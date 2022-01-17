@@ -54,7 +54,7 @@ const Work = () => (
 				</ListItem>
 				<ListItem>
 					<Meta>Stack</Meta>
-					<span>ReactNative, Arduino Nano 33 IoT, </span>
+					<span>ReactNative, Arduino Nano 33 IoT</span>
 				</ListItem>
 				<ListItem>
 					<Meta>Source</Meta>
