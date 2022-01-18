@@ -3,13 +3,14 @@ import { AnimatePresence } from "framer-motion";
 import Head from "next/head";
 import JunXiong from "../Intro";
 import Navbar from "../Navbar";
+import Footer from "../Footer";
 
 const Main = ({ children, router }) => {
 	return (
 		<Box as="main" pb={8}>
 			<Head>
 				<meta name="apple-mobile-web-app-capable" content="yes" />
-				<meta name="viewport" content="width=device, initial-scale=1" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<meta name="description" content="Jun Xiong's homepage" />
 				<meta name="author" content="Jun Xiong" />
 				<meta property="og:site_name" content="Jun Xiong's Homepage" />
@@ -23,7 +24,10 @@ const Main = ({ children, router }) => {
 
 			<Container maxW="container.md" pt={14}>
 				<JunXiong />
+
 				{children}
+
+				<Footer />
 			</Container>
 		</Box>
 	);
