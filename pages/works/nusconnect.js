@@ -51,6 +51,15 @@ const Work = () => (
 					</Link>
 				</ListItem>
 				<ListItem>
+					<Meta>Award</Meta>
+					<Link
+						href="https://credentials.nus.edu.sg/a2be1551-4093-4a45-850d-570cd13f5437"
+						target="_blank">
+						Achieved Artemis (Extreme) in Orbital
+						<ExternalLinkIcon mx="2px" />
+					</Link>
+				</ListItem>
+				<ListItem>
 					<Meta>Platform</Meta>
 					<span>Web</span>
 				</ListItem>
