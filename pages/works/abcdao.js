@@ -16,7 +16,7 @@ const Work = () => (
 	<Layout title="ABCDAO">
 		<Box>
 			<Title>
-				$ABCDao <Badge>Aug 2021 - Dec 2022</Badge>
+				$ABCDao <Badge>Aug 2021 - Dec 2021</Badge>
 			</Title>
 			<P>
 				The NUS Fintech Society’s Blockchain Department has been transformed

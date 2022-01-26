@@ -210,11 +210,7 @@ const WorkExperience = () => {
 						<ListItem>
 							Conduct weekly tutorials, code review and marking.
 						</ListItem>
-						<ListItem>Guided over 60 students across various modules.</ListItem>
-						<ListItem>
-							Organized SCRUM meetings and collaborated with other departments
-							to discover and troubleshoot current bugs in the App.
-						</ListItem>
+						<ListItem>Guided over 80 students across various modules.</ListItem>
 					</UnorderedList>
 					<TechTeach />
 				</Box>

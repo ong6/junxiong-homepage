@@ -11,6 +11,7 @@ import thumbAbcdao from "../public/images/works/abcdao_01.png";
 import thumbSqueezy from "../public/images/works/squeezy_01.png";
 import thumbHandsfree from "../public/images/works/handsfree_02.png";
 import thumbMarkbind from "../public/images/works/markbind_01.png";
+import thumbAmuze from "../public/images/works/amuze_01.png";
 
 const Works = () => (
 	<Layout title="Works">
@@ -30,11 +31,19 @@ const Works = () => (
 					</WorkGridItem>
 				</Section>
 				<Section>
+					<WorkGridItem
+						id="amuze"
+						title="Amuze"
+						thumbnail={thumbAmuze}>
+						The NFT museum for collectors to showcase their collection.
+					</WorkGridItem>
+				</Section>
+				<Section delay={0.1}>
 					<WorkGridItem id="dexdao" title="The DEX DAO" thumbnail={thumbDexDao}>
 						A DAO with the goal of unifying the L2 DEX community
 					</WorkGridItem>
 				</Section>
-				<Section>
+				<Section delay={0.1}>
 					<WorkGridItem
 						id="imposter"
 						title="imPoster"
