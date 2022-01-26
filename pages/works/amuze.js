@@ -16,7 +16,7 @@ const Work = () => (
 	<Layout title="A-Muze">
 		<Box>
 			<Title>
-				A-Muze <Badge>Dec 2022 - Present</Badge>
+				A-Muze <Badge>Dec 2021 - Present</Badge>
 			</Title>
 			<P>
 				A-muze is a museum experience built with NFT and Blockchain technologies. It helps to facilitate collectors to list their historical assets onto the blockchain, promoting the culture of ownership. This enables these Unique and maybe forgotten pieces of history to be found digitally regardless of location, Convenience for users to view these museums, anytime and anywhere
