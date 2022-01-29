@@ -20,6 +20,7 @@ import Section from "../components/Section";
 import thumbMarkbind from "../public/images/works/markbind_01.png";
 import thumbNusConnect from "../public/images/works/nusconnect_03.png";
 import thumbSqueezy from "../public/images/works/squeezy_01.png";
+import thumbAmuze from "../public/images/works/amuze_01.png";
 
 export default function Home() {
 	return (
@@ -58,11 +59,10 @@ export default function Home() {
 							Squeeze your stress away with this smart Stress-Ball!
 						</WorkGridItem>
 						<WorkGridItem
-							id="nusconnect"
-							title="NUSConnect"
-							thumbnail={thumbNusConnect}>
-							A gamified learning management system that is accessible to all
-							and easy to use
+							id="amuze"
+							title="Amuze (1st Runner Up)"
+							thumbnail={thumbAmuze}>
+							The NFT museum for collectors rent, mint and earn!
 						</WorkGridItem>
 						<WorkGridItem
 							id="markbind"

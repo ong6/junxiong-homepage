@@ -13,13 +13,20 @@ import P from "../../components/Paragraph";
 import Layout from "../../components/layouts/Articles";
 
 const Work = () => (
-	<Layout title="A-Muze">
+	<Layout title="Amuze">
 		<Box>
 			<Title>
 				A-Muze <Badge>Dec 2021 - Present</Badge>
 			</Title>
 			<P>
-				A-muze is a museum experience built with NFT and Blockchain technologies. It helps to facilitate collectors to list their historical assets onto the blockchain, promoting the culture of ownership. This enables these Unique and maybe forgotten pieces of history to be found digitally regardless of location, Convenience for users to view these museums, anytime and anywhere
+				First Runner-up at NUS Fintech Month Hackathon 2022 (10k Prize). Amuze
+				is a museum experience built with NFT and Blockchain technologies. It
+				helps to facilitate collectors to list their historical assets onto the
+				blockchain, promoting the culture of ownership. This enables these
+				Unique and maybe forgotten pieces of history to be found digitally
+				regardless of location, Convenience for users to view these museums,
+				anytime and anywhere. I was in charge of the Full-stack development of
+				the project.
 			</P>
 			<List ml={4} my={4}>
 				<ListItem>
@@ -29,13 +36,22 @@ const Work = () => (
 					</Link>
 				</ListItem>
 				<ListItem>
+					<Meta>Presentation Slides</Meta>
+					<Link
+						href="	https://docs.google.com/presentation/d/1ELMGX2O2zSgMe_jo-t0f0Val5YJ7-Qlv/edit?usp=sharing&ouid=118156243590926955681&rtpof=true&sd=true"
+						target="_blank">
+						https://docs.google.com/presentation/d/1ELMGX2O2zSgMe_jo-t0f0Val5YJ7-Qlv/edit?usp=sharing&ouid=118156243590926955681&rtpof=true&sd=true
+						<ExternalLinkIcon mx="2px" />
+					</Link>
+				</ListItem>
+				<ListItem>
 					<Meta>Platform</Meta>
 					<span>Online website, Web3 (Metamask needed)</span>
 				</ListItem>
 				<ListItem>
 					<Meta>Stack</Meta>
 					<span>
-						Next.js, TailwindCSS, Solidity, Etherscan, Alchemy, Node.js, Vercel, AWS
+						Next.js, TailwindCSS, Solidity, Etherscan, Alchemy, Node.js, Vercel
 					</span>
 				</ListItem>
 			</List>
@@ -45,8 +61,9 @@ const Work = () => (
 			</Heading>
 
 			<div className="space-y-8">
-				<WorkImage src="/images/works/amuze_01.png" alt="the dex dao" />
-				<WorkImage src="/images/works/amuze_02.png" alt="the dex dao" />
+				<WorkImage src="/images/works/amuze_03.png" alt="amuze" />
+				<WorkImage src="/images/works/amuze_01.png" alt="amuze" />
+				<WorkImage src="/images/works/amuze_02.png" alt="amuze" />
 			</div>
 		</Box>
 	</Layout>

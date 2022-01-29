@@ -19,11 +19,11 @@ const Work = () => (
 				Project Squeezy <Badge>Nov 2021 - Jan 2022</Badge>
 			</Title>
 			<P>
-				Won 2nd Place in NUS Makerthon 2022! Project Squeezy was done for the
-				one month long NUS Makerthon 2022 and was a joint hardware and software
-				project. We designed Squeezy to be a smart stress ball with a companion
-				app that can help you track your stress levels. The app is built with
-				React Native and connects to the ball via Bluetooth-Low-Energy.
+				First Runner-up for NUS Makerthon 2022 (3K prize)! Project Squeezy is a
+				joint hardware and software project. Squeezy is designed to be a smart
+				stress ball with a companion app that can help you track your stress
+				levels. I was in charge of building the app with React Native and
+				connecting it to the ball via Bluetooth.
 			</P>
 			<List ml={4} my={4}>
 				<ListItem>
@@ -70,6 +70,7 @@ const Work = () => (
 			</Heading>
 
 			<div className="space-y-8">
+				<WorkImage src="/images/works/squeezy_04.png" alt="squeezy" />
 				<Box>
 					<iframe
 						alt="squeezy"

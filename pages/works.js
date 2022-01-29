@@ -21,21 +21,13 @@ const Works = () => (
 			</Heading>
 
 			<SimpleGrid columns={[1, 1, 2]} gap={6}>
-				<Section>
+				<Section delay={0.1}>
 					<WorkGridItem
 						id="nusconnect"
 						title="NUSConnect"
 						thumbnail={thumbNusConnect}>
 						A gamified learning management system that is accessible to all and
 						easy to use
-					</WorkGridItem>
-				</Section>
-				<Section>
-					<WorkGridItem
-						id="amuze"
-						title="Amuze"
-						thumbnail={thumbAmuze}>
-						The NFT museum for collectors to showcase their collection.
 					</WorkGridItem>
 				</Section>
 				<Section delay={0.1}>
@@ -51,7 +43,6 @@ const Works = () => (
 						API testing tool built for CLI lovers
 					</WorkGridItem>
 				</Section>
-
 				<Section delay={0.1}>
 					<WorkGridItem
 						id="fintechwebsite"
@@ -69,7 +60,7 @@ const Works = () => (
 				</Section>
 			</SimpleGrid>
 
-			<Section delay={0.2}>
+			<Section delay={0.3}>
 				<Divider my={6} />
 				<Heading as="h3" fontSize={20} mb={4}>
 					Hackathon Projects
@@ -77,25 +68,33 @@ const Works = () => (
 			</Section>
 
 			<SimpleGrid columns={[1, 1, 2]} gap={6}>
-				<Section delay={0.3}>
+				<Section delay={0.5}>
+					<WorkGridItem
+						id="amuze"
+						title="Amuze (1st Runner Up)"
+						thumbnail={thumbAmuze}>
+						The NFT museum for collectors rent, mint and earn!
+					</WorkGridItem>
+				</Section>
+				<Section delay={0.5}>
 					<WorkGridItem
 						id="squeezy"
 						thumbnail={thumbSqueezy}
-						title="Project Squeezy (Won 2nd Place)">
+						title="Project Squeezy (1st Runner Up)">
 						Squeeze your stress away with this smart Stress-Ball!
 					</WorkGridItem>
 				</Section>
-				<Section delay={0.3}>
+				<Section delay={0.5}>
 					<WorkGridItem
 						id="youtubehandsfree"
 						thumbnail={thumbHandsfree}
 						title="Youtube-Handsfree (Participation)">
-						A VR Creative tools for fashion brands
+						A AR Tool for watching youtube Handsfree!
 					</WorkGridItem>
 				</Section>
 			</SimpleGrid>
 
-			<Section delay={0.4}>
+			<Section delay={0.7}>
 				<Divider my={6} />
 				<Heading as="h3" fontSize={20} mb={4}>
 					Open Source Projects
@@ -103,7 +102,7 @@ const Works = () => (
 			</Section>
 
 			<SimpleGrid columns={[1, 1, 2]} gap={6}>
-				<Section delay={0.5}>
+				<Section delay={0.9}>
 					<WorkGridItem
 						id="markbind"
 						thumbnail={thumbMarkbind}
