@@ -4,6 +4,7 @@ import Section from "../components/Section";
 import { WorkGridItem } from "../components/GridItem";
 
 import thumbNusConnect from "../public/images/works/nusconnect_03.png";
+import thumbCovalent from "../public/images/works/covalent_02.png";
 import thumbDexDao from "../public/images/works/dexdao_01.png";
 import thumbImposter from "../public/images/works/imposter_01.png";
 import thumbFintechWebsite from "../public/images/works/fintechwebsite_03.png";
@@ -12,6 +13,7 @@ import thumbSqueezy from "../public/images/works/squeezy_01.png";
 import thumbHandsfree from "../public/images/works/handsfree_02.png";
 import thumbMarkbind from "../public/images/works/markbind_01.png";
 import thumbAmuze from "../public/images/works/amuze_01.png";
+import thumbContractMe from "../public/images/works/contractme_01.png";
 
 const Works = () => (
 	<Layout title="Works">
@@ -19,7 +21,6 @@ const Works = () => (
 			<Heading as="h3" fontSize={20} mb={4}>
 				Passion Projects
 			</Heading>
-
 			<SimpleGrid columns={[1, 1, 2]} gap={6}>
 				<Section delay={0.1}>
 					<WorkGridItem
@@ -30,11 +31,11 @@ const Works = () => (
 						easy to use
 					</WorkGridItem>
 				</Section>
-				<Section delay={0.1}>
+				{/* <Section delay={0.1}>
 					<WorkGridItem id="dexdao" title="The DEX DAO" thumbnail={thumbDexDao}>
 						A DAO with the goal of unifying the L2 DEX community
 					</WorkGridItem>
-				</Section>
+				</Section> */}
 				<Section delay={0.1}>
 					<WorkGridItem
 						id="imposter"
@@ -63,7 +64,7 @@ const Works = () => (
 			<Section delay={0.3}>
 				<Divider my={6} />
 				<Heading as="h3" fontSize={20} mb={4}>
-					Hackathon Projects
+					Hackathons Won
 				</Heading>
 			</Section>
 
@@ -84,12 +85,38 @@ const Works = () => (
 						Squeeze your stress away with this smart Stress-Ball!
 					</WorkGridItem>
 				</Section>
-				<Section delay={0.5}>
+				{/* <Section delay={0.5}>
 					<WorkGridItem
 						id="youtubehandsfree"
 						thumbnail={thumbHandsfree}
 						title="Youtube-Handsfree (Participation)">
 						A AR Tool for watching youtube Handsfree!
+					</WorkGridItem>
+				</Section> */}
+			</SimpleGrid>
+
+			<Section delay={0.6}>
+				<Divider my={6} />
+				<Heading as="h3" fontSize={20} mb={4}>
+					Design Projects
+				</Heading>
+			</Section>
+
+			<SimpleGrid columns={[1, 1, 2]} gap={6}>
+				<Section delay={0.6}>
+					<WorkGridItem
+						id="covalent"
+						title="Covalent"
+						thumbnail={thumbCovalent}>
+						A social media dashboard for video producers
+					</WorkGridItem>
+				</Section>
+				<Section delay={0.6}>
+					<WorkGridItem
+						id="contractme"
+						thumbnail={thumbContractMe}
+						title="ContractMe!">
+						Hiring contractors has never been so easy!
 					</WorkGridItem>
 				</Section>
 			</SimpleGrid>
@@ -97,7 +124,7 @@ const Works = () => (
 			<Section delay={0.7}>
 				<Divider my={6} />
 				<Heading as="h3" fontSize={20} mb={4}>
-					Open Source Projects
+					Open Source Contributions
 				</Heading>
 			</Section>
 
