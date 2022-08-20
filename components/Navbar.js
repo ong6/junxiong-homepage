@@ -44,6 +44,17 @@ const LinkItem = ({ href, path, _target, children, ...props }) => {
 const Navbar = (props) => {
 	const { path } = props;
 
+	const navigationLinks = [
+		{
+			href: "/resume",
+			name: "Resume",
+		},
+		{
+			href: "/works",
+			name: "Works",
+		},
+	];
+
 	return (
 		<Box
 			position="fixed"
@@ -73,12 +84,11 @@ const Navbar = (props) => {
 					alignItems="center"
 					flexGrow={1}
 					mt={{ base: 4, md: 0 }}>
-					<LinkItem href="/resume" path={path}>
-						Resume
-					</LinkItem>
-					<LinkItem href="/works" path={path}>
-						Works
-					</LinkItem>
+					{navigationLinks.map((link) => (
+						<LinkItem href={link.href} path={path} key={link.name}>
+							{link.name}
+						</LinkItem>
+					))}
 					<LinkItem
 						_target="_blank"
 						href="https://github.com/ong6/junxiong-homepage"
@@ -103,15 +113,11 @@ const Navbar = (props) => {
 								aria-label="Options"
 							/>
 							<MenuList>
-								<NextLink href="/" passHref>
-									<MenuItem as={Link}>About</MenuItem>
-								</NextLink>
-								<NextLink href="/resume" passHref>
-									<MenuItem as={Link}>Resume</MenuItem>
-								</NextLink>
-								<NextLink href="/works" passHref>
-									<MenuItem as={Link}>works</MenuItem>
-								</NextLink>
+								{navigationLinks.map((link) => (
+									<NextLink href={link.href} path={path} key={link.name}>
+										<MenuItem as={Link}>{link.name}</MenuItem>
+									</NextLink>
+								))}
 								<MenuItem
 									as={Link}
 									href="https://github.com/ong6/junxiong-homepage">
