@@ -33,23 +33,48 @@ import {
 	SiTypescript,
 	SiVercel,
 	SiVuedotjs,
+	SiApachemaven,
+	SiJira,
+	SiSpring,
+	SiSpringboot,
+	SiPrisma,
+	SiStorybook,
+	SiAzuredevops,
 } from "react-icons/si";
 
-export const TechFintech = () => {
-	const databaseList = {
-		Python: SiPython,
-		JS: SiJavascript,
-		Solidity: SiSolidity,
-		Django: SiDjango,
-		Github: SiGithub,
-		React: SiReact,
-		IPFS: SiIpfs,
-	};
+export const ResumeLogo = ({ children, title, thumbnail, small = false }) => (
+	<Box
+		textAlign="center"
+		display="flex"
+		alignItems="center"
+		flexDirection="column"
+		px={2}
+		mb={5}
+		role="group">
+		<Icon
+			as={thumbnail}
+			alt={title}
+			w={small ? "36px" : "48px"}
+			h={small ? "36px" : "48px"}
+			placeholder="blur"
+		/>
+		<Text
+			fontSize="sm"
+			fontWeight="bold"
+			position="absolute"
+			mt={small ? "36px" : "48px"}
+			_groupHover={{ opacity: 1, transition: "opacity .2s ease-in" }}
+			className="opacity-0 ease-out transition-all duration-1000">
+			{children}
+		</Text>
+	</Box>
+);
 
+export default function TechStack({ stack }) {
 	return (
-		<Box my={4}>
+		<Box>
 			<Box className="flex flex-row flex-wrap">
-				{Object.entries(databaseList).map(([key, value]) => (
+				{Object.entries(stack).map(([key, value]) => (
 					<ResumeLogo key={key} title={key} thumbnail={value} small={true}>
 						{key}
 					</ResumeLogo>
@@ -57,52 +82,69 @@ export const TechFintech = () => {
 			</Box>
 		</Box>
 	);
+}
+export const TechTanso = () => {
+	const tansoList = {
+		Next: SiNextdotjs,
+		TS: SiTypescript,
+		Prisma: SiPrisma,
+		Storybook: SiStorybook,
+		Azure: SiAzuredevops,
+		Postgres: SiPostgresql,
+		Git: SiGithub,
+		Docker: SiDocker,
+	};
+	return <TechStack stack={tansoList} />;
 };
+
+export const TechDBS = () => {
+	const dbsList = {
+		Java: SiJava,
+		Maven: SiApachemaven,
+		Jira: SiJira,
+		Github: SiGithub,
+		Bash: SiGnubash,
+		Spring: SiSpringboot,
+	};
+	return <TechStack stack={dbsList} />;
+};
+
+export const TechFintech = () => {
+	const fintechList = {
+		Next: SiNextdotjs,
+		Python: SiPython,
+		TS: SiTypescript,
+		Solidity: SiSolidity,
+		IPFS: SiIpfs,
+		Github: SiGithub,
+	};
+	return <TechStack stack={fintechList} />;
+};
+
 export const TechTeach = () => {
-	const databaseList = {
+	const teachList = {
 		Java: SiJava,
 		Python: SiPython,
 		Github: SiGithub,
 	};
 
-	return (
-		<Box my={4}>
-			<Box className="flex flex-row flex-wrap">
-				{Object.entries(databaseList).map(([key, value]) => (
-					<ResumeLogo key={key} title={key} thumbnail={value} small={true}>
-						{key}
-					</ResumeLogo>
-				))}
-			</Box>
-		</Box>
-	);
+	return <TechStack stack={teachList} />;
 };
 
 export const TechCurve = () => {
-	const databaseList = {
+	const curveList = {
 		Java: SiJava,
-		PgSQL: SiPostgresql,
-		HTML: SiHtml5,
+		Maven: SiApachemaven,
 		CSS: SiCss3,
-		JS: SiJavascript,
+		PgSQL: SiPostgresql,
 		Github: SiGithub,
 	};
 
-	return (
-		<Box my={4}>
-			<Box className="flex flex-row flex-wrap">
-				{Object.entries(databaseList).map(([key, value]) => (
-					<ResumeLogo key={key} title={key} thumbnail={value} small={true}>
-						{key}
-					</ResumeLogo>
-				))}
-			</Box>
-		</Box>
-	);
+	return <TechStack stack={curveList} />;
 };
 
 export const TechMaha = () => {
-	const databaseList = {
+	const mahaList = {
 		Flutter: SiFlutter,
 		Dart: SiDart,
 		PHP: SiPhpmyadmin,
@@ -110,17 +152,7 @@ export const TechMaha = () => {
 		MySQL: SiMysql,
 	};
 
-	return (
-		<Box my={4}>
-			<Box className="flex flex-row flex-wrap">
-				{Object.entries(databaseList).map(([key, value]) => (
-					<ResumeLogo key={key} title={key} thumbnail={value} small={true}>
-						{key}
-					</ResumeLogo>
-				))}
-			</Box>
-		</Box>
-	);
+	return <TechStack stack={mahaList} />;
 };
 
 export const Databases = () => {
@@ -134,15 +166,7 @@ export const Databases = () => {
 		mongodb: SiMongodb,
 	};
 
-	return (
-		<Box className="flex flex-row flex-wrap">
-			{Object.entries(databaseList).map(([key, value]) => (
-				<ResumeLogo key={key} title={key} thumbnail={value}>
-					{key}
-				</ResumeLogo>
-			))}
-		</Box>
-	);
+	return <TechStack stack={databaseList} />;
 };
 
 export const ToolsAndFramework = () => {
@@ -159,20 +183,11 @@ export const ToolsAndFramework = () => {
 		Git: SiGithub,
 	};
 
-	return (
-		<Box className="flex flex-row flex-wrap">
-			{Object.entries(frameworkList).map(([key, value]) => (
-				<ResumeLogo key={key} title={key} thumbnail={value}>
-					{key}
-				</ResumeLogo>
-			))}
-		</Box>
-	);
+	return <TechStack stack={frameworkList} />;
 };
 
 export const ProficientLanguage = () => {
 	const languageList = {
-		Python: SiPython,
 		Java: SiJava,
 		JS: SiJavascript,
 		TS: SiTypescript,
@@ -181,41 +196,9 @@ export const ProficientLanguage = () => {
 		"C++": SiCplusplus,
 		CSS: SiCss3,
 		HTML: SiHtml5,
+		Python: SiPython,
 		Solidity: SiSolidity,
 	};
 
-	return (
-		<Box className="flex flex-row flex-wrap">
-			{Object.entries(languageList).map(([key, value]) => (
-				<ResumeLogo key={key} title={key} thumbnail={value}>
-					{key}
-				</ResumeLogo>
-			))}
-		</Box>
-	);
+	return <TechStack stack={languageList} />;
 };
-
-export const ResumeLogo = ({ children, title, thumbnail, small = false }) => (
-	<Box
-		textAlign="center"
-		display="flex"
-		alignItems="center"
-		flexDirection="column"
-		px={2}
-		role="group">
-		<Icon
-			as={thumbnail}
-			alt={title}
-			w={small ? "36px" : "48px"}
-			h={small ? "36px" : "48px"}
-			placeholder="blur"
-		/>
-		<Text
-			fontSize="sm"
-			fontWeight="bold"
-			_groupHover={{ opacity: 1, transition: "opacity .2s ease-in" }}
-			className="opacity-0 ease-out transition-all duration-1000">
-			{children}
-		</Text>
-	</Box>
-);

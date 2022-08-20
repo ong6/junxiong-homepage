@@ -1,14 +1,101 @@
-import {
-	Box,
-	Heading,
-	Link,
-	ListItem,
-	Text,
-	UnorderedList,
-} from "@chakra-ui/react";
-import NextLink from "next/link";
+import { Box, Heading, Link } from "@chakra-ui/react";
 import React from "react";
-import { TechCurve, TechFintech, TechMaha, TechTeach } from "./Icons";
+import { TechCurve, TechDBS, TechMaha, TechTanso } from "./Icons";
+import ResumeDetail from "./ResumeDetail";
+
+const WorkDetails = [
+	{
+		title: "Tanso",
+		location: "Germany, Munich",
+		roles: [
+			{
+				subtitle: "Software Engineering Intern (Full stack)",
+				date: "July 2022 - Dec 2022",
+				description: [
+					"Worked with Typescript, NextJs, Prisma and tRPC to develop a full-stack dashboard app for carbon emissions tracking.",
+					"Learned how an early-stage start-up is ran and organized weekly product development sessions.",
+				],
+			},
+		],
+		tech: <TechTanso />,
+	},
+	{
+		title: "DBS Bank",
+		location: "Singapore",
+		roles: [
+			{
+				subtitle:
+					"Software Engineering Intern (Backend), Global Transaction Services",
+				date: "May 2022 - July 2022",
+				description: [
+					"Created scheduled Cron jobs for key services and designed user acceptance testing.",
+					"Designed and engineered the backend models for the limit system with MySQL and Java Spring Boot.",
+				],
+			},
+		],
+		tech: <TechDBS />,
+	},
+	{
+		title: "Mahachem",
+		location: "Singapore",
+		roles: [
+			{
+				subtitle: "Software Engineering Intern (Mobile), Tech Department",
+				date: "May 2021 - July 2021",
+				description: [
+					<>
+						Developed and designed a{" "}
+						<Link
+							href={"https://appadvice.com/app/myassistant-2-0/1500392856"}
+							target="_blank">
+							Flutter Application
+						</Link>{" "}
+						to assist on site sales team with showcasing of products.
+					</>,
+					"Automated the conversion of products data into SQL databases for further analysis and managed the creation of API endpoints to be used by the client app.",
+				],
+			},
+		],
+		tech: <TechMaha />,
+	},
+	{
+		title: "Curveseries",
+		location: "Singapore",
+		roles: [
+			{
+				subtitle: "Software Engineering Intern (Java)",
+				date: "Jan 2020 - April 2020",
+				description: [
+					"Conceptualized and developed Java Application to collect RSS News feeds and stored the data in a Postgres SQL database for analysis.",
+					"Organized refinery maintenance data to be set up for predictive analysis.",
+					"Performed formula-based charting on futures across various oil products.",
+				],
+			},
+		],
+		tech: <TechCurve />,
+	},
+	{
+		title: "National University of Singapore",
+		location: "Singapore",
+		roles: [
+			{
+				subtitle: "Teaching Assistant, CS2030S & CS2103T",
+				date: "Jan 2021 - May 2022",
+				description: [
+					"Conduct weekly tutorials, code review and marking and guided over 60 students across Object Oriented programming and Software Engineering modules.",
+					"Awarded with Student Mentor Award for Guiding Students through difficult coursework.",
+					<>
+						Designed and authored a{" "}
+						<Link href={"https://ong6.github.io/Unix-Guide/"} target="_blank">
+							website guide
+						</Link>{" "}
+						to help students get started with Unix systems.
+					</>,
+				],
+			},
+		],
+	},
+];
 
 export default function WorkExperience() {
 	return (
@@ -16,135 +103,9 @@ export default function WorkExperience() {
 			<Heading as="h3" variant="section-title" fontSize={24}>
 				Experience
 			</Heading>
-			<Box className="space-y-8">
-				<Box>
-					<Box
-						display="flex"
-						alignItems="center"
-						justifyContent="space-between">
-						<Text fontSize={18} fontWeight="bold">
-							NUS Fintech Society, Senior Software Developer
-						</Text>
-						<Text fontSize={18} fontWeight="bold">
-							Sep 2020 - Present
-						</Text>
-					</Box>
-					<UnorderedList pl={8} fontSize={18} fontWeight="medium">
-						<ListItem>
-							Collaborated with a team of 4 members to develop a full-stack
-							website for{" "}
-							<NextLink href={"/works/fintechwebsite"}>
-								<Link>NUS Fintech Society.</Link>
-							</NextLink>
-						</ListItem>
-						<ListItem>
-							Developed and designed a{" "}
-							<NextLink href={"/works/abcdao"}>
-								<Link>Decentralized Autonomous Organization (DAO)</Link>
-							</NextLink>
-							, to serve more than 200 fintech society members.
-						</ListItem>
-						<ListItem>
-							Represented fintech society to{" "}
-							<Link
-								href={
-									"https://fintechlab.nus.edu.sg/nus-fintech-society-blockchain-department-project-showcase/"
-								}
-								target="_blank">
-								present
-							</Link>{" "}
-							and advocate our DAO project on a global stage during Singapore
-							Fintech Month.
-						</ListItem>
-					</UnorderedList>
-					<TechFintech />
-				</Box>
-
-				<Box>
-					<Box
-						display="flex"
-						alignItems="center"
-						justifyContent="space-between">
-						<Text fontSize={18} fontWeight="bold">
-							MahaChem, Mobile App Developer
-						</Text>
-						<Text fontSize={18} fontWeight="bold">
-							May 2021 - Sep 2021
-						</Text>
-					</Box>
-					<UnorderedList pl={8} fontSize={18} fontWeight="medium">
-						<ListItem>
-							Developed and designed a{" "}
-							<Link
-								href={"https://appadvice.com/app/myassistant-2-0/1500392856"}
-								target="_blank">
-								Flutter Application
-							</Link>{" "}
-							to assist on site sales team with showcasing of products.
-						</ListItem>
-						<ListItem>
-							Automated the conversion of products data into SQL database for
-							further analysis and managed the creation of API endpoints to be
-							used by the client app.
-						</ListItem>
-						<ListItem>
-							Organized SCRUM meetings and collaborated with other departments
-							to discover and troubleshoot current bugs in the App.
-						</ListItem>
-					</UnorderedList>
-					<TechMaha />
-				</Box>
-
-				<Box>
-					<Box
-						display="flex"
-						alignItems="center"
-						justifyContent="space-between">
-						<Text fontSize={18} fontWeight="bold">
-							Curveseries, Software Engineer Intern
-						</Text>
-						<Text fontSize={18} fontWeight="bold">
-							Jan 2020 - Apr 2020
-						</Text>
-					</Box>
-					<UnorderedList pl={8} fontSize={18} fontWeight="medium">
-						<ListItem>
-							Organized refinery maintenance data to be set up for predictive
-							analysis
-						</ListItem>
-						<ListItem>
-							Performed formula-based charting on futures across various oil
-							products
-						</ListItem>
-						<ListItem>
-							Conceptualized and developed Java Application to collect RSS News
-							feeds and stored them in a SQL database for further analysis
-						</ListItem>
-					</UnorderedList>
-					<TechCurve />
-				</Box>
-
-				<Box>
-					<Box
-						display="flex"
-						alignItems="center"
-						justifyContent="space-between">
-						<Text fontSize={18} fontWeight="bold">
-							Teaching Assistant (NUS)
-						</Text>
-						<Text fontSize={18} fontWeight="bold">
-							Jan 2021 - Present
-						</Text>
-					</Box>
-					<UnorderedList pl={8} fontSize={18} fontWeight="medium">
-						<ListItem>
-							Conduct weekly tutorials, code review and marking.
-						</ListItem>
-						<ListItem>Guided over 80 students across various modules.</ListItem>
-					</UnorderedList>
-					<TechTeach />
-				</Box>
-			</Box>
+			{WorkDetails.map((detail, index) => (
+				<ResumeDetail key={index} detail={detail} />
+			))}
 		</Box>
 	);
 }
