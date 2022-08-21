@@ -1,4 +1,4 @@
-import { Box, Heading, Image, Text } from "@chakra-ui/react";
+import { Box, Heading, Image, SkeletonCircle, Text } from "@chakra-ui/react";
 import React from "react";
 
 export default function Intro() {
@@ -32,6 +32,7 @@ export default function Intro() {
 					borderRadius="full"
 					src="/images/junxiong.png"
 					alt="Profile image"
+					fallback={<SkeletonCircle width="250px" height="250px" />}
 				/>
 			</Box>
 		</Box>
