@@ -1,4 +1,11 @@
-import { Box, Heading, Image, SkeletonCircle, Text } from "@chakra-ui/react";
+import {
+	Box,
+	Center,
+	Heading,
+	Image,
+	SkeletonCircle,
+	Text,
+} from "@chakra-ui/react";
 import React from "react";
 
 export default function Intro() {
@@ -18,22 +25,25 @@ export default function Intro() {
 					Software Developer • Computer Science Student • Rock Climber
 				</Text>
 			</Box>
-			<Box
-				flexShrink={0}
-				mt={{ base: 4, md: 0 }}
-				ml={{ md: 6 }}
-				textAlign="center">
-				<Image
-					borderColor="whiteAlpha.800"
-					borderWidth={2}
-					borderStyle="solid"
-					maxW={{ sm: "250px" }}
-					display="inline-block"
-					borderRadius="full"
-					src="/images/junxiong.png"
-					alt="Profile image"
-					fallback={<SkeletonCircle width="250px" height="250px" />}
-				/>
+			<Box flexShrink={0} mt={4} textAlign="center">
+				<Center>
+					<Image
+						borderColor="whiteAlpha.800"
+						borderWidth={2}
+						borderStyle="solid"
+						maxW={{ sm: "250px" }}
+						display="inline-block"
+						borderRadius="full"
+						src="/images/junxiong.png"
+						alt="Profile image"
+						fallback={
+							<SkeletonCircle
+								width={{ sm: "250px" }}
+								height={{ sm: "250px" }}
+							/>
+						}
+					/>
+				</Center>
 			</Box>
 		</Box>
 	);
