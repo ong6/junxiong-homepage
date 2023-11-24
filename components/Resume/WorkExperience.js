@@ -1,15 +1,53 @@
 import { Box, Heading, Link } from "@chakra-ui/react";
 import React from "react";
-import { TechCurve, TechDBS, TechMaha, TechTanso } from "./Icons";
+import {
+	TechBinance,
+	TechCurve,
+	TechDBS,
+	TechMaha,
+	TechTanso,
+	TechThoughtMachine,
+} from "./Icons";
 import ResumeDetail from "./ResumeDetail";
 
 const WorkDetails = [
+	{
+		title: "Binance",
+		location: "Remote",
+		roles: [
+			{
+				subtitle: "Software Engineering Intern (Frontend), Payments Team",
+				date: "Aug 2023 - Nov 2023",
+				description: [
+					"Designed and implemented complex UI/UX systems in Typescript and React, boosting user engagement and impacting over 128 million users of Binance.",
+					"Collaborated on the Front End development of the 'Crypto Box', a unique feature streamlining payment distributions to group users.",
+					"Participated in the integration and testing of secure checkout payment systems while working with cross-functional teams.",
+				],
+			},
+		],
+		tech: <TechBinance />,
+	},
+	{
+		title: "Thought Machine",
+		location: "Singapore",
+		roles: [
+			{
+				subtitle: "Software Engineering Intern (Client Engineering)",
+				date: "May 2023 - Aug 2023",
+				description: [
+					"Pioneered the development of a generalized remediation tool, streamlining the remediation process and ensuring product consistency, reducing duplicate work, and improving product delivery time.",
+					"Collaborated with engineers and analysts to develop tailored banking products, enhancing utility and client interactions while using Python and Postman for demonstrations.",
+				],
+			},
+		],
+		tech: <TechThoughtMachine />,
+	},
 	{
 		title: "Tanso",
 		location: "Germany, Munich",
 		roles: [
 			{
-				subtitle: "Software Engineering Intern (Full stack)",
+				subtitle: "Software Engineering Intern (Fullstack)",
 				date: "July 2022 - Dec 2022",
 				description: [
 					"Worked with Typescript, NextJs, Prisma and tRPC to develop a full-stack dashboard app for carbon emissions tracking.",
@@ -40,7 +78,7 @@ const WorkDetails = [
 		location: "Singapore",
 		roles: [
 			{
-				subtitle: "Software Engineering Intern (Mobile), Tech Department",
+				subtitle: "Software Engineering Intern (Mobile)",
 				date: "May 2021 - July 2021",
 				description: [
 					<>
@@ -63,7 +101,7 @@ const WorkDetails = [
 		location: "Singapore",
 		roles: [
 			{
-				subtitle: "Software Engineering Intern (Java)",
+				subtitle: "Software Engineering Intern (Backend)",
 				date: "Jan 2020 - April 2020",
 				description: [
 					"Conceptualized and developed Java Application to collect RSS News feeds and stored the data in a Postgres SQL database for analysis.",

@@ -1,10 +1,11 @@
 import { Icon } from "@chakra-ui/icons";
-import { Box, Image, Text, Tooltip } from "@chakra-ui/react";
-import { motion } from "framer-motion";
+import { Box, Text } from "@chakra-ui/react";
 import React from "react";
 import {
 	SiAndroid,
-	SiBootstrap,
+	SiApachekafka,
+	SiApachemaven,
+	SiAzuredevops,
 	SiCplusplus,
 	SiCss3,
 	SiDart,
@@ -15,32 +16,29 @@ import {
 	SiFlutter,
 	SiGithub,
 	SiGnubash,
+	SiGooglecloud,
 	SiHeroku,
 	SiHtml5,
 	SiIpfs,
-	SiJava,
 	SiJavascript,
-	SiJquery,
+	SiJira,
 	SiMongodb,
 	SiMysql,
+	SiNextdotjs,
 	SiPhpmyadmin,
 	SiPostgresql,
+	SiPrisma,
 	SiPython,
 	SiReact,
 	SiRedux,
 	SiSolidity,
-	SiNextdotjs,
+	SiSpringboot,
+	SiStorybook,
 	SiTypescript,
 	SiVercel,
 	SiVuedotjs,
-	SiApachemaven,
-	SiJira,
-	SiSpring,
-	SiSpringboot,
-	SiPrisma,
-	SiStorybook,
-	SiAzuredevops,
 } from "react-icons/si";
+import { FaJava } from "react-icons/fa";
 
 export const ResumeLogo = ({ children, title, thumbnail, small = false }) => (
 	<Box
@@ -83,6 +81,32 @@ export default function TechStack({ stack }) {
 		</Box>
 	);
 }
+
+export const TechBinance = () => {
+	const binanceList = {
+		HTML: SiHtml5,
+		CSS: SiCss3,
+		React: SiReact,
+		Redux: SiRedux,
+		TS: SiTypescript,
+		Storybook: SiStorybook,
+		Postgres: SiPostgresql,
+		Git: SiGithub,
+		Docker: SiDocker,
+	};
+	return <TechStack stack={binanceList} />;
+};
+export const TechThoughtMachine = () => {
+	const tmList = {
+		Python: SiPython,
+		Azure: SiAzuredevops,
+		Kafka: SiApachekafka,
+		Postgres: SiPostgresql,
+		MongoDB: SiMongodb,
+	};
+	return <TechStack stack={tmList} />;
+};
+
 export const TechTanso = () => {
 	const tansoList = {
 		Next: SiNextdotjs,
@@ -99,7 +123,7 @@ export const TechTanso = () => {
 
 export const TechDBS = () => {
 	const dbsList = {
-		Java: SiJava,
+		Java: FaJava,
 		Maven: SiApachemaven,
 		Jira: SiJira,
 		Github: SiGithub,
@@ -123,7 +147,7 @@ export const TechFintech = () => {
 
 export const TechTeach = () => {
 	const teachList = {
-		Java: SiJava,
+		Java: FaJava,
 		Python: SiPython,
 		Github: SiGithub,
 	};
@@ -133,7 +157,7 @@ export const TechTeach = () => {
 
 export const TechCurve = () => {
 	const curveList = {
-		Java: SiJava,
+		Java: FaJava,
 		Maven: SiApachemaven,
 		CSS: SiCss3,
 		PgSQL: SiPostgresql,
@@ -164,6 +188,7 @@ export const Databases = () => {
 		Heroku: SiHeroku,
 		IPFS: SiIpfs,
 		mongodb: SiMongodb,
+		Kafka: SiApachekafka,
 	};
 
 	return <TechStack stack={databaseList} />;
@@ -181,6 +206,7 @@ export const ToolsAndFramework = () => {
 		Vue: SiVuedotjs,
 		Flutter: SiFlutter,
 		Git: SiGithub,
+		Google: SiGooglecloud,
 	};
 
 	return <TechStack stack={frameworkList} />;
@@ -188,7 +214,7 @@ export const ToolsAndFramework = () => {
 
 export const ProficientLanguage = () => {
 	const languageList = {
-		Java: SiJava,
+		Java: FaJava,
 		JS: SiJavascript,
 		TS: SiTypescript,
 		Dart: SiDart,

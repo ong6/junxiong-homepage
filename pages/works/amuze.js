@@ -16,7 +16,7 @@ const Work = () => (
 	<Layout title="Amuze">
 		<Box>
 			<Title>
-				A-Muze <Badge>Dec 2021 - Present</Badge>
+				A-Muze <Badge>Dec 2021 - Jan 2022</Badge>
 			</Title>
 			<P>
 				First Runner-up at NUS Fintech Month Hackathon 2022 (10k Prize). Amuze

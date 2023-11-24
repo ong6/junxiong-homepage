@@ -7,7 +7,7 @@ import thumbMarkbind from "../../public/images/works/markbind_01.png";
 import thumbNusConnect from "../../public/images/works/nusconnect_03.png";
 import thumbSqueezy from "../../public/images/works/squeezy_01.png";
 
-export default function Projects() {
+export default function FeaturedProjects() {
 	return (
 		<>
 			<Heading as="h3" variant="section-title" fontSize={24}>

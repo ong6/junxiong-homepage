@@ -1,5 +1,6 @@
 import {
 	Box,
+	Divider,
 	Flex,
 	ListItem,
 	Spacer,
@@ -10,7 +11,7 @@ import React from "react";
 
 export default function ResumeDetail({ detail }) {
 	return (
-		<>
+		<div className="mb-2">
 			<Box
 				display="flex"
 				alignItems="center"
@@ -19,7 +20,7 @@ export default function ResumeDetail({ detail }) {
 				<Text fontSize={18} fontWeight="bold">
 					{detail.title}
 				</Text>
-				<Text fontSize={18} fontWeight="bold">
+				<Text fontSize={18} fontWeight="medium">
 					{detail.location}
 				</Text>
 			</Box>
@@ -32,16 +33,16 @@ export default function ResumeDetail({ detail }) {
 						mb={{ sm: 4, smmd: 1 }}>
 						<Text
 							fontSize={18}
-							fontWeight="semibold"
+							fontWeight="medium"
 							fontStyle="italic"
 							textAlign={{ sm: "center", smmd: "left" }}>
 							{role.subtitle}
 						</Text>
-						<Text fontSize={18} fontWeight="semibold">
+						<Text fontSize={18} fontWeight="medium">
 							{role.date}
 						</Text>
 					</Flex>
-					<UnorderedList pl={8} fontSize={18} fontWeight="medium" mb={2}>
+					<UnorderedList pl={8} fontSize={18} fontWeight="thin" mb={2}>
 						{role.description.map((description, index) => (
 							<ListItem key={index}>{description}</ListItem>
 						))}
@@ -50,6 +51,7 @@ export default function ResumeDetail({ detail }) {
 			))}
 			<Spacer pb={2} />
 			{detail.tech}
-		</>
+			<Divider />
+		</div>
 	);
 }

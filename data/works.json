@@ -1,0 +1,32 @@
+{
+	"passionProjects": [
+		{
+			"id": "nusconnect",
+			"title": "NUSConnect",
+			"thumbnail": "path/to/thumbNusConnect",
+			"description": "A gamified learning management system that is accessible to all and easy to use"
+		},
+		{
+			"id": "imposter",
+			"title": "imPoster",
+			"thumbnail": "path/to/thumbImposter",
+			"description": "API testing tool built for CLI lovers"
+		}
+		// Add more projects here
+	],
+	"hackathonsWon": [
+		{
+			"id": "amuze",
+			"title": "Amuze (1st Runner Up)",
+			"thumbnail": "path/to/thumbAmuze",
+			"description": "The NFT museum for collectors rent, mint and earn!"
+		}
+		// Add more hackathon projects here
+	],
+	"designProjects": [
+		// Add design projects here
+	],
+	"openSourceContributions": [
+		// Add open source contributions here
+	]
+}

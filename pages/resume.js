@@ -6,7 +6,7 @@ import {
 	ToolsAndFramework,
 } from "../components/Resume/Icons";
 import Education from "../components/Resume/Education";
-import Projects from "../components/Resume/Projects";
+import FeaturedProjects from "../components/Resume/FeaturedProjects";
 import WorkExperience from "../components/Resume/WorkExperience";
 import Section from "../components/Section";
 import Extracurricular from "../components/Resume/Extracurricular";
@@ -27,7 +27,7 @@ const Works = () => (
 				<Extracurricular />
 			</Section>
 			<Section delay={0.9}>
-				<Projects />
+				<FeaturedProjects />
 			</Section>
 		</Box>
 	</Layout>

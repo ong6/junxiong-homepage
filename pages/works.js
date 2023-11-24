@@ -2,6 +2,8 @@ import { Box, Divider, Heading, SimpleGrid } from "@chakra-ui/react";
 import { WorkGridItem } from "../components/GridItem";
 import Layout from "../components/layouts/Articles";
 import Section from "../components/Section";
+
+// Importing thumbnails
 import thumbAbcdao from "../public/images/works/abcdao_01.png";
 import thumbAmuze from "../public/images/works/amuze_01.png";
 import thumbContractMe from "../public/images/works/contractme_01.png";
@@ -11,9 +13,128 @@ import thumbImposter from "../public/images/works/imposter_01.png";
 import thumbMarkbind from "../public/images/works/markbind_01.png";
 import thumbNusConnect from "../public/images/works/nusconnect_03.png";
 import thumbSqueezy from "../public/images/works/squeezy_01.png";
+import thumbMarkup from "../public/images/works/markup_01.png";
+import thumbVitalvision from "../public/images/works/vitalvision_01.png";
+import thumbCodeParty from "../public/images/works/codeparty_01.png";
 
-// import thumbHandsfree from "../public/images/works/handsfree_02.png";
-// import thumbDexDao from "../public/images/works/dexdao_01.png";
+const passionProjects = [
+	{
+		id: "codeparty",
+		title: "CodeParty",
+		thumbnail: thumbCodeParty,
+		description:
+			"A leetcode clone built for CS3219 with the aim of helping students to prepare for technical interviews",
+		delay: 0.1,
+		backgroundColor: "white",
+		padding: "1rem",
+	},
+	{
+		id: "nusconnect",
+		title: "NUSConnect",
+		thumbnail: thumbNusConnect,
+		description:
+			"A gamified learning management system that is accessible to all and easy to use",
+		delay: 0.1,
+	},
+	{
+		id: "imposter",
+		title: "imPoster",
+		thumbnail: thumbImposter,
+		description: "API testing tool built for CLI lovers",
+		delay: 0.1,
+	},
+	{
+		id: "fintechwebsite",
+		title: "NUS Fintech Website",
+		thumbnail: thumbFintechWebsite,
+		description:
+			"A website built for NUS Fintech Society to showcase its projects and events",
+		delay: 0.1,
+	},
+	{
+		id: "abcdao",
+		title: "ABCDao",
+		thumbnail: thumbAbcdao,
+		description:
+			"A decentralized autonomous organization that aims to provide a way for NUS fintech society members to vote on topics",
+		delay: 0.1,
+	},
+];
+
+const hackathonsWon = [
+	{
+		id: "vitalvision",
+		title: "Vital Vision (2nd Runner Up)",
+		thumbnail: thumbVitalvision,
+		description: "Gamify stroke rehabilitation with VR!",
+		delay: 0.5,
+		backgroundColor: "white",
+	},
+	{
+		id: "markup",
+		title: "Markup (2nd Runner Up)",
+		thumbnail: thumbMarkup,
+		description: "Mark smart, with Markup!",
+		delay: 0.5,
+		backgroundColor: "white",
+	},
+	{
+		id: "amuze",
+		title: "Amuze (1st Runner Up)",
+		thumbnail: thumbAmuze,
+		description: "The NFT museum for collectors rent, mint and earn!",
+		delay: 0.5,
+	},
+	{
+		id: "squeezy",
+		title: "Project Squeezy (1st Runner Up)",
+		thumbnail: thumbSqueezy,
+		description: "Squeeze your stress away with this smart Stress-Ball!",
+		delay: 0.5,
+	},
+];
+
+const designProjects = [
+	{
+		id: "covalent",
+		title: "Covalent",
+		thumbnail: thumbCovalent,
+		description: "A social media dashboard for video producers",
+		delay: 0.6,
+	},
+	{
+		id: "contractme",
+		title: "ContractMe!",
+		thumbnail: thumbContractMe,
+		description: "Hiring contractors has never been so easy!",
+		delay: 0.6,
+	},
+];
+
+const openSourceContributions = [
+	{
+		id: "markbind",
+		title: "Markbind",
+		thumbnail: thumbMarkbind,
+		description:
+			"A tool for generating static websites from Markdown-like syntax.",
+		delay: 0.9,
+	},
+];
+
+const renderProjects = (projects) =>
+	projects.map((project) => (
+		<Section delay={project.delay} key={project.id}>
+			<WorkGridItem
+				id={project.id}
+				title={project.title}
+				thumbnail={project.thumbnail}
+				backgroundColor={project.backgroundColor}
+				padding={project.padding}>
+				{project.description}
+			</WorkGridItem>
+		</Section>
+	));
 
 const Works = () => (
 	<Layout title="Works">
@@ -21,122 +142,32 @@ const Works = () => (
 			<Heading as="h3" fontSize={20} mb={4}>
 				Passion Projects
 			</Heading>
-			<SimpleGrid columns={[1, 1, 2]} gap={6}>
-				<Section delay={0.1}>
-					<WorkGridItem
-						id="nusconnect"
-						title="NUSConnect"
-						thumbnail={thumbNusConnect}>
-						A gamified learning management system that is accessible to all and
-						easy to use
-					</WorkGridItem>
-				</Section>
-				{/* <Section delay={0.1}>
-					<WorkGridItem id="dexdao" title="The DEX DAO" thumbnail={thumbDexDao}>
-						A DAO with the goal of unifying the L2 DEX community
-					</WorkGridItem>
-				</Section> */}
-				<Section delay={0.1}>
-					<WorkGridItem
-						id="imposter"
-						title="imPoster"
-						thumbnail={thumbImposter}>
-						API testing tool built for CLI lovers
-					</WorkGridItem>
-				</Section>
-				<Section delay={0.1}>
-					<WorkGridItem
-						id="fintechwebsite"
-						title="NUS Fintech Website"
-						thumbnail={thumbFintechWebsite}>
-						A website built for NUS Fintech Society to showcase its projects and
-						events
-					</WorkGridItem>
-				</Section>
-				<Section delay={0.1}>
-					<WorkGridItem id="abcdao" thumbnail={thumbAbcdao} title="ABCDao">
-						A decentralized autonomous organization that aims to provide a way
-						for NUS fintech society members to vote on topics
-					</WorkGridItem>
-				</Section>
+			<SimpleGrid columns={[1, 1, 1, 2]} gap={6}>
+				{renderProjects(passionProjects)}
 			</SimpleGrid>
 
-			<Section delay={0.3}>
-				<Divider my={6} />
-				<Heading as="h3" fontSize={20} mb={4}>
-					Hackathons Won
-				</Heading>
-			</Section>
-
-			<SimpleGrid columns={[1, 1, 2]} gap={6}>
-				<Section delay={0.5}>
-					<WorkGridItem
-						id="amuze"
-						title="Amuze (1st Runner Up)"
-						thumbnail={thumbAmuze}>
-						The NFT museum for collectors rent, mint and earn!
-					</WorkGridItem>
-				</Section>
-				<Section delay={0.5}>
-					<WorkGridItem
-						id="squeezy"
-						thumbnail={thumbSqueezy}
-						title="Project Squeezy (1st Runner Up)">
-						Squeeze your stress away with this smart Stress-Ball!
-					</WorkGridItem>
-				</Section>
-				{/* <Section delay={0.5}>
-					<WorkGridItem
-						id="youtubehandsfree"
-						thumbnail={thumbHandsfree}
-						title="Youtube-Handsfree (Participation)">
-						A AR Tool for watching youtube Handsfree!
-					</WorkGridItem>
-				</Section> */}
+			<Divider my={6} />
+			<Heading as="h3" fontSize={20} mb={4}>
+				Hackathons Won
+			</Heading>
+			<SimpleGrid columns={[1, 1, 1, 2]} gap={6}>
+				{renderProjects(hackathonsWon)}
 			</SimpleGrid>
 
-			<Section delay={0.6}>
-				<Divider my={6} />
-				<Heading as="h3" fontSize={20} mb={4}>
-					Design Projects
-				</Heading>
-			</Section>
-
-			<SimpleGrid columns={[1, 1, 2]} gap={6}>
-				<Section delay={0.6}>
-					<WorkGridItem
-						id="covalent"
-						title="Covalent"
-						thumbnail={thumbCovalent}>
-						A social media dashboard for video producers
-					</WorkGridItem>
-				</Section>
-				<Section delay={0.6}>
-					<WorkGridItem
-						id="contractme"
-						thumbnail={thumbContractMe}
-						title="ContractMe!">
-						Hiring contractors has never been so easy!
-					</WorkGridItem>
-				</Section>
+			<Divider my={6} />
+			<Heading as="h3" fontSize={20} mb={4}>
+				Design Projects
+			</Heading>
+			<SimpleGrid columns={[1, 1, 1, 2]} gap={6}>
+				{renderProjects(designProjects)}
 			</SimpleGrid>
 
-			<Section delay={0.7}>
-				<Divider my={6} />
-				<Heading as="h3" fontSize={20} mb={4}>
-					Open Source Contributions
-				</Heading>
-			</Section>
-
-			<SimpleGrid columns={[1, 1, 2]} gap={6}>
-				<Section delay={0.9}>
-					<WorkGridItem
-						id="markbind"
-						thumbnail={thumbMarkbind}
-						title="Markbind">
-						A tool for generating static websites from Markdown-like syntax.
-					</WorkGridItem>
-				</Section>
+			<Divider my={6} />
+			<Heading as="h3" fontSize={20} mb={4}>
+				Open Source Contributions
+			</Heading>
+			<SimpleGrid columns={[1, 1, 1, 2]} gap={6}>
+				{renderProjects(openSourceContributions)}
 			</SimpleGrid>
 		</Box>
 	</Layout>

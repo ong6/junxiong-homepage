@@ -16,7 +16,7 @@ const Work = () => (
 	<Layout title="Markbind">
 		<Box>
 			<Title>
-				Markbind (Contributor) <Badge>Aug 2021 - Present</Badge>
+				Markbind (Contributor) <Badge>Aug 2021 - Aug 2023</Badge>
 			</Title>
 			<P>
 				A tool for generating static websites from Markdown-like syntax.

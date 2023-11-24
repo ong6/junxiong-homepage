@@ -21,18 +21,19 @@ import { IoLogoGithub } from "react-icons/io5";
 const LinkItem = ({ href, path, _target, children, ...props }) => {
 	const active = path === href;
 	const inactiveColor = useColorModeValue("gray200", "whiteAlpha.900");
+	const activeColor = useColorModeValue("#6b46c1", "#f6ad55");
 
 	return (
 		<NextLink href={href} passHref>
 			<Link
 				p={2}
 				px={4}
-				fontFamily="heading"
 				fontWeight="medium"
 				fontSize="lg"
-				bg={active ? "#123C69" : undefined}
-				color={active ? "#EEE2DC" : inactiveColor}
+				textDecoration={active ? "underline" : "none"}
+				color={active ? activeColor : inactiveColor}
 				_hover={{ color: "#AC3B61" }}
+				_focus={{ outline: "none" }}
 				_target={_target}
 				{...props}>
 				{children}
