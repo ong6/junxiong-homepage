@@ -25,7 +25,7 @@ const Work = () => (
 				frequently updated exam questions on demand, while instantly grading
 				student responses. This makes quality assessment resources accessible to
 				all students regardless of their school and background. By replacing
-				manual exam creation and paper-based submissions, we save teachers' time
+				manual exam creation and paper-based submissions, we save teachers time
 				and provide data-driven insights into student performance.
 			</P>
 			<List ml={4} my={4}>
