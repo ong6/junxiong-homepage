@@ -55,10 +55,6 @@ const Navbar = (props) => {
 			name: "Works",
 		},
 		{
-			href: "/blog",
-			name: "Blog",
-		},
-		{
 			href: "/hobbies",
 			name: "Hobbies",
 		},
