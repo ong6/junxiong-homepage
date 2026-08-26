@@ -111,6 +111,10 @@ const printStyles = css`
 		#resume-print-root hr {
 			border-color: #aaa !important;
 		}
+		#resume-print-root h1,
+		#resume-print-root h3 {
+			text-decoration-color: #000 !important;
+		}
 
 		/* Keep an individual role/detail block on one page. */
 		#resume-print-root .mb-2,
