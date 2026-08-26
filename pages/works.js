@@ -1,4 +1,4 @@
-import { Box, Divider, Heading, SimpleGrid } from "@chakra-ui/react";
+import { Box, Divider, Heading, SimpleGrid, Text } from "@chakra-ui/react";
 import { WorkGridItem } from "../components/GridItem";
 import Layout from "../components/layouts/Articles";
 import Section from "../components/Section";
@@ -137,8 +137,16 @@ const renderProjects = (projects) =>
 	));
 
 const Works = () => (
-	<Layout title="Works">
+	<Layout title="University Projects">
 		<Box>
+			<Heading as="h3" variant="section-title" fontSize={24}>
+				University Projects (2020 – 2023)
+			</Heading>
+			<Text mb={6} opacity={0.8}>
+				An archive from my NUS years — hackathons, coursework and student
+				society work. I keep it here for the memories; what I build these days
+				lives on my resume and GitHub.
+			</Text>
 			<Heading as="h3" fontSize={20} mb={4}>
 				Passion Projects
 			</Heading>

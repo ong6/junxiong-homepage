@@ -52,7 +52,7 @@ export default function Home() {
 
 				<Section delay={0.3}>
 					<Heading as="h3" variant="section-title">
-						Recent Works
+						From my university days
 					</Heading>
 					<SimpleGrid columns={[1, 2, 3]} gap={6}>
 						<WorkGridItem
@@ -79,8 +79,9 @@ export default function Home() {
 							as={NextLink}
 							href="/works"
 							rightIcon={<ChevronRightIcon />}
+							variant="outline"
 							colorScheme="teal">
-							All Works
+							University project archive
 						</Button>
 					</Box>
 				</Section>

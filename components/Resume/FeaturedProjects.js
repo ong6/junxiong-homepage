@@ -11,7 +11,7 @@ export default function FeaturedProjects() {
 	return (
 		<>
 			<Heading as="h3" variant="section-title" fontSize={24}>
-				Projects
+				University Projects
 			</Heading>
 			<SimpleGrid columns={[1, 2, 3]} gap={6}>
 				<WorkGridItem

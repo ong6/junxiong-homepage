@@ -52,7 +52,7 @@ const Navbar = (props) => {
 		},
 		{
 			href: "/works",
-			name: "Works",
+			name: "Uni Projects",
 		},
 		{
 			href: "/hobbies",
