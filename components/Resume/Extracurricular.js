@@ -1,4 +1,5 @@
-import { Box, Heading, Link } from "@chakra-ui/react";
+import { Box, Link } from "@chakra-ui/react";
+import TermHeading from "../TermHeading";
 import React from "react";
 import { TechFintech } from "./Icons";
 import ResumeDetail from "./ResumeDetail";
@@ -23,9 +24,9 @@ const extracurricular = [
 				description: [
 					<>
 						Developed and designed a{" "}
-						<NextLink href={"/works/abcdao"}>
-							<Link>Decentralized Autonomous Organization (DAO)</Link>
-						</NextLink>
+						<Link as={NextLink} href="/works/abcdao">
+							Decentralized Autonomous Organization (DAO)
+						</Link>
 						, to serve more than 200 fintech society members.
 					</>,
 				],
@@ -55,9 +56,7 @@ const extracurricular = [
 export default function Extracurricular() {
 	return (
 		<Box mb={8}>
-			<Heading as="h3" variant="section-title" fontSize={24}>
-				Extracurricular Activities
-			</Heading>
+			<TermHeading>extracurricular</TermHeading>
 			{extracurricular.map((detail, index) => (
 				<ResumeDetail key={index} detail={detail} />
 			))}

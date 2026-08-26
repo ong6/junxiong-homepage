@@ -3,15 +3,12 @@ import {
 	Button,
 	Container,
 	Flex,
-	Heading,
 	Icon,
 	Link,
 	List,
 	ListItem,
 	Text,
-	useColorModeValue,
 } from "@chakra-ui/react";
-import { Global, css } from "@emotion/react";
 import NextLink from "next/link";
 import { AiTwotoneMail } from "react-icons/ai";
 import { IoLogoGithub, IoLogoLinkedin } from "react-icons/io5";
@@ -19,111 +16,7 @@ import Layout from "../components/layouts/Articles";
 import Paragraph from "../components/Paragraph";
 import Section from "../components/Section";
 import TerminalHero from "../components/TerminalHero";
-import Education from "../components/Resume/Education";
-import Extracurricular from "../components/Resume/Extracurricular";
-import PrintButton from "../components/Resume/PrintButton";
-import PrintHeader from "../components/Resume/PrintHeader";
-import WorkExperience from "../components/Resume/WorkExperience";
-
-const printStyles = css`
-	.print-only {
-		display: none;
-	}
-
-	@media print {
-		@page {
-			margin: 1.5cm;
-		}
-
-		/* Kill animations everywhere — framer-motion leaves inline
-		   opacity/transform that would hide content in print. */
-		* {
-			opacity: 1 !important;
-			transform: none !important;
-			animation: none !important;
-			transition: none !important;
-			box-shadow: none !important;
-			text-shadow: none !important;
-		}
-
-		/* Layout-owned chrome: fixed navbar (with theme toggle), and the
-		   intro/avatar + footer, which are the Container's non-article
-		   children inside the Main layout. */
-		nav {
-			display: none !important;
-		}
-		main > div > *:not(article) {
-			display: none !important;
-		}
-
-		/* Screen-only sections. */
-		.print-hide {
-			display: none !important;
-		}
-		/* Per-job tech icon rows inside resume details. */
-		#resume-print-root .flex-wrap {
-			display: none !important;
-		}
-
-		/* The full-CV block, hidden on screen. */
-		.print-only {
-			display: block !important;
-		}
-
-		/* Clean page: white background, black text (Chakra sets color-mode
-		   backgrounds via CSS vars on body — override them too). */
-		html,
-		body {
-			background: #fff !important;
-			--chakra-colors-chakra-body-bg: #fff;
-			--chakra-colors-chakra-body-text: #000;
-		}
-		body,
-		#resume-print-root,
-		#resume-print-root * {
-			background: transparent !important;
-			color: #000 !important;
-			font-family: Georgia, "Times New Roman", Times, serif;
-		}
-		body {
-			background: #fff !important;
-		}
-
-		/* Typography. */
-		#resume-print-root {
-			font-size: 11pt;
-		}
-		#resume-print-root p,
-		#resume-print-root li {
-			font-size: 11pt !important;
-			line-height: 1.4 !important;
-		}
-		#resume-print-root h1 {
-			font-size: 16pt !important;
-		}
-		#resume-print-root h3 {
-			font-size: 13pt !important;
-		}
-		#resume-print-root a {
-			color: #000 !important;
-			text-decoration: none !important;
-		}
-		#resume-print-root hr {
-			border-color: #aaa !important;
-		}
-		#resume-print-root h1,
-		#resume-print-root h3 {
-			text-decoration-color: #000 !important;
-		}
-
-		/* Keep an individual role/detail block on one page. */
-		#resume-print-root .mb-2,
-		#resume-print-root .mb-2 > div {
-			break-inside: avoid;
-			page-break-inside: avoid;
-		}
-	}
-`;
+import TermHeading from "../components/TermHeading";
 
 const experience = [
 	{
@@ -147,62 +40,57 @@ const experience = [
 ];
 
 const skills = [
-	{ label: "Languages", items: "Go · TypeScript · Python · Java · SQL" },
+	{
+		label: "Languages",
+		items: "Go · TypeScript · JavaScript · Python · Java · SQL · Bash",
+	},
 	{
 		label: "Backend",
-		items: "gRPC · Kafka · Redis · MySQL · ClickHouse · microservices",
+		items: "gRPC · Kafka · Redis · Node.js · Spring Boot · REST · microservices",
+	},
+	{
+		label: "Data",
+		items: "MySQL · PostgreSQL · MongoDB · ClickHouse · Hive · Spark · OLAP · ETL",
 	},
 	{
 		label: "AI systems",
-		items: "MCP · A2A · LangGraph · RAG · agentic workflows",
+		items:
+			"MCP · A2A · LangGraph · LlamaIndex · RAG · prompt engineering · agentic workflows",
 	},
 	{
-		label: "Frontend & infra",
-		items: "React · Next.js · Docker · Kubernetes · AWS · CI/CD",
+		label: "Frontend",
+		items: "React · Next.js · Vue · Redux · Tailwind",
+	},
+	{
+		label: "Infra",
+		items: "Docker · Kubernetes · AWS · Linux · Jenkins · CI/CD · Git",
 	},
 ];
-
-const TermHeading = ({ children }) => (
-	<Heading
-		as="h3"
-		fontFamily="'JetBrains Mono', monospace"
-		fontSize={18}
-		mt={3}
-		mb={4}>
-		<Box
-			as="span"
-			color={useColorModeValue("teal.600", "#8be9b6")}
-			fontWeight={700}>
-			:/${" "}
-		</Box>
-		{children}
-	</Heading>
-);
 
 export default function Home() {
 	return (
 		<Layout>
-			<Container maxW="full" id="resume-print-root">
-				<Global styles={printStyles} />
-
-				<Box className="print-hide">
+			<Container maxW="full">
+				<Box>
 					<TerminalHero />
 					<Section delay={0.1}>
 						<TermHeading>about</TermHeading>
 						<Paragraph>
-							I&apos;m a software engineer at TikTok in Singapore, building AI
-							infrastructure for Global E-commerce — agent runtimes, MCP
-							tooling and Go/gRPC services used across the org. In 2025 I
-							founded Compoze, an AI solutions company that was acquired by one
-							of its clients. Off the clock I climb, trade with a written
-							playbook, and over-engineer my personal tooling.
+							I write Go and TypeScript at TikTok in Singapore, on the team
+							that builds AI infrastructure for Global E-commerce. My job is
+							the plumbing: the agent runtime, the tool servers, and the SDK
+							that other engineers ship on. Last year I also ran Compoze, a
+							one-person AI shop, until one of its clients bought it. Evenings
+							usually mean a climbing wall or my trading journal.
 						</Paragraph>
 					</Section>
 
 					<Section delay={0.2}>
 						<Flex justify="space-between" align="baseline">
 							<TermHeading>experience</TermHeading>
-							<PrintButton />
+							<Link as={NextLink} href="/resume" fontSize={15}>
+								full resume →
+							</Link>
 						</Flex>
 						{experience.map((row) => (
 							<Flex key={row.title} gap={4} py={3} borderBottomWidth="1px">
@@ -315,14 +203,6 @@ export default function Home() {
 							</ListItem>
 						</List>
 					</Section>
-				</Box>
-
-				{/* Full CV, print only — the on-screen page stays compact. */}
-				<Box className="print-only">
-					<PrintHeader />
-					<Education />
-					<WorkExperience />
-					<Extracurricular />
 				</Box>
 			</Container>
 		</Layout>

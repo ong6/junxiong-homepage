@@ -1,4 +1,11 @@
-import { Box, Divider, Heading, SimpleGrid, Text } from "@chakra-ui/react";
+import {
+	Box,
+	Divider,
+	Heading,
+	SimpleGrid,
+	Text,
+	useColorModeValue,
+} from "@chakra-ui/react";
 import { WorkGridItem } from "../components/GridItem";
 import Intro from "../components/Intro";
 import Layout from "../components/layouts/Articles";
@@ -123,6 +130,41 @@ const openSourceContributions = [
 	},
 ];
 
+const TermHeading = ({ children, suffix }) => (
+	<Heading
+		as="h3"
+		fontFamily="'JetBrains Mono', monospace"
+		fontSize={18}
+		mt={3}
+		mb={4}>
+		<Box
+			as="span"
+			color={useColorModeValue("teal.600", "#8be9b6")}
+			fontWeight={700}>
+			:/${" "}
+		</Box>
+		{children}
+		{suffix && (
+			<Box as="span" opacity={0.5} fontWeight={400}>
+				{" "}
+				{suffix}
+			</Box>
+		)}
+	</Heading>
+);
+
+const GroupHeading = ({ children }) => (
+	<Heading
+		as="h4"
+		fontFamily="'JetBrains Mono', monospace"
+		fontSize={15}
+		fontWeight={500}
+		opacity={0.6}
+		mb={4}>
+		{`:/$ ls ${children}`}
+	</Heading>
+);
+
 const renderProjects = (projects) =>
 	projects.map((project) => (
 		<Section delay={project.delay} key={project.id}>
@@ -141,41 +183,31 @@ const Works = () => (
 	<Layout title="University Projects">
 		<Box>
 			<Intro />
-			<Heading as="h3" variant="section-title" fontSize={24}>
-				University Projects (2020 – 2023)
-			</Heading>
+			<TermHeading suffix="(2020 – 2023)">university-archive</TermHeading>
 			<Text mb={6} opacity={0.8}>
 				An archive from my NUS years — hackathons, coursework and student
 				society work. I keep it here for the memories; what I build these days
 				lives on my resume and GitHub.
 			</Text>
-			<Heading as="h3" fontSize={20} mb={4}>
-				Passion Projects
-			</Heading>
+			<GroupHeading>passion-projects/</GroupHeading>
 			<SimpleGrid columns={[1, 1, 1, 2]} gap={6}>
 				{renderProjects(passionProjects)}
 			</SimpleGrid>
 
 			<Divider my={6} />
-			<Heading as="h3" fontSize={20} mb={4}>
-				Hackathons Won
-			</Heading>
+			<GroupHeading>hackathons-won/</GroupHeading>
 			<SimpleGrid columns={[1, 1, 1, 2]} gap={6}>
 				{renderProjects(hackathonsWon)}
 			</SimpleGrid>
 
 			<Divider my={6} />
-			<Heading as="h3" fontSize={20} mb={4}>
-				Design Projects
-			</Heading>
+			<GroupHeading>design-projects/</GroupHeading>
 			<SimpleGrid columns={[1, 1, 1, 2]} gap={6}>
 				{renderProjects(designProjects)}
 			</SimpleGrid>
 
 			<Divider my={6} />
-			<Heading as="h3" fontSize={20} mb={4}>
-				Open Source Contributions
-			</Heading>
+			<GroupHeading>open-source/</GroupHeading>
 			<SimpleGrid columns={[1, 1, 1, 2]} gap={6}>
 				{renderProjects(openSourceContributions)}
 			</SimpleGrid>

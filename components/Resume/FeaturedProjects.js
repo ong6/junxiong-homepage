@@ -1,5 +1,6 @@
 import { ChevronRightIcon } from "@chakra-ui/icons";
-import { Box, Button, Heading, SimpleGrid } from "@chakra-ui/react";
+import { Box, Button, SimpleGrid } from "@chakra-ui/react";
+import TermHeading from "../TermHeading";
 import React from "react";
 import NextLink from "next/link";
 import { WorkGridItem } from "../GridItem";
@@ -10,9 +11,7 @@ import thumbSqueezy from "../../public/images/works/squeezy_01.png";
 export default function FeaturedProjects() {
 	return (
 		<>
-			<Heading as="h3" variant="section-title" fontSize={24}>
-				University Projects
-			</Heading>
+			<TermHeading>projects</TermHeading>
 			<SimpleGrid columns={[1, 2, 3]} gap={6}>
 				<WorkGridItem
 					id="squeezy"

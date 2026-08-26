@@ -1,4 +1,5 @@
-import { Box, Heading, ListItem, Text, UnorderedList } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
+import TermHeading from "../TermHeading";
 import React from "react";
 import { TechFintech } from "./Icons";
 import ResumeDetail from "./ResumeDetail";
@@ -36,9 +37,7 @@ const EducationDetails = [
 export default function Education() {
 	return (
 		<Box mb={8}>
-			<Heading as="h3" variant="section-title" fontSize={24}>
-				Education
-			</Heading>
+			<TermHeading>education</TermHeading>
 			{EducationDetails.map((detail, index) => (
 				<ResumeDetail key={index} detail={detail} />
 			))}

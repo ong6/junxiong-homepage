@@ -20,7 +20,11 @@ export default function ResumeDetail({ detail }) {
 				<Text fontSize={18} fontWeight="bold">
 					{detail.title}
 				</Text>
-				<Text fontSize={18} fontWeight="medium">
+				<Text
+					fontSize={15}
+					fontWeight="medium"
+					fontFamily="'JetBrains Mono', monospace"
+					opacity={0.6}>
 					{detail.location}
 				</Text>
 			</Box>
@@ -38,7 +42,11 @@ export default function ResumeDetail({ detail }) {
 							textAlign={{ sm: "center", smmd: "left" }}>
 							{role.subtitle}
 						</Text>
-						<Text fontSize={18} fontWeight="medium">
+						<Text
+							fontSize={15}
+							fontWeight="medium"
+							fontFamily="'JetBrains Mono', monospace"
+							opacity={0.6}>
 							{role.date}
 						</Text>
 					</Flex>

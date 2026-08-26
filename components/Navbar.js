@@ -47,6 +47,10 @@ const Navbar = (props) => {
 
 	const navigationLinks = [
 		{
+			href: "/resume",
+			name: "Resume",
+		},
+		{
 			href: "/hobbies",
 			name: "Hobbies",
 		},

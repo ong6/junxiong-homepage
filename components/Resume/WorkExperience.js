@@ -1,4 +1,5 @@
-import { Box, Heading, Link } from "@chakra-ui/react";
+import { Box, Link } from "@chakra-ui/react";
+import TermHeading from "../TermHeading";
 import React from "react";
 import {
 	TechBinance,
@@ -187,9 +188,7 @@ const WorkDetails = [
 export default function WorkExperience() {
 	return (
 		<Box mb={4}>
-			<Heading as="h3" variant="section-title" fontSize={24}>
-				Experience
-			</Heading>
+			<TermHeading>experience</TermHeading>
 			{WorkDetails.map((detail, index) => (
 				<ResumeDetail key={index} detail={detail} />
 			))}
