@@ -5,9 +5,9 @@ import {
 	SiApachehive,
 	SiApachekafka,
 	SiApachemaven,
-	SiAzuredevops,
+	
 	SiClickhouse,
-	SiCss3,
+	SiCss,
 	SiDart,
 	SiDocker,
 	SiFastapi,
@@ -40,6 +40,7 @@ import {
 	SiVuedotjs,
 } from "react-icons/si";
 import { FaJava, FaAws } from "react-icons/fa";
+import { VscAzureDevops } from "react-icons/vsc";
 import { TbBrandOpenai } from "react-icons/tb";
 
 export const ResumeLogo = ({ children, title, thumbnail, small = false }) => (
@@ -115,7 +116,7 @@ export const TechCompoze = () => {
 export const TechBinance = () => {
 	const binanceList = {
 		HTML: SiHtml5,
-		CSS: SiCss3,
+		CSS: SiCss,
 		React: SiReact,
 		Redux: SiRedux,
 		TS: SiTypescript,
@@ -129,7 +130,7 @@ export const TechBinance = () => {
 export const TechThoughtMachine = () => {
 	const tmList = {
 		Python: SiPython,
-		Azure: SiAzuredevops,
+		Azure: VscAzureDevops,
 		Kafka: SiApachekafka,
 		Postgres: SiPostgresql,
 		MongoDB: SiMongodb,
@@ -143,7 +144,7 @@ export const TechTanso = () => {
 		TS: SiTypescript,
 		Prisma: SiPrisma,
 		Storybook: SiStorybook,
-		Azure: SiAzuredevops,
+		Azure: VscAzureDevops,
 		Postgres: SiPostgresql,
 		Git: SiGithub,
 		Docker: SiDocker,
@@ -179,7 +180,7 @@ export const TechCurve = () => {
 	const curveList = {
 		Java: FaJava,
 		Maven: SiApachemaven,
-		CSS: SiCss3,
+		CSS: SiCss,
 		PgSQL: SiPostgresql,
 		Github: SiGithub,
 	};
