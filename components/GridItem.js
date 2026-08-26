@@ -30,46 +30,41 @@ export const WorkGridItem = ({
 	padding = "0rem",
 }) => (
 	<Box w="100%" textAlign="center">
-		<NextLink href={`/works/${id}`} passHref>
-			<LinkBox cursor="pointer">
-				<Box
-					position="relative"
-					w="100%"
-					h="0"
-					paddingBottom="56.25%" // 16:9 Aspect Ratio
-					backgroundColor={backgroundColor}
-					display="flex"
-					justifyContent="center"
-					alignItems="center"
-					rounded="2xl"
-					overflow="hidden">
-					<div
-						style={{
-							position: "absolute",
-							top: 0,
-							left: 0,
-							bottom: 0,
-							right: 0,
-							padding: padding,
-						}}>
-						<Image
-							src={thumbnail}
-							alt={title}
-							layout="responsive"
-							width={16}
-							height={9}
-							objectFit="contain" // Use contain to see full image without crop
-						/>
-					</div>
-				</Box>
-				<LinkOverlay href={`/works/${id}`}>
-					<Text mt={2} fontSize={20}>
-						{title}
-					</Text>
-				</LinkOverlay>
-				<Text fontSize={14}>{children}</Text>
-			</LinkBox>
-		</NextLink>
+		<LinkBox cursor="pointer">
+			<Box
+				position="relative"
+				w="100%"
+				h="0"
+				paddingBottom="56.25%" // 16:9 Aspect Ratio
+				backgroundColor={backgroundColor}
+				display="flex"
+				justifyContent="center"
+				alignItems="center"
+				rounded="2xl"
+				overflow="hidden">
+				<div
+					style={{
+						position: "absolute",
+						top: 0,
+						left: 0,
+						bottom: 0,
+						right: 0,
+					}}>
+					<Image
+						src={thumbnail}
+						alt={title}
+						fill
+						style={{ objectFit: "contain", padding: padding }}
+					/>
+				</div>
+			</Box>
+			<LinkOverlay as={NextLink} href={`/works/${id}`}>
+				<Text mt={2} fontSize={20}>
+					{title}
+				</Text>
+			</LinkOverlay>
+			<Text fontSize={14}>{children}</Text>
+		</LinkBox>
 	</Box>
 );
 

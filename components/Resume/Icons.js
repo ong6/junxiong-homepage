@@ -2,43 +2,45 @@ import { Icon } from "@chakra-ui/icons";
 import { Box, Text } from "@chakra-ui/react";
 import React from "react";
 import {
-	SiAndroid,
+	SiApachehive,
 	SiApachekafka,
 	SiApachemaven,
 	SiAzuredevops,
-	SiCplusplus,
+	SiClickhouse,
 	SiCss3,
 	SiDart,
-	SiDjango,
 	SiDocker,
-	SiFirebase,
-	SiFlask,
+	SiFastapi,
 	SiFlutter,
 	SiGithub,
 	SiGnubash,
+	SiGo,
 	SiGooglecloud,
-	SiHeroku,
 	SiHtml5,
 	SiIpfs,
 	SiJavascript,
 	SiJira,
+	SiKubernetes,
 	SiMongodb,
 	SiMysql,
 	SiNextdotjs,
+	SiNodedotjs,
 	SiPhpmyadmin,
 	SiPostgresql,
 	SiPrisma,
 	SiPython,
 	SiReact,
+	SiRedis,
 	SiRedux,
 	SiSolidity,
 	SiSpringboot,
 	SiStorybook,
+	SiTailwindcss,
 	SiTypescript,
-	SiVercel,
 	SiVuedotjs,
 } from "react-icons/si";
-import { FaJava } from "react-icons/fa";
+import { FaJava, FaAws } from "react-icons/fa";
+import { TbBrandOpenai } from "react-icons/tb";
 
 export const ResumeLogo = ({ children, title, thumbnail, small = false }) => (
 	<Box
@@ -81,6 +83,34 @@ export default function TechStack({ stack }) {
 		</Box>
 	);
 }
+
+export const TechTikTok = () => {
+	const tiktokList = {
+		Go: SiGo,
+		Python: SiPython,
+		TS: SiTypescript,
+		React: SiReact,
+		Kafka: SiApachekafka,
+		Redis: SiRedis,
+		MySQL: SiMysql,
+		Hive: SiApachehive,
+		ClickHouse: SiClickhouse,
+		K8s: SiKubernetes,
+	};
+	return <TechStack stack={tiktokList} />;
+};
+
+export const TechCompoze = () => {
+	const compozeList = {
+		Python: SiPython,
+		FastAPI: SiFastapi,
+		Next: SiNextdotjs,
+		TS: SiTypescript,
+		OpenAI: TbBrandOpenai,
+		Docker: SiDocker,
+	};
+	return <TechStack stack={compozeList} />;
+};
 
 export const TechBinance = () => {
 	const binanceList = {
@@ -145,16 +175,6 @@ export const TechFintech = () => {
 	return <TechStack stack={fintechList} />;
 };
 
-export const TechTeach = () => {
-	const teachList = {
-		Java: FaJava,
-		Python: SiPython,
-		Github: SiGithub,
-	};
-
-	return <TechStack stack={teachList} />;
-};
-
 export const TechCurve = () => {
 	const curveList = {
 		Java: FaJava,
@@ -181,14 +201,16 @@ export const TechMaha = () => {
 
 export const Databases = () => {
 	const databaseList = {
-		Docker: SiDocker,
-		PgSQL: SiPostgresql,
 		MySQL: SiMysql,
-		Firebase: SiFirebase,
-		Heroku: SiHeroku,
-		IPFS: SiIpfs,
-		mongodb: SiMongodb,
+		PgSQL: SiPostgresql,
+		MongoDB: SiMongodb,
+		Redis: SiRedis,
+		ClickHouse: SiClickhouse,
 		Kafka: SiApachekafka,
+		Docker: SiDocker,
+		K8s: SiKubernetes,
+		AWS: FaAws,
+		GCloud: SiGooglecloud,
 	};
 
 	return <TechStack stack={databaseList} />;
@@ -196,17 +218,16 @@ export const Databases = () => {
 
 export const ToolsAndFramework = () => {
 	const frameworkList = {
-		Flask: SiFlask,
-		Android: SiAndroid,
-		Django: SiDjango,
 		React: SiReact,
 		Next: SiNextdotjs,
+		Node: SiNodedotjs,
 		Redux: SiRedux,
-		Vercel: SiVercel,
 		Vue: SiVuedotjs,
-		Flutter: SiFlutter,
+		Tailwind: SiTailwindcss,
+		Spring: SiSpringboot,
+		FastAPI: SiFastapi,
+		"AI/LLM": TbBrandOpenai,
 		Git: SiGithub,
-		Google: SiGooglecloud,
 	};
 
 	return <TechStack stack={frameworkList} />;
@@ -214,16 +235,13 @@ export const ToolsAndFramework = () => {
 
 export const ProficientLanguage = () => {
 	const languageList = {
-		Java: FaJava,
-		JS: SiJavascript,
+		Go: SiGo,
 		TS: SiTypescript,
-		Dart: SiDart,
-		Bash: SiGnubash,
-		"C++": SiCplusplus,
-		CSS: SiCss3,
-		HTML: SiHtml5,
+		JS: SiJavascript,
 		Python: SiPython,
-		Solidity: SiSolidity,
+		Java: FaJava,
+		SQL: SiMysql,
+		Bash: SiGnubash,
 	};
 
 	return <TechStack stack={languageList} />;

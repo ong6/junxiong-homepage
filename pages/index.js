@@ -18,7 +18,6 @@ import Layout from "../components/layouts/Articles";
 import Paragraph from "../components/Paragraph";
 import Section from "../components/Section";
 import thumbMarkbind from "../public/images/works/markbind_01.png";
-import thumbNusConnect from "../public/images/works/nusconnect_03.png";
 import thumbSqueezy from "../public/images/works/squeezy_01.png";
 import thumbAmuze from "../public/images/works/amuze_01.png";
 
@@ -31,19 +30,23 @@ export default function Home() {
 						About me
 					</Heading>
 					<Paragraph>
-						Jun Xiong is a student at the National University of Singapore
-						majoring in Computer Science. He is a software developer with a
-						passion for building things that look and feel good. He enjoys
-						learning new technologies and has a knack for solving real life
-						problems with code. When he is not coding, he loves rock climbing,
-						reading and tinkering with computers.
+						Jun Xiong is a software engineer at TikTok in Singapore, where he
+						works on AI infrastructure and backend platforms for Global
+						E-commerce — building agent runtimes, MCP tooling and Go/gRPC
+						services used across the org. He graduated with Honours in Computer
+						Science from the National University of Singapore, and in 2025
+						founded Compoze, an AI solutions company that was acquired by one of
+						its clients. When he is not coding, he loves rock climbing, reading
+						and tinkering with computers.
 					</Paragraph>
 					<Box align="center" my={4}>
-						<NextLink href="/resume">
-							<Button rightIcon={<ChevronRightIcon />} colorScheme="teal">
-								My portfolio
-							</Button>
-						</NextLink>
+						<Button
+							as={NextLink}
+							href="/resume"
+							rightIcon={<ChevronRightIcon />}
+							colorScheme="teal">
+							My portfolio
+						</Button>
 					</Box>
 				</Section>
 
@@ -72,11 +75,13 @@ export default function Home() {
 						</WorkGridItem>
 					</SimpleGrid>
 					<Box align="center" my={4}>
-						<NextLink href="/works">
-							<Button rightIcon={<ChevronRightIcon />} colorScheme="teal">
-								All Works
-							</Button>
-						</NextLink>
+						<Button
+							as={NextLink}
+							href="/works"
+							rightIcon={<ChevronRightIcon />}
+							colorScheme="teal">
+							All Works
+						</Button>
 					</Box>
 				</Section>
 
@@ -85,8 +90,8 @@ export default function Home() {
 						I ♥
 					</Heading>
 					<Paragraph>
-						Rock Climbing, Volleyball, Travelling, Blockchain, Fintech, Trading
-						and Reading.
+						Rock Climbing, Volleyball, Travelling, AI, Fintech, Trading and
+						Reading.
 					</Paragraph>
 				</Section>
 

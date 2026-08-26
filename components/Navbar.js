@@ -24,21 +24,21 @@ const LinkItem = ({ href, path, _target, children, ...props }) => {
 	const activeColor = useColorModeValue("#6b46c1", "#f6ad55");
 
 	return (
-		<NextLink href={href} passHref>
-			<Link
-				p={2}
-				px={4}
-				fontWeight="medium"
-				fontSize="lg"
-				textDecoration={active ? "underline" : "none"}
-				color={active ? activeColor : inactiveColor}
-				_hover={{ color: "#AC3B61" }}
-				_focus={{ outline: "none" }}
-				_target={_target}
-				{...props}>
-				{children}
-			</Link>
-		</NextLink>
+		<Link
+			as={NextLink}
+			href={href}
+			p={2}
+			px={4}
+			fontWeight="medium"
+			fontSize="lg"
+			textDecoration={active ? "underline" : "none"}
+			color={active ? activeColor : inactiveColor}
+			_hover={{ color: "#AC3B61" }}
+			_focus={{ outline: "none" }}
+			target={_target}
+			{...props}>
+			{children}
+		</Link>
 	);
 };
 
@@ -53,6 +53,14 @@ const Navbar = (props) => {
 		{
 			href: "/works",
 			name: "Works",
+		},
+		{
+			href: "/blog",
+			name: "Blog",
+		},
+		{
+			href: "/hobbies",
+			name: "Hobbies",
 		},
 	];
 
@@ -115,9 +123,9 @@ const Navbar = (props) => {
 							/>
 							<MenuList>
 								{navigationLinks.map((link) => (
-									<NextLink href={link.href} path={path} key={link.name}>
-										<MenuItem as={Link}>{link.name}</MenuItem>
-									</NextLink>
+									<MenuItem as={NextLink} href={link.href} key={link.name}>
+										{link.name}
+									</MenuItem>
 								))}
 								<MenuItem
 									as={Link}

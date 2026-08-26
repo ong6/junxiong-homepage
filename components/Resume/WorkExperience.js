@@ -2,15 +2,64 @@ import { Box, Heading, Link } from "@chakra-ui/react";
 import React from "react";
 import {
 	TechBinance,
+	TechCompoze,
 	TechCurve,
 	TechDBS,
 	TechMaha,
 	TechTanso,
 	TechThoughtMachine,
+	TechTikTok,
 } from "./Icons";
 import ResumeDetail from "./ResumeDetail";
 
 const WorkDetails = [
+	{
+		title: "TikTok",
+		location: "Singapore",
+		roles: [
+			{
+				subtitle:
+					"AI Infrastructure Engineer, Global E-commerce (Promotion & Operations)",
+				date: "Oct 2025 - Present",
+				description: [
+					"Built the team's shared AI platform from the ground up — an A2A + LangGraph agent runtime, a Go MCP server exposing internal tooling, and a React chat SDK that lets any team embed an assistant in a few lines of code.",
+					"Cut multi-step operations workflows from minutes of manual work to under 30 seconds, now in daily use by operations teams.",
+					"Designed and shipped 0-to-1 promotion backend platforms in Go and gRPC with React frontends, serving campaigns across 13+ markets.",
+				],
+			},
+			{
+				subtitle: "Software Engineer, Creator Marketplace",
+				date: "Jan 2025 - Oct 2025",
+				description: [
+					"Built Go backend services for the Campaign Workbench and creator video diagnosis systems, helping sellers find and evaluate creators at scale.",
+				],
+			},
+			{
+				subtitle:
+					"Software Engineer, Global E-commerce (Seller Center, Data Intelligence)",
+				date: "Apr 2024 - Dec 2024",
+				description: [
+					"Built seller analytics and data-intelligence services on OLAP and ETL pipelines (ClickHouse, Hive) powering Seller Center insights.",
+				],
+			},
+		],
+		tech: <TechTikTok />,
+	},
+	{
+		title: "Compoze",
+		location: "Singapore",
+		roles: [
+			{
+				subtitle: "Founder",
+				date: "Jan 2025 - Dec 2025",
+				description: [
+					"Solo-founded an AI solutions company building retrieval-augmented chat products for clients — LlamaIndex and FastAPI backends, Next.js frontends, vector indexing on LlamaCloud, deployed on Fly.io.",
+					"Acquired by one of its clients at the end of 2025.",
+				],
+			},
+		],
+		tech: <TechCompoze />,
+	},
 	{
 		title: "Binance",
 		location: "Remote",

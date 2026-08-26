@@ -11,7 +11,7 @@ const extracurricular = [
 		roles: [
 			{
 				subtitle: "President",
-				date: "May 2022 – Present",
+				date: "May 2022 – Dec 2023",
 				description: [
 					"Lead the club of over 200 students and defined its goals, visions, and mission",
 					"Collaborated with large fintech companies such as Ripple, Shopee, ByBit, Alpha lab and more to organize large scale events in the fintech space",

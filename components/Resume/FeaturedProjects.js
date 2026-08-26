@@ -32,11 +32,13 @@ export default function FeaturedProjects() {
 				</WorkGridItem>
 			</SimpleGrid>
 			<Box align="center" my={4}>
-				<NextLink href="/works">
-					<Button rightIcon={<ChevronRightIcon />} colorScheme="teal">
-						View All Works
-					</Button>
-				</NextLink>
+				<Button
+					as={NextLink}
+					href="/works"
+					rightIcon={<ChevronRightIcon />}
+					colorScheme="teal">
+					View All Works
+				</Button>
 			</Box>
 		</>
 	);

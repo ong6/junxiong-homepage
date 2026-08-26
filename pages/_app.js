@@ -8,8 +8,8 @@ function MyApp({ Component, pageProps, router }) {
 	return (
 		<ChakraProvider theme={theme}>
 			<Layout router={router}>
-				<AnimatePresence exitBeforeEnter initial={true}>
-					<Component {...pageProps} key={router.route} />;
+				<AnimatePresence mode="wait" initial={true}>
+					<Component {...pageProps} key={router.route} />
 				</AnimatePresence>
 			</Layout>
 		</ChakraProvider>
