@@ -1,7 +1,6 @@
 import { Box, Container } from "@chakra-ui/react";
 import { AnimatePresence } from "framer-motion";
 import Head from "next/head";
-import JunXiong from "../Intro";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
 
@@ -57,8 +56,6 @@ const Main = ({ children, router }) => {
 			<Navbar path={router.asPath} />
 
 			<Container maxW="container.md" pt={14}>
-				<JunXiong />
-
 				{children}
 
 				<Footer />

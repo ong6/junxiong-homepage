@@ -2,6 +2,7 @@ import { Container, Heading, Icon, Link } from "@chakra-ui/react";
 import { FaVolleyballBall } from "react-icons/fa";
 import { GiMountainClimbing } from "react-icons/gi";
 import { IoAirplane, IoBook, IoCodeSlash, IoTrendingUp } from "react-icons/io5";
+import Intro from "../components/Intro";
 import Layout from "../components/layouts/Articles";
 import Paragraph from "../components/Paragraph";
 import Section from "../components/Section";
@@ -9,6 +10,7 @@ import Section from "../components/Section";
 const Hobbies = () => (
 	<Layout title="Hobbies">
 		<Container maxW="full">
+			<Intro />
 			<Section delay={0.1}>
 				<Heading as="h3" variant="section-title">
 					<Icon as={GiMountainClimbing} mr={2} verticalAlign="middle" />

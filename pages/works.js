@@ -1,5 +1,6 @@
 import { Box, Divider, Heading, SimpleGrid, Text } from "@chakra-ui/react";
 import { WorkGridItem } from "../components/GridItem";
+import Intro from "../components/Intro";
 import Layout from "../components/layouts/Articles";
 import Section from "../components/Section";
 
@@ -139,6 +140,7 @@ const renderProjects = (projects) =>
 const Works = () => (
 	<Layout title="University Projects">
 		<Box>
+			<Intro />
 			<Heading as="h3" variant="section-title" fontSize={24}>
 				University Projects (2020 – 2023)
 			</Heading>
