@@ -4,6 +4,9 @@
 	"description": "Jun Xiong's Website",
 	"version": "2.0.0",
 	"author": "Jun Xiong <ong6>",
+	"engines": {
+		"node": ">=20"
+	},
 	"keywords": [
 		"junxiong",
 		"ong6",
