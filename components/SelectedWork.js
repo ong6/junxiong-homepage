@@ -15,7 +15,7 @@ const projects = [
 		label: "Production system · TikTok",
 		title: "Shared AI platform",
 		description:
-			"The runtime, tool layer, and frontend SDK that let product teams ship streaming AI workflows without rebuilding the plumbing.",
+			"The runtime, tool layer, and frontend SDK that let product teams ship streaming AI workflows without rebuilding the plumbing. Adding an assistant to a page went from a multi-file change to a few lines; multi-step operations workflows dropped from minutes to under 30 seconds. In daily use across the US, SEA and UK.",
 		stack: ["A2A", "LangGraph", "Go MCP", "React"],
 		visual: "platform",
 	},
@@ -23,17 +23,17 @@ const projects = [
 		label: "Open source · Personal",
 		title: "Singapore property intelligence",
 		description:
-			"A decision system that combines official transaction data, algorithmic scoring, and researched qualitative checks for condo analysis.",
+			"A decision system that combines official URA transaction data, algorithmic scoring, and agent-researched qualitative checks into one comparable score per condo. Built to make my own property search a data problem instead of an agent's opinion.",
 		stack: ["Python", "Data pipelines", "AI agents"],
 		visual: "property",
 		href: "https://github.com/ong6/sg-property-analysis",
 		linkLabel: "Explore the repository",
 	},
 	{
-		label: "Founder · Acquired 2025",
+		label: "Side venture · sold 2025",
 		title: "Compoze",
 		description:
-			"A one-person AI solutions company. I took RAG products from client problem to deployed software before a client acquired the business.",
+			"A one-person AI solutions company I ran on nights and weekends alongside the day job. I did the discovery calls, scoping, build, pricing and training, then sold it to one of its clients in 2025.",
 		stack: ["LlamaIndex", "FastAPI", "Next.js"],
 		visual: "compoze",
 	},

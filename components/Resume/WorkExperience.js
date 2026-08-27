@@ -54,8 +54,8 @@ const WorkDetails = [
 				subtitle: "Founder",
 				date: "Jan 2025 - Dec 2025",
 				description: [
-					"Solo-founded an AI solutions company building retrieval-augmented chat products for clients — LlamaIndex and FastAPI backends, Next.js frontends, vector indexing on LlamaCloud, deployed on Fly.io.",
-					"Acquired by one of its clients at the end of 2025.",
+					"Solo-founded and ran an AI solutions company alongside my full-time role at TikTok, building retrieval-augmented chat products for clients — LlamaIndex and FastAPI backends, Next.js frontends, vector indexing on LlamaCloud, deployed on Fly.io.",
+					"Sold to one of its clients at the end of 2025.",
 				],
 			},
 		],

@@ -8,7 +8,7 @@ const PrintButton = () => (
 		colorScheme="teal"
 		size="sm"
 		onClick={() => window.print()}>
-		Print resume
+		Save as PDF / print
 	</Button>
 );
 

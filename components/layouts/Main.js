@@ -12,7 +12,7 @@ const Main = ({ children, router }) => {
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<meta
 					name="description"
-					content="Ong Jun Xiong — software engineer at TikTok in Singapore working on AI infrastructure and backend platforms. Projects, resume and writing."
+					content="Ong Jun Xiong — software engineer at TikTok in Singapore working on AI infrastructure and backend platforms. Selected work, resume and how to reach me."
 				/>
 				<meta name="author" content="Jun Xiong" />
 				<meta property="og:site_name" content="Ong Jun Xiong" />
@@ -23,7 +23,7 @@ const Main = ({ children, router }) => {
 				/>
 				<meta
 					property="og:description"
-					content="Ong Jun Xiong — software engineer at TikTok in Singapore working on AI infrastructure and backend platforms. Projects, resume and writing."
+					content="Ong Jun Xiong — software engineer at TikTok in Singapore working on AI infrastructure and backend platforms. Selected work, resume and how to reach me."
 				/>
 				<meta property="og:url" content="https://junxiong.dev" />
 				<meta

@@ -21,16 +21,22 @@ import TermHeading from "../components/TermHeading";
 
 const experience = [
 	{
-		period: "2024 – now",
+		period: "Oct 2025 – now",
 		title: "TikTok · AI Infrastructure Engineer",
 		blurb:
-			"Agent platform for Global E-commerce: A2A + LangGraph runtime, a Go MCP server, and a React chat SDK other teams build on. Before that, promotion backends in Go/gRPC and seller analytics on OLAP pipelines.",
+			"Promoted into the AI infra role after 18 months on promotion and seller backends. Built the team's agent platform from zero: an A2A + LangGraph runtime, a Go MCP server, and a React chat SDK other teams build on. In daily use by operations teams across the US, SEA and UK.",
 	},
 	{
-		period: "2025",
-		title: "Compoze · Founder",
+		period: "Apr 2024 – Oct 2025",
+		title: "TikTok · Software Engineer",
 		blurb:
-			"Solo AI solutions company — RAG chat products on LlamaIndex, FastAPI and Next.js. Acquired by one of its clients, Dec 2025.",
+			"Go/gRPC promotion backends and seller analytics on OLAP pipelines (ClickHouse, Hive), serving campaigns across 13+ markets.",
+	},
+	{
+		period: "2025 · alongside TikTok",
+		title: "Compoze · Founder (sold)",
+		blurb:
+			"A side venture I built and ran on nights and weekends: RAG chat products for clients on LlamaIndex, FastAPI and Next.js. Sold to one of its clients at the end of 2025.",
 	},
 	{
 		period: "before",
@@ -80,9 +86,11 @@ export default function Home() {
 							I write Go and TypeScript at TikTok in Singapore, on the team
 							that builds AI infrastructure for Global E-commerce. My job is
 							the plumbing: the agent runtime, the tool servers, and the SDK
-							that other engineers ship on. Last year I also ran Compoze, a
-							one-person AI shop, until one of its clients bought it. Evenings
-							usually mean a climbing wall or my trading journal.
+							that other engineers ship on — it is in daily use by operations
+							teams across the US, SEA and UK. Alongside the day job I ran
+							Compoze, a one-person AI shop, on nights and weekends until one
+							of its clients bought it in 2025. Evenings otherwise mean a
+							climbing wall or my trading journal.
 						</Paragraph>
 					</Section>
 
