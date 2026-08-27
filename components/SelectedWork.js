@@ -2,7 +2,6 @@ import {
 	Badge,
 	Box,
 	Flex,
-	Grid,
 	Heading,
 	Link,
 	Text,
@@ -12,158 +11,75 @@ import { ExternalLinkIcon } from "@chakra-ui/icons";
 
 const projects = [
 	{
-		label: "Production system · TikTok",
-		title: "Shared AI platform",
-		description:
-			"The runtime, tool layer, and frontend SDK that let product teams ship streaming AI workflows without rebuilding the plumbing. Adding an assistant to a page went from a multi-file change to a few lines; multi-step operations workflows dropped from minutes to under 30 seconds. In daily use across the US, SEA and UK.",
-		stack: ["A2A", "LangGraph", "Go MCP", "React"],
-		visual: "platform",
-	},
-	{
-		label: "Open source · Personal",
+		meta: "2026 · open source",
 		title: "Singapore property intelligence",
 		description:
-			"A decision system that combines official URA transaction data, algorithmic scoring, and agent-researched qualitative checks into one comparable score per condo. Built to make my own property search a data problem instead of an agent's opinion.",
-		stack: ["Python", "Data pipelines", "AI agents"],
-		visual: "property",
+			"A decision system for buying a home in Singapore. It pulls official URA transaction data, scores every condo on comparable-unit value, and runs AI agents over the qualitative checks a spreadsheet can't hold — tenure, lease decay, surrounding supply. Built to make my own search a data problem instead of an agent's opinion.",
+		stack: ["Python", "Data pipelines", "AI agents", "URA API"],
 		href: "https://github.com/ong6/sg-property-analysis",
-		linkLabel: "Explore the repository",
+		linkLabel: "Repository",
 	},
 	{
-		label: "Side venture · sold 2025",
+		meta: "2025 · side venture, sold",
 		title: "Compoze",
 		description:
-			"A one-person AI solutions company I ran on nights and weekends alongside the day job. I did the discovery calls, scoping, build, pricing and training, then sold it to one of its clients in 2025.",
-		stack: ["LlamaIndex", "FastAPI", "Next.js"],
-		visual: "compoze",
+			"A one-person AI solutions company I ran on nights and weekends alongside the day job — retrieval-augmented chat products built for clients on LlamaIndex and FastAPI, with Next.js frontends and vector indexing on LlamaCloud. I did the discovery calls, the scoping, the build, the pricing and the training. Sold to one of its clients at the end of 2025.",
+		stack: ["LlamaIndex", "FastAPI", "Next.js", "Fly.io"],
 	},
 ];
 
-const Node = ({ children, ...props }) => (
-	<Box
-		border="1px solid"
-		borderColor="whiteAlpha.300"
-		borderRadius="6px"
-		px={2.5}
-		py={1.5}
-		bg="blackAlpha.400"
-		fontSize="10px"
-		fontWeight="700"
-		letterSpacing="0.04em"
-		{...props}>
-		{children}
-	</Box>
-);
-
-function ProjectVisual({ type }) {
-	if (type === "property") {
-		return (
-			<Flex h="118px" align="center" justify="center" gap={3}>
-				<Box>
-					<Text fontSize="10px" opacity={0.65} textTransform="uppercase">
-						condo score
-					</Text>
-					<Text fontSize="34px" fontWeight="800" lineHeight="1">
-						742
-					</Text>
-				</Box>
-				<Box h="52px" borderLeft="1px solid" borderColor="whiteAlpha.300" />
-				<Box fontSize="10px" lineHeight="1.8">
-					<Text>URA transactions ✓</Text>
-					<Text>relative value ✓</Text>
-					<Text>agent review ✓</Text>
-				</Box>
-			</Flex>
-		);
-	}
-
-	if (type === "compoze") {
-		return (
-			<Flex h="118px" align="center" justify="center" direction="column">
-				<Text fontSize="10px" opacity={0.65} mb={2}>
-					CLIENT QUESTION
-				</Text>
-				<Flex align="center" gap={2}>
-					<Node>RAG</Node>
-					<Text opacity={0.5}>→</Text>
-					<Node>API</Node>
-					<Text opacity={0.5}>→</Text>
-					<Node>PRODUCT</Node>
-				</Flex>
-			</Flex>
-		);
-	}
-
-	return (
-		<Flex h="118px" align="center" justify="center" direction="column" gap={2}>
-			<Node>AGENT RUNTIME</Node>
-			<Box h="12px" borderLeft="1px solid" borderColor="whiteAlpha.400" />
-			<Flex align="center" gap={2}>
-				<Node>TOOLS</Node>
-				<Node>ARTIFACTS</Node>
-				<Node>UI SDK</Node>
-			</Flex>
-		</Flex>
-	);
-}
-
-function ProjectCard({ project }) {
-	const cardBackground = useColorModeValue("rgba(255,255,255,0.42)", "#171a19");
-	const borderColor = useColorModeValue("rgba(65,54,45,0.20)", "whiteAlpha.200");
-	const visualBackground = useColorModeValue("#25332f", "#0d1110");
+function ProjectRow({ project, isLast }) {
+	const borderColor = useColorModeValue("rgba(65,54,45,0.18)", "whiteAlpha.200");
 
 	return (
 		<Flex
-			minW={0}
-			direction="column"
-			border="1px solid"
-			borderColor={borderColor}
-			borderRadius="12px"
-			overflow="hidden"
-			bg={cardBackground}
-			transition="transform 180ms ease, border-color 180ms ease"
-			_hover={{ transform: "translateY(-3px)", borderColor: "teal.400" }}>
-			<Box
-				bg={visualBackground}
-				color="#cfe8d8"
+			direction={{ base: "column", md: "row" }}
+			gap={{ base: 2, md: 8 }}
+			py={6}
+			borderBottomWidth={isLast ? 0 : "1px"}
+			borderColor={borderColor}>
+			<Text
+				w={{ base: "auto", md: "170px" }}
+				flexShrink={0}
 				fontFamily="'JetBrains Mono', monospace"
-				px={4}>
-				<ProjectVisual type={project.visual} />
-			</Box>
-			<Flex direction="column" p={5} flex="1">
-				<Text
-					fontFamily="'JetBrains Mono', monospace"
-					fontSize="10px"
-					fontWeight="700"
-					letterSpacing="0.08em"
-					textTransform="uppercase"
-					opacity={0.62}>
-					{project.label}
-				</Text>
-				<Heading as="h4" fontSize="19px" mt={2} mb={3}>
-					{project.title}
-				</Heading>
-				<Text fontSize="14px" lineHeight="1.65" opacity={0.78} flex="1">
+				fontSize="11px"
+				fontWeight="700"
+				letterSpacing="0.07em"
+				textTransform="uppercase"
+				opacity={0.55}
+				pt={{ md: 1.5 }}>
+				{project.meta}
+			</Text>
+
+			<Box minW={0} flex="1">
+				<Flex align="baseline" wrap="wrap" gap={3}>
+					<Heading as="h4" fontSize="20px">
+						{project.title}
+					</Heading>
+					{project.href && (
+						<Link
+							href={project.href}
+							target="_blank"
+							fontSize="13px"
+							fontWeight="700"
+							opacity={0.8}>
+							{project.linkLabel} <ExternalLinkIcon mx="1px" mb="2px" />
+						</Link>
+					)}
+				</Flex>
+
+				<Text fontSize="15px" lineHeight="1.7" opacity={0.78} mt={2}>
 					{project.description}
 				</Text>
-				<Flex wrap="wrap" gap={2} mt={4}>
+
+				<Flex wrap="wrap" gap={2} mt={3}>
 					{project.stack.map((item) => (
 						<Badge key={item} variant="subtle" colorScheme="teal">
 							{item}
 						</Badge>
 					))}
 				</Flex>
-				{project.href && (
-					<Link
-						href={project.href}
-						target="_blank"
-						mt={5}
-						fontWeight="700"
-						fontSize="14px">
-						{project.linkLabel} <ExternalLinkIcon mx="2px" />
-					</Link>
-				)}
-			</Flex>
+			</Box>
 		</Flex>
 	);
 }
@@ -171,11 +87,13 @@ function ProjectCard({ project }) {
 export default function SelectedWork() {
 	return (
 		<Box id="selected-work" scrollMarginTop="88px" minW={0}>
-			<Grid templateColumns={{ base: "1fr", md: "repeat(3, 1fr)" }} gap={4}>
-				{projects.map((project) => (
-					<ProjectCard key={project.title} project={project} />
-				))}
-			</Grid>
+			{projects.map((project, i) => (
+				<ProjectRow
+					key={project.title}
+					project={project}
+					isLast={i === projects.length - 1}
+				/>
+			))}
 		</Box>
 	);
 }

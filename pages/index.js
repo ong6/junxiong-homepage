@@ -18,6 +18,7 @@ import Section from "../components/Section";
 import SelectedWork from "../components/SelectedWork";
 import TerminalHero from "../components/TerminalHero";
 import TermHeading from "../components/TermHeading";
+import Timeline from "../components/Timeline";
 
 const experience = [
 	{
@@ -33,7 +34,8 @@ const experience = [
 			"Go/gRPC promotion backends and seller analytics on OLAP pipelines (ClickHouse, Hive), serving campaigns across 13+ markets.",
 	},
 	{
-		period: "2025 · alongside TikTok",
+		period: "2025",
+		tag: "alongside TikTok",
 		title: "Compoze · Founder (sold)",
 		blurb:
 			"A side venture I built and ran on nights and weekends: RAG chat products for clients on LlamaIndex, FastAPI and Next.js. Sold to one of its clients at the end of 2025.",
@@ -106,23 +108,7 @@ export default function Home() {
 								full resume →
 							</Link>
 						</Flex>
-						{experience.map((row) => (
-							<Flex key={row.title} gap={4} py={3} borderBottomWidth="1px">
-								<Text
-									w={{ base: "90px", md: "120px" }}
-									flexShrink={0}
-									opacity={0.6}
-									fontSize={15}>
-									{row.period}
-								</Text>
-								<Box>
-									<Text fontWeight="bold">{row.title}</Text>
-									<Text fontSize={15} opacity={0.75} mt={1}>
-										{row.blurb}
-									</Text>
-								</Box>
-							</Flex>
-						))}
+						<Timeline items={experience} />
 					</Section>
 
 					<Section delay={0.4}>
