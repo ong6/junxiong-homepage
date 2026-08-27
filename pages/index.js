@@ -15,6 +15,7 @@ import { IoLogoGithub, IoLogoLinkedin } from "react-icons/io5";
 import Layout from "../components/layouts/Articles";
 import Paragraph from "../components/Paragraph";
 import Section from "../components/Section";
+import SelectedWork from "../components/SelectedWork";
 import TerminalHero from "../components/TerminalHero";
 import TermHeading from "../components/TermHeading";
 
@@ -86,6 +87,11 @@ export default function Home() {
 					</Section>
 
 					<Section delay={0.2}>
+						<TermHeading>selected work</TermHeading>
+						<SelectedWork />
+					</Section>
+
+					<Section delay={0.3}>
 						<Flex justify="space-between" align="baseline">
 							<TermHeading>experience</TermHeading>
 							<Link as={NextLink} href="/resume" fontSize={15}>
@@ -111,7 +117,7 @@ export default function Home() {
 						))}
 					</Section>
 
-					<Section delay={0.3}>
+					<Section delay={0.4}>
 						<TermHeading>skills</TermHeading>
 						{skills.map((row) => (
 							<Flex key={row.label} gap={4} py={1.5}>
@@ -129,7 +135,7 @@ export default function Home() {
 						))}
 					</Section>
 
-					<Section delay={0.4}>
+					<Section delay={0.5}>
 						<TermHeading>education</TermHeading>
 						<Paragraph>
 							BComp (Hons) in Computer Science, National University of
@@ -140,7 +146,7 @@ export default function Home() {
 						</Paragraph>
 					</Section>
 
-					<Section delay={0.5}>
+					<Section delay={0.6}>
 						<TermHeading>tinkering</TermHeading>
 						<Paragraph>
 							Side projects live on{" "}
@@ -166,7 +172,7 @@ export default function Home() {
 						</Paragraph>
 					</Section>
 
-					<Section delay={0.6}>
+					<Section delay={0.7}>
 						<TermHeading>contact</TermHeading>
 						<List>
 							<ListItem>

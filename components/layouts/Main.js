@@ -6,7 +6,7 @@ import Footer from "../Footer";
 
 const Main = ({ children, router }) => {
 	return (
-		<Box as="main" pb={8}>
+		<Box as="main" pb={8} overflowX="hidden">
 			<Head>
 				<meta name="apple-mobile-web-app-capable" content="yes" />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -15,9 +15,12 @@ const Main = ({ children, router }) => {
 					content="Ong Jun Xiong — software engineer at TikTok in Singapore working on AI infrastructure and backend platforms. Projects, resume and writing."
 				/>
 				<meta name="author" content="Jun Xiong" />
-				<meta property="og:site_name" content="Jun Xiong Homepage" />
+				<meta property="og:site_name" content="Ong Jun Xiong" />
 				<meta property="og:type" content="website" />
-				<meta property="og:title" content="Jun Xiong - Homepage" />
+				<meta
+					property="og:title"
+					content="Ong Jun Xiong — AI Infrastructure & Backend Engineer"
+				/>
 				<meta
 					property="og:description"
 					content="Ong Jun Xiong — software engineer at TikTok in Singapore working on AI infrastructure and backend platforms. Projects, resume and writing."
@@ -27,10 +30,19 @@ const Main = ({ children, router }) => {
 					property="og:image"
 					content="https://junxiong.dev/images/junxiong.png"
 				/>
-				<meta name="twitter:card" content="summary" />
+				<meta name="twitter:card" content="summary_large_image" />
+				<meta
+					name="twitter:title"
+					content="Ong Jun Xiong — AI Infrastructure & Backend Engineer"
+				/>
+				<meta
+					name="twitter:description"
+					content="Software engineer at TikTok in Singapore building AI infrastructure and backend platforms."
+				/>
+				<meta name="twitter:image" content="https://junxiong.dev/images/junxiong.png" />
 				<link rel="canonical" href="https://junxiong.dev" />
 				<link rel="icon" href="/favicon.ico" />
-				<title>Jun Xiong - Homepage</title>
+				<title>Ong Jun Xiong — AI Infrastructure & Backend Engineer</title>
 				<script
 					type="application/ld+json"
 					dangerouslySetInnerHTML={{

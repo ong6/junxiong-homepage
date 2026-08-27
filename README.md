@@ -1,34 +1,48 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# junxiong.dev
 
-## Getting Started
+The source for [junxiong.dev](https://junxiong.dev), Ong Jun Xiong's personal site.
+It presents my work in AI infrastructure, backend platforms, and product engineering through a
+terminal-inspired interface.
 
-First, run the development server:
+## What is here
+
+- A single-page recruiter landing with selected work, experience, skills, and contact links
+- A browser and print-friendly resume
+- An archive of university projects
+- Light and dark themes with reduced-motion support
+- Search and social metadata, a sitemap, and structured `Person` data
+
+## Stack
+
+Next.js 15, React 18, Chakra UI, Emotion, and Framer Motion. Vercel deploys the `main` branch to
+[junxiong.dev](https://junxiong.dev).
+
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Verify a production build
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+```bash
+npm run build
+npm start
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Structure
 
-## Learn More
+```text
+pages/          Routes and page content
+components/     Shared layout, terminal, resume, and work components
+public/         Images, robots.txt, and sitemap.xml
+lib/theme.js    Chakra theme and colour-mode configuration
+```
 
-To learn more about Next.js, take a look at the following resources:
+## License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The source is available for reference. Personal copy, work history, and images remain the property
+of Ong Jun Xiong.

@@ -56,7 +56,7 @@ const Navbar = (props) => {
 		},
 		{
 			href: "/works",
-			name: "Archive",
+			name: "University work",
 		},
 	];
 

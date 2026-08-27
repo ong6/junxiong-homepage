@@ -1,5 +1,6 @@
-import { Box, useColorModeValue } from "@chakra-ui/react";
+import { Box, Button, Flex, Link, useColorModeValue } from "@chakra-ui/react";
 import { Global, css } from "@emotion/react";
+import NextLink from "next/link";
 
 const heroStyles = css`
 	@keyframes crt-type {
@@ -65,7 +66,9 @@ export default function TerminalHero() {
 		<Box pt={10} pb={6} style={{ perspective: "1200px" }}>
 			<Global styles={heroStyles} />
 			<Box
+				w="100%"
 				maxW="560px"
+				minW={0}
 				mx="auto"
 				transform="rotateX(3deg)"
 				transition="transform .4s ease"
@@ -170,6 +173,28 @@ export default function TerminalHero() {
 					bg={standColor}
 					borderRadius="6px"
 				/>
+				<Flex
+					mt={7}
+					gap={3}
+					justify="center"
+					direction={{ base: "column", smmd: "row" }}>
+					<Button
+						as={Link}
+						href="#selected-work"
+						colorScheme="teal"
+						w={{ base: "100%", smmd: "auto" }}
+						_hover={{ textDecoration: "none", transform: "translateY(-1px)" }}>
+						View selected work
+					</Button>
+					<Button
+						as={NextLink}
+						href="/resume"
+						variant="outline"
+						w={{ base: "100%", smmd: "auto" }}
+						_hover={{ textDecoration: "none", transform: "translateY(-1px)" }}>
+						View resume
+					</Button>
+				</Flex>
 			</Box>
 		</Box>
 	);
