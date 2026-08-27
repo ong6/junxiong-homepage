@@ -13,7 +13,9 @@ import P from "../../components/Paragraph";
 import Layout from "../../components/layouts/Articles";
 
 const Work = () => (
-	<Layout title="Markbind">
+	<Layout
+		title="Markbind"
+		description="Markbind is a static site generator for Markdown-like syntax, used for course sites and documentation. I am a contributor and help maintain it.">
 		<Box>
 			<Title>
 				Markbind (Contributor) <Badge>Aug 2021 - Aug 2023</Badge>
@@ -58,7 +60,7 @@ const Work = () => (
 				</ListItem>
 			</List>
 
-			<Heading as="h4" fontSize={16} my={8}>
+			<Heading as="h3" fontSize={16} my={8}>
 				<Center>Project Showcase</Center>
 			</Heading>
 			<div className="space-y-8">

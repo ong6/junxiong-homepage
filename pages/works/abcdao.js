@@ -13,7 +13,9 @@ import P from "../../components/Paragraph";
 import Layout from "../../components/layouts/Articles";
 
 const Work = () => (
-	<Layout title="ABCDAO">
+	<Layout
+		title="ABCDAO"
+		description="ABCDAO is a decentralized autonomous organization for NUS Fintech's Blockchain Department, with an ERC20 governance token and on-chain voting.">
 		<Box>
 			<Title>
 				$ABCDao <Badge>Aug 2021 - Dec 2021</Badge>
@@ -63,7 +65,7 @@ const Work = () => (
 				</ListItem>
 			</List>
 
-			<Heading as="h4" fontSize={16} my={8}>
+			<Heading as="h3" fontSize={16} my={8}>
 				<Center>Project Showcase</Center>
 			</Heading>
 

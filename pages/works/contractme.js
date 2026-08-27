@@ -13,7 +13,9 @@ import P from "../../components/Paragraph";
 import Layout from "../../components/layouts/Articles";
 
 const Work = () => (
-	<Layout title="ABCDAO">
+	<Layout
+		title="ContractMe!"
+		description="ContractMe! is a marketplace app designed through a full design process from user research to evaluation as a CS3240 project.">
 		<Box>
 			<Title>
 				ContractMe! <Badge>February 2022 - April 2022</Badge>
@@ -56,7 +58,7 @@ const Work = () => (
 				</ListItem>
 			</List>
 
-			<Heading as="h4" fontSize={16} my={8}>
+			<Heading as="h3" fontSize={16} my={8}>
 				<Center>Project Showcase</Center>
 			</Heading>
 

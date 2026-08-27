@@ -24,6 +24,8 @@ import thumbSqueezy from "../public/images/works/squeezy_01.png";
 import thumbMarkup from "../public/images/works/markup_01.png";
 import thumbVitalvision from "../public/images/works/vitalvision_01.png";
 import thumbCodeParty from "../public/images/works/codeparty_01.png";
+import thumbDexDao from "../public/images/works/dexdao_01.png";
+import thumbHandsfree from "../public/images/works/handsfree_01.gif";
 
 const passionProjects = [
 	{
@@ -65,6 +67,22 @@ const passionProjects = [
 		thumbnail: thumbAbcdao,
 		description:
 			"A decentralized autonomous organization that aims to provide a way for NUS fintech society members to vote on topics",
+		delay: 0.1,
+	},
+	{
+		id: "dexdao",
+		title: "The DEX DAO",
+		thumbnail: thumbDexDao,
+		description:
+			"A token project for decentralized exchange traders, launched with an airdrop to every trader from 2021",
+		delay: 0.1,
+	},
+	{
+		id: "youtubehandsfree",
+		title: "Youtube Handsfree",
+		thumbnail: thumbHandsfree,
+		description:
+			"A Chrome extension that controls YouTube playback with hand signs, built in a two-day hackathon",
 		delay: 0.1,
 	},
 ];
@@ -132,7 +150,7 @@ const openSourceContributions = [
 
 const TermHeading = ({ children, suffix }) => (
 	<Heading
-		as="h3"
+		as="h2"
 		fontFamily="'JetBrains Mono', monospace"
 		fontSize={18}
 		mt={3}
@@ -155,11 +173,11 @@ const TermHeading = ({ children, suffix }) => (
 
 const GroupHeading = ({ children }) => (
 	<Heading
-		as="h4"
+		as="h3"
 		fontFamily="'JetBrains Mono', monospace"
 		fontSize={15}
 		fontWeight={500}
-		opacity={0.6}
+		opacity={0.7}
 		mb={4}>
 		{`:/$ ls ${children}`}
 	</Heading>
@@ -180,7 +198,9 @@ const renderProjects = (projects) =>
 	));
 
 const Works = () => (
-	<Layout title="University Projects">
+	<Layout
+		title="University Projects"
+		description="An archive of Ong Jun Xiong's NUS-era projects, 2020 to 2023: hackathon wins, coursework, design work and open source. Current work lives on the resume.">
 		<Box>
 			<Intro />
 			<TermHeading suffix="(2020 – 2023)">university-archive</TermHeading>

@@ -18,7 +18,9 @@ import Document from "./../_document";
 // https://docs.google.com/document/d/1sb4gFP5xFQs2hCUGsVNRfetcjbK61MfjpuwXIqnWCac/edit?usp=sharing
 
 const Work = () => (
-	<Layout title="CodeParty">
+	<Layout
+		title="CodeParty"
+		description="CodeParty is an interview-prep platform that pairs peers on coding questions in real time, with a shared question repository.">
 		<Box>
 			<Title>
 				CodeParty <Badge>Aug 2023 - Nov 2023</Badge>
@@ -75,7 +77,7 @@ const Work = () => (
 				</ListItem>
 			</List>
 
-			<Heading as="h4" fontSize={16} my={8}>
+			<Heading as="h3" fontSize={16} my={8}>
 				<Center>Project Showcase</Center>
 			</Heading>
 

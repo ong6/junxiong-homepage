@@ -117,7 +117,9 @@ const printStyles = css`
 `;
 
 const Resume = () => (
-	<Layout title="Resume">
+	<Layout
+		title="Resume"
+		description="Ong Jun Xiong's full CV: AI infrastructure and backend work at TikTok, Compoze (founded and sold), plus internships at Binance, Thought Machine and DBS.">
 		<Box id="resume-print-root">
 			<Global styles={printStyles} />
 			<PrintHeader />
@@ -152,7 +154,7 @@ const GroupTitle = ({ children }) => (
 		fontFamily="'JetBrains Mono', monospace"
 		fontSize={14}
 		fontWeight={600}
-		opacity={0.6}
+		opacity={0.7}
 		pb={3}>
 		{children}
 	</Text>

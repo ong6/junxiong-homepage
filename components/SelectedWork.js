@@ -46,14 +46,14 @@ function ProjectRow({ project, isLast }) {
 				fontWeight="700"
 				letterSpacing="0.07em"
 				textTransform="uppercase"
-				opacity={0.55}
+				opacity={0.7}
 				pt={{ md: 1.5 }}>
 				{project.meta}
 			</Text>
 
 			<Box minW={0} flex="1">
 				<Flex align="baseline" wrap="wrap" gap={3}>
-					<Heading as="h4" fontSize="20px">
+					<Heading as="h3" fontSize="20px">
 						{project.title}
 					</Heading>
 					{project.href && (

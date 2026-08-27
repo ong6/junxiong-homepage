@@ -8,28 +8,49 @@ const variants = {
 	exit: { opacity: 0, x: -0, y: 20 },
 };
 
-const Layout = ({ children, title }) => (
-	<motion.article
-		initial="hidden"
-		animate="enter"
-		exit="exit"
-		variants={variants}
-		transition={{ duration: 0.4, type: "easeInOut" }}
-		style={{ position: "relative" }}>
-		<>
-			{title && (
-				<Head>
-					<title>{title} - Jun Xiong</title>
-					<meta name="twitter:title" content={title} />
-					<meta property="og:title" content={title} />
-					<meta property="og:type" content="article" />
-				</Head>
-			)}
-			{children}
+// `title` gets the site suffix appended; `description` overrides the site-wide
+// one from the Main layout for this route only. Both are optional — the
+// homepage renders without either and keeps the defaults.
+const Layout = ({ children, title, description }) => {
+	const pageTitle = title ? `${title} — Ong Jun Xiong` : null;
 
-			<GridItemStyle />
-		</>
-	</motion.article>
-);
+	return (
+		<motion.article
+			initial="hidden"
+			animate="enter"
+			exit="exit"
+			variants={variants}
+			transition={{ duration: 0.4, type: "easeInOut" }}
+			style={{ position: "relative" }}>
+			<>
+				{(pageTitle || description) && (
+					<Head>
+						{pageTitle && <title>{pageTitle}</title>}
+						{pageTitle && (
+							<meta name="twitter:title" content={pageTitle} />
+						)}
+						{pageTitle && <meta key="og:title" property="og:title" content={pageTitle} />}
+						{description && (
+							<meta name="description" content={description} />
+						)}
+						{description && (
+							<meta
+								key="og:description"
+								property="og:description"
+								content={description}
+							/>
+						)}
+						{description && (
+							<meta name="twitter:description" content={description} />
+						)}
+					</Head>
+				)}
+				{children}
+
+				<GridItemStyle />
+			</>
+		</motion.article>
+	);
+};
 
 export default Layout;

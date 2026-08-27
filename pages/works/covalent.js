@@ -13,7 +13,9 @@ import P from "../../components/Paragraph";
 import Layout from "../../components/layouts/Articles";
 
 const Work = () => (
-	<Layout title="ABCDAO">
+	<Layout
+		title="Covalent"
+		description="Covalent is a social media manager app dashboard designed for video producers as a solo CS3240 interactive design project.">
 		<Box>
 			<Title>
 				Covalent <Badge>March 2022 - April 2022</Badge>
@@ -56,7 +58,7 @@ const Work = () => (
 				</ListItem>
 			</List>
 
-			<Heading as="h4" fontSize={16} my={8}>
+			<Heading as="h3" fontSize={16} my={8}>
 				<Center>Project Showcase</Center>
 			</Heading>
 

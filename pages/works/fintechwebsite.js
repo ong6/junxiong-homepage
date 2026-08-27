@@ -13,7 +13,9 @@ import P from "../../components/Paragraph";
 import Layout from "../../components/layouts/Articles";
 
 const Work = () => (
-	<Layout title="NUS Fintech Website">
+	<Layout
+		title="NUS Fintech Website"
+		description="The NUS Fintech Society website: blockchain and machine learning research, projects and events for over 200 members.">
 		<Box>
 			<Title>
 				NUS Fintech Website <Badge>Nov 2020 - Jan 2021</Badge>
@@ -44,7 +46,7 @@ const Work = () => (
 				</ListItem>
 			</List>
 
-			<Heading as="h4" fontSize={16} my={8}>
+			<Heading as="h3" fontSize={16} my={8}>
 				<Center>Project Showcase</Center>
 			</Heading>
 

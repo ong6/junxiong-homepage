@@ -2,7 +2,7 @@ import { Box, Heading, useColorModeValue } from "@chakra-ui/react";
 
 const TermHeading = ({ children, ...props }) => (
 	<Heading
-		as="h3"
+		as="h2"
 		fontFamily="'JetBrains Mono', monospace"
 		fontSize={18}
 		mt={3}

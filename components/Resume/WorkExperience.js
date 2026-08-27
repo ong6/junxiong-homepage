@@ -170,7 +170,7 @@ const WorkDetails = [
 				subtitle: "Teaching Assistant, CS2030S & CS2103T",
 				date: "Jan 2021 - May 2022",
 				description: [
-					"Conduct weekly tutorials, code review and marking and guided over 60 students across Object Oriented programming and Software Engineering modules.",
+					"Conducted weekly tutorials, code review and marking and guided over 60 students across Object Oriented programming and Software Engineering modules.",
 					"Awarded with Student Mentor Award for Guiding Students through difficult coursework.",
 					<>
 						Designed and authored a{" "}

@@ -24,7 +24,7 @@ export default function ResumeDetail({ detail }) {
 					fontSize={15}
 					fontWeight="medium"
 					fontFamily="'JetBrains Mono', monospace"
-					opacity={0.6}>
+					opacity={0.7}>
 					{detail.location}
 				</Text>
 			</Box>
@@ -46,7 +46,7 @@ export default function ResumeDetail({ detail }) {
 							fontSize={15}
 							fontWeight="medium"
 							fontFamily="'JetBrains Mono', monospace"
-							opacity={0.6}>
+							opacity={0.7}>
 							{role.date}
 						</Text>
 					</Flex>

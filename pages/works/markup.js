@@ -13,7 +13,9 @@ import P from "../../components/Paragraph";
 import Layout from "../../components/layouts/Articles";
 
 const Work = () => (
-	<Layout title="Markup">
+	<Layout
+		title="Markup"
+		description="Markup is an AI web app that generates exam questions and auto-grades the responses.">
 		<Box>
 			<Title>
 				Markup <Badge>June 2023 - Aug 2023</Badge>
@@ -48,7 +50,7 @@ const Work = () => (
 				</ListItem>
 			</List>
 
-			{/* <Heading as="h4" fontSize={16} my={8}>
+			{/* <Heading as="h3" fontSize={16} my={8}>
 				<Center>Project Showcase</Center>
 			</Heading>
 

@@ -13,7 +13,9 @@ import P from "../../components/Paragraph";
 import Layout from "../../components/layouts/Articles";
 
 const Work = () => (
-	<Layout title="imPoster">
+	<Layout
+		title="imPoster"
+		description="imPoster is a desktop app for exploring, testing and building APIs, aimed at people new to API development.">
 		<Box>
 			<Title>
 				imPoster <Badge>Feb 2021 - April 2021</Badge>
@@ -59,7 +61,7 @@ const Work = () => (
 				</ListItem>
 			</List>
 
-			<Heading as="h4" fontSize={16} mt={8}>
+			<Heading as="h3" fontSize={16} mt={8}>
 				<Center>Project Showcase</Center>
 			</Heading>
 

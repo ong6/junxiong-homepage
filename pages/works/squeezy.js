@@ -13,7 +13,9 @@ import P from "../../components/Paragraph";
 import Layout from "../../components/layouts/Articles";
 
 const Work = () => (
-	<Layout title="Project Squeezy">
+	<Layout
+		title="Project Squeezy"
+		description="Project Squeezy is a smart stress ball that reports stress levels over Bluetooth to a React Native app.">
 		<Box>
 			<Title>
 				Project Squeezy <Badge>Nov 2021 - Jan 2022</Badge>
@@ -65,7 +67,7 @@ const Work = () => (
 				</ListItem>
 			</List>
 
-			<Heading as="h4" fontSize={16} my={8}>
+			<Heading as="h3" fontSize={16} my={8}>
 				<Center>Project Showcase</Center>
 			</Heading>
 

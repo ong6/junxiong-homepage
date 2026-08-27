@@ -13,7 +13,9 @@ import P from "../../components/Paragraph";
 import Layout from "../../components/layouts/Articles";
 
 const Work = () => (
-	<Layout title="The DEX DAO">
+	<Layout
+		title="The DEX DAO"
+		description="The DEX DAO is a token project for decentralized exchange traders, launched with an airdrop to every trader from 2021.">
 		<Box>
 			<Title>
 				The DEX DAO <Badge>Dec 2021 - Jan 2022</Badge>
@@ -49,7 +51,7 @@ const Work = () => (
 				</ListItem>
 			</List>
 
-			<Heading as="h4" fontSize={16} my={8}>
+			<Heading as="h3" fontSize={16} my={8}>
 				<Center>Project Showcase</Center>
 			</Heading>
 

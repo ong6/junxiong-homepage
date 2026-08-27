@@ -8,11 +8,13 @@ import Paragraph from "../components/Paragraph";
 import Section from "../components/Section";
 
 const Hobbies = () => (
-	<Layout title="Hobbies">
+	<Layout
+		title="Hobbies"
+		description="Away from work: rock climbing, volleyball, trading stocks against a written playbook, tinkering with side projects, slow travel and reading.">
 		<Container maxW="full">
 			<Intro />
 			<Section delay={0.1}>
-				<Heading as="h3" variant="section-title">
+				<Heading as="h2" variant="section-title">
 					<Icon as={GiMountainClimbing} mr={2} verticalAlign="middle" />
 					Rock Climbing
 				</Heading>
@@ -26,7 +28,7 @@ const Hobbies = () => (
 			</Section>
 
 			<Section delay={0.2}>
-				<Heading as="h3" variant="section-title">
+				<Heading as="h2" variant="section-title">
 					<Icon as={FaVolleyballBall} mr={2} verticalAlign="middle" />
 					Volleyball
 				</Heading>
@@ -39,7 +41,7 @@ const Hobbies = () => (
 			</Section>
 
 			<Section delay={0.3}>
-				<Heading as="h3" variant="section-title">
+				<Heading as="h2" variant="section-title">
 					<Icon as={IoTrendingUp} mr={2} verticalAlign="middle" />
 					Trading &amp; Markets
 				</Heading>
@@ -53,7 +55,7 @@ const Hobbies = () => (
 			</Section>
 
 			<Section delay={0.4}>
-				<Heading as="h3" variant="section-title">
+				<Heading as="h2" variant="section-title">
 					<Icon as={IoCodeSlash} mr={2} verticalAlign="middle" />
 					Tinkering with Code
 				</Heading>
@@ -70,7 +72,7 @@ const Hobbies = () => (
 			</Section>
 
 			<Section delay={0.5}>
-				<Heading as="h3" variant="section-title">
+				<Heading as="h2" variant="section-title">
 					<Icon as={IoAirplane} mr={2} verticalAlign="middle" />
 					Travel
 				</Heading>
@@ -83,7 +85,7 @@ const Hobbies = () => (
 			</Section>
 
 			<Section delay={0.6}>
-				<Heading as="h3" variant="section-title">
+				<Heading as="h2" variant="section-title">
 					<Icon as={IoBook} mr={2} verticalAlign="middle" />
 					Reading
 				</Heading>

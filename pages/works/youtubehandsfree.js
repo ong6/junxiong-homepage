@@ -13,7 +13,9 @@ import P from "../../components/Paragraph";
 import Layout from "../../components/layouts/Articles";
 
 const Work = () => (
-	<Layout title="Youtube Handsfree">
+	<Layout
+		title="Youtube Handsfree"
+		description="Youtube Handsfree is a computer vision Chrome extension that controls YouTube playback with hand signs.">
 		<Box>
 			<Title>
 				Youtube Handsfree <Badge>Nov 2020 - Nov 2020</Badge>
@@ -43,7 +45,7 @@ const Work = () => (
 				</ListItem>
 			</List>
 
-			<Heading as="h4" fontSize={16} my={8}>
+			<Heading as="h3" fontSize={16} my={8}>
 				<Center>Project Showcase</Center>
 			</Heading>
 

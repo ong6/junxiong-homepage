@@ -1,7 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import TermHeading from "../TermHeading";
 import React from "react";
-import { TechFintech } from "./Icons";
 import ResumeDetail from "./ResumeDetail";
 
 const EducationDetails = [
@@ -15,7 +14,6 @@ const EducationDetails = [
 				description: [
 					"Relevant course work: Object-Oriented Programming, Software engineering, Data structures and algorithms, Computer organization, Distributed Systems, Big Data, AI planning and Decision making, VR and AR Development",
 					"Specializing in Artificial Intelligence and Software Engineering",
-					"Awarded Student Take on the World Award",
 				],
 			},
 		],
@@ -26,9 +24,9 @@ const EducationDetails = [
 		location: "Germany, Munich",
 		roles: [
 			{
-				subtitle: "Department of Innovation & Entrepreneurship ",
+				subtitle: "Department of Innovation & Entrepreneurship",
 				date: "July 2022 - Dec 2022",
-				description: ["NUS Overseas Collage (NOC) Munich batch 8"],
+				description: ["NUS Overseas Colleges (NOC) Munich, batch 8", "Awarded the Student Take on the World (SToW) Award"],
 			},
 		],
 		tech: "",

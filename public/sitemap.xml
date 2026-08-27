@@ -3,56 +3,109 @@
 	<url>
 		<loc>https://junxiong.dev/</loc>
 		<lastmod>2026-08-27</lastmod>
-	</url>
-	<url>
-		<loc>https://junxiong.dev/works</loc>
+		<changefreq>weekly</changefreq>
+		<priority>1.0</priority>
 	</url>
 	<url>
 		<loc>https://junxiong.dev/resume</loc>
+		<lastmod>2026-08-27</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.9</priority>
+	</url>
+	<url>
+		<loc>https://junxiong.dev/works</loc>
+		<lastmod>2026-08-27</lastmod>
+		<changefreq>monthly</changefreq>
+		<priority>0.7</priority>
 	</url>
 	<url>
 		<loc>https://junxiong.dev/hobbies</loc>
+		<lastmod>2026-08-27</lastmod>
+		<changefreq>monthly</changefreq>
+		<priority>0.5</priority>
 	</url>
 	<url>
 		<loc>https://junxiong.dev/works/abcdao</loc>
+		<lastmod>2026-08-26</lastmod>
+		<changefreq>yearly</changefreq>
+		<priority>0.3</priority>
 	</url>
 	<url>
 		<loc>https://junxiong.dev/works/amuze</loc>
+		<lastmod>2026-08-26</lastmod>
+		<changefreq>yearly</changefreq>
+		<priority>0.3</priority>
 	</url>
 	<url>
 		<loc>https://junxiong.dev/works/codeparty</loc>
+		<lastmod>2026-08-26</lastmod>
+		<changefreq>yearly</changefreq>
+		<priority>0.3</priority>
 	</url>
 	<url>
 		<loc>https://junxiong.dev/works/contractme</loc>
+		<lastmod>2026-08-26</lastmod>
+		<changefreq>yearly</changefreq>
+		<priority>0.3</priority>
 	</url>
 	<url>
 		<loc>https://junxiong.dev/works/covalent</loc>
+		<lastmod>2026-08-26</lastmod>
+		<changefreq>yearly</changefreq>
+		<priority>0.3</priority>
 	</url>
 	<url>
 		<loc>https://junxiong.dev/works/dexdao</loc>
+		<lastmod>2026-08-26</lastmod>
+		<changefreq>yearly</changefreq>
+		<priority>0.3</priority>
 	</url>
 	<url>
 		<loc>https://junxiong.dev/works/fintechwebsite</loc>
+		<lastmod>2026-08-26</lastmod>
+		<changefreq>yearly</changefreq>
+		<priority>0.3</priority>
 	</url>
 	<url>
 		<loc>https://junxiong.dev/works/imposter</loc>
+		<lastmod>2026-08-26</lastmod>
+		<changefreq>yearly</changefreq>
+		<priority>0.3</priority>
 	</url>
 	<url>
 		<loc>https://junxiong.dev/works/markbind</loc>
+		<lastmod>2026-08-26</lastmod>
+		<changefreq>yearly</changefreq>
+		<priority>0.3</priority>
 	</url>
 	<url>
 		<loc>https://junxiong.dev/works/markup</loc>
+		<lastmod>2026-08-26</lastmod>
+		<changefreq>yearly</changefreq>
+		<priority>0.3</priority>
 	</url>
 	<url>
 		<loc>https://junxiong.dev/works/nusconnect</loc>
+		<lastmod>2026-08-26</lastmod>
+		<changefreq>yearly</changefreq>
+		<priority>0.3</priority>
 	</url>
 	<url>
 		<loc>https://junxiong.dev/works/squeezy</loc>
+		<lastmod>2026-08-26</lastmod>
+		<changefreq>yearly</changefreq>
+		<priority>0.3</priority>
 	</url>
 	<url>
 		<loc>https://junxiong.dev/works/vitalvision</loc>
+		<lastmod>2026-08-26</lastmod>
+		<changefreq>yearly</changefreq>
+		<priority>0.3</priority>
 	</url>
 	<url>
 		<loc>https://junxiong.dev/works/youtubehandsfree</loc>
+		<lastmod>2026-08-26</lastmod>
+		<changefreq>yearly</changefreq>
+		<priority>0.3</priority>
 	</url>
 </urlset>

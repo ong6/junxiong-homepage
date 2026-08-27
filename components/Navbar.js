@@ -20,8 +20,10 @@ import { IoLogoGithub } from "react-icons/io5";
 
 const LinkItem = ({ href, path, _target, children, ...props }) => {
 	const active = path === href;
-	const inactiveColor = useColorModeValue("gray200", "whiteAlpha.900");
+	const inactiveColor = useColorModeValue("gray.800", "whiteAlpha.900");
 	const activeColor = useColorModeValue("#6b46c1", "#f6ad55");
+	// #AC3B61 is only 2.75:1 on the dark background — use the theme accents.
+	const hoverColor = useColorModeValue("#AC3B61", "#ff63c3");
 
 	return (
 		<Link
@@ -33,7 +35,7 @@ const LinkItem = ({ href, path, _target, children, ...props }) => {
 			fontSize="lg"
 			textDecoration={active ? "underline" : "none"}
 			color={active ? activeColor : inactiveColor}
-			_hover={{ color: "#AC3B61" }}
+			_hover={{ color: hoverColor }}
 			_focus={{ outline: "none" }}
 			target={_target}
 			{...props}>

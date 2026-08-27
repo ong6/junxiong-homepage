@@ -13,7 +13,9 @@ import P from "../../components/Paragraph";
 import Layout from "../../components/layouts/Articles";
 
 const Work = () => (
-	<Layout title="NUS Connect">
+	<Layout
+		title="NUS Connect"
+		description="NUSConnect is a custom LMS for NUS students and teaching assistants, with a forum, a quiz system and gamified rewards.">
 		<Box>
 			<Title>
 				NUSConnect <Badge>May 2021 - Aug 2021</Badge>
@@ -80,7 +82,7 @@ const Work = () => (
 				</ListItem>
 			</List>
 
-			<Heading as="h4" fontSize={16} mt={8}>
+			<Heading as="h3" fontSize={16} mt={8}>
 				<Center>Project Showcase</Center>
 			</Heading>
 

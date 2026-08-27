@@ -35,7 +35,7 @@ export default function Intro() {
 						display="inline-block"
 						borderRadius="full"
 						src="/images/junxiong.png"
-						alt="Profile image"
+						alt="Ong Jun Xiong"
 						fallback={
 							<SkeletonCircle
 								width={{ sm: "250px" }}

@@ -13,7 +13,9 @@ import P from "../../components/Paragraph";
 import Layout from "../../components/layouts/Articles";
 
 const Work = () => (
-	<Layout title="Vital Vision">
+	<Layout
+		title="Vital Vision"
+		description="Vital Vision is VR rehabilitation for post-stroke patients, with a dashboard that lets clinicians monitor progress.">
 		<Box>
 			<Title>
 				Vital Vision <Badge>Jan 2023 - Aug 2023</Badge>
@@ -66,7 +68,7 @@ const Work = () => (
 					</span>
 				</ListItem>
 			</List>
-			<Heading as="h4" fontSize={16} my={8}>
+			<Heading as="h3" fontSize={16} my={8}>
 				<Center>Project Showcase</Center>
 			</Heading>
 			<div className="space-y-8">
