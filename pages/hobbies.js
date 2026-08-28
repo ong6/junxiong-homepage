@@ -1,7 +1,12 @@
 import { Container, Heading, Icon, Link } from "@chakra-ui/react";
-import { FaVolleyballBall } from "react-icons/fa";
-import { GiMountainClimbing } from "react-icons/gi";
-import { IoAirplane, IoBook, IoCodeSlash, IoTrendingUp } from "react-icons/io5";
+import {
+	IoAirplane,
+	IoBook,
+	IoCodeSlash,
+	IoServer,
+	IoTennisball,
+	IoTrendingUp,
+} from "react-icons/io5";
 import Intro from "../components/Intro";
 import Layout from "../components/layouts/Articles";
 import Paragraph from "../components/Paragraph";
@@ -10,37 +15,23 @@ import Section from "../components/Section";
 const Hobbies = () => (
 	<Layout
 		title="Hobbies"
-		description="Away from work: rock climbing, volleyball, trading stocks against a written playbook, tinkering with side projects, slow travel and reading.">
+		description="Away from work: tennis, trading stocks against a written playbook, tinkering with side projects and home servers, slow travel and reading.">
 		<Container maxW="full">
 			<Intro />
 			<Section delay={0.1}>
 				<Heading as="h2" variant="section-title">
-					<Icon as={GiMountainClimbing} mr={2} verticalAlign="middle" />
-					Rock Climbing
+					<Icon as={IoTennisball} mr={2} verticalAlign="middle" />
+					Tennis
 				</Heading>
 				<Paragraph>
-					Climbing is my main sport. I like that a wall gives you honest
-					feedback — either you top out or you fall, and the only way forward
-					is to break the problem down and try again. It keeps me strong, keeps
-					me humble, and it is the first thing I look for when I want to switch
-					my brain off from work.
+					Tennis is my main sport. The feedback is immediate and unsentimental
+					— the ball goes in or it does not — and getting better means drilling
+					one specific thing badly until it is boring. It is the first thing I
+					reach for when I want to switch my brain off from work.
 				</Paragraph>
 			</Section>
 
 			<Section delay={0.2}>
-				<Heading as="h2" variant="section-title">
-					<Icon as={FaVolleyballBall} mr={2} verticalAlign="middle" />
-					Volleyball
-				</Heading>
-				<Paragraph>
-					Volleyball is my team sport. Climbing is mostly me against the wall,
-					so I enjoy the contrast of a game where the whole point is reading
-					five other people and setting each other up. A good rally is one of
-					the most fun things in sport.
-				</Paragraph>
-			</Section>
-
-			<Section delay={0.3}>
 				<Heading as="h2" variant="section-title">
 					<Icon as={IoTrendingUp} mr={2} verticalAlign="middle" />
 					Trading &amp; Markets
@@ -54,7 +45,7 @@ const Hobbies = () => (
 				</Paragraph>
 			</Section>
 
-			<Section delay={0.4}>
+			<Section delay={0.3}>
 				<Heading as="h2" variant="section-title">
 					<Icon as={IoCodeSlash} mr={2} verticalAlign="middle" />
 					Tinkering with Code
@@ -68,6 +59,19 @@ const Hobbies = () => (
 					, building agent tooling for myself, and running my personal notes
 					and life admin as a markdown repo that an AI agent tends for me. Half
 					the fun is that the tools only need to make sense to one user.
+				</Paragraph>
+			</Section>
+
+			<Section delay={0.4}>
+				<Heading as="h2" variant="section-title">
+					<Icon as={IoServer} mr={2} verticalAlign="middle" />
+					Home Servers
+				</Heading>
+				<Paragraph>
+					I run things on my own hardware at home rather than renting them. It
+					is the cheapest way I know to learn the operational half of software
+					— the part that only shows up when something has to stay up while you
+					are asleep, and nobody is paid to fix it but you.
 				</Paragraph>
 			</Section>
 

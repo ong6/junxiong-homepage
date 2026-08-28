@@ -22,7 +22,7 @@ export default function Intro() {
 					:/$ Ong Jun Xiong
 				</Heading>
 				<Text textAlign="center">
-					Software Engineer @ TikTok • AI Infrastructure • Rock Climber
+					Software Engineer @ TikTok • AI Infrastructure • Tennis Player
 				</Text>
 			</Box>
 			<Box flexShrink={0} mt={4} textAlign="center">

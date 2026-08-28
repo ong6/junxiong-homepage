@@ -92,7 +92,8 @@ export default function Home() {
 							teams across the US, SEA and UK. Alongside the day job I ran
 							Compoze, a one-person AI shop, on nights and weekends until one
 							of its clients bought it in 2025. Evenings otherwise mean a
-							climbing wall or my trading journal.
+							tennis court, a home server that needs attention, or my trading
+							journal.
 						</Paragraph>
 					</Section>
 
