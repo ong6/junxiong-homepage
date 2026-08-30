@@ -64,7 +64,7 @@ export default function Timeline({ items }) {
 								fontWeight="700"
 								letterSpacing="0.07em"
 								textTransform="uppercase"
-								opacity={0.55}>
+								opacity={0.7}>
 								{row.period}
 							</Text>
 							{isCurrent && (
