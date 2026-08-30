@@ -24,10 +24,11 @@ const Hobbies = () => (
 					Tennis
 				</Heading>
 				<Paragraph>
-					Tennis is my main sport. The feedback is immediate and unsentimental
-					— the ball goes in or it does not — and getting better means drilling
-					one specific thing badly until it is boring. It is the first thing I
-					reach for when I want to switch my brain off from work.
+					Tennis is my main sport, and the appeal is that the feedback has no
+					opinion: the ball goes in or it does not, and no amount of explaining
+					fixes a bad toss. Getting better means picking one specific flaw and
+					drilling it until it is boring. It is the only hour of the day where
+					I genuinely cannot think about software.
 				</Paragraph>
 			</Section>
 
@@ -68,10 +69,12 @@ const Hobbies = () => (
 					Home Servers
 				</Heading>
 				<Paragraph>
-					I run things on my own hardware at home rather than renting them. It
-					is the cheapest way I know to learn the operational half of software
-					— the part that only shows up when something has to stay up while you
-					are asleep, and nobody is paid to fix it but you.
+					The build I am speccing now is an always-on inference box: a machine
+					in the corner of a room serving models to my own tools while I sleep,
+					with nobody paid to fix it but me. Most of the hobby so far is the
+					purchase arithmetic — tokens per second is roughly memory bandwidth
+					divided by model size, and that one line settles more hardware
+					arguments than any benchmark thread. I write up what I learn as I go.
 				</Paragraph>
 			</Section>
 
