@@ -1,0 +1,129 @@
+% Public resume source for junxiong.dev.
+% Keep claims limited to facts already published on the site. No phone number
+% or private/internal business metrics belong in this version.
+\documentclass[11pt,a4paper]{article}
+
+\providecommand{\IfDocumentMetadataT}[1]{}
+\providecommand{\IfDocumentMetadataTF}[2]{#2}
+
+\usepackage{fontspec}
+\usepackage[margin=0.58in,top=0.46in,bottom=0.46in]{geometry}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\setmainfont{Helvetica Neue}[
+  UprightFont = *,
+  BoldFont = * Bold,
+  ItalicFont = * Italic,
+  BoldItalicFont = * Bold Italic,
+]
+
+\definecolor{ink}{HTML}{17201D}
+\definecolor{accent}{HTML}{087F6D}
+\definecolor{rule}{HTML}{B7C3BE}
+
+\pagestyle{empty}
+\hypersetup{colorlinks=true,urlcolor=accent,linkcolor=accent}
+\color{ink}
+
+\titleformat{\section}
+  {\normalsize\bfseries\color{ink}}
+  {}{0em}{}
+  [{\color{rule}\titlerule}]
+\titlespacing*{\section}{0pt}{7pt}{3pt}
+
+\setlist[itemize]{
+  nosep,
+  leftmargin=1.3em,
+  topsep=2pt,
+  parsep=0pt,
+  itemsep=1.5pt
+}
+\renewcommand{\labelitemi}{\footnotesize\color{accent}$\bullet$}
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{0pt}
+
+\newcommand{\company}[3]{%
+  \vspace{3pt}
+  \noindent\textbf{#1} \hfill #2 \,\textbar\, \textit{#3}\par
+}
+\newcommand{\role}[2]{%
+  \vspace{2pt}
+  \noindent\textit{#1} \hfill \textit{#2}\par
+}
+\newcommand{\earlier}[4]{%
+  \noindent\textbf{#1} \,\textbar\, \textit{#2} \,\textbar\, #3
+  \hfill \textit{#4}\par
+}
+
+\begin{document}
+
+\begin{center}
+  {\fontsize{23}{25}\selectfont\bfseries Ong Jun Xiong}\\[2pt]
+  {\large\bfseries\color{accent} AI Infrastructure \& Backend Engineer}\\[5pt]
+  \small
+  Singapore \enspace\textbar\enspace
+  \href{mailto:junxiongong2@gmail.com}{junxiongong2@gmail.com}
+  \enspace\textbar\enspace
+  \href{https://junxiong.dev}{junxiong.dev}
+  \enspace\textbar\enspace
+  \href{https://github.com/ong6}{github.com/ong6}
+  \enspace\textbar\enspace
+  \href{https://www.linkedin.com/in/junx6/}{linkedin.com/in/junx6}
+\end{center}
+
+\vspace{-1pt}
+
+\section{Profile}
+
+I build production agent runtimes, tool servers, and backend platforms. At TikTok, my work spans the shared AI layer and the Go services beneath global e-commerce operations. I also founded and sold a one-person AI solutions company.
+
+\section{Experience}
+
+\company{TikTok, Global E-commerce}{Singapore}{Apr 2024 -- Present}
+
+\role{AI Infrastructure Engineer}{Oct 2025 -- Present}
+\begin{itemize}
+  \item Built the team's agent platform from zero: an A2A and LangGraph runtime, a Go MCP server, and a React chat SDK that other product teams build on.
+  \item Put the platform into daily use with operations teams across the US, Southeast Asia, and the UK. Multi-step workflows that took minutes now complete in under 30 seconds.
+\end{itemize}
+
+\role{Software Engineer, Backend Platforms}{Apr 2024 -- Oct 2025}
+\begin{itemize}
+  \item Built Go and gRPC promotion backends and React tools serving campaigns across more than 13 markets.
+  \item Worked on seller analytics and creator systems backed by ClickHouse and Hive, including Campaign Workbench and video diagnosis products.
+\end{itemize}
+
+\company{Compoze}{Singapore}{Jan 2025 -- Dec 2025}
+\role{Founder}{Built alongside TikTok}
+\begin{itemize}
+  \item Built and ran a one-person AI solutions company. I handled discovery, scoping, pricing, delivery, and client training.
+  \item Shipped retrieval-augmented chat products with LlamaIndex, FastAPI, Next.js, and LlamaCloud. A client acquired the company at the end of 2025.
+\end{itemize}
+
+\vspace{3pt}
+\noindent\textbf{Earlier experience}
+
+\earlier{Binance}{Payments Engineering Intern}{TypeScript and React payment experiences for Crypto Box and checkout systems on a platform serving more than 128 million users}{Aug -- Nov 2023}
+\earlier{Thought Machine}{Client Engineering Intern}{Python tooling and tailored core-banking delivery}{May -- Aug 2023}
+\earlier{Tanso, Munich}{Full-stack Engineering Intern}{TypeScript and Next.js carbon-accounting product}{Jul -- Dec 2022}
+\earlier{DBS Bank}{Backend Engineering Intern}{Java and Spring Boot transaction-banking services}{May -- Jul 2022}
+
+\section{Technical Skills}
+
+\textbf{AI systems:} MCP, A2A, LangGraph, LlamaIndex, RAG, agentic workflows\\[2pt]
+\textbf{Backend:} Go, TypeScript, Python, Java, gRPC, REST, Kafka, Redis\\[2pt]
+\textbf{Data and infrastructure:} MySQL, PostgreSQL, ClickHouse, Hive, Docker, Kubernetes, AWS\\[2pt]
+\textbf{Product:} React, Next.js, distributed systems, client delivery, technical scoping
+
+\section{Education}
+
+\company{National University of Singapore}{Singapore}{Aug 2020 -- Dec 2023}
+\role{Bachelor of Computing (Honours), Computer Science}{AI and Software Engineering}
+\begin{itemize}
+  \item NUS Overseas Colleges in Munich. Teaching assistant and Student Mentor Award recipient; President of the NUS Fintech Society.
+\end{itemize}
+
+\end{document}

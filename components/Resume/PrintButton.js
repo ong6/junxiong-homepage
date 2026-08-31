@@ -1,14 +1,16 @@
 import { Button } from "@chakra-ui/react";
-import { IoPrint } from "react-icons/io5";
+import { FiDownload } from "react-icons/fi";
 
-const PrintButton = () => (
+const PrintButton = (props) => (
 	<Button
-		className="print-hide"
-		leftIcon={<IoPrint />}
+		as="a"
+		href="/resume/Ong-Jun-Xiong-Resume.pdf"
+		download
+		leftIcon={<FiDownload />}
 		colorScheme="teal"
 		size="sm"
-		onClick={() => window.print()}>
-		Save as PDF / print
+		{...props}>
+		Download PDF
 	</Button>
 );
 

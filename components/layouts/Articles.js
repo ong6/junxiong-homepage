@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import Head from "next/head";
 import { GridItemStyle } from "../GridItem";
 
@@ -13,14 +13,19 @@ const variants = {
 // homepage renders without either and keeps the defaults.
 const Layout = ({ children, title, description }) => {
 	const pageTitle = title ? `${title} — Ong Jun Xiong` : null;
+	const reduceMotion = useReducedMotion();
 
 	return (
 		<motion.article
-			initial="hidden"
+			initial={false}
 			animate="enter"
-			exit="exit"
+			exit={reduceMotion ? undefined : "exit"}
 			variants={variants}
-			transition={{ duration: 0.4, type: "easeInOut" }}
+			transition={
+				reduceMotion
+					? { duration: 0 }
+					: { duration: 0.25, type: "easeInOut" }
+			}
 			style={{ position: "relative" }}>
 			<>
 				{(pageTitle || description) && (

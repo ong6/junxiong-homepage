@@ -1,22 +1,23 @@
-import { Box, Heading, useColorModeValue } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 
-const TermHeading = ({ children, ...props }) => (
-	<Heading
-		as="h2"
-		fontFamily="'JetBrains Mono', monospace"
-		fontSize={18}
-		mt={3}
-		mb={4}
-		{...props}>
-		<Box
-			as="span"
-			className="term-prefix"
-			color={useColorModeValue("teal.600", "#8be9b6")}
-			fontWeight={700}>
-			:/${" "}
-		</Box>
-		{children}
-	</Heading>
+const TermHeading = ({ children, kicker = "Selected signal", ...props }) => (
+	<Box {...props}>
+		<Flex align="center" gap={3} mb={2}>
+			<Box w="7px" h="7px" bg="mint.500" transform="rotate(45deg)" aria-hidden="true" />
+			<Text
+				fontFamily="var(--font-mono)"
+				fontSize="10px"
+				fontWeight="700"
+				letterSpacing=".11em"
+				textTransform="uppercase"
+				color="text.muted">
+				{kicker}
+			</Text>
+		</Flex>
+		<Heading as="h2" fontSize={{ base: "32px", md: "44px" }} lineHeight="1.08">
+			{children}
+		</Heading>
+	</Box>
 );
 
 export default TermHeading;

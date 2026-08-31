@@ -27,14 +27,8 @@ const Work = () => (
 			</P>
 			<List ml={4} my={4}>
 				<ListItem>
-					<Meta>Website</Meta>
-					<Link href="https://www.thedexdao.com/" target="_blank">
-						https://www.thedexdao.com/ <ExternalLinkIcon mx="2px" />
-					</Link>
-				</ListItem>
-				<ListItem>
 					<Meta>Twitter</Meta>
-					<Link href="https://twitter.com/The_DexDAO" target="_blank">
+					<Link href="https://twitter.com/The_DexDAO" target="_blank" rel="noopener noreferrer">
 						@The_DexDAO
 						<ExternalLinkIcon mx="2px" />
 					</Link>
@@ -56,8 +50,8 @@ const Work = () => (
 			</Heading>
 
 			<div className="space-y-8">
-				<WorkImage src="/images/works/dexdao_03.png" alt="the dex dao" />
-				<WorkImage src="/images/works/dexdao_02.png" alt="the dex dao" />
+				<WorkImage src="/images/works/dexdao_03.png" alt="The Dex DAO homepage" />
+				<WorkImage src="/images/works/dexdao_02.webp" alt="The Dex DAO token dashboard" />
 				{/* <WorkImage src="/images/works/dex_01.png" alt="the dex dao" /> */}
 			</div>
 		</Box>

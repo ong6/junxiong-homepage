@@ -1,65 +1,73 @@
 import {
 	Box,
-	Divider,
 	Flex,
 	ListItem,
-	Spacer,
 	Text,
 	UnorderedList,
+	useColorModeValue,
 } from "@chakra-ui/react";
-import React from "react";
 
-export default function ResumeDetail({ detail }) {
+export default function ResumeDetail({ detail, compact = false }) {
+	const borderColor = useColorModeValue("rgba(65,54,45,0.2)", "whiteAlpha.200");
+	const muted = useColorModeValue("gray.600", "whiteAlpha.700");
+
 	return (
-		<div className="mb-2">
-			<Box
-				display="flex"
-				alignItems="center"
-				justifyContent="space-between"
-				flexDir={{ sm: "column", smmd: "row" }}>
-				<Text fontSize={18} fontWeight="bold">
+		<Box
+			as="section"
+			py={compact ? 4 : 5}
+			borderTopWidth="1px"
+			borderColor={borderColor}>
+			<Flex
+				direction={{ base: "column", smmd: "row" }}
+				justify="space-between"
+				align={{ base: "flex-start", smmd: "baseline" }}
+				gap={1}>
+				<Text as="h3" fontSize={compact ? "17px" : "20px"} fontWeight="800">
 					{detail.title}
 				</Text>
 				<Text
-					fontSize={15}
-					fontWeight="medium"
-					fontFamily="'JetBrains Mono', monospace"
-					opacity={0.7}>
+					fontFamily="var(--font-mono)"
+					fontSize="11px"
+					fontWeight="700"
+					letterSpacing="0.06em"
+					textTransform="uppercase"
+					color={muted}>
 					{detail.location}
 				</Text>
-			</Box>
-			{detail.roles.map((role, index) => (
-				<Box key={index}>
+			</Flex>
+
+			{detail.roles.map((role) => (
+				<Box key={`${detail.title}-${role.subtitle}`} mt={3}>
 					<Flex
-						alignItems="center"
-						justifyContent="space-between"
-						flexDir={{ sm: "column", smmd: "row" }}
-						mb={{ sm: 4, smmd: 1 }}>
-						<Text
-							fontSize={18}
-							fontWeight="medium"
-							fontStyle="italic"
-							textAlign={{ sm: "center", smmd: "left" }}>
+						direction={{ base: "column", smmd: "row" }}
+						justify="space-between"
+						align={{ base: "flex-start", smmd: "baseline" }}
+						gap={1}>
+						<Text as="h4" fontSize="15px" fontWeight="700">
 							{role.subtitle}
 						</Text>
 						<Text
-							fontSize={15}
-							fontWeight="medium"
-							fontFamily="'JetBrains Mono', monospace"
-							opacity={0.7}>
+							fontFamily="var(--font-mono)"
+							fontSize="11px"
+							whiteSpace="nowrap"
+							color={muted}>
 							{role.date}
 						</Text>
 					</Flex>
-					<UnorderedList pl={8} fontSize={18} fontWeight="thin" mb={2}>
-						{role.description.map((description, index) => (
-							<ListItem key={index}>{description}</ListItem>
+
+					<UnorderedList mt={2} ml={5} spacing={1.5}>
+						{role.description.map((description) => (
+							<ListItem
+								key={description}
+								fontSize="15px"
+								lineHeight="1.65"
+								opacity={0.84}>
+								{description}
+							</ListItem>
 						))}
 					</UnorderedList>
 				</Box>
 			))}
-			<Spacer pb={2} />
-			{detail.tech}
-			<Divider />
-		</div>
+		</Box>
 	);
 }

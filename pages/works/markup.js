@@ -35,7 +35,7 @@ const Work = () => (
 					<Meta>Presentation Slides</Meta>
 					<Link
 						href="https://docs.google.com/presentation/d/1Sp1yHuupdsB_QyIpKAaQisAKY6uAZsAiop0jfxhgaUM/edit?usp=sharing"
-						target="_blank">
+						target="_blank" rel="noopener noreferrer">
 						Google Slides
 						<ExternalLinkIcon mx="2px" />
 					</Link>
@@ -50,15 +50,13 @@ const Work = () => (
 				</ListItem>
 			</List>
 
-			{/* <Heading as="h3" fontSize={16} my={8}>
+			<Heading as="h3" fontSize={16} my={8}>
 				<Center>Project Showcase</Center>
 			</Heading>
 
 			<div className="space-y-8">
-				<WorkImage src="/images/works/amuze_03.png" alt="amuze" />
-				<WorkImage src="/images/works/amuze_01.png" alt="amuze" />
-				<WorkImage src="/images/works/amuze_02.png" alt="amuze" />
-			</div> */}
+				<WorkImage src="/images/works/markup_01.png" alt="Markup question-generation interface" />
+			</div>
 		</Box>
 	</Layout>
 );

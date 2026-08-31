@@ -25,7 +25,7 @@ import thumbMarkup from "../public/images/works/markup_01.png";
 import thumbVitalvision from "../public/images/works/vitalvision_01.png";
 import thumbCodeParty from "../public/images/works/codeparty_01.png";
 import thumbDexDao from "../public/images/works/dexdao_01.png";
-import thumbHandsfree from "../public/images/works/handsfree_01.gif";
+import thumbHandsfree from "../public/images/works/handsfree_01.webp";
 
 const passionProjects = [
 	{
@@ -151,13 +151,13 @@ const openSourceContributions = [
 const TermHeading = ({ children, suffix }) => (
 	<Heading
 		as="h2"
-		fontFamily="'JetBrains Mono', monospace"
+		fontFamily="var(--font-mono)"
 		fontSize={18}
 		mt={3}
 		mb={4}>
 		<Box
 			as="span"
-			color={useColorModeValue("teal.600", "#8be9b6")}
+			color={useColorModeValue("mint.700", "mint.300")}
 			fontWeight={700}>
 			:/${" "}
 		</Box>
@@ -174,7 +174,7 @@ const TermHeading = ({ children, suffix }) => (
 const GroupHeading = ({ children }) => (
 	<Heading
 		as="h3"
-		fontFamily="'JetBrains Mono', monospace"
+		fontFamily="var(--font-mono)"
 		fontSize={15}
 		fontWeight={500}
 		opacity={0.7}

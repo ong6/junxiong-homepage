@@ -41,7 +41,8 @@ const extracurricular = [
 							href={
 								"https://fintechlab.nus.edu.sg/nus-fintech-society-blockchain-department-project-showcase/"
 							}
-							target="_blank">
+							target="_blank"
+							rel="noopener noreferrer">
 							present
 						</Link>{" "}
 						and advocate our DAO project on a global stage during Singapore

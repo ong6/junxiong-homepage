@@ -1,9 +1,9 @@
 import { Badge, Box, Flex, Text, useColorModeValue } from "@chakra-ui/react";
 
 export default function Timeline({ items }) {
-	const railColor = useColorModeValue("rgba(65,54,45,0.20)", "whiteAlpha.300");
-	const nodeIdle = useColorModeValue("rgba(65,54,45,0.35)", "whiteAlpha.500");
-	const pageBg = useColorModeValue("#EEE2DC", "#202023");
+	const railColor = useColorModeValue("rgba(26,36,32,.18)", "rgba(230,235,232,.18)");
+	const nodeIdle = useColorModeValue("rgba(26,36,32,.36)", "rgba(230,235,232,.38)");
+	const pageBg = useColorModeValue("#F1EEE6", "#0E1512");
 
 	// Single source of truth for the timeline geometry. `--rail-x` is the centre
 	// line of the rail, measured from the container's border box; the nodes are
@@ -51,15 +51,15 @@ export default function Timeline({ items }) {
 							h={size}
 							transform="translate(-50%, -50%)"
 							borderRadius="full"
-							bg={isCurrent ? "teal.400" : pageBg}
+							bg={isCurrent ? "mint.400" : pageBg}
 							border="1px solid"
-							borderColor={isCurrent ? "teal.400" : nodeIdle}
-							boxShadow={isCurrent ? "0 0 0 4px rgba(56,178,172,0.18)" : "none"}
+							borderColor={isCurrent ? "mint.400" : nodeIdle}
+							boxShadow={isCurrent ? "0 0 0 4px rgba(47,167,120,.18)" : "none"}
 						/>
 
 						<Flex align="center" wrap="wrap" gap={2.5}>
 							<Text
-								fontFamily="'JetBrains Mono', monospace"
+								fontFamily="var(--font-mono)"
 								fontSize="11px"
 								fontWeight="700"
 								letterSpacing="0.07em"
@@ -68,7 +68,7 @@ export default function Timeline({ items }) {
 								{row.period}
 							</Text>
 							{isCurrent && (
-								<Badge variant="subtle" colorScheme="teal" fontSize="9px">
+								<Badge variant="subtle" colorScheme="green" fontSize="9px">
 									current
 								</Badge>
 							)}
@@ -82,7 +82,7 @@ export default function Timeline({ items }) {
 						<Text fontWeight="bold" fontSize="17px" mt={1}>
 							{row.title}
 						</Text>
-						<Text fontSize="15px" lineHeight="1.7" opacity={0.75} mt={1.5}>
+						<Text fontSize="15px" lineHeight="1.7" color="text.muted" mt={1.5}>
 							{row.blurb}
 						</Text>
 					</Box>

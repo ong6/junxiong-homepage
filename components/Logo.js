@@ -25,12 +25,12 @@ const Logo = () => {
 	const codeImg = `/images/Brackets${useColorModeValue("", "-dark")}.png`;
 
 	return (
-		<Link href="/">
+		<Link href="/" aria-label="Ong Jun Xiong — home">
 			<LogoBox>
-				<Image src={codeImg} width={20} height={20} alt="logo" />
+				<Image src={codeImg} width={20} height={20} alt="" />
 				<Text
 					color={useColorModeValue("gray.800", "whiteAlpha.900")}
-					fontFamily='M PLUS Rounded 1c", sans-serif'
+					fontFamily="var(--font-sans)"
 					fontWeight="bold"
 					ml={3}>
 					Jun Xiong

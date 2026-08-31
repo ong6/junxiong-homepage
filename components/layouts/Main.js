@@ -1,4 +1,4 @@
-import { Box, Container } from "@chakra-ui/react";
+import { Box, Container, Link } from "@chakra-ui/react";
 import Head from "next/head";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
@@ -7,9 +7,9 @@ export const SITE_URL = "https://junxiong.dev";
 
 export const DEFAULT_TITLE = "Ong Jun Xiong — AI Infrastructure & Backend Engineer";
 export const DEFAULT_DESCRIPTION =
-	"Ong Jun Xiong — software engineer at TikTok in Singapore working on AI infrastructure and backend platforms. Selected work, resume and how to reach me.";
+	"Ong Jun Xiong is an AI infrastructure engineer at TikTok in Singapore, building production agent platforms and backend systems. Selected work, experience, and contact.";
 
-const OG_IMAGE = `${SITE_URL}/images/junxiong.png`;
+const OG_IMAGE = `${SITE_URL}/images/og-card.jpg`;
 
 // One canonical per route. Strip the hash and query so `/#selected-work` and
 // `/works?x=1` do not become separate canonicals, and keep the apex host with
@@ -65,7 +65,7 @@ const Main = ({ children, router }) => {
 	const canonical = canonicalFor(router?.asPath);
 
 	return (
-		<Box as="main" pb={8} overflowX="hidden">
+		<Box pb={8} overflowX="hidden">
 			<Head>
 				<meta name="apple-mobile-web-app-capable" content="yes" />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -82,14 +82,20 @@ const Main = ({ children, router }) => {
 				<meta key="og:description" property="og:description" content={DEFAULT_DESCRIPTION} />
 				<meta property="og:url" content={canonical} />
 				<meta property="og:image" content={OG_IMAGE} />
-				<meta property="og:image:width" content="2459" />
-				<meta property="og:image:height" content="2459" />
-				<meta property="og:image:alt" content="Ong Jun Xiong" />
-				<meta name="twitter:card" content="summary" />
+				<meta property="og:image:width" content="1200" />
+				<meta property="og:image:height" content="630" />
+				<meta
+					property="og:image:alt"
+					content="Ong Jun Xiong — AI infrastructure and backend engineer"
+				/>
+				<meta name="twitter:card" content="summary_large_image" />
 				<meta name="twitter:title" content={DEFAULT_TITLE} />
 				<meta name="twitter:description" content={DEFAULT_DESCRIPTION} />
 				<meta name="twitter:image" content={OG_IMAGE} />
-				<meta name="twitter:image:alt" content="Ong Jun Xiong" />
+				<meta
+					name="twitter:image:alt"
+					content="Ong Jun Xiong — AI infrastructure and backend engineer"
+				/>
 				<link rel="canonical" href={canonical} />
 				<link rel="icon" href="/favicon.ico" />
 				<title>{DEFAULT_TITLE}</title>
@@ -99,9 +105,27 @@ const Main = ({ children, router }) => {
 				/>
 			</Head>
 
+			<Link
+				href="#main-content"
+				position="fixed"
+				top={3}
+				left={3}
+				zIndex={2000}
+				px={4}
+				py={2.5}
+				borderRadius="md"
+				bg="gray.900"
+				color="white"
+				fontWeight="700"
+				transform="translateY(-160%)"
+				transition="transform 0.15s ease"
+				_focus={{ transform: "translateY(0)", outline: "3px solid", outlineColor: "mint.300" }}>
+				Skip to content
+			</Link>
+
 			<Navbar path={router.asPath} />
 
-			<Container maxW="container.md" pt={14}>
+			<Container as="main" id="main-content" maxW="1120px" pt={14}>
 				{children}
 
 				<Footer />

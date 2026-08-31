@@ -29,7 +29,7 @@ const Work = () => (
 			<List ml={4} my={4}>
 				<ListItem>
 					<Meta>Website</Meta>
-					<Link href="https://markbind.org/" target="_blank">
+					<Link href="https://markbind.org/" target="_blank" rel="noopener noreferrer">
 						https://markbind.org/ <ExternalLinkIcon mx="2px" />
 					</Link>
 				</ListItem>
@@ -46,14 +46,14 @@ const Work = () => (
 						<Meta>Contributions</Meta>
 						<Link
 							href="https://github.com/ong6/oss-progress-report/blob/main/nus-oss/markbind.md"
-							target="_blank">
+							target="_blank" rel="noopener noreferrer">
 							github.com/ong6/oss-progress-report/blob/main/nus-oss/markbind.md
 							<ExternalLinkIcon mx="2px" />
 						</Link>
 					</ListItem>
 					<ListItem></ListItem>
 					<Meta>Source</Meta>
-					<Link href="https://github.com/MarkBind/markbind" target="_blank">
+					<Link href="https://github.com/MarkBind/markbind" target="_blank" rel="noopener noreferrer">
 						github.com/MarkBind/markbind
 						<ExternalLinkIcon mx="2px" />
 					</Link>
@@ -64,8 +64,8 @@ const Work = () => (
 				<Center>Project Showcase</Center>
 			</Heading>
 			<div className="space-y-8">
-				<WorkImage src="/images/works/markbind_02.png" alt="Markbind" />
-				<WorkImage src="/images/works/markbind_03.png" alt="Markbind" />
+				<WorkImage src="/images/works/markbind_02.png" alt="MarkBind documentation homepage" />
+				<WorkImage src="/images/works/markbind_03.png" alt="MarkBind authoring interface" />
 			</div>
 		</Box>
 	</Layout>

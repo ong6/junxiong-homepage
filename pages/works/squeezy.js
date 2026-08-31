@@ -30,13 +30,13 @@ const Work = () => (
 			<List ml={4} my={4}>
 				<ListItem>
 					<Meta>Website</Meta>
-					<Link href="https://linktr.ee/projectsqueezy" target="_blank">
+					<Link href="https://linktr.ee/projectsqueezy" target="_blank" rel="noopener noreferrer">
 						https://linktr.ee/projectsqueezy <ExternalLinkIcon mx="2px" />
 					</Link>
 				</ListItem>
 				<ListItem>
 					<Meta>Poster</Meta>
-					<Link href="https://i.imgur.com/ZZ92PxS.jpg" target="_blank">
+					<Link href="https://i.imgur.com/ZZ92PxS.jpg" target="_blank" rel="noopener noreferrer">
 						Project Squeezy Poster
 						<ExternalLinkIcon mx="2px" />
 					</Link>
@@ -45,7 +45,7 @@ const Work = () => (
 					<Meta>Showcase Booth</Meta>
 					<Link
 						href="https://uvents.nus.edu.sg/event/make2022/module/MAK2022/project/16"
-						target="_blank">
+						target="_blank" rel="noopener noreferrer">
 						View us at Makerbooth 2022!
 						<ExternalLinkIcon mx="2px" />
 					</Link>
@@ -60,7 +60,7 @@ const Work = () => (
 				</ListItem>
 				<ListItem>
 					<Meta>Source</Meta>
-					<Link href="https://github.com/ong6/squeezy_app" target="_blank">
+					<Link href="https://github.com/ong6/squeezy_app" target="_blank" rel="noopener noreferrer">
 						github.com/ong6/squeezy_app
 						<ExternalLinkIcon mx="2px" />
 					</Link>
@@ -72,10 +72,11 @@ const Work = () => (
 			</Heading>
 
 			<div className="space-y-8">
-				<WorkImage src="/images/works/squeezy_04.png" alt="squeezy" />
+				<WorkImage src="/images/works/squeezy_04.png" alt="Project Squeezy companion app" />
 				<Box>
 					<iframe
-						alt="squeezy"
+						title="Project Squeezy demonstration"
+						loading="lazy"
 						src="https://www.youtube.com/embed/nHkiPQZP4-U"
 						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 						width="100%"
@@ -84,8 +85,8 @@ const Work = () => (
 						allowFullScreen
 					/>
 				</Box>
-				<WorkImage src="/images/works/squeezy_02.png" alt="squeezy" />
-				<WorkImage src="/images/works/squeezy_03.png" alt="squeezy" />
+				<WorkImage src="/images/works/squeezy_02.png" alt="Project Squeezy stress history view" />
+				<WorkImage src="/images/works/squeezy_03.png" alt="Project Squeezy Bluetooth pairing flow" />
 			</div>
 		</Box>
 	</Layout>

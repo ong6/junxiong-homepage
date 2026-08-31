@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Ong Jun Xiong, AI Infrastructure and Backend Engineer</title>
+  <desc id="desc">A graphite portfolio card with an editorial headline and a compact production terminal.</desc>
+  <rect width="1200" height="630" fill="#0E1512"/>
+  <rect x="28" y="28" width="1144" height="574" rx="18" fill="none" stroke="#33443C" stroke-width="2"/>
+  <circle cx="76" cy="76" r="7" fill="#71DCB2"/>
+  <text x="98" y="84" fill="#A5B3AD" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="20" font-weight="700" letter-spacing="2">JX / SINGAPORE</text>
+
+  <text x="76" y="214" fill="#F1EEE6" font-family="Arial, Helvetica, sans-serif" font-size="70" font-weight="700" letter-spacing="-3">Systems behind</text>
+  <text x="76" y="292" fill="#F1EEE6" font-family="Arial, Helvetica, sans-serif" font-size="70" font-weight="700" letter-spacing="-3">production AI.</text>
+  <text x="80" y="348" fill="#A5B3AD" font-family="Arial, Helvetica, sans-serif" font-size="25">Agent runtimes · Tool servers · Backend platforms</text>
+
+  <rect x="742" y="128" width="368" height="300" rx="22" fill="#2A332F" stroke="#415148" stroke-width="2"/>
+  <rect x="768" y="154" width="316" height="228" rx="12" fill="#08100C" stroke="#405349" stroke-width="2"/>
+  <text x="794" y="194" fill="#71DCB2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="16" font-weight="700">JX/PRODUCTION</text>
+  <text x="794" y="238" fill="#71DCB2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="14">role</text>
+  <text x="864" y="238" fill="#C9F3E1" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="14">AI infrastructure</text>
+  <text x="794" y="278" fill="#71DCB2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="14">builds</text>
+  <text x="864" y="278" fill="#C9F3E1" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="14">reliable systems</text>
+  <text x="794" y="318" fill="#71DCB2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="14">stack</text>
+  <text x="864" y="318" fill="#C9F3E1" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="14">Go · TS · Python</text>
+  <text x="794" y="358" fill="#71DCB2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="14">ready $ █</text>
+  <rect x="872" y="428" width="108" height="18" fill="#2A332F"/>
+  <rect x="824" y="445" width="204" height="10" rx="5" fill="#2A332F"/>
+
+  <text x="80" y="526" fill="#F1EEE6" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700">Ong Jun Xiong</text>
+  <text x="80" y="560" fill="#71DCB2" font-family="Arial, Helvetica, sans-serif" font-size="21">AI Infrastructure Engineer at TikTok</text>
+  <text x="1110" y="560" text-anchor="end" fill="#A5B3AD" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="18">junxiong.dev</text>
+</svg>

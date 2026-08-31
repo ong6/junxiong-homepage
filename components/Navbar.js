@@ -1,139 +1,132 @@
 import Logo from "./Logo";
 import NextLink from "next/link";
 import {
-	Container,
 	Box,
-	Link,
-	Stack,
-	Heading,
+	Container,
 	Flex,
+	IconButton,
+	Link,
 	Menu,
+	MenuButton,
 	MenuItem,
 	MenuList,
-	MenuButton,
-	IconButton,
+	Stack,
 	useColorModeValue,
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import ThemeToggleButton from "./ThemeToggleButton";
-import { IoLogoGithub } from "react-icons/io5";
 
-const LinkItem = ({ href, path, _target, children, ...props }) => {
-	const active = path === href;
-	const inactiveColor = useColorModeValue("gray.800", "whiteAlpha.900");
-	const activeColor = useColorModeValue("#6b46c1", "#f6ad55");
-	// #AC3B61 is only 2.75:1 on the dark background — use the theme accents.
-	const hoverColor = useColorModeValue("#AC3B61", "#ff63c3");
+const navigationLinks = [
+	{ href: "/#work", homeHref: "#work", name: "Work" },
+	{ href: "/#experience", homeHref: "#experience", name: "Experience" },
+	{ href: "/#about", homeHref: "#about", name: "About" },
+	{ href: "/resume", name: "Résumé" },
+	{ href: "/#contact", homeHref: "#contact", name: "Contact" },
+];
 
+function LinkItem({ href, active, children }) {
 	return (
 		<Link
 			as={NextLink}
 			href={href}
-			p={2}
-			px={4}
-			fontWeight="medium"
-			fontSize="lg"
-			textDecoration={active ? "underline" : "none"}
-			color={active ? activeColor : inactiveColor}
-			_hover={{ color: hoverColor }}
-			_focus={{ outline: "none" }}
-			target={_target}
-			{...props}>
+			position="relative"
+			px={2}
+			py={2}
+			fontSize="13px"
+			fontWeight="650"
+			color={active ? "page.text" : "text.muted"}
+			textDecoration="none"
+			_after={{
+				content: '""',
+				position: "absolute",
+				left: 2,
+				right: 2,
+				bottom: "4px",
+				h: "1px",
+				bg: "mint.500",
+				transform: active ? "scaleX(1)" : "scaleX(0)",
+				transformOrigin: "left",
+				transition: "transform 160ms ease",
+			}}
+			_hover={{ color: "page.text", textDecoration: "none", _after: { transform: "scaleX(1)" } }}>
 			{children}
 		</Link>
 	);
-};
+}
 
-const Navbar = (props) => {
-	const { path } = props;
-
-	const navigationLinks = [
-		{
-			href: "/resume",
-			name: "Resume",
-		},
-		{
-			href: "/hobbies",
-			name: "Hobbies",
-		},
-		{
-			href: "/works",
-			name: "University work",
-		},
-	];
+const Navbar = ({ path = "/", ...props }) => {
+	const onHome = path === "/" || path.startsWith("/#");
+	const navBg = useColorModeValue("rgba(241,238,230,.86)", "rgba(14,21,18,.86)");
+	const menuBg = useColorModeValue("warm.50", "graphite.800");
 
 	return (
 		<Box
 			position="fixed"
 			as="nav"
+			top={0}
 			w="100%"
-			bg={useColorModeValue("rgba(237, 198, 182, 0.20)", "#202023")}
-			css={{ backdropFilter: "blur(10px)" }}
-			zIndex={1}
+			bg={navBg}
+			borderBottom="1px solid"
+			borderColor="border.subtle"
+			css={{ backdropFilter: "blur(16px) saturate(140%)" }}
+			zIndex={20}
 			{...props}>
 			<Container
 				display="flex"
-				p={2}
-				maxW="container.lg"
-				wrap="wrap"
+				px={{ base: 3, md: 6 }}
+				py={2}
+				maxW="1120px"
 				align="center"
 				justify="space-between">
-				<Flex align="center" mr={5}>
-					<Heading as="h1" size="lg" letterSpacing={"tighter"}>
-						<Logo />
-					</Heading>
-				</Flex>
+				<Box flexShrink={0} mr={{ base: 2, md: 6 }}>
+					<Logo />
+				</Box>
 
 				<Stack
-					direction={{ base: "column", md: "row" }}
+					direction="row"
 					display={{ base: "none", md: "flex" }}
-					width={{ base: "full", md: "auto" }}
 					alignItems="center"
-					flexGrow={1}
-					mt={{ base: 4, md: 0 }}>
-					{navigationLinks.map((link) => (
-						<LinkItem href={link.href} path={path} key={link.name}>
-							{link.name}
-						</LinkItem>
-					))}
-					<LinkItem
-						_target="_blank"
-						href="https://github.com/ong6/junxiong-homepage"
-						path={path}
-						display="inline-flex"
-						alignItems="center"
-						style={{ gap: 4 }}
-						pl={2}>
-						<IoLogoGithub />
-						Source
-					</LinkItem>
+					spacing={{ md: 2, lg: 4 }}
+					flex="1"
+					justify="flex-end"
+					mr={3}>
+					{navigationLinks.map((link) => {
+						const href = onHome && link.homeHref ? link.homeHref : link.href;
+						const active = link.href === "/resume" && path.startsWith("/resume");
+						return (
+							<LinkItem href={href} active={active} key={link.name}>
+								{link.name}
+							</LinkItem>
+						);
+					})}
 				</Stack>
 
-				<Box flex={1} align="right">
+				<Flex align="center" gap={2}>
 					<ThemeToggleButton />
-					<Box ml={2} display={{ base: "inline-block", md: "none" }}>
+					<Box display={{ base: "block", md: "none" }}>
 						<Menu isLazy id="navbar-menu">
 							<MenuButton
 								as={IconButton}
 								icon={<HamburgerIcon />}
 								variant="outline"
-								aria-label="Options"
+								borderColor="border.subtle"
+								minW="44px"
+								h="44px"
+								aria-label="Open navigation menu"
 							/>
-							<MenuList>
-								{navigationLinks.map((link) => (
-									<MenuItem as={NextLink} href={link.href} key={link.name}>
-										{link.name}
-									</MenuItem>
-								))}
-								<MenuItem
-									as={Link}
-									href="https://github.com/ong6/junxiong-homepage">
-									View Source
-								</MenuItem>
+							<MenuList bg={menuBg} borderColor="border.subtle" boxShadow="0 18px 48px rgba(0,0,0,.18)">
+								{navigationLinks.map((link) => {
+									const href = onHome && link.homeHref ? link.homeHref : link.href;
+									return (
+										<MenuItem as={NextLink} href={href} key={link.name} bg="transparent" _hover={{ bg: "surface.quiet" }}>
+											{link.name}
+										</MenuItem>
+									);
+								})}
 							</MenuList>
 						</Menu>
 					</Box>
-				</Box>
+				</Flex>
 			</Container>
 		</Box>
 	);

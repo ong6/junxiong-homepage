@@ -30,7 +30,7 @@ const Work = () => (
 					<Meta>Source</Meta>
 					<Link
 						href="https://github.com/ong6/youtube-handsfree"
-						target="_blank">
+						target="_blank" rel="noopener noreferrer">
 						github.com/ong6/youtube-handsfree
 						<ExternalLinkIcon mx="2px" />
 					</Link>
@@ -51,8 +51,8 @@ const Work = () => (
 
 			<div className="space-y-8">
 				<WorkImage
-					src="/images/works/handsfree_01.gif"
-					alt="youtube handsfree"
+					src="/images/works/handsfree_01.webp"
+					alt="YouTube Handsfree gesture controls in action"
 				/>
 			</div>
 		</Box>

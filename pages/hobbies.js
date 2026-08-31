@@ -54,7 +54,10 @@ const Hobbies = () => (
 				<Paragraph>
 					I keep a few side projects going outside of work. Right now that
 					means a{" "}
-					<Link href="https://github.com/ong6/sg-property-analysis" target="_blank">
+					<Link
+						href="https://github.com/ong6/sg-property-analysis"
+						target="_blank"
+						rel="noopener noreferrer">
 						Singapore property data-analysis project
 					</Link>
 					, building agent tooling for myself, and running my personal notes

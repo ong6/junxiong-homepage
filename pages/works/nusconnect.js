@@ -30,7 +30,7 @@ const Work = () => (
 			<List ml={4} my={4}>
 				<ListItem>
 					<Meta>Website</Meta>
-					<Link href="https://nus-connect.vercel.app/" target="_blank">
+					<Link href="https://nus-connect.vercel.app/" target="_blank" rel="noopener noreferrer">
 						https://nus-connect.vercel.app/ <ExternalLinkIcon mx="2px" />
 					</Link>
 				</ListItem>
@@ -38,7 +38,7 @@ const Work = () => (
 					<Meta>Documentation</Meta>
 					<Link
 						href="https://notawakestudio.github.io/NUSConnect-Docs/"
-						target="_blank">
+						target="_blank" rel="noopener noreferrer">
 						https://notawakestudio.github.io/NUSConnect-Docs/
 						<ExternalLinkIcon mx="2px" />
 					</Link>
@@ -47,7 +47,7 @@ const Work = () => (
 					<Meta>Presentation</Meta>
 					<Link
 						href="https://www.youtube.com/watch?v=lYMwwFo2hoU"
-						target="_blank">
+						target="_blank" rel="noopener noreferrer">
 						What is NUS Connect?
 						<ExternalLinkIcon mx="2px" />
 					</Link>
@@ -56,7 +56,7 @@ const Work = () => (
 					<Meta>Award</Meta>
 					<Link
 						href="https://credentials.nus.edu.sg/a2be1551-4093-4a45-850d-570cd13f5437"
-						target="_blank">
+						target="_blank" rel="noopener noreferrer">
 						Achieved Artemis (Extreme) in Orbital
 						<ExternalLinkIcon mx="2px" />
 					</Link>
@@ -75,7 +75,7 @@ const Work = () => (
 					<Meta>Source</Meta>
 					<Link
 						href="https://github.com/notawakestudio/NUSConnect"
-						target="_blank">
+						target="_blank" rel="noopener noreferrer">
 						github.com/notawakestudio/NUSConnect
 						<ExternalLinkIcon mx="2px" />
 					</Link>
@@ -87,10 +87,11 @@ const Work = () => (
 			</Heading>
 
 			<div className="space-y-8">
-				<WorkImage src="/images/works/nusconnect_02.png" alt="Nusconnect" />
+				<WorkImage src="/images/works/nusconnect_02.png" alt="NUSConnect course forum" />
 				<Box>
 					<iframe
-						alt="Nusconnect"
+						title="NUSConnect product demonstration"
+						loading="lazy"
 						src="https://www.youtube.com/embed/5p1V0kUZNzQ"
 						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 						width="100%"
@@ -99,7 +100,7 @@ const Work = () => (
 						allowFullScreen
 					/>
 				</Box>
-				<WorkImage src="/images/works/nusconnect_01.png" alt="Nusconnect" />
+				<WorkImage src="/images/works/nusconnect_01.webp" alt="NUSConnect learning dashboard" />
 			</div>
 		</Box>
 	</Layout>

@@ -31,7 +31,7 @@ const Work = () => (
 			<List ml={4} my={4}>
 				<ListItem>
 					<Meta>Website</Meta>
-					<Link href="https://fintechsociety.comp.nus.edu.sg/" target="_blank">
+					<Link href="https://fintechsociety.comp.nus.edu.sg/" target="_blank" rel="noopener noreferrer">
 						https://fintechsociety.comp.nus.edu.sg/
 						<ExternalLinkIcon mx="2px" />
 					</Link>
@@ -53,11 +53,11 @@ const Work = () => (
 			<div className="space-y-8">
 				<WorkImage
 					src="/images/works/fintechwebsite_01.png"
-					alt="fintech website"
+					alt="NUS FinTech Society homepage"
 				/>
 				<WorkImage
 					src="/images/works/fintechwebsite_02.png"
-					alt="fintech website"
+					alt="NUS FinTech Society project showcase"
 				/>
 			</div>
 		</Box>

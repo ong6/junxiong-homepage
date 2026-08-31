@@ -34,7 +34,7 @@ const Work = () => (
 					<Meta>Website</Meta>
 					<Link
 						href="https://semperstroke-dashboard.vercel.app/landing"
-						target="_blank">
+						target="_blank" rel="noopener noreferrer">
 						https://semperstroke-dashboard.vercel.app/landing{" "}
 						<ExternalLinkIcon mx="2px" />
 					</Link>
@@ -43,7 +43,7 @@ const Work = () => (
 					<Meta>Featured on: </Meta>
 					<Link
 						href="https://www.instagram.com/p/CxaKYDbBjTK/?img_index=1"
-						target="_blank">
+						target="_blank" rel="noopener noreferrer">
 						Instagram
 						<ExternalLinkIcon mx="2px" />
 					</Link>
@@ -52,7 +52,7 @@ const Work = () => (
 					<Meta>Featured on:</Meta>
 					<Link
 						href="https://www.comp.nus.edu.sg/news/2023-medical-grand-challenge/"
-						target="_blank">
+						target="_blank" rel="noopener noreferrer">
 						NUS Official Website
 						<ExternalLinkIcon mx="2px" />
 					</Link>
@@ -72,7 +72,7 @@ const Work = () => (
 				<Center>Project Showcase</Center>
 			</Heading>
 			<div className="space-y-8">
-				<WorkImage src="/images/works/vitalvision_02.jpg" alt="Vital Vision" />
+				<WorkImage src="/images/works/vitalvision_02.webp" alt="Vital Vision clinician dashboard" />
 			</div>
 		</Box>
 	</Layout>

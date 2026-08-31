@@ -28,16 +28,10 @@ const Work = () => (
 			</P>
 			<List ml={4} my={4}>
 				<ListItem>
-					<Meta>Website</Meta>
-					<Link href="https://imposter-dev.tk/" target="_blank">
-						https://imposter-dev.tk/ <ExternalLinkIcon mx="2px" />
-					</Link>
-				</ListItem>
-				<ListItem>
 					<Meta>Documentation</Meta>
 					<Link
 						href="https://ay2021s2-cs2103t-t12-4.github.io/tp/"
-						target="_blank">
+						target="_blank" rel="noopener noreferrer">
 						https://ay2021s2-cs2103t-t12-4.github.io/tp/
 						<ExternalLinkIcon mx="2px" />
 					</Link>
@@ -46,7 +40,7 @@ const Work = () => (
 					<Meta>Source</Meta>
 					<Link
 						href="https://github.com/AY2021S2-CS2103T-T12-4/tp"
-						target="_blank">
+						target="_blank" rel="noopener noreferrer">
 						github.com/ong6/imposter
 						<ExternalLinkIcon mx="2px" />
 					</Link>
@@ -66,8 +60,8 @@ const Work = () => (
 			</Heading>
 
 			<div className="space-y-8">
-				<WorkImage src="/images/works/imposter_02.png" alt="imposter" />
-				<WorkImage src="/images/works/imposter_03.png" alt="imposter" />
+				<WorkImage src="/images/works/imposter_02.webp" alt="imPoster API request workspace" />
+				<WorkImage src="/images/works/imposter_03.png" alt="imPoster API response viewer" />
 			</div>
 		</Box>
 	</Layout>

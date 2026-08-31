@@ -32,7 +32,7 @@ const Work = () => (
 					<Meta>Website</Meta>
 					<Link
 						href="https://nus-fintech-society.github.io/BC_DAO_frontend/#/"
-						target="_blank">
+						target="_blank" rel="noopener noreferrer">
 						https://nus-fintech-society.github.io/BC_DAO_frontend/#/
 						<ExternalLinkIcon mx="2px" />
 					</Link>
@@ -41,7 +41,7 @@ const Work = () => (
 					<Meta>Source</Meta>
 					<Link
 						href="https://github.com/NUS-Fintech-Society/BC_DAO_frontend"
-						target="_blank">
+						target="_blank" rel="noopener noreferrer">
 						https://github.com/NUS-Fintech-Society/BC_DAO_frontend
 						<ExternalLinkIcon mx="2px" />
 					</Link>
@@ -50,7 +50,7 @@ const Work = () => (
 					<Meta>Presentation</Meta>
 					<Link
 						href="https://fintechlab.nus.edu.sg/nus-fintech-society-blockchain-department-project-showcase/"
-						target="_blank">
+						target="_blank" rel="noopener noreferrer">
 						Blockchain DAO Project Showcase
 						<ExternalLinkIcon mx="2px" />
 					</Link>
@@ -70,8 +70,8 @@ const Work = () => (
 			</Heading>
 
 			<div className="space-y-8">
-				<WorkImage src="/images/works/abcdao_01.png" alt="abcdao" />
-				<WorkImage src="/images/works/abcdao_02.png" alt="abcdao" />
+				<WorkImage src="/images/works/abcdao_01.png" alt="ABCDAO governance homepage" />
+				<WorkImage src="/images/works/abcdao_02.png" alt="ABCDAO proposal voting interface" />
 			</div>
 		</Box>
 	</Layout>

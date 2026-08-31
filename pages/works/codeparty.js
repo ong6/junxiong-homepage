@@ -11,7 +11,6 @@ import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { Title, WorkImage, Meta } from "../../components/Work";
 import P from "../../components/Paragraph";
 import Layout from "../../components/layouts/Articles";
-import Document from "./../_document";
 
 // https://www.figma.com/file/rWDRhrZmCD2SsVzisNQHH6/PeerPrep?type=design&node-id=1509-1035&mode=design&t=0ueA4Qsn7kLyWJzQ-0
 // https://docs.google.com/presentation/d/1CbiiCUi9Sq9yVgMjhTKZeJQ3E5jKd1cQE_3clSYkWiY/edit?usp=sharing
@@ -35,16 +34,10 @@ const Work = () => (
 			</P>
 			<List ml={4} my={4}>
 				<ListItem>
-					<Meta>Website</Meta>
-					<Link href="https://www.codeparty.org/" target="_blank">
-						https://www.codeparty.org/ <ExternalLinkIcon mx="2px" />
-					</Link>
-				</ListItem>
-				<ListItem>
 					<Meta>Figma</Meta>
 					<Link
 						href="https://www.figma.com/file/rWDRhrZmCD2SsVzisNQHH6/PeerPrep?type=design&node-id=1509-1035&mode=design&t=0ueA4Qsn7kLyWJzQ-0"
-						target="_blank">
+						target="_blank" rel="noopener noreferrer">
 						Figma
 						<ExternalLinkIcon mx="2px" />
 					</Link>
@@ -53,7 +46,7 @@ const Work = () => (
 					<Meta>Presentation Slides</Meta>
 					<Link
 						href="https://docs.google.com/presentation/d/1CbiiCUi9Sq9yVgMjhTKZeJQ3E5jKd1cQE_3clSYkWiY/edit?usp=sharing"
-						target="_blank">
+						target="_blank" rel="noopener noreferrer">
 						Google Slides
 						<ExternalLinkIcon mx="2px" />
 					</Link>
@@ -62,7 +55,7 @@ const Work = () => (
 					<Meta>Documentation</Meta>
 					<Link
 						href="https://docs.google.com/document/d/1sb4gFP5xFQs2hCUGsVNRfetcjbK61MfjpuwXIqnWCac/edit?usp=sharing"
-						target="_blank">
+						target="_blank" rel="noopener noreferrer">
 						Docs
 						<ExternalLinkIcon mx="2px" />
 					</Link>
@@ -82,8 +75,8 @@ const Work = () => (
 			</Heading>
 
 			<div className="space-y-8">
-				<WorkImage src="/images/works/codeparty_03.png" alt="codeparty" />
-				<WorkImage src="/images/works/codeparty_02.png" alt="codeparty" />
+				<WorkImage src="/images/works/codeparty_03.webp" alt="CodeParty collaborative coding workspace" />
+				<WorkImage src="/images/works/codeparty_02.png" alt="CodeParty question library" />
 			</div>
 		</Box>
 	</Layout>

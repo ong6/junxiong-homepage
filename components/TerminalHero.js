@@ -1,200 +1,252 @@
-import { Box, Button, Flex, Link, useColorModeValue } from "@chakra-ui/react";
+import {
+	Box,
+	Button,
+	Flex,
+	Heading,
+	Stack,
+	Text,
+	useColorModeValue,
+} from "@chakra-ui/react";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Global, css } from "@emotion/react";
 import NextLink from "next/link";
 
 const heroStyles = css`
-	@keyframes crt-type {
+	@keyframes signal-in {
 		from {
-			width: 0;
+			clip-path: inset(0 100% 0 0);
 		}
 		to {
-			width: 100%;
+			clip-path: inset(0 0 0 0);
 		}
 	}
-	@keyframes crt-blink {
+
+	@keyframes caret-pulse {
 		0%,
 		45% {
 			opacity: 1;
 		}
-		50%,
+		55%,
 		100% {
-			opacity: 0;
+			opacity: 0.15;
 		}
 	}
-	.crt-typed {
-		overflow: hidden;
-		white-space: nowrap;
-		display: inline-block;
-		vertical-align: bottom;
-		animation: crt-type 1.6s steps(24) both 0.3s;
+
+	.signal-line {
+		animation: signal-in 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 	}
-	.crt-caret {
-		animation: crt-blink 1.1s infinite;
+
+	.signal-line:nth-of-type(2) {
+		animation-delay: 120ms;
 	}
-	@media (prefers-reduced-motion: reduce) {
-		.crt-typed {
-			animation: none;
-		}
-		.crt-caret {
-			animation: none;
-		}
+
+	.signal-line:nth-of-type(3) {
+		animation-delay: 240ms;
+	}
+
+	.signal-line:nth-of-type(4) {
+		animation-delay: 360ms;
+	}
+
+	.signal-caret {
+		animation: caret-pulse 1.2s steps(1) infinite;
 	}
 `;
 
-const screenLines = [
-	{ cmd: "whoami", out: "ong jun xiong" },
-	{ cmd: "title", out: "software engineer @ tiktok" },
-	{ cmd: "focus", out: "ai infrastructure · go · typescript" },
-	{ cmd: "pwd", out: "~/singapore" },
+const systemLines = [
+	["role", "AI infrastructure engineer"],
+	["runtime", "A2A · LangGraph"],
+	["tools", "Go · MCP"],
+	["interface", "React · TypeScript"],
 ];
 
-export default function TerminalHero() {
-	const plastic = useColorModeValue(
-		"linear-gradient(180deg, #e8ddd2, #d5c8bb)",
-		"linear-gradient(180deg, #3a3a40, #2a2a2e)"
-	);
-	const plasticEdge = useColorModeValue("#c2b4a5", "#1c1c1f");
-	const standColor = useColorModeValue("#d5c8bb", "#2a2a2e");
-	const shadow = useColorModeValue(
-		"0 30px 40px -24px rgba(80, 60, 40, 0.45)",
-		"0 30px 40px -24px rgba(0, 0, 0, 0.8)"
-	);
-	const prompt = useColorModeValue("#8be9b6", "#8be9b6");
-	const brand = useColorModeValue("#7a6a5c", "#6e6a66");
+function CrtConsole() {
+	const shell = useColorModeValue("#D6D0C5", "#2A332F");
+	const shellEdge = useColorModeValue("#BBB2A4", "#0A0F0D");
+	const label = useColorModeValue("#55675F", "#A5B3AD");
 
 	return (
-		<Box pt={10} pb={6} style={{ perspective: "1200px" }}>
+		<Box
+			position="relative"
+			maxW={{ base: "440px", md: "400px" }}
+			w="100%"
+			mx={{ base: "auto", md: 0 }}
+			aria-label="A terminal showing Jun Xiong's AI infrastructure stack"
+			role="img">
+			<Box
+				position="absolute"
+				inset="8% -5% -5% 8%"
+				bg={useColorModeValue("rgba(47,167,120,.12)", "rgba(113,220,178,.08)")}
+				filter="blur(24px)"
+				aria-hidden="true"
+			/>
+			<Box
+				position="relative"
+				bg={shell}
+				border="1px solid"
+				borderColor={shellEdge}
+				borderRadius="18px 18px 12px 12px"
+				p={{ base: 3, smmd: 4 }}
+				boxShadow={useColorModeValue(
+					"0 28px 60px -34px rgba(20,30,26,.55), inset 0 1px rgba(255,255,255,.5)",
+					"0 30px 70px -30px rgba(0,0,0,.95), inset 0 1px rgba(255,255,255,.06)"
+				)}>
+				<Box
+					position="relative"
+					bg="#08100C"
+					border="1px solid #34443C"
+					borderRadius="10px"
+					overflow="hidden"
+					p={{ base: 4, smmd: 5 }}
+					minH={{ base: "224px", md: "250px" }}
+					fontFamily="var(--font-mono)"
+					fontSize={{ base: "11px", smmd: "12px" }}
+					lineHeight="1.75"
+					color="#C9F3E1"
+					textShadow="0 0 10px rgba(113,220,178,.23)"
+					boxShadow="inset 0 0 44px rgba(0,0,0,.84)">
+					<Flex justify="space-between" color="#71DCB2" mb={3} opacity={0.78}>
+						<Text as="span">JX/PRODUCTION</Text>
+						<Text as="span">● ONLINE</Text>
+					</Flex>
+					{systemLines.map(([key, value]) => (
+						<Flex key={key} className="signal-line" gap={3} whiteSpace="nowrap">
+							<Text as="span" color="#71DCB2" w="70px" flexShrink={0}>
+								{key}
+							</Text>
+							<Text as="span" overflow="hidden" textOverflow="ellipsis">
+								{value}
+							</Text>
+						</Flex>
+					))}
+					<Box mt={3} pt={3} borderTop="1px solid rgba(113,220,178,.18)">
+						<Text as="span" color="#71DCB2">
+							ready $ {" "}
+						</Text>
+						<Box
+							as="span"
+							className="signal-caret"
+							display="inline-block"
+							w="7px"
+							h="13px"
+							mb="-2px"
+							bg="#71DCB2"
+						/>
+					</Box>
+					<Box
+						position="absolute"
+						inset={0}
+						pointerEvents="none"
+						background="repeating-linear-gradient(0deg, rgba(0,0,0,.16) 0, rgba(0,0,0,.16) 1px, transparent 2px, transparent 4px)"
+					/>
+					<Box
+						position="absolute"
+						inset={0}
+						pointerEvents="none"
+						background="radial-gradient(ellipse at center, transparent 54%, rgba(0,0,0,.5) 100%)"
+					/>
+				</Box>
+				<Flex justify="space-between" align="center" pt={2} px={1} color={label}>
+					<Text
+						fontFamily="var(--font-mono)"
+						fontSize="9px"
+						fontWeight="700"
+						letterSpacing=".15em">
+						JX-26
+					</Text>
+					<Flex gap={1.5} aria-hidden="true">
+						<Box w="5px" h="5px" borderRadius="full" bg="mint.500" />
+						<Box w="5px" h="5px" borderRadius="full" bg={label} opacity={0.4} />
+					</Flex>
+				</Flex>
+			</Box>
+			<Box w="32%" h="14px" mx="auto" bg={shell} borderX="1px solid" borderColor={shellEdge} />
+			<Box
+				w="52%"
+				h="8px"
+				mx="auto"
+				bg={shell}
+				border="1px solid"
+				borderColor={shellEdge}
+				borderRadius="6px 6px 3px 3px"
+			/>
+		</Box>
+	);
+}
+
+export default function TerminalHero() {
+	const eyebrowColor = useColorModeValue("mint.700", "mint.300");
+	const solidBg = useColorModeValue("graphite.900", "mint.300");
+	const solidColor = useColorModeValue("warm.50", "graphite.900");
+	const solidHoverBg = useColorModeValue("graphite.700", "mint.200");
+
+	return (
+		<Box as="section" pt={{ base: 12, md: 20 }} pb={{ base: 16, md: 24 }}>
 			<Global styles={heroStyles} />
 			<Box
-				w="100%"
-				maxW="560px"
-				minW={0}
-				mx="auto"
-				transform="rotateX(3deg)"
-				transition="transform .4s ease"
-				_hover={{ transform: "rotateX(0deg)" }}>
-				{/* Monitor bezel */}
-				<Box
-					bg={plastic}
-					border="1px solid"
-					borderColor={plasticEdge}
-					borderRadius="26px"
-					p={{ base: 3, md: 5 }}
-					boxShadow={shadow}>
-					{/* Screen — dark glass in both color modes, like a real CRT */}
-					<Box
-						position="relative"
-						bg="#101312"
-						borderRadius="14px"
-						overflow="hidden"
-						boxShadow="inset 0 0 40px rgba(0,0,0,0.9)"
-						fontFamily="'JetBrains Mono', monospace"
-						fontSize={{ base: "12px", md: "14px" }}
-						lineHeight="1.9"
-						p={{ base: 4, md: 6 }}
-						color="#cfe8d8"
-						textShadow="0 0 6px rgba(139, 233, 182, 0.35)">
-						<Box display="flex" whiteSpace="nowrap">
-							<Box as="span" color={prompt} mr={2}>
-								:/$
-							</Box>
-							<Box as="span" className="crt-typed">
-								{screenLines[0].cmd}
-							</Box>
-						</Box>
-						<Box fontWeight="700" fontSize={{ base: "15px", md: "18px" }}>
-							{screenLines[0].out}
-						</Box>
-						{screenLines.slice(1).map((line) => (
-							<Box key={line.cmd}>
-								<Box as="span" color={prompt}>
-									:/${" "}
-								</Box>
-								{line.cmd}
-								<Box as="span" opacity={0.75}>
-									{"  →  "}
-									{line.out}
-								</Box>
-							</Box>
-						))}
-						<Box>
-							<Box as="span" color={prompt}>
-								:/${" "}
-							</Box>
-							<Box
-								as="span"
-								className="crt-caret"
-								display="inline-block"
-								w="9px"
-								h="16px"
-								mb="-2px"
-								bg={prompt}
-							/>
-						</Box>
-						{/* Scanlines */}
-						<Box
-							position="absolute"
-							inset={0}
-							pointerEvents="none"
-							background="repeating-linear-gradient(0deg, rgba(0,0,0,0.22) 0px, rgba(0,0,0,0.22) 1px, transparent 2px, transparent 4px)"
-						/>
-						{/* Vignette / glass curve */}
-						<Box
-							position="absolute"
-							inset={0}
-							pointerEvents="none"
-							background="radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.5) 100%)"
-						/>
-					</Box>
-					{/* Bezel badge */}
-					<Box
-						textAlign="center"
-						pt={2}
-						fontSize="10px"
-						letterSpacing="3px"
-						color={brand}
-						fontFamily="'JetBrains Mono', monospace">
-						JX-2026
-					</Box>
+				display="grid"
+				gridTemplateColumns={{ base: "1fr", md: "minmax(0, 1.18fr) minmax(300px, .82fr)" }}
+				gap={{ base: 12, md: 12, lg: 20 }}
+				alignItems="center">
+				<Box maxW="660px">
+					<Flex
+						align="center"
+						gap={3}
+						fontFamily="var(--font-mono)"
+						fontSize="11px"
+						fontWeight="700"
+						letterSpacing=".11em"
+						textTransform="uppercase"
+						color={eyebrowColor}
+						mb={5}>
+						<Box w="28px" h="1px" bg="currentColor" />
+						AI infrastructure engineer · TikTok · Singapore
+					</Flex>
+					<Heading
+						as="h1"
+						fontSize={{ base: "42px", smmd: "52px", lg: "68px" }}
+						lineHeight={{ base: 1.03, lg: 0.98 }}
+						letterSpacing="-.055em"
+						maxW="760px">
+						I build the systems behind production AI.
+					</Heading>
+					<Text
+						mt={{ base: 5, md: 7 }}
+						fontSize={{ base: "17px", md: "19px" }}
+						lineHeight="1.65"
+						color="text.muted"
+						maxW="620px">
+						Agent runtimes, tool servers, data platforms, and the interfaces
+						people use. I turn ambiguous operational problems into reliable
+						systems used across the US, Southeast Asia, and the UK.
+					</Text>
+					<Stack direction={{ base: "column", smmd: "row" }} spacing={3} mt={8}>
+						<Button
+							as="a"
+							href="#work"
+							rightIcon={<ArrowForwardIcon />}
+							bg={solidBg}
+							color={solidColor}
+							px={6}
+							_hover={{ transform: "translateY(-2px)", bg: solidHoverBg }}>
+							See selected work
+						</Button>
+						<Button
+							as={NextLink}
+							href="/resume"
+							variant="outline"
+							rightIcon={<ArrowForwardIcon />}
+							borderColor="border.subtle"
+							_hover={{ transform: "translateY(-2px)", bg: "surface.quiet" }}>
+							View résumé
+						</Button>
+					</Stack>
+					<Text mt={5} fontSize="13px" color="text.muted">
+						Interested in AI infrastructure, backend, and forward-deployed roles.
+					</Text>
 				</Box>
-				{/* Stand */}
-				<Box
-					w="120px"
-					h="16px"
-					mx="auto"
-					bg={standColor}
-					borderBottomRadius="8px"
-				/>
-				<Box
-					w="220px"
-					h="10px"
-					mx="auto"
-					mt="0"
-					bg={standColor}
-					borderRadius="6px"
-				/>
-				<Flex
-					mt={7}
-					gap={3}
-					justify="center"
-					direction={{ base: "column", smmd: "row" }}>
-					<Button
-						as={Link}
-						href="#selected-work"
-						colorScheme="teal"
-						w={{ base: "100%", smmd: "auto" }}
-						_hover={{ textDecoration: "none", transform: "translateY(-1px)" }}>
-						View selected work
-					</Button>
-					<Button
-						as={NextLink}
-						href="/resume"
-						variant="outline"
-						w={{ base: "100%", smmd: "auto" }}
-						_hover={{ textDecoration: "none", transform: "translateY(-1px)" }}>
-						View resume
-					</Button>
-				</Flex>
+
+				<CrtConsole />
 			</Box>
 		</Box>
 	);

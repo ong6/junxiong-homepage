@@ -33,15 +33,15 @@ const Work = () => (
 			<List ml={4} my={4}>
 				<ListItem>
 					<Meta>Website</Meta>
-					<Link href="https://amuze.vercel.app/" target="_blank">
+					<Link href="https://amuze.vercel.app/" target="_blank" rel="noopener noreferrer">
 						https://amuze.vercel.app/ <ExternalLinkIcon mx="2px" />
 					</Link>
 				</ListItem>
 				<ListItem>
 					<Meta>Presentation Slides</Meta>
 					<Link
-						href="	https://docs.google.com/presentation/d/1ELMGX2O2zSgMe_jo-t0f0Val5YJ7-Qlv/edit?usp=sharing&ouid=118156243590926955681&rtpof=true&sd=true"
-						target="_blank">
+						href="https://docs.google.com/presentation/d/1ELMGX2O2zSgMe_jo-t0f0Val5YJ7-Qlv/edit?usp=sharing&ouid=118156243590926955681&rtpof=true&sd=true"
+						target="_blank" rel="noopener noreferrer">
 						https://docs.google.com/presentation/d/1ELMGX2O2zSgMe_jo-t0f0Val5YJ7-Qlv/edit?usp=sharing&ouid=118156243590926955681&rtpof=true&sd=true
 						<ExternalLinkIcon mx="2px" />
 					</Link>
@@ -63,9 +63,9 @@ const Work = () => (
 			</Heading>
 
 			<div className="space-y-8">
-				<WorkImage src="/images/works/amuze_03.png" alt="amuze" />
-				<WorkImage src="/images/works/amuze_01.png" alt="amuze" />
-				<WorkImage src="/images/works/amuze_02.png" alt="amuze" />
+				<WorkImage src="/images/works/amuze_03.png" alt="A-Muze digital museum landing page" />
+				<WorkImage src="/images/works/amuze_01.png" alt="A-Muze collection gallery" />
+				<WorkImage src="/images/works/amuze_02.png" alt="A-Muze NFT collection details" />
 			</div>
 		</Box>
 	</Layout>
