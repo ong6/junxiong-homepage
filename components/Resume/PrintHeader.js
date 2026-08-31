@@ -51,7 +51,7 @@ export default function PrintHeader() {
 				global e-commerce operations.
 			</Text>
 
-			<Flex wrap="wrap" gapX={5} gapY={2} mt={4} fontSize="14px" fontWeight="700">
+			<Flex wrap="wrap" columnGap={5} rowGap={2} mt={4} fontSize="14px" fontWeight="700">
 				<Link href="https://junxiong.dev">junxiong.dev</Link>
 				{contactLinks.map((link) => (
 					<Link

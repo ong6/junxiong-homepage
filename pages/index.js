@@ -66,7 +66,7 @@ function Introduction() {
 						people using it: agent runtimes, tool servers, data products, and the
 						occasional two-day experiment. This is where I keep the things I have made.
 					</Text>
-					<Flex mt={6} wrap="wrap" gapX={6} gapY={3}>
+					<Flex mt={6} wrap="wrap" columnGap={6} rowGap={3}>
 						<Link href="https://github.com/ong6" target="_blank" rel="noopener noreferrer" {...utilityLinkProps}>
 							GitHub ↗
 						</Link>

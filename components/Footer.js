@@ -19,7 +19,7 @@ const Footer = () => (
 					ENGINEER · BUILDER · SINGAPORE
 				</Text>
 			</Box>
-			<Flex wrap="wrap" gapX={5} gapY={2}>
+			<Flex wrap="wrap" columnGap={5} rowGap={2}>
 				{links.map((link) => (
 					<Link
 						key={link.label}

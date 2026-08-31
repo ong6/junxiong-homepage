@@ -105,7 +105,7 @@ function GroundplaneCard() {
 						<Text color="#71DCB2">output blocked ✓</Text>
 					</Box>
 				</Box>
-				<Flex mt={4} wrap="wrap" gapX={4} gapY={1} color="#7D9187" sx={tagStyle}>
+				<Flex mt={4} wrap="wrap" columnGap={4} rowGap={1} color="#7D9187" sx={tagStyle}>
 					<Text>Argmax</Text>
 					<Text>Order</Text>
 					<Text>Aggregate</Text>
