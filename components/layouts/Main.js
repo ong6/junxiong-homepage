@@ -5,9 +5,9 @@ import Footer from "../Footer";
 
 export const SITE_URL = "https://junxiong.dev";
 
-export const DEFAULT_TITLE = "Ong Jun Xiong — AI Infrastructure & Backend Engineer";
+export const DEFAULT_TITLE = "Ong Jun Xiong | AI Infrastructure Engineer in Singapore";
 export const DEFAULT_DESCRIPTION =
-	"Ong Jun Xiong is an AI infrastructure engineer at TikTok in Singapore, building production agent platforms and backend systems. Selected work, experience, and contact.";
+	"Ong Jun Xiong is an AI infrastructure engineer at TikTok in Singapore. Explore his agent systems, backend platforms, open-source tools, and personal software projects.";
 
 const OG_IMAGE = `${SITE_URL}/images/og-card.jpg`;
 
@@ -21,13 +21,12 @@ export const canonicalFor = (asPath) => {
 };
 
 const personSchema = {
-	"@context": "https://schema.org",
 	"@type": "Person",
 	"@id": `${SITE_URL}/#person`,
 	name: "Ong Jun Xiong",
 	alternateName: ["Jun Xiong Ong", "Jun Xiong", "ong6"],
-	url: SITE_URL,
-	image: OG_IMAGE,
+	url: `${SITE_URL}/`,
+	image: `${SITE_URL}/images/junxiong.webp`,
 	jobTitle: "AI Infrastructure Engineer",
 	description: DEFAULT_DESCRIPTION,
 	worksFor: {
@@ -61,8 +60,39 @@ const personSchema = {
 	sameAs: ["https://github.com/ong6", "https://www.linkedin.com/in/junx6/"],
 };
 
+const profileSchema = {
+	"@context": "https://schema.org",
+	"@graph": [
+		{
+			"@type": "WebSite",
+			"@id": `${SITE_URL}/#website`,
+			url: `${SITE_URL}/`,
+			name: "Ong Jun Xiong",
+			alternateName: "Jun Xiong",
+			publisher: { "@id": `${SITE_URL}/#person` },
+		},
+		{
+			"@type": "ProfilePage",
+			"@id": `${SITE_URL}/#profile`,
+			url: `${SITE_URL}/`,
+			name: DEFAULT_TITLE,
+			description: DEFAULT_DESCRIPTION,
+			dateModified: "2026-08-31",
+			isPartOf: { "@id": `${SITE_URL}/#website` },
+			mainEntity: { "@id": `${SITE_URL}/#person` },
+		},
+		{
+			...personSchema,
+			mainEntityOfPage: { "@id": `${SITE_URL}/#profile` },
+		},
+	],
+};
+
 const Main = ({ children, router }) => {
 	const canonical = canonicalFor(router?.asPath);
+	const structuredData = canonical === `${SITE_URL}/`
+		? profileSchema
+		: { "@context": "https://schema.org", ...personSchema };
 
 	return (
 		<Box pb={8} overflowX="hidden">
@@ -101,7 +131,7 @@ const Main = ({ children, router }) => {
 				<title>{DEFAULT_TITLE}</title>
 				<script
 					type="application/ld+json"
-					dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+					dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
 				/>
 			</Head>
 

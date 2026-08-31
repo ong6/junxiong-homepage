@@ -1,305 +1,307 @@
 import {
 	Box,
 	Flex,
+	Grid,
 	Heading,
 	Link,
+	LinkBox,
+	LinkOverlay,
 	SimpleGrid,
 	Stack,
 	Text,
 	useColorModeValue,
 } from "@chakra-ui/react";
-import { ExternalLinkIcon } from "@chakra-ui/icons";
+import Image from "next/image";
+import NextLink from "next/link";
+import codePartyImage from "../public/images/works/codeparty_03.webp";
+import handsfreeImage from "../public/images/works/handsfree-card.webp";
+import nusConnectImage from "../public/images/works/nusconnect_01.webp";
 
-const projects = [
+const tagStyle = {
+	fontFamily: "var(--font-mono)",
+	fontSize: "9px",
+	fontWeight: "700",
+	letterSpacing: ".08em",
+	textTransform: "uppercase",
+};
+
+function ProjectHeading({ href, external, children }) {
+	const heading = (
+		<Heading as="h3" fontSize={{ base: "27px", md: "32px" }} lineHeight="1.08">
+			{children}
+		</Heading>
+	);
+
+	if (!href) return heading;
+
+	return (
+		<LinkOverlay
+			as={external ? undefined : NextLink}
+			href={href}
+			target={external ? "_blank" : undefined}
+			rel={external ? "noopener noreferrer" : undefined}>
+			{heading}
+		</LinkOverlay>
+	);
+}
+
+function ProjectCard({ children, span, bg, color = "page.text", minH = "440px" }) {
+	return (
+		<LinkBox
+			as="article"
+			gridColumn={{ base: "1 / -1", md: `span ${span}` }}
+			minH={{ base: "auto", md: minH }}
+			bg={bg}
+			color={color}
+			border="1px solid"
+			borderColor="border.subtle"
+			overflow="hidden"
+			display="flex"
+			flexDirection="column"
+			transition="transform 180ms ease, box-shadow 180ms ease"
+			_hover={{
+				transform: "translateY(-4px)",
+				boxShadow: "0 24px 56px -36px rgba(0,0,0,.8)",
+			}}>
+			{children}
+		</LinkBox>
+	);
+}
+
+function GroundplaneCard() {
+	return (
+		<ProjectCard span={7} bg="#101A16" color="#E6EBE8" minH="520px">
+			<Box p={{ base: 6, md: 8 }} pb={4}>
+				<Flex justify="space-between" gap={4} color="#71DCB2" sx={tagStyle}>
+					<Text>Open source · 2026</Text>
+					<Text>Python</Text>
+				</Flex>
+				<Box mt={4}>
+					<ProjectHeading href="https://github.com/ong6/groundplane" external>
+						Groundplane ↗
+					</ProjectHeading>
+				</Box>
+				<Text mt={3} maxW="570px" color="#A5B3AD" fontSize="15px" lineHeight="1.7">
+					A small deterministic boundary for agent output. It turns tool results
+					into typed facts, then rejects rankings, totals, and relationships the
+					model cannot support.
+				</Text>
+			</Box>
+
+			<Box mt="auto" px={{ base: 6, md: 8 }} pb={{ base: 6, md: 8 }}>
+				<Box border="1px solid #34443C" bg="#08100C" p={{ base: 4, md: 5 }}>
+					<Flex
+						justify="space-between"
+						fontFamily="var(--font-mono)"
+						fontSize="10px"
+						color="#7D9187">
+						<Text>groundplane / boundary.py</Text>
+						<Text>93 tests</Text>
+					</Flex>
+					<Box mt={5} fontFamily="var(--font-mono)" fontSize={{ base: "10px", md: "12px" }} lineHeight="1.9">
+						<Text color="#A5B3AD">facts = FactSet.from_tool_results(rows)</Text>
+						<Text color="#E6EBE8">claim = Winner(entity=&quot;north&quot;)</Text>
+						<Text color="#F09A8E">boundary.verify(claim) → UnsupportedClaim</Text>
+						<Text color="#71DCB2">output blocked ✓</Text>
+					</Box>
+				</Box>
+				<Flex mt={4} wrap="wrap" gapX={4} gapY={1} color="#7D9187" sx={tagStyle}>
+					<Text>Argmax</Text>
+					<Text>Order</Text>
+					<Text>Aggregate</Text>
+					<Text>Entity</Text>
+					<Text>Row</Text>
+				</Flex>
+			</Box>
+		</ProjectCard>
+	);
+}
+
+function PropertyCard() {
+	const tracks = "rgba(16,35,60,.11)";
+	return (
+		<ProjectCard span={5} bg="#DDEAF5" color="#10233C" minH="520px">
+			<Box p={{ base: 6, md: 8 }}>
+				<Flex justify="space-between" gap={4} color="#3B6087" sx={tagStyle}>
+					<Text>Personal tool · 2026</Text>
+					<Text>Data + agents</Text>
+				</Flex>
+				<Box mt={4}>
+					<ProjectHeading href="https://github.com/ong6/sg-property-analysis" external>
+						Property intelligence ↗
+					</ProjectHeading>
+				</Box>
+				<Text mt={3} color="#3B526C" fontSize="15px" lineHeight="1.7">
+					I wanted a calmer way to evaluate Singapore homes, so I built one from
+					listing data, official transactions, cost models, and structured agent
+					research.
+				</Text>
+			</Box>
+
+			<Box mt="auto" mx={{ base: 6, md: 8 }} mb={{ base: 6, md: 8 }} bg="#F7FBFE" border="1px solid rgba(16,35,60,.15)" p={5}>
+				<Flex justify="space-between" align="end" pb={4} borderBottom="1px solid rgba(16,35,60,.15)">
+					<Box>
+						<Text sx={tagStyle} color="#536C86">Sample report</Text>
+						<Text mt={1} fontSize="18px" fontWeight="750">Comparable unit</Text>
+					</Box>
+					<Box bg="#255B89" color="white" px={3} py={1.5} sx={tagStyle}>Buy</Box>
+				</Flex>
+				<Stack spacing={4} mt={5}>
+					{[
+						["relative value", "78%"],
+						["liquidity", "64%"],
+						["hold fit", "86%"],
+					].map(([label, width]) => (
+						<Box key={label}>
+							<Flex justify="space-between" color="#536C86" sx={tagStyle} mb={1.5}>
+								<Text>{label}</Text>
+								<Text>{width}</Text>
+							</Flex>
+							<Box h="6px" bg={tracks}>
+								<Box h="100%" w={width} bg="#3D79A8" />
+							</Box>
+						</Box>
+					))}
+				</Stack>
+			</Box>
+		</ProjectCard>
+	);
+}
+
+function CompozeCard() {
+	return (
+		<ProjectCard span={5} bg="#F0DCCF" color="#342119" minH="430px">
+			<Box p={{ base: 6, md: 8 }}>
+				<Flex justify="space-between" gap={4} color="#7A4936" sx={tagStyle}>
+					<Text>Company · 2025</Text>
+					<Text>Acquired</Text>
+				</Flex>
+				<Box mt={4}>
+					<ProjectHeading>Compoze</ProjectHeading>
+				</Box>
+				<Text mt={3} color="#684737" fontSize="15px" lineHeight="1.7">
+					A one-person AI studio I ran alongside TikTok. I found the customers,
+					priced the work, built their document-grounded assistants, deployed
+					them, and taught people how to use them.
+				</Text>
+			</Box>
+
+			<Grid mt="auto" templateColumns="repeat(3, 1fr)" borderTop="1px solid rgba(52,33,25,.16)">
+				{[
+					["knowledge", "LlamaIndex"],
+					["service", "FastAPI"],
+					["interface", "Next.js"],
+				].map(([label, value], index) => (
+					<Box
+						key={label}
+						p={{ base: 3, md: 4 }}
+						borderLeft={index ? "1px solid rgba(52,33,25,.16)" : undefined}>
+						<Text color="#7A4936" sx={tagStyle}>{label}</Text>
+						<Text mt={2} fontSize={{ base: "11px", md: "13px" }} fontWeight="700">{value}</Text>
+					</Box>
+				))}
+			</Grid>
+		</ProjectCard>
+	);
+}
+
+function HandsfreeCard() {
+	return (
+		<ProjectCard span={7} bg="#E7E2F4" color="#28213E" minH="430px">
+			<Box position="relative" minH={{ base: "250px", md: "290px" }} bg="#181421" overflow="hidden">
+				<Image
+					src={handsfreeImage}
+					alt="YouTube Handsfree gesture controls"
+					fill
+					sizes="(max-width: 768px) 100vw, 58vw"
+					style={{ objectFit: "cover", objectPosition: "center" }}
+				/>
+			</Box>
+			<Box p={{ base: 6, md: 8 }}>
+				<Text color="#675C89" sx={tagStyle}>Two-day hackathon · computer vision</Text>
+				<Box mt={3}>
+					<ProjectHeading href="/works/youtubehandsfree">YouTube Handsfree</ProjectHeading>
+				</Box>
+				<Text mt={3} color="#5A526E" fontSize="15px" lineHeight="1.7">
+					A Chrome extension that lets you pause, seek, and control YouTube with hand signs.
+				</Text>
+			</Box>
+		</ProjectCard>
+	);
+}
+
+const archiveProjects = [
 	{
-		key: "groundplane",
-		eyebrow: "Open source · v0 in development",
-		title: "Groundplane",
-		intro:
-			"A deterministic boundary for agent output: tool results become typed facts, and unsupported model claims fail loudly.",
-		problem:
-			"An agent can call the right tools and still name the wrong winner, invent a total, or swap values between rows.",
-		ownership:
-			"Designed and built the dependency-free Python core, five relational check families, CI, and optional LangGraph and MCP adapters.",
-		outcome:
-			"93 tests run across Python 3.10–3.13. Wrong rankings, aggregates, entities, and row relationships raise before output ships.",
-		stack: "Python · LangGraph · MCP · CI",
-		href: "https://github.com/ong6/groundplane",
-		linkLabel: "Explore the repository",
-		visual: "groundplane",
+		title: "CodeParty",
+		year: "2023",
+		description: "A collaborative interview-practice platform built as a distributed system.",
+		href: "/works/codeparty",
+		image: codePartyImage,
+		position: "center",
 	},
 	{
-		key: "property",
-		eyebrow: "Personal data product · 2026",
-		title: "Singapore property intelligence",
-		intro:
-			"A repeatable decision system for a noisy, high-stakes home search, built from listing data, official transactions, and structured research.",
-		problem:
-			"Comparable sales, investment costs, listing quality, and qualitative risks lived across incompatible sources.",
-		ownership:
-			"Built the ingestion, official URA-data enrichment, MMR scoring, agent-research workflow, evaluation memory, and local interfaces.",
-		outcome:
-			"The pipeline produces a traceable Buy, Neutral, or Avoid report while keeping algorithmic evidence separate from agent judgment.",
-		stack: "Python · Data pipelines · Browser automation · AI agents",
-		href: "https://github.com/ong6/sg-property-analysis",
-		linkLabel: "Explore the repository",
-		visual: "property",
-	},
-	{
-		key: "compoze",
-		eyebrow: "Founder · acquired by a client · 2025",
-		title: "Compoze",
-		intro:
-			"A one-person AI solutions company delivering document-grounded assistants to business customers.",
-		problem:
-			"Customers needed useful AI over private knowledge, integrated and deployed as a product rather than a demo.",
-		ownership:
-			"Owned discovery, scoping, pricing, product engineering, deployment, and customer training end to end alongside my TikTok role.",
-		outcome:
-			"Built the RAG product on FastAPI, LlamaIndex, and Next.js. One of its clients acquired the company at the end of 2025.",
-		stack: "FastAPI · LlamaIndex · Next.js · Fly.io",
-		visual: "compoze",
+		title: "NUSConnect",
+		year: "2021",
+		description: "A gamified, accessible learning platform made for NUS Orbital.",
+		href: "/works/nusconnect",
+		image: nusConnectImage,
+		position: "top",
 	},
 ];
 
-function GroundplaneVisual() {
-	const muted = useColorModeValue("graphite.500", "graphite.300");
-	const activeCellBg = useColorModeValue("mint.50", "rgba(113,220,178,.08)");
-	const activeCellColor = useColorModeValue("mint.800", "mint.200");
+function ArchiveCard({ project }) {
 	return (
-		<Box aria-hidden="true" h="100%" minH="252px" display="flex" flexDirection="column" justifyContent="center">
-			<Flex align="center" gap={2} fontFamily="var(--font-mono)" fontSize="10px">
-				{["tool results", "typed facts", "boundary"].map((item, index) => (
-					<Flex key={item} align="center" gap={2} minW={0} flex={index === 1 ? 1 : "initial"}>
-						<Box
-							px={2.5}
-							py={2}
-							border="1px solid"
-							borderColor={index === 2 ? "mint.400" : "border.subtle"}
-							bg={index === 2 ? activeCellBg : "surface.raised"}
-							color={index === 2 ? activeCellColor : muted}
-							whiteSpace="nowrap">
-							{item}
-						</Box>
-						{index < 2 && <Text color={muted}>→</Text>}
-					</Flex>
-				))}
-			</Flex>
-			<Box mt={5} p={4} bg="#08100C" border="1px solid #34443C" boxShadow="inset 0 0 28px rgba(0,0,0,.7)">
-				<Text fontFamily="var(--font-mono)" fontSize="10px" color="#A5B3AD">
-					claim.winner
-				</Text>
-				<Flex mt={2} justify="space-between" gap={3} fontFamily="var(--font-mono)" fontSize="11px">
-					<Text color="#F09A8E">model: north</Text>
-					<Text color="#71DCB2">facts: harbour</Text>
-				</Flex>
-				<Box mt={3} pt={3} borderTop="1px solid rgba(113,220,178,.16)">
-					<Text fontFamily="var(--font-mono)" fontSize="10px" color="#F09A8E">
-						× UnsupportedClaim · output blocked
-					</Text>
-				</Box>
+		<LinkBox as="article" border="1px solid" borderColor="border.subtle" bg="surface.raised" overflow="hidden">
+			<Box position="relative" aspectRatio="16 / 10" bg="surface.quiet" overflow="hidden">
+				<Image
+					src={project.image}
+					alt={`${project.title} interface`}
+					fill
+					sizes="(max-width: 768px) 100vw, 50vw"
+					style={{ objectFit: "cover", objectPosition: project.position }}
+				/>
 			</Box>
-			<Flex mt={4} gap={2} wrap="wrap">
-				{["ARGMAX", "ORDER", "TOTAL", "ENTITY", "ROW"].map((check) => (
-					<Box
-						key={check}
-						fontFamily="var(--font-mono)"
-						fontSize="9px"
-						letterSpacing=".08em"
-						color="text.muted">
-						✓ {check}
-					</Box>
-				))}
-			</Flex>
-		</Box>
-	);
-}
-
-function PropertyVisual() {
-	const tracks = useColorModeValue("rgba(26,36,32,.09)", "rgba(230,235,232,.08)");
-	const rows = [
-		["relative value", "78%"],
-		["liquidity", "64%"],
-		["hold fit", "86%"],
-	];
-
-	return (
-		<Box aria-hidden="true" minH="252px" display="flex" flexDirection="column" justifyContent="center">
-			<Flex justify="space-between" align="flex-end" pb={3} borderBottom="1px solid" borderColor="border.subtle">
-				<Box>
-					<Text fontFamily="var(--font-mono)" fontSize="9px" color="text.muted" letterSpacing=".08em">
-						DECISION PIPELINE / SAMPLE
-					</Text>
-					<Text mt={1} fontWeight="700" fontSize="16px">Comparable unit</Text>
-				</Box>
-				<Box px={3} py={1.5} bg="mint.600" color="white" fontFamily="var(--font-mono)" fontSize="10px" fontWeight="700">
-					BUY
-				</Box>
-			</Flex>
-			<Stack spacing={4} mt={5}>
-				{rows.map(([label, width], index) => (
-					<Box key={label}>
-						<Flex justify="space-between" fontFamily="var(--font-mono)" fontSize="10px" color="text.muted" mb={1.5}>
-							<Text>{label}</Text>
-							<Text>{["URA + peer sales", "transactions", "cost model"][index]}</Text>
-						</Flex>
-						<Box h="5px" bg={tracks}>
-							<Box h="100%" w={width} bg={index === 2 ? "mint.400" : "mint.600"} />
-						</Box>
-					</Box>
-				))}
-			</Stack>
-			<Flex mt={5} pt={4} borderTop="1px solid" borderColor="border.subtle" gap={2} align="center">
-				<Text fontFamily="var(--font-mono)" fontSize="9px" color="mint.500">ALGO</Text>
-				<Text color="text.muted">→</Text>
-				<Text fontFamily="var(--font-mono)" fontSize="9px" color="mint.500">RESEARCH</Text>
-				<Text color="text.muted">→</Text>
-				<Text fontFamily="var(--font-mono)" fontSize="9px" color="mint.500">VERDICT</Text>
-			</Flex>
-		</Box>
-	);
-}
-
-function CompozeVisual() {
-	const steps = ["discover", "scope", "build", "deploy", "train"];
-	const acquisitionBg = useColorModeValue("graphite.800", "mint.300");
-	const acquisitionColor = useColorModeValue("warm.50", "graphite.900");
-	return (
-		<Box aria-hidden="true" minH="252px" display="flex" flexDirection="column" justifyContent="center">
-			<Box position="relative" py={5}>
-				<Box position="absolute" left="8%" right="8%" top="50%" h="1px" bg="border.subtle" />
-				<Flex position="relative" justify="space-between">
-					{steps.map((step, index) => (
-						<Box key={step} textAlign="center">
-							<Box
-								w={{ base: "26px", smmd: "32px" }}
-								h={{ base: "26px", smmd: "32px" }}
-								mx="auto"
-								display="grid"
-								placeItems="center"
-								bg={index === steps.length - 1 ? "mint.500" : "surface.raised"}
-								color={index === steps.length - 1 ? "white" : "text.muted"}
-								border="1px solid"
-								borderColor={index === steps.length - 1 ? "mint.500" : "border.subtle"}
-								fontFamily="var(--font-mono)"
-								fontSize="9px">
-								{index + 1}
-							</Box>
-							<Text mt={2} fontFamily="var(--font-mono)" fontSize={{ base: "8px", smmd: "9px" }} color="text.muted">
-								{step}
-							</Text>
-						</Box>
-					))}
-				</Flex>
-			</Box>
-			<SimpleGrid columns={3} gap={2} mt={4}>
-				{[
-					["KNOWLEDGE", "LlamaIndex"],
-					["SERVICE", "FastAPI"],
-					["INTERFACE", "Next.js"],
-				].map(([label, value]) => (
-					<Box key={label} p={{ base: 2, smmd: 3 }} bg="surface.raised" border="1px solid" borderColor="border.subtle">
-						<Text fontFamily="var(--font-mono)" fontSize="8px" color="text.muted">{label}</Text>
-						<Text mt={1} fontSize={{ base: "10px", smmd: "12px" }} fontWeight="700">{value}</Text>
-					</Box>
-				))}
-			</SimpleGrid>
-			<Flex mt={4} px={3} py={2.5} bg={acquisitionBg} color={acquisitionColor} justify="space-between" fontFamily="var(--font-mono)" fontSize="9px">
-				<Text>END-TO-END OWNERSHIP</Text>
-				<Text>ACQUIRED 2025</Text>
-			</Flex>
-		</Box>
-	);
-}
-
-const visuals = {
-	groundplane: GroundplaneVisual,
-	property: PropertyVisual,
-	compoze: CompozeVisual,
-};
-
-function Detail({ label, children }) {
-	return (
-		<Box>
-			<Text
-				fontFamily="var(--font-mono)"
-				fontSize="9px"
-				fontWeight="700"
-				letterSpacing=".11em"
-				color="text.muted"
-				textTransform="uppercase"
-				mb={1}>
-				{label}
-			</Text>
-			<Text fontSize="14px" lineHeight="1.65">
-				{children}
-			</Text>
-		</Box>
-	);
-}
-
-function ProjectCaseStudy({ project, index }) {
-	const Visual = visuals[project.visual];
-	const visualBg = useColorModeValue("rgba(231,225,215,.62)", "rgba(26,36,32,.72)");
-
-	return (
-		<Box
-			as="article"
-			borderTop="1px solid"
-			borderColor="border.subtle"
-			py={{ base: 10, md: 14 }}>
-			<SimpleGrid columns={{ base: 1, md: 2 }} gap={{ base: 8, md: 12, lg: 18 }} alignItems="center">
-				<Box order={{ base: 2, md: index % 2 === 0 ? 1 : 2 }}>
-					<Text
-						fontFamily="var(--font-mono)"
-						fontSize="10px"
-						fontWeight="700"
-						letterSpacing=".1em"
-						textTransform="uppercase"
-						color="mint.500">
-						{project.eyebrow}
-					</Text>
-					<Heading as="h3" fontSize={{ base: "29px", md: "36px" }} mt={2}>
+			<Box p={5}>
+				<Flex justify="space-between" align="baseline" gap={3}>
+					<LinkOverlay as={NextLink} href={project.href} fontSize="18px" fontWeight="750">
 						{project.title}
-					</Heading>
-					<Text mt={3} fontSize={{ base: "16px", md: "17px" }} lineHeight="1.65" color="text.muted">
-						{project.intro}
-					</Text>
-					<Stack spacing={4} mt={6}>
-						<Detail label="Problem">{project.problem}</Detail>
-						<Detail label="Ownership">{project.ownership}</Detail>
-						<Detail label="Outcome">{project.outcome}</Detail>
-					</Stack>
-					<Flex mt={6} gap={4} align="center" wrap="wrap">
-						{project.href && (
-							<Link href={project.href} target="_blank" rel="noopener noreferrer" fontSize="14px" fontWeight="700">
-								{project.linkLabel} <ExternalLinkIcon mx="1px" mb="2px" />
-							</Link>
-						)}
-						<Text fontFamily="var(--font-mono)" fontSize="10px" color="text.muted">
-							{project.stack}
-						</Text>
-					</Flex>
-				</Box>
-				<Box
-					order={{ base: 1, md: index % 2 === 0 ? 2 : 1 }}
-					bg={visualBg}
-					border="1px solid"
-					borderColor="border.subtle"
-					p={{ base: 5, smmd: 7, md: 6, lg: 8 }}>
-					<Visual />
-				</Box>
-			</SimpleGrid>
-		</Box>
+					</LinkOverlay>
+					<Text color="text.muted" sx={tagStyle}>{project.year}</Text>
+				</Flex>
+				<Text mt={2} color="text.muted" fontSize="13px" lineHeight="1.6">
+					{project.description}
+				</Text>
+			</Box>
+		</LinkBox>
 	);
 }
 
 export default function SelectedWork() {
+	const quietLabel = useColorModeValue("graphite.500", "graphite.300");
+
 	return (
 		<Box>
-			{projects.map((project, index) => (
-				<ProjectCaseStudy key={project.key} project={project} index={index} />
-			))}
+			<Grid templateColumns={{ base: "1fr", md: "repeat(12, 1fr)" }} gap={{ base: 5, md: 6 }}>
+				<GroundplaneCard />
+				<PropertyCard />
+				<CompozeCard />
+				<HandsfreeCard />
+			</Grid>
+
+			<Flex mt={{ base: 14, md: 20 }} mb={5} justify="space-between" align="end" gap={5}>
+				<Box>
+					<Text color={quietLabel} sx={tagStyle}>Older, still mine</Text>
+					<Heading as="h3" mt={2} fontSize={{ base: "24px", md: "29px" }}>From the archive</Heading>
+				</Box>
+				<Link as={NextLink} href="/works" fontSize="13px" fontWeight="700">
+					All university projects →
+				</Link>
+			</Flex>
+			<SimpleGrid columns={{ base: 1, md: 2 }} gap={6}>
+				{archiveProjects.map((project) => (
+					<ArchiveCard key={project.title} project={project} />
+				))}
+			</SimpleGrid>
 		</Box>
 	);
 }

@@ -2,6 +2,7 @@ import { Box, Flex, Link, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 
 const links = [
+	{ label: "Email", href: "mailto:junxiongong2@gmail.com" },
 	{ label: "Hobbies", href: "/hobbies", internal: true },
 	{ label: "University work", href: "/works", internal: true },
 	{ label: "GitHub", href: "https://github.com/ong6" },
@@ -15,7 +16,7 @@ const Footer = () => (
 			<Box>
 				<Text fontWeight="700" fontSize="14px">Ong Jun Xiong</Text>
 				<Text mt={1} fontFamily="var(--font-mono)" fontSize="9px" letterSpacing=".08em" color="text.muted">
-					AI INFRASTRUCTURE · BACKEND · SINGAPORE
+					ENGINEER · BUILDER · SINGAPORE
 				</Text>
 			</Box>
 			<Flex wrap="wrap" gapX={5} gapY={2}>
@@ -24,8 +25,8 @@ const Footer = () => (
 						key={link.label}
 						as={link.internal ? NextLink : undefined}
 						href={link.href}
-						target={link.internal ? undefined : "_blank"}
-						rel={link.internal ? undefined : "noopener noreferrer"}
+						target={link.href.startsWith("http") ? "_blank" : undefined}
+						rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
 						fontSize="12px"
 						fontWeight="650"
 						color="text.muted"

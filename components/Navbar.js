@@ -17,11 +17,11 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 import ThemeToggleButton from "./ThemeToggleButton";
 
 const navigationLinks = [
-	{ href: "/#work", homeHref: "#work", name: "Work" },
-	{ href: "/#experience", homeHref: "#experience", name: "Experience" },
+	{ href: "/#work", homeHref: "#work", name: "Projects" },
 	{ href: "/#about", homeHref: "#about", name: "About" },
+	{ href: "/#now", homeHref: "#now", name: "Now" },
 	{ href: "/resume", name: "Résumé" },
-	{ href: "/#contact", homeHref: "#contact", name: "Contact" },
+	{ href: "/works", name: "Archive" },
 ];
 
 function LinkItem({ href, active, children }) {
