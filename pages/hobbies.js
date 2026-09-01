@@ -7,8 +7,8 @@ import {
 	IoTennisball,
 	IoTrendingUp,
 } from "react-icons/io5";
-import Intro from "../components/Intro";
 import Layout from "../components/layouts/Articles";
+import PageHeader from "../components/PageHeader";
 import Paragraph from "../components/Paragraph";
 import Section from "../components/Section";
 
@@ -17,9 +17,12 @@ const Hobbies = () => (
 		title="Hobbies"
 		description="Away from work: tennis, trading stocks against a written playbook, tinkering with side projects and home servers, slow travel and reading.">
 		<Container maxW="full">
-			<Intro />
+			<PageHeader eyebrow="// AWAY FROM WORK" title="The non-work page.">
+				The things that fill the hours when I am not building software — and a
+				few that turn into software anyway.
+			</PageHeader>
 			<Section delay={0.1}>
-				<Heading as="h2" variant="section-title">
+				<Heading as="h2" fontSize={{ base: "22px", md: "26px" }} mb={3}>
 					<Icon as={IoTennisball} mr={2} verticalAlign="middle" />
 					Tennis
 				</Heading>
@@ -33,7 +36,7 @@ const Hobbies = () => (
 			</Section>
 
 			<Section delay={0.2}>
-				<Heading as="h2" variant="section-title">
+				<Heading as="h2" fontSize={{ base: "22px", md: "26px" }} mb={3}>
 					<Icon as={IoTrendingUp} mr={2} verticalAlign="middle" />
 					Trading &amp; Markets
 				</Heading>
@@ -47,7 +50,7 @@ const Hobbies = () => (
 			</Section>
 
 			<Section delay={0.3}>
-				<Heading as="h2" variant="section-title">
+				<Heading as="h2" fontSize={{ base: "22px", md: "26px" }} mb={3}>
 					<Icon as={IoCodeSlash} mr={2} verticalAlign="middle" />
 					Tinkering with Code
 				</Heading>
@@ -67,7 +70,7 @@ const Hobbies = () => (
 			</Section>
 
 			<Section delay={0.4}>
-				<Heading as="h2" variant="section-title">
+				<Heading as="h2" fontSize={{ base: "22px", md: "26px" }} mb={3}>
 					<Icon as={IoServer} mr={2} verticalAlign="middle" />
 					Home Servers
 				</Heading>
@@ -82,7 +85,7 @@ const Hobbies = () => (
 			</Section>
 
 			<Section delay={0.5}>
-				<Heading as="h2" variant="section-title">
+				<Heading as="h2" fontSize={{ base: "22px", md: "26px" }} mb={3}>
 					<Icon as={IoAirplane} mr={2} verticalAlign="middle" />
 					Travel
 				</Heading>
@@ -95,7 +98,7 @@ const Hobbies = () => (
 			</Section>
 
 			<Section delay={0.6}>
-				<Heading as="h2" variant="section-title">
+				<Heading as="h2" fontSize={{ base: "22px", md: "26px" }} mb={3}>
 					<Icon as={IoBook} mr={2} verticalAlign="middle" />
 					Reading
 				</Heading>

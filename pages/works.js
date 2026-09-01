@@ -1,14 +1,7 @@
-import {
-	Box,
-	Divider,
-	Heading,
-	SimpleGrid,
-	Text,
-	useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, Heading, SimpleGrid } from "@chakra-ui/react";
 import { WorkGridItem } from "../components/GridItem";
-import Intro from "../components/Intro";
 import Layout from "../components/layouts/Articles";
+import PageHeader from "../components/PageHeader";
 import Section from "../components/Section";
 
 // Importing thumbnails
@@ -148,38 +141,18 @@ const openSourceContributions = [
 	},
 ];
 
-const TermHeading = ({ children, suffix }) => (
+const GroupHeading = ({ children }) => (
 	<Heading
 		as="h2"
 		fontFamily="var(--font-mono)"
-		fontSize={18}
-		mt={3}
-		mb={4}>
-		<Box
-			as="span"
-			color={useColorModeValue("mint.700", "mint.300")}
-			fontWeight={700}>
-			:/${" "}
-		</Box>
-		{children}
-		{suffix && (
-			<Box as="span" opacity={0.5} fontWeight={400}>
-				{" "}
-				{suffix}
-			</Box>
-		)}
-	</Heading>
-);
-
-const GroupHeading = ({ children }) => (
-	<Heading
-		as="h3"
-		fontFamily="var(--font-mono)"
-		fontSize={15}
-		fontWeight={500}
-		opacity={0.7}
-		mb={4}>
-		{`:/$ ls ${children}`}
+		fontSize="11px"
+		fontWeight="700"
+		letterSpacing=".12em"
+		textTransform="uppercase"
+		color="mint.500"
+		mt={{ base: 12, md: 16 }}
+		mb={5}>
+		{`// ${children}`}
 	</Heading>
 );
 
@@ -202,32 +175,27 @@ const Works = () => (
 		title="University Projects"
 		description="An archive of Ong Jun Xiong's NUS-era projects, 2020 to 2023: hackathon wins, coursework, design work and open source. Current work lives on the resume.">
 		<Box>
-			<Intro />
-			<TermHeading suffix="(2020 – 2023)">university-archive</TermHeading>
-			<Text mb={6} opacity={0.8}>
+			<PageHeader eyebrow="// ARCHIVE / 2020 – 2023" title="From the archive.">
 				An archive from my NUS years — hackathons, coursework and student
 				society work. I keep it here for the memories; what I build these days
 				lives on my resume and GitHub.
-			</Text>
-			<GroupHeading>passion-projects/</GroupHeading>
+			</PageHeader>
+			<GroupHeading>Passion projects</GroupHeading>
 			<SimpleGrid columns={[1, 1, 1, 2]} gap={6}>
 				{renderProjects(passionProjects)}
 			</SimpleGrid>
 
-			<Divider my={6} />
-			<GroupHeading>hackathons-won/</GroupHeading>
+			<GroupHeading>Hackathons won</GroupHeading>
 			<SimpleGrid columns={[1, 1, 1, 2]} gap={6}>
 				{renderProjects(hackathonsWon)}
 			</SimpleGrid>
 
-			<Divider my={6} />
-			<GroupHeading>design-projects/</GroupHeading>
+			<GroupHeading>Design projects</GroupHeading>
 			<SimpleGrid columns={[1, 1, 1, 2]} gap={6}>
 				{renderProjects(designProjects)}
 			</SimpleGrid>
 
-			<Divider my={6} />
-			<GroupHeading>open-source/</GroupHeading>
+			<GroupHeading>Open source</GroupHeading>
 			<SimpleGrid columns={[1, 1, 1, 2]} gap={6}>
 				{renderProjects(openSourceContributions)}
 			</SimpleGrid>
