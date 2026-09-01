@@ -21,12 +21,10 @@ const Work = () => (
 				NUS Fintech Website <Badge>Nov 2020 - Jan 2021</Badge>
 			</Title>
 			<P>
-				NUS FinTech Society was founded under NUS School of Computing by a group
-				of like-minded individuals with a passion in pursuing research and
-				driving applications in the realms of Blockchain and Machine Learning.
-				We currently have over 200 members, each with a strong grasp of their
-				individual research areas. This website was built to showcase our
-				projects, events and team.
+				NUS FinTech Society is a School of Computing club that does blockchain
+				and machine learning research, with over 200 members. I built the
+				society&apos;s website — the public face for its projects, events, and
+				team.
 			</P>
 			<List ml={4} my={4}>
 				<ListItem>

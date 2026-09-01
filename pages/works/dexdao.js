@@ -21,9 +21,9 @@ const Work = () => (
 				The DEX DAO <Badge>Dec 2021 - Jan 2022</Badge>
 			</Title>
 			<P>
-				$DEX aims to unify the DEX community, creators and markets to create an
-				ecosystem. To gather us together, we have chosen all traders from 2021
-				to conduct our airdrop.
+				$DEX was a token experiment for the decentralized-exchange crowd. We
+				airdropped it to every wallet that traded on a DEX in 2021 — the
+				simplest honest definition of &ldquo;the community&rdquo; we could find.
 			</P>
 			<List ml={4} my={4}>
 				<ListItem>

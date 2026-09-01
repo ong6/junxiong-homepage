@@ -21,11 +21,10 @@ const Work = () => (
 				NUSConnect <Badge>May 2021 - Aug 2021</Badge>
 			</Title>
 			<P>
-				A custom LMS (Learning Management System) for NUS students and teaching
-				assistants to connect with each other through a easy to use forum and
-				quiz system. This LMS is designed to encourage students to be more
-				active in their peer to peer interactions and has a gamified learning
-				system which rewards its users as they complete more and more quizzes.
+				A custom learning management system for NUS students and teaching
+				assistants, built around a forum and a quiz system. Completing quizzes
+				earns rewards, which sounds gimmicky until you watch how much more
+				students post when there is a streak to protect.
 			</P>
 			<List ml={4} my={4}>
 				<ListItem>

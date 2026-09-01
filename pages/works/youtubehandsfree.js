@@ -21,9 +21,9 @@ const Work = () => (
 				Youtube Handsfree <Badge>Nov 2020 - Nov 2020</Badge>
 			</Title>
 			<P>
-				A computer vision system that tracks hand movement and allows users to
-				control videos using hand signs. This was made for a Hackathon 2 day
-				project.
+				A computer-vision system that tracks your hand through the webcam and
+				maps signs to YouTube controls: pause, seek, volume. Built in a two-day
+				hackathon, mostly to see if it could be done.
 			</P>
 			<List ml={4} my={4}>
 				<ListItem>

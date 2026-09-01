@@ -21,10 +21,10 @@ const Work = () => (
 				Covalent <Badge>March 2022 - April 2022</Badge>
 			</Title>
 			<P>
-				A solo design project done for CS3240 (Interactive Design). The goal of
-				the project was to design a social media manager app. I choose to focus
-				on video producers and design my app based on a dashboard. The
-				repository and prototype preserve the full design process.
+				A solo project for CS3240 (Interactive Design). The brief was a social
+				media manager app; I narrowed it to video producers and built the design
+				around a single dashboard. The repository and prototype preserve the
+				full design process, research through evaluation.
 			</P>
 			<List ml={4} my={4}>
 				<ListItem>

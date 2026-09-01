@@ -21,10 +21,10 @@ const Work = () => (
 				imPoster <Badge>Feb 2021 - April 2021</Badge>
 			</Title>
 			<P>
-				imPoster is a desktop application for beginners of API development to
-				quickly go hands-on with the basics. Whether you are looking to explore,
-				test, or build your very own APIs, the simple and minimalistic style of
-				imPoster will quickly get you up and going.
+				imPoster is a desktop app for people new to API development. Point it at
+				an endpoint and send requests — explore, test, or build your own APIs
+				without wading through a professional tool&apos;s settings first. The
+				interface is deliberately minimal.
 			</P>
 			<List ml={4} my={4}>
 				<ListItem>

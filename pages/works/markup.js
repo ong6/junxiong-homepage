@@ -21,14 +21,10 @@ const Work = () => (
 				Markup <Badge>June 2023 - Aug 2023</Badge>
 			</Title>
 			<P>
-				An AI-powered web app that levels the playing field in education by
-				automating exam question generation and instant auto-grading. Our app
-				uses advanced natural language processing to generate high quality,
-				frequently updated exam questions on demand, while instantly grading
-				student responses. This makes quality assessment resources accessible to
-				all students regardless of their school and background. By replacing
-				manual exam creation and paper-based submissions, we save teachers time
-				and provide data-driven insights into student performance.
+				Markup generates exam questions on demand and grades the answers
+				instantly. Teachers skip writing and marking papers by hand; students
+				get an unlimited supply of practice questions whatever school they are
+				from, plus per-question data on where a class is actually struggling.
 			</P>
 			<List ml={4} my={4}>
 				<ListItem>

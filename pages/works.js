@@ -33,7 +33,7 @@ const passionProjects = [
 		title: "CodeParty",
 		thumbnail: thumbCodeParty,
 		description:
-			"A leetcode clone built for CS3219 with the aim of helping students to prepare for technical interviews",
+			"Pairs you with a peer to practice interview questions in a shared editor, built for CS3219",
 		delay: 0.1,
 		backgroundColor: "white",
 		padding: "1rem",
@@ -43,7 +43,7 @@ const passionProjects = [
 		title: "NUSConnect",
 		thumbnail: thumbNusConnect,
 		description:
-			"A gamified learning management system that is accessible to all and easy to use",
+			"A learning management system for NUS with a forum, quizzes, and gamified rewards",
 		delay: 0.1,
 	},
 	{
@@ -58,7 +58,7 @@ const passionProjects = [
 		title: "NUS Fintech Website",
 		thumbnail: thumbFintechWebsite,
 		description:
-			"A website built for NUS Fintech Society to showcase its projects and events",
+			"The NUS Fintech Society website: projects, events, and the team behind them",
 		delay: 0.1,
 	},
 	{
@@ -66,7 +66,7 @@ const passionProjects = [
 		title: "ABCDao",
 		thumbnail: thumbAbcdao,
 		description:
-			"A decentralized autonomous organization that aims to provide a way for NUS fintech society members to vote on topics",
+			"A DAO where NUS Fintech Society members vote on club decisions with a governance token",
 		delay: 0.1,
 	},
 	{
@@ -92,7 +92,7 @@ const hackathonsWon = [
 		id: "vitalvision",
 		title: "Vital Vision (2nd Runner Up)",
 		thumbnail: thumbVitalvision,
-		description: "Gamify stroke rehabilitation with VR!",
+		description: "VR rehabilitation exercises for post-stroke patients, with a clinician dashboard",
 		delay: 0.5,
 		backgroundColor: "white",
 	},
@@ -100,7 +100,7 @@ const hackathonsWon = [
 		id: "markup",
 		title: "Markup (2nd Runner Up)",
 		thumbnail: thumbMarkup,
-		description: "Mark smart, with Markup!",
+		description: "Generates exam questions on demand and auto-grades the answers",
 		delay: 0.5,
 		backgroundColor: "white",
 	},
@@ -108,14 +108,14 @@ const hackathonsWon = [
 		id: "amuze",
 		title: "Amuze (1st Runner Up)",
 		thumbnail: thumbAmuze,
-		description: "The NFT museum for collectors rent, mint and earn!",
+		description: "A digital museum where collectors list historical pieces as NFTs",
 		delay: 0.5,
 	},
 	{
 		id: "squeezy",
 		title: "Project Squeezy (1st Runner Up)",
 		thumbnail: thumbSqueezy,
-		description: "Squeeze your stress away with this smart Stress-Ball!",
+		description: "A smart stress ball with a companion app that tracks your stress over Bluetooth",
 		delay: 0.5,
 	},
 ];
@@ -132,7 +132,7 @@ const designProjects = [
 		id: "contractme",
 		title: "ContractMe!",
 		thumbnail: thumbContractMe,
-		description: "Hiring contractors has never been so easy!",
+		description: "A marketplace app for hiring contractors, taken through a full CS3240 design process",
 		delay: 0.6,
 	},
 ];

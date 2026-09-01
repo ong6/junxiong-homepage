@@ -21,11 +21,10 @@ const Work = () => (
 				$ABCDao <Badge>Aug 2021 - Dec 2021</Badge>
 			</Title>
 			<P>
-				The NUS Fintech Society’s Blockchain Department has been transformed
-				into a DAO with the members calling the shots on all major decisions. We
-				even have our own ERC20 governance token called ABCDao and we might be
-				airdropping it. We aim to democratize the decision making process and
-				remove biases in the university co-curricular activity space.
+				We turned the NUS Fintech Society&apos;s Blockchain Department into a DAO:
+				members vote on every major decision on-chain, weighted by an ERC20
+				governance token we issued called ABCDao. A student club is a fun place
+				to test governance ideas — the stakes are low and the politics are real.
 			</P>
 			<List ml={4} my={4}>
 				<ListItem>

@@ -21,14 +21,10 @@ const Work = () => (
 				A-Muze <Badge>Dec 2021 - Jan 2022</Badge>
 			</Title>
 			<P>
-				First Runner-up at NUS Fintech Month Hackathon 2022 (10k Prize). Amuze
-				is a museum experience built with NFT and Blockchain technologies. It
-				helps to facilitate collectors to list their historical assets onto the
-				blockchain, promoting the culture of ownership. This enables these
-				Unique and maybe forgotten pieces of history to be found digitally
-				regardless of location, Convenience for users to view these museums,
-				anytime and anywhere. I was in charge of the Full-stack development of
-				the project.
+				First Runner-up at NUS Fintech Month Hackathon 2022 (10k prize). Amuze
+				is a digital museum: collectors list historical pieces as NFTs, and
+				anyone can walk the collection from anywhere. The pitch was that a lot
+				of history sits unseen in private hands. I built the full stack.
 			</P>
 			<List ml={4} my={4}>
 				<ListItem>

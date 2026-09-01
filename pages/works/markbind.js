@@ -21,10 +21,10 @@ const Work = () => (
 				Markbind (Contributor) <Badge>Aug 2021 - Aug 2023</Badge>
 			</Title>
 			<P>
-				A tool for generating static websites from Markdown-like syntax.
-				Optimized for content-heavy instructional websites, e.g. course
-				websites, tutorials, project/product documentation, textbooks. I am a
-				contributor to this repo and help to maintain it.
+				A static site generator for content-heavy instructional sites: course
+				pages, tutorials, documentation, textbooks. Markdown-like syntax in,
+				finished website out. I contributed to the repo and helped maintain it
+				from 2021 to 2023.
 			</P>
 			<List ml={4} my={4}>
 				<ListItem>

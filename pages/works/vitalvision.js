@@ -21,13 +21,11 @@ const Work = () => (
 				Vital Vision <Badge>Jan 2023 - Aug 2023</Badge>
 			</Title>
 			<P>
-				Vital Vision aims to provide cutting edge Virtual Reality Rehab
-				solutions tailored for post-stroke patients. Our unique offering
-				includes an immersive virtual experience that aids in the recovery
-				process, filling in the gap in the transition from hospital to step down
-				community care. We have developed an intuitive and interactive dashboard
-				that enables medical professionals to monitor patient progress and make
-				the relevant adjustments to the rehabilitation process.
+				VR rehabilitation for post-stroke patients, aimed at the gap between
+				hospital discharge and community care, where guided recovery work often
+				stops. Patients run their exercises inside an immersive environment;
+				clinicians follow progress on a dashboard and adjust the program from
+				there.
 			</P>
 			<List ml={4} my={4}>
 				<ListItem>

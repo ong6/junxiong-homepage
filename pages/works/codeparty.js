@@ -25,12 +25,11 @@ const Work = () => (
 				CodeParty <Badge>Aug 2023 - Nov 2023</Badge>
 			</Title>
 			<P>
-				The CodeParty project aims to create a comprehensive platform that
-				enables users to prepare collaboratively for interviews or other forms
-				of assessments by connecting peers, facilitating real-time
-				collaboration, and providing a rich repository of questions. The
-				platform is founded on a microservices architecture to ensure
-				scalability, maintainability, and agility in rolling out new features.
+				CodeParty pairs you with a peer and a coding question, in a shared
+				editor, in real time. Practicing interviews alone is easy to put off;
+				booking a session with another person is not. We built it for CS3219 as
+				a set of microservices so each part — matching, collaboration, the
+				question bank — could be deployed and replaced on its own.
 			</P>
 			<List ml={4} my={4}>
 				<ListItem>

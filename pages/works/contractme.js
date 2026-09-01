@@ -21,11 +21,10 @@ const Work = () => (
 				ContractMe! <Badge>February 2022 - April 2022</Badge>
 			</Title>
 			<P>
-				A team design project done for CS3240 (Interactive Design). The goal of
-				the project was to go through the full design process from user research
-				to user evaluation. Our team choose to focus on a marketplace app called
-				ContractMe. The repository and prototype preserve the full design
-				process.
+				A team project for CS3240 (Interactive Design): take one app through the
+				whole design process, user research to user evaluation. We picked a
+				marketplace for hiring contractors and called it ContractMe. The
+				repository and prototype preserve every stage of that process.
 			</P>
 			<List ml={4} my={4}>
 				<ListItem>
