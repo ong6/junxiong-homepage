@@ -77,7 +77,7 @@ const profileSchema = {
 			url: `${SITE_URL}/`,
 			name: DEFAULT_TITLE,
 			description: DEFAULT_DESCRIPTION,
-			dateModified: "2026-08-31",
+			dateModified: "2026-09-01",
 			isPartOf: { "@id": `${SITE_URL}/#website` },
 			mainEntity: { "@id": `${SITE_URL}/#person` },
 		},

@@ -91,7 +91,7 @@ function Introduction() {
 							loading="eager"
 							fetchPriority="high"
 						/>
-						<Flex mt={3} justify="space-between" color="text.muted" fontFamily="var(--font-mono)" fontSize="9px">
+						<Flex mt={3} justify="space-between" color="text.muted" fontFamily="var(--font-mono)" fontSize={{ base: "11px", md: "10px" }}>
 							<Text>JX / 2026</Text>
 							<Text>ENGINEER + BUILDER</Text>
 						</Flex>

@@ -12,7 +12,7 @@ const currentExperience = [
 				date: "Oct 2025 – present",
 				description: [
 					"Built the team's agent platform from zero: an A2A and LangGraph runtime, a Go MCP server, and a React chat SDK that other product teams build on.",
-					"Put the platform into daily use with operations teams across the US, Southeast Asia, and the UK. Multi-step workflows that took minutes now complete in under 30 seconds.",
+					"Put the platform into daily use with operations teams across the US, Southeast Asia, and the UK, where it automates multi-step operational workflows.",
 				],
 			},
 			{

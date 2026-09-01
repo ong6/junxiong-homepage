@@ -15,7 +15,7 @@ const Footer = () => (
 		<Flex direction={{ base: "column", md: "row" }} justify="space-between" align={{ md: "center" }} gap={5}>
 			<Box>
 				<Text fontWeight="700" fontSize="14px">Ong Jun Xiong</Text>
-				<Text mt={1} fontFamily="var(--font-mono)" fontSize="9px" letterSpacing=".08em" color="text.muted">
+				<Text mt={1} fontFamily="var(--font-mono)" fontSize={{ base: "11px", md: "10px" }} letterSpacing=".08em" color="text.muted">
 					ENGINEER · BUILDER · SINGAPORE
 				</Text>
 			</Box>

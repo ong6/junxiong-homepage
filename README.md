@@ -1,12 +1,13 @@
 # junxiong.dev
 
 The source for [junxiong.dev](https://junxiong.dev), Ong Jun Xiong's personal site.
-It presents my work in AI infrastructure, backend platforms, and product engineering through a
-terminal-inspired interface.
+It presents my personal projects and work in AI infrastructure, backend platforms, and product
+engineering through a restrained terminal-inspired interface.
 
 ## What is here
 
-- A single-page recruiter landing with selected work, experience, skills, and contact links
+- A project-first homepage with selected work and personal context
+- A public case study for Compoze, with client identity and financial terms kept private
 - A browser and print-friendly resume
 - An archive of university projects
 - Light and dark themes with reduced-motion support

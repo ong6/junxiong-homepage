@@ -19,7 +19,7 @@ import nusConnectImage from "../public/images/works/nusconnect_01.webp";
 
 const tagStyle = {
 	fontFamily: "var(--font-mono)",
-	fontSize: "9px",
+	fontSize: { base: "11px", md: "10px" },
 	fontWeight: "700",
 	letterSpacing: ".08em",
 	textTransform: "uppercase",
@@ -174,10 +174,10 @@ function CompozeCard() {
 			<Box p={{ base: 6, md: 8 }}>
 				<Flex justify="space-between" gap={4} color="#7A4936" sx={tagStyle}>
 					<Text>Company · 2025</Text>
-					<Text>Acquired</Text>
+					<Text>Sold to a client</Text>
 				</Flex>
 				<Box mt={4}>
-					<ProjectHeading>Compoze</ProjectHeading>
+					<ProjectHeading href="/compoze">Compoze</ProjectHeading>
 				</Box>
 				<Text mt={3} color="#684737" fontSize="15px" lineHeight="1.7">
 					A one-person AI studio I ran alongside TikTok. I found the customers,
