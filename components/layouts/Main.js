@@ -97,6 +97,10 @@ const Main = ({ children, router }) => {
 	return (
 		<Box pb={8} overflowX="hidden">
 			<Head>
+				<meta
+					name="google-site-verification"
+					content="xEfOIDuq7sNtCuAVI0fO7WCZUCk02TUXpGGwmq--LoI"
+				/>
 				<meta name="mobile-web-app-capable" content="yes" />
 				<meta name="apple-mobile-web-app-capable" content="yes" />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
