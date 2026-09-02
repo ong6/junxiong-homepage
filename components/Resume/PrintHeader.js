@@ -45,7 +45,7 @@ export default function PrintHeader() {
 				<PrintButton flexShrink={0} />
 			</Flex>
 
-			<Text fontSize="16px" lineHeight="1.75" opacity={0.82} maxW="680px" mt={5}>
+			<Text fontSize="16px" lineHeight="1.75" opacity={0.92} maxW="680px" mt={5}>
 				I build production agent runtimes, tool servers, and backend platforms.
 				At TikTok, my work spans the shared AI layer and the Go services beneath
 				global e-commerce operations.

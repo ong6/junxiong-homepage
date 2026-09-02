@@ -1,14 +1,24 @@
+// Alternate hero copy (from retired TerminalHero):
+//
+//   Eyebrow:   AI infrastructure engineer · TikTok · Singapore
+//   Headline:  I build the systems behind production AI.
+//   Lede:      Agent runtimes, tool servers, data platforms, and the interfaces
+//              people use. I turn ambiguous operational problems into reliable
+//              systems used across the US, Southeast Asia, and the UK.
+//   CTAs:      "See selected work" (#work), "View résumé" (/resume)
+//   Note:      Interested in AI infrastructure, backend, and forward-deployed roles.
+
 import {
 	Box,
 	Flex,
 	Grid,
 	Heading,
-	Image,
 	Link,
 	SimpleGrid,
 	Text,
 	useColorModeValue,
 } from "@chakra-ui/react";
+import NextImage from "next/image";
 import NextLink from "next/link";
 import Layout from "../components/layouts/Articles";
 import Section from "../components/Section";
@@ -23,6 +33,19 @@ const utilityLinkProps = {
 	textUnderlineOffset: "4px",
 };
 
+function Eyebrow({ children }) {
+	return (
+		<Text
+			fontFamily="var(--font-mono)"
+			fontSize="10px"
+			fontWeight="700"
+			letterSpacing=".12em"
+			color={useColorModeValue("mint.700", "mint.300")}>
+			{children}
+		</Text>
+	);
+}
+
 function Introduction() {
 	const portraitBorder = useColorModeValue(
 		"rgba(26,36,32,.18)",
@@ -31,14 +54,7 @@ function Introduction() {
 
 	return (
 		<Box as="section" id="about" scrollMarginTop="96px" pt={{ base: 12, md: 20 }}>
-			<Text
-				fontFamily="var(--font-mono)"
-				fontSize="10px"
-				fontWeight="700"
-				letterSpacing=".12em"
-				color="mint.500">
-				{"// JUNXIONG.DEV / SINGAPORE"}
-			</Text>
+			<Eyebrow>{"// JUNXIONG.DEV / SINGAPORE"}</Eyebrow>
 
 			<Grid
 				gridTemplateColumns={{ base: "1fr", md: "minmax(0, 1.35fr) minmax(260px, .65fr)" }}
@@ -81,15 +97,20 @@ function Introduction() {
 
 				<Box justifySelf={{ md: "end" }} w="100%" maxW={{ base: "330px", md: "310px" }}>
 					<Box border="1px solid" borderColor={portraitBorder} bg="surface.raised" p={3} transform={{ md: "rotate(1.5deg)" }}>
-						<Image
+						<NextImage
 							src="/images/junxiong.webp"
 							alt="Ong Jun Xiong, AI infrastructure engineer in Singapore"
-							w="100%"
-							aspectRatio="4 / 3"
-							objectFit="cover"
-							objectPosition="center 28%"
-							loading="eager"
-							fetchPriority="high"
+							width={768}
+							height={768}
+							priority
+							sizes="(max-width: 48em) 330px, 310px"
+							style={{
+								width: "100%",
+								height: "auto",
+								aspectRatio: "4 / 3",
+								objectFit: "cover",
+								objectPosition: "center 28%",
+							}}
 						/>
 						<Flex mt={3} justify="space-between" color="text.muted" fontFamily="var(--font-mono)" fontSize={{ base: "11px", md: "10px" }}>
 							<Text>JX / 2026</Text>
@@ -105,14 +126,7 @@ function Introduction() {
 function Now() {
 	return (
 		<Box id="now" scrollMarginTop="96px" pt={{ base: 20, md: 28 }}>
-			<Text
-				fontFamily="var(--font-mono)"
-				fontSize="10px"
-				fontWeight="700"
-				letterSpacing=".12em"
-				color="mint.500">
-				{"// NOW"}
-			</Text>
+			<Eyebrow>{"// NOW"}</Eyebrow>
 			<SimpleGrid columns={{ base: 1, md: 2 }} gap={{ base: 8, md: 16 }} mt={5}>
 				<Box>
 					<Heading as="h2" fontSize={{ base: "25px", md: "31px" }}>At work</Heading>
@@ -147,14 +161,7 @@ export default function Home() {
 
 			<Section>
 				<Box id="work" scrollMarginTop="96px" pt={{ base: 20, md: 28 }}>
-					<Text
-						fontFamily="var(--font-mono)"
-						fontSize="10px"
-						fontWeight="700"
-						letterSpacing=".12em"
-						color="mint.500">
-						{"// SELECTED PROJECTS"}
-					</Text>
+					<Eyebrow>{"// SELECTED PROJECTS"}</Eyebrow>
 					<Heading as="h2" mt={3} mb={{ base: 7, md: 10 }} fontSize={{ base: "34px", md: "46px" }}>
 						Things I have made.
 					</Heading>

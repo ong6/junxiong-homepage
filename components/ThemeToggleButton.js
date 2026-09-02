@@ -7,7 +7,7 @@ const ThemeToggleButton = () => {
 	return (
 		<IconButton
 			aria-label={useColorModeValue("Use dark theme", "Use light theme")}
-			colorScheme="teal"
+			colorScheme="mint"
 			variant="ghost"
 			minW="44px"
 			h="44px"

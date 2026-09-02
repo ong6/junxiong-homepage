@@ -11,7 +11,7 @@ const links = [
 ];
 
 const Footer = () => (
-	<Box as="footer" mt={{ base: 14, md: 20 }} pt={6} borderTop="1px solid" borderColor="border.subtle">
+	<Box mt={{ base: 14, md: 20 }} pt={6} borderTop="1px solid" borderColor="border.subtle">
 		<Flex direction={{ base: "column", md: "row" }} justify="space-between" align={{ md: "center" }} gap={5}>
 			<Box>
 				<Text fontWeight="700" fontSize="14px">Ong Jun Xiong</Text>

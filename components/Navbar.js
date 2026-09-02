@@ -6,10 +6,7 @@ import {
 	Flex,
 	IconButton,
 	Link,
-	Menu,
-	MenuButton,
-	MenuItem,
-	MenuList,
+	useDisclosure,
 	Stack,
 	useColorModeValue,
 } from "@chakra-ui/react";
@@ -20,6 +17,7 @@ const navigationLinks = [
 	{ href: "/#work", homeHref: "#work", name: "Projects" },
 	{ href: "/#about", homeHref: "#about", name: "About" },
 	{ href: "/#now", homeHref: "#now", name: "Now" },
+	{ href: "/compoze", name: "Compoze" },
 	{ href: "/resume", name: "Résumé" },
 	{ href: "/works", name: "Archive" },
 ];
@@ -58,6 +56,7 @@ const Navbar = ({ path = "/", ...props }) => {
 	const onHome = path === "/" || path.startsWith("/#");
 	const navBg = useColorModeValue("rgba(241,238,230,.86)", "rgba(14,21,18,.86)");
 	const menuBg = useColorModeValue("warm.50", "graphite.800");
+	const menu = useDisclosure();
 
 	return (
 		<Box
@@ -92,7 +91,7 @@ const Navbar = ({ path = "/", ...props }) => {
 					mr={3}>
 					{navigationLinks.map((link) => {
 						const href = onHome && link.homeHref ? link.homeHref : link.href;
-						const active = link.href === "/resume" && path.startsWith("/resume");
+						const active = !link.homeHref && path.startsWith(link.href);
 						return (
 							<LinkItem href={href} active={active} key={link.name}>
 								{link.name}
@@ -104,27 +103,52 @@ const Navbar = ({ path = "/", ...props }) => {
 				<Flex align="center" gap={2}>
 					<ThemeToggleButton />
 					<Box display={{ base: "block", md: "none" }}>
-						<Menu isLazy id="navbar-menu">
-							<MenuButton
-								as={IconButton}
-								icon={<HamburgerIcon />}
-								variant="outline"
+						<IconButton
+							icon={<HamburgerIcon />}
+							variant="outline"
+							borderColor="border.subtle"
+							minW="44px"
+							h="44px"
+							aria-label={menu.isOpen ? "Close navigation menu" : "Open navigation menu"}
+							aria-expanded={menu.isOpen}
+							aria-controls="navbar-menu"
+							onClick={menu.onToggle}
+						/>
+						{menu.isOpen && (
+							<Stack
+								id="navbar-menu"
+								as="ul"
+								listStyleType="none"
+								position="absolute"
+								right={3}
+								top="calc(100% + 6px)"
+								minW="180px"
+								spacing={0}
+								py={2}
+								bg={menuBg}
+								border="1px solid"
 								borderColor="border.subtle"
-								minW="44px"
-								h="44px"
-								aria-label="Open navigation menu"
-							/>
-							<MenuList bg={menuBg} borderColor="border.subtle" boxShadow="0 18px 48px rgba(0,0,0,.18)">
+								borderRadius="md"
+								boxShadow="0 18px 48px rgba(0,0,0,.18)">
 								{navigationLinks.map((link) => {
 									const href = onHome && link.homeHref ? link.homeHref : link.href;
 									return (
-										<MenuItem as={NextLink} href={href} key={link.name} bg="transparent" _hover={{ bg: "surface.quiet" }}>
-											{link.name}
-										</MenuItem>
+										<Box as="li" key={link.name}>
+											<Link
+												as={NextLink}
+												href={href}
+												display="block"
+												px={4}
+												py={2}
+												_hover={{ bg: "surface.quiet", textDecoration: "none" }}
+												onClick={menu.onClose}>
+												{link.name}
+											</Link>
+										</Box>
 									);
 								})}
-							</MenuList>
-						</Menu>
+							</Stack>
+						)}
 					</Box>
 				</Flex>
 			</Container>

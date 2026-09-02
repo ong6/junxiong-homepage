@@ -1,4 +1,4 @@
-import { Box, Heading, SimpleGrid } from "@chakra-ui/react";
+import { Box, Heading, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
 import { WorkGridItem } from "../components/GridItem";
 import Layout from "../components/layouts/Articles";
 import PageHeader from "../components/PageHeader";
@@ -7,8 +7,8 @@ import Section from "../components/Section";
 // Importing thumbnails
 import thumbAbcdao from "../public/images/works/abcdao_01.png";
 import thumbAmuze from "../public/images/works/amuze_01.png";
-import thumbContractMe from "../public/images/works/contractme_01.png";
-import thumbCovalent from "../public/images/works/covalent_02.png";
+import thumbContractMe from "../public/images/works/contractme_01.webp";
+import thumbCovalent from "../public/images/works/covalent_02.webp";
 import thumbFintechWebsite from "../public/images/works/fintechwebsite_03.png";
 import thumbImposter from "../public/images/works/imposter_01.png";
 import thumbMarkbind from "../public/images/works/markbind_01.png";
@@ -149,7 +149,7 @@ const GroupHeading = ({ children }) => (
 		fontWeight="700"
 		letterSpacing=".12em"
 		textTransform="uppercase"
-		color="mint.500"
+		color={useColorModeValue("mint.700", "mint.300")}
 		mt={{ base: 12, md: 16 }}
 		mb={5}>
 		{`// ${children}`}

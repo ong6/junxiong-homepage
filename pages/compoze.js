@@ -7,6 +7,7 @@ import {
 	SimpleGrid,
 	Stack,
 	Text,
+	useColorModeValue,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import Layout from "../components/layouts/Articles";
@@ -35,6 +36,8 @@ const deliveryStages = [
 ];
 
 export default function Compoze() {
+	const labelColor = useColorModeValue("mint.700", "mint.300");
+
 	return (
 		<Layout
 			title="Compoze"
@@ -44,7 +47,7 @@ export default function Compoze() {
 					← Selected projects
 				</Link>
 
-				<Text mt={10} color="mint.500" sx={labelStyle}>
+				<Text mt={10} color={labelColor} sx={labelStyle}>
 					2025 · side venture · sold to a client
 				</Text>
 				<Heading
@@ -74,7 +77,7 @@ export default function Compoze() {
 						borderTop={{ base: index ? "1px solid" : "none", md: "none" }}
 						borderLeft={{ base: "none", md: index ? "1px solid" : "none" }}
 						borderColor="border.subtle">
-						<Text color="mint.500" sx={labelStyle}>{label}</Text>
+						<Text color={labelColor} sx={labelStyle}>{label}</Text>
 						<Text mt={3} fontSize="16px" fontWeight="700" lineHeight="1.5">{value}</Text>
 					</Box>
 				))}
@@ -86,7 +89,7 @@ export default function Compoze() {
 				gap={{ base: 10, md: 16 }}
 				mt={{ base: 16, md: 24 }}>
 				<Box>
-					<Text color="mint.500" sx={labelStyle}>{"// The product"}</Text>
+					<Text color={labelColor} sx={labelStyle}>{"// The product"}</Text>
 					<Heading as="h2" mt={3} fontSize={{ base: "30px", md: "38px" }}>
 						One product, configured per customer.
 					</Heading>
@@ -124,7 +127,7 @@ export default function Compoze() {
 			</Grid>
 
 			<Box as="section" mt={{ base: 16, md: 24 }}>
-				<Text color="mint.500" sx={labelStyle}>{"// The work around the product"}</Text>
+				<Text color={labelColor} sx={labelStyle}>{"// The work around the product"}</Text>
 				<Heading as="h2" mt={3} fontSize={{ base: "30px", md: "38px" }}>
 					The build was only one stage.
 				</Heading>
@@ -135,7 +138,7 @@ export default function Compoze() {
 				<Grid templateColumns={{ base: "1fr", smmd: "repeat(2, 1fr)", md: "repeat(3, 1fr)" }} gap="1px" bg="border.subtle" mt={8} border="1px solid" borderColor="border.subtle">
 					{deliveryStages.map((stage, index) => (
 						<Box key={stage} bg="page.bg" p={5}>
-							<Text color="mint.500" sx={labelStyle}>{String(index + 1).padStart(2, "0")}</Text>
+							<Text color={labelColor} sx={labelStyle}>{String(index + 1).padStart(2, "0")}</Text>
 							<Text mt={3} fontSize="15px" fontWeight="700">{stage}</Text>
 						</Box>
 					))}

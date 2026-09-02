@@ -61,7 +61,7 @@ export default function ResumeDetail({ detail, compact = false }) {
 								key={description}
 								fontSize="15px"
 								lineHeight="1.65"
-								opacity={0.84}>
+								opacity={0.92}>
 								{description}
 							</ListItem>
 						))}

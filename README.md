@@ -38,7 +38,7 @@ npm start
 
 ```text
 pages/          Routes and page content
-components/     Shared layout, terminal, resume, and work components
+components/     Shared layout, navigation, resume, and work components
 public/         Images, robots.txt, and sitemap.xml
 lib/theme.js    Chakra theme and colour-mode configuration
 ```

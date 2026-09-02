@@ -33,7 +33,7 @@ export default function Skills() {
 					<Text w={{ smmd: "128px" }} flexShrink={0} fontSize="15px" fontWeight="800">
 						{skill.label}
 					</Text>
-					<Text fontSize="15px" lineHeight="1.65" opacity={0.8}>
+					<Text fontSize="15px" lineHeight="1.65" opacity={0.92}>
 						{skill.value}
 					</Text>
 				</Flex>

@@ -1,4 +1,4 @@
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { Box, Heading, Text, useColorModeValue } from "@chakra-ui/react";
 
 // Subpage header matching the homepage grammar: mono `//` eyebrow, big
 // left-aligned title, optional muted lede.
@@ -10,7 +10,7 @@ export default function PageHeader({ eyebrow, title, children }) {
 				fontSize="10px"
 				fontWeight="700"
 				letterSpacing=".12em"
-				color="mint.500">
+				color={useColorModeValue("mint.700", "mint.300")}>
 				{eyebrow}
 			</Text>
 			<Heading

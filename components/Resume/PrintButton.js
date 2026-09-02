@@ -7,7 +7,7 @@ const PrintButton = (props) => (
 		href="/resume/Ong-Jun-Xiong-Resume.pdf"
 		download
 		leftIcon={<FiDownload />}
-		colorScheme="teal"
+		colorScheme="mint"
 		size="sm"
 		{...props}>
 		Download PDF

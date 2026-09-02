@@ -60,6 +60,10 @@ const personSchema = {
 	sameAs: ["https://github.com/ong6", "https://www.linkedin.com/in/junx6/"],
 };
 
+// Evaluated once at module load. Pages are prerendered at build time, so this
+// stamps the build date rather than a stale hardcoded one.
+const BUILD_DATE = new Date().toISOString().slice(0, 10);
+
 const profileSchema = {
 	"@context": "https://schema.org",
 	"@graph": [
@@ -77,7 +81,7 @@ const profileSchema = {
 			url: `${SITE_URL}/`,
 			name: DEFAULT_TITLE,
 			description: DEFAULT_DESCRIPTION,
-			dateModified: "2026-09-01",
+			dateModified: BUILD_DATE,
 			isPartOf: { "@id": `${SITE_URL}/#website` },
 			mainEntity: { "@id": `${SITE_URL}/#person` },
 		},
@@ -90,9 +94,19 @@ const profileSchema = {
 
 const Main = ({ children, router }) => {
 	const canonical = canonicalFor(router?.asPath);
-	const structuredData = canonical === `${SITE_URL}/`
-		? profileSchema
-		: { "@context": "https://schema.org", ...personSchema };
+	const structuredData =
+		canonical === `${SITE_URL}/`
+			? profileSchema
+			: {
+					"@context": "https://schema.org",
+					"@type": "WebPage",
+					"@id": canonical,
+					url: canonical,
+					isPartOf: { "@id": `${SITE_URL}/#website` },
+					dateModified: BUILD_DATE,
+					about: { "@id": `${SITE_URL}/#person` },
+					primaryImageOfPage: OG_IMAGE,
+			  };
 
 	return (
 		<Box pb={8} overflowX="hidden">
@@ -158,11 +172,15 @@ const Main = ({ children, router }) => {
 				Skip to content
 			</Link>
 
-			<Navbar path={router.asPath} />
+			<Box as="header">
+				<Navbar path={router.asPath} />
+			</Box>
 
 			<Container as="main" id="main-content" maxW="1120px" pt={14}>
 				{children}
+			</Container>
 
+			<Container as="footer" maxW="1120px">
 				<Footer />
 			</Container>
 		</Box>

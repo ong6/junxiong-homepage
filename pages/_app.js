@@ -1,7 +1,7 @@
 import "../styles/globals.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import Layout from "../components/layouts/Main";
-import { AnimatePresence } from "framer-motion";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import theme from "../lib/theme";
 
@@ -24,11 +24,10 @@ function MyApp({ Component, pageProps, router }) {
 		<div className={`${plexSans.variable} ${plexMono.variable}`}>
 			<ChakraProvider theme={theme}>
 				<Layout router={router}>
-					<AnimatePresence mode="wait" initial={false}>
-						<Component {...pageProps} key={router.route} />
-					</AnimatePresence>
+					<Component {...pageProps} key={router.route} />
 				</Layout>
 			</ChakraProvider>
+			<SpeedInsights />
 		</div>
 	);
 }
