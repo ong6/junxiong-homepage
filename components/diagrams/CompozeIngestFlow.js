@@ -91,8 +91,8 @@ function Wide({ accent }) {
 			))}
 
 			<Line id={id} x1={136} y1={364} x2={136} y2={1000} dashed />
-			<Label x={124} y={608} text="on failure" anchor="end" size={11} />
-			<Cross cx={136} cy={632} />
+			<Label x={124} y={648} text="on failure" anchor="end" size={11} />
+			<Cross cx={136} cy={672} />
 
 			<Line id={id} x1={360} y1={920} x2={360} y2={1000} />
 			<Label x={348} y={978} text="chunks + embeddings" anchor="end" size={11} />
@@ -227,7 +227,7 @@ function Narrow({ accent }) {
 			<Line id={id} x1={36} y1={312} x2={36} y2={928} arrow={false} dashed />
 			<Line id={id} x1={36} y1={928} x2={110} y2={928} arrow={false} dashed />
 			<Line id={id} x1={110} y1={928} x2={110} y2={952} dashed />
-			<Cross cx={36} cy={620} s={4} />
+			<Cross cx={36} cy={592} s={4} />
 
 			<Line id={id} x1={200} y1={816} x2={200} y2={864} />
 			<Label x={210} y={856} text="chunks + vectors" size={10} />
