@@ -1,13 +1,3 @@
-// Alternate hero copy (from retired TerminalHero):
-//
-//   Eyebrow:   AI infrastructure engineer · TikTok · Singapore
-//   Headline:  I build the systems behind production AI.
-//   Lede:      Agent runtimes, tool servers, data platforms, and the interfaces
-//              people use. I turn ambiguous operational problems into reliable
-//              systems used across the US, Southeast Asia, and the UK.
-//   CTAs:      "See selected work" (#work), "View résumé" (/resume)
-//   Note:      Interested in AI infrastructure, backend, and forward-deployed roles.
-
 import {
 	Box,
 	Flex,
@@ -74,13 +64,13 @@ function Introduction() {
 						fontSize={{ base: "19px", md: "23px" }}
 						lineHeight="1.45"
 						fontWeight="650">
-						AI infrastructure engineer at TikTok. I make reliable systems and
-						small tools for problems I cannot leave alone.
+						AI infrastructure engineer at TikTok in Singapore. I build backend
+						systems for production AI, and a lot of small tools nobody asked for.
 					</Text>
 					<Text mt={5} maxW="640px" fontSize="16px" lineHeight="1.75" color="text.muted">
-						Most of my work sits somewhere between backend infrastructure and the
-						people using it: agent runtimes, tool servers, data products, and the
-						occasional two-day experiment. This is where I keep the things I have made.
+						Agent runtimes, tool servers, data products, and the occasional two-day
+						experiment. Some of it is work. Most of the rest started because
+						something annoyed me enough to write code about it.
 					</Text>
 					<Flex mt={6} wrap="wrap" columnGap={6} rowGap={3}>
 						<Link href="https://github.com/ong6" target="_blank" rel="noopener noreferrer" {...utilityLinkProps}>
@@ -114,7 +104,7 @@ function Introduction() {
 						/>
 						<Flex mt={3} justify="space-between" color="text.muted" fontFamily="var(--font-mono)" fontSize={{ base: "11px", md: "10px" }}>
 							<Text>JX / 2026</Text>
-							<Text>ENGINEER + BUILDER</Text>
+							<Text>SINGAPORE</Text>
 						</Flex>
 					</Box>
 				</Box>
@@ -142,11 +132,12 @@ function Now() {
 				<Box>
 					<Heading as="h2" fontSize={{ base: "25px", md: "31px" }}>Away from work</Heading>
 					<Text mt={3} color="text.muted" fontSize="15px" lineHeight="1.75">
-						I play tennis, keep a written trading journal, overthink home-server
-						hardware, and build software for decisions I would otherwise make badly.
+						Tennis, a trading journal I actually keep up, and far too much
+						reading about home-server hardware I have not bought. I also build
+						small tools for decisions I would otherwise wing.
 					</Text>
 					<Link as={NextLink} href="/hobbies" display="inline-block" mt={4} {...utilityLinkProps}>
-						The non-work page →
+						Hobbies →
 					</Link>
 				</Box>
 			</SimpleGrid>
@@ -161,9 +152,9 @@ export default function Home() {
 
 			<Section>
 				<Box id="work" scrollMarginTop="96px" pt={{ base: 20, md: 28 }}>
-					<Eyebrow>{"// SELECTED PROJECTS"}</Eyebrow>
+					<Eyebrow>{"// PROJECTS"}</Eyebrow>
 					<Heading as="h2" mt={3} mb={{ base: 7, md: 10 }} fontSize={{ base: "34px", md: "46px" }}>
-						Things I have made.
+						Stuff I built
 					</Heading>
 					<SelectedWork />
 				</Box>

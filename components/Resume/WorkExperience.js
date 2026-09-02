@@ -86,7 +86,7 @@ const earlierExperience = [
 export default function WorkExperience() {
 	return (
 		<Box>
-			<TermHeading>experience</TermHeading>
+			<TermHeading kicker="Roles">experience</TermHeading>
 			{currentExperience.map((detail) => (
 				<ResumeDetail key={detail.title} detail={detail} />
 			))}

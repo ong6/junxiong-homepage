@@ -23,7 +23,7 @@ const skills = [
 export default function Skills() {
 	return (
 		<Box>
-			<TermHeading>technical spine</TermHeading>
+			<TermHeading kicker="Tools">technical spine</TermHeading>
 			{skills.map((skill) => (
 				<Flex
 					key={skill.label}

@@ -17,7 +17,6 @@ const navigationLinks = [
 	{ href: "/#work", homeHref: "#work", name: "Projects" },
 	{ href: "/#about", homeHref: "#about", name: "About" },
 	{ href: "/#now", homeHref: "#now", name: "Now" },
-	{ href: "/compoze", name: "Compoze" },
 	{ href: "/resume", name: "Résumé" },
 	{ href: "/works", name: "Archive" },
 ];

@@ -82,9 +82,9 @@ function GroundplaneCard() {
 					</ProjectHeading>
 				</Box>
 				<Text mt={3} maxW="570px" color="#A5B3AD" fontSize="15px" lineHeight="1.7">
-					A small deterministic boundary for agent output. It turns tool results
-					into typed facts, then rejects rankings, totals, and relationships the
-					model cannot support.
+					A deterministic boundary for agent output. Tool results become typed
+					facts, and any ranking, total or relationship those facts do not support
+					gets blocked before it reaches the user.
 				</Text>
 			</Box>
 
@@ -132,9 +132,9 @@ function PropertyCard() {
 					</ProjectHeading>
 				</Box>
 				<Text mt={3} color="#3B526C" fontSize="15px" lineHeight="1.7">
-					I wanted a calmer way to evaluate Singapore homes, so I built one from
-					listing data, official transactions, cost models, and structured agent
-					research.
+					Scores Singapore property listings against official transactions, cost models
+					and agent research. I built it because comparing units by hand in a
+					spreadsheet was miserable.
 				</Text>
 			</Box>
 
@@ -180,9 +180,9 @@ function CompozeCard() {
 					<ProjectHeading href="/compoze">Compoze</ProjectHeading>
 				</Box>
 				<Text mt={3} color="#684737" fontSize="15px" lineHeight="1.7">
-					A one-person AI studio I ran alongside TikTok. I found the customers,
-					priced the work, built their document-grounded assistants, deployed
-					them, and taught people how to use them.
+					A one-person AI studio I ran alongside TikTok. I did the selling and the
+					pricing, built the document-grounded assistants, shipped them, and then
+					sat with clients until they could use the thing without me.
 				</Text>
 			</Box>
 
@@ -223,7 +223,7 @@ function HandsfreeCard() {
 					<ProjectHeading href="/works/youtubehandsfree">YouTube Handsfree</ProjectHeading>
 				</Box>
 				<Text mt={3} color="#5A526E" fontSize="15px" lineHeight="1.7">
-					A Chrome extension that lets you pause, seek, and control YouTube with hand signs.
+					Chrome extension that pauses and seeks YouTube with hand signs.
 				</Text>
 			</Box>
 		</ProjectCard>
@@ -234,7 +234,7 @@ const archiveProjects = [
 	{
 		title: "CodeParty",
 		year: "2023",
-		description: "A collaborative interview-practice platform built as a distributed system.",
+		description: "Interview practice with a collaborative editor, built as a distributed system.",
 		href: "/works/codeparty",
 		image: codePartyImage,
 		position: "center",
@@ -242,7 +242,7 @@ const archiveProjects = [
 	{
 		title: "NUSConnect",
 		year: "2021",
-		description: "A gamified, accessible learning platform made for NUS Orbital.",
+		description: "Gamified, accessible learning platform. Our NUS Orbital project.",
 		href: "/works/nusconnect",
 		image: nusConnectImage,
 		position: "top",
@@ -290,8 +290,8 @@ export default function SelectedWork() {
 
 			<Flex mt={{ base: 14, md: 20 }} mb={5} justify="space-between" align="end" gap={5}>
 				<Box>
-					<Text color={quietLabel} sx={tagStyle}>Older, still mine</Text>
-					<Heading as="h3" mt={2} fontSize={{ base: "24px", md: "29px" }}>From the archive</Heading>
+					<Text color={quietLabel} sx={tagStyle}>2021 – 2023</Text>
+					<Heading as="h3" mt={2} fontSize={{ base: "24px", md: "29px" }}>Older projects</Heading>
 				</Box>
 				<Link as={NextLink} href="/works" fontSize="13px" fontWeight="700">
 					All university projects →

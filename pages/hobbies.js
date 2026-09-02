@@ -1,114 +1,102 @@
-import { Container, Heading, Icon, Link } from "@chakra-ui/react";
-import {
-	IoAirplane,
-	IoBook,
-	IoCodeSlash,
-	IoServer,
-	IoTennisball,
-	IoTrendingUp,
-} from "react-icons/io5";
+import { Box, Container, Link, Text, useColorModeValue } from "@chakra-ui/react";
 import Layout from "../components/layouts/Articles";
-import PageHeader from "../components/PageHeader";
-import Paragraph from "../components/Paragraph";
 import Section from "../components/Section";
+
+// A running log, not a grid of cards: one narrow column, numbered entries, a
+// single rule down the left margin. Deliberately unlike /works and the homepage.
+const Entry = ({ index, label, children, delay }) => {
+	const rule = useColorModeValue("rgba(26,36,32,.16)", "rgba(230,235,232,.14)");
+	const num = useColorModeValue("mint.700", "mint.300");
+
+	return (
+		<Section delay={delay}>
+			<Box
+				borderLeftWidth="1px"
+				borderColor={rule}
+				pl={{ base: 5, md: 8 }}
+				pb={{ base: 7, md: 9 }}>
+				<Text
+					fontFamily="var(--font-mono)"
+					fontSize="11px"
+					fontWeight="700"
+					letterSpacing=".1em"
+					color={num}
+					mb={1}>
+					{index}
+				</Text>
+				<Text fontSize={{ base: "19px", md: "21px" }} fontWeight="700" mb={2}>
+					{label}
+				</Text>
+				<Text fontSize="16px" lineHeight="1.75" color="text.muted">
+					{children}
+				</Text>
+			</Box>
+		</Section>
+	);
+};
 
 const Hobbies = () => (
 	<Layout
 		title="Hobbies"
-		description="Away from work: tennis, trading stocks against a written playbook, tinkering with side projects and home servers, slow travel and reading.">
-		<Container maxW="full">
-			<PageHeader eyebrow="// AWAY FROM WORK" title="The non-work page.">
-				The things that fill the hours when I am not building software — and a
-				few that turn into software anyway.
-			</PageHeader>
-			<Section delay={0.1}>
-				<Heading as="h2" fontSize={{ base: "22px", md: "26px" }} mb={3}>
-					<Icon as={IoTennisball} mr={2} verticalAlign="middle" />
-					Tennis
-				</Heading>
-				<Paragraph>
-					Tennis is my main sport, and the appeal is that the feedback has no
-					opinion: the ball goes in or it does not, and no amount of explaining
-					fixes a bad toss. Getting better means picking one specific flaw and
-					drilling it until it is boring. It is the only hour of the day where
-					I genuinely cannot think about software.
-				</Paragraph>
-			</Section>
+		description="What Ong Jun Xiong does away from work: tennis, trading against a written playbook, side projects, a home inference box, slow travel and reading.">
+		<Container maxW="720px" px={0} ml={0}>
+			<Box pt={{ base: 10, md: 14 }} pb={{ base: 6, md: 8 }}>
+				<Text
+					as="h1"
+					fontFamily="var(--font-mono)"
+					fontSize={{ base: "13px", md: "14px" }}
+					fontWeight="700"
+					letterSpacing=".08em"
+					textTransform="uppercase">
+					Things I do when I&apos;m not working
+				</Text>
+			</Box>
 
-			<Section delay={0.2}>
-				<Heading as="h2" fontSize={{ base: "22px", md: "26px" }} mb={3}>
-					<Icon as={IoTrendingUp} mr={2} verticalAlign="middle" />
-					Trading &amp; Markets
-				</Heading>
-				<Paragraph>
-					I actively trade stocks with a written playbook. Every trade gets
-					logged with an R-multiple calculation, every watchlist name has
-					written entry and exit triggers, and every week I review the log
-					hunting for one repeating mistake at a time. I treat it as a craft to
-					get slightly better at each week, not a get-rich scheme.
-				</Paragraph>
-			</Section>
+			<Entry index="01" label="Tennis" delay={0.05}>
+				My main sport. Getting better means picking one flaw and drilling it
+				until it is boring. It is also the only hour in a day where I am not
+				thinking about software.
+			</Entry>
 
-			<Section delay={0.3}>
-				<Heading as="h2" fontSize={{ base: "22px", md: "26px" }} mb={3}>
-					<Icon as={IoCodeSlash} mr={2} verticalAlign="middle" />
-					Tinkering with Code
-				</Heading>
-				<Paragraph>
-					I keep a few side projects going outside of work. Right now that
-					means a{" "}
-					<Link
-						href="https://github.com/ong6/sg-property-analysis"
-						target="_blank"
-						rel="noopener noreferrer">
-						Singapore property data-analysis project
-					</Link>
-					, building agent tooling for myself, and running my personal notes
-					and life admin as a markdown repo that an AI agent tends for me. Half
-					the fun is that the tools only need to make sense to one user.
-				</Paragraph>
-			</Section>
+			<Entry index="02" label="Trading" delay={0.1}>
+				I trade stocks against a written playbook. Every trade is logged with
+				its R-multiple, every watchlist name has entry and exit triggers
+				written down before I touch it, and once a week I read back the log
+				looking for one repeating mistake. It is a craft I want to be slightly
+				better at each week, not a get-rich scheme.
+			</Entry>
 
-			<Section delay={0.4}>
-				<Heading as="h2" fontSize={{ base: "22px", md: "26px" }} mb={3}>
-					<Icon as={IoServer} mr={2} verticalAlign="middle" />
-					Home Servers
-				</Heading>
-				<Paragraph>
-					The build I am speccing now is an always-on inference box: a machine
-					in the corner of a room serving models to my own tools while I sleep,
-					with nobody paid to fix it but me. Most of the hobby so far is the
-					purchase arithmetic — tokens per second is roughly memory bandwidth
-					divided by model size, and that one line settles more hardware
-					arguments than any benchmark thread. I write up what I learn as I go.
-				</Paragraph>
-			</Section>
+			<Entry index="03" label="Side projects" delay={0.15}>
+				Currently a{" "}
+				<Link
+					href="https://github.com/ong6/sg-property-analysis"
+					target="_blank"
+					rel="noopener noreferrer">
+					Singapore property data-analysis project
+				</Link>
+				, agent tooling for my own use, and my notes and life admin kept as a
+				markdown repo that an AI agent tends for me. The tools only have to
+				make sense to one user, which cuts out most of the arguing.
+			</Entry>
 
-			<Section delay={0.5}>
-				<Heading as="h2" fontSize={{ base: "22px", md: "26px" }} mb={3}>
-					<Icon as={IoAirplane} mr={2} verticalAlign="middle" />
-					Travel
-				</Heading>
-				<Paragraph>
-					I lived in Munich for six months during NUS Overseas Colleges, which
-					sold me on staying somewhere long enough to have a regular grocery
-					store. I prefer slow trips — fewer places, more days in each — over
-					checklist itineraries.
-				</Paragraph>
-			</Section>
+			<Entry index="04" label="Home server" delay={0.2}>
+				I am speccing an always-on inference box that serves models to my own
+				tools. So far the hobby is mostly purchase arithmetic: tokens per
+				second is roughly memory bandwidth divided by model size, and that one
+				line settles more hardware arguments than any benchmark thread. I write
+				up what I learn as I go.
+			</Entry>
 
-			<Section delay={0.6}>
-				<Heading as="h2" fontSize={{ base: "22px", md: "26px" }} mb={3}>
-					<Icon as={IoBook} mr={2} verticalAlign="middle" />
-					Reading
-				</Heading>
-				<Paragraph>
-					I read to steal ideas — mostly non-fiction that connects to whatever
-					I am building or trading at the moment, with fiction in between to
-					reset. A book that changes how I do one thing is worth a shelf of
-					ones I merely agreed with.
-				</Paragraph>
-			</Section>
+			<Entry index="05" label="Travel" delay={0.25}>
+				Six months in Munich on NUS Overseas Colleges, which was long enough to
+				have a regular grocery store. That is the part I want from a trip now,
+				so I go slow: fewer places, more days in each.
+			</Entry>
+
+			<Entry index="06" label="Reading" delay={0.3}>
+				Non-fiction, usually tied to whatever I am building or trading at the
+				time. Fiction in between to reset.
+			</Entry>
 		</Container>
 	</Layout>
 );
