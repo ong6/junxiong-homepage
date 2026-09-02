@@ -8,6 +8,7 @@ const topRoutes = [
 	{ path: "/", changefreq: "weekly", priority: "1.0" },
 	{ path: "/resume", changefreq: "weekly", priority: "0.9" },
 	{ path: "/compoze", changefreq: "yearly", priority: "0.8" },
+	{ path: "/groundplane", changefreq: "yearly", priority: "0.8" },
 	{ path: "/works", changefreq: "monthly", priority: "0.7" },
 	{ path: "/hobbies", changefreq: "monthly", priority: "0.5" },
 ];

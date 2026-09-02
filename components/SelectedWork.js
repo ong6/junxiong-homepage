@@ -77,9 +77,7 @@ function GroundplaneCard() {
 					<Text>Python</Text>
 				</Flex>
 				<Box mt={4}>
-					<ProjectHeading href="https://github.com/ong6/groundplane" external>
-						Groundplane ↗
-					</ProjectHeading>
+					<ProjectHeading href="/groundplane">Groundplane</ProjectHeading>
 				</Box>
 				<Text mt={3} maxW="570px" color="#A5B3AD" fontSize="15px" lineHeight="1.7">
 					A deterministic boundary for agent output. Tool results become typed
@@ -96,13 +94,13 @@ function GroundplaneCard() {
 						fontSize="10px"
 						color="#7D9187">
 						<Text>groundplane / boundary.py</Text>
-						<Text>93 tests</Text>
+						<Text>169 tests</Text>
 					</Flex>
 					<Box mt={5} fontFamily="var(--font-mono)" fontSize={{ base: "10px", md: "12px" }} lineHeight="1.9">
-						<Text color="#A5B3AD">facts = FactSet.from_tool_results(rows)</Text>
-						<Text color="#E6EBE8">claim = Winner(entity=&quot;north&quot;)</Text>
-						<Text color="#F09A8E">boundary.verify(claim) → UnsupportedClaim</Text>
-						<Text color="#71DCB2">output blocked ✓</Text>
+						<Text color="#A5B3AD">reg.record_ranking(&quot;campaign_ctr&quot;, rows, key=&quot;ctr&quot;, ...)</Text>
+						<Text color="#E6EBE8">with boundary(reg, facts=[...], checks=[superlative(...)]) as b:</Text>
+						<Text color="#E6EBE8" pl={4}>{'b.submit({"winner": "north"})'}</Text>
+						<Text color="#F09A8E">UnsupportedClaim: registered facts support &apos;harbour&apos;</Text>
 					</Box>
 				</Box>
 				<Flex mt={4} wrap="wrap" columnGap={4} rowGap={1} color="#7D9187" sx={tagStyle}>
