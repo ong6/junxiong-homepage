@@ -1,5 +1,6 @@
 import { Box, Container, Heading, Link, Text, useColorModeValue } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { CodeBlock, CodeFigure } from "../components/CodeBlock";
 import Layout from "../components/layouts/Articles";
 
 // Same shape as /groundplane: one ~680px column of prose, two code figures
@@ -27,69 +28,6 @@ const H2 = (props) => (
 
 const Code = (props) => (
 	<Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em" {...props} />
-);
-
-const CodeBlock = ({ title, lines }) => {
-	const muted = useColorModeValue("graphite.500", "graphite.300");
-	const hot = useColorModeValue("mint.700", "mint.300");
-	return (
-		<Box
-			mt={4}
-			border="1px solid"
-			borderColor="border.subtle"
-			bg="surface.raised"
-			px={{ base: 4, md: 5 }}
-			py={{ base: 4, md: 5 }}
-			maxW="100%"
-			overflowX="auto"
-			sx={{ WebkitOverflowScrolling: "touch" }}>
-			<Text
-				fontFamily="var(--font-mono)"
-				fontSize={{ base: "11px", md: "12px" }}
-				fontWeight="700"
-				letterSpacing=".08em"
-				textTransform="uppercase"
-				color="text.muted">
-				{title}
-			</Text>
-			<Box
-				as="pre"
-				mt={3}
-				m={0}
-				fontFamily="var(--font-mono)"
-				fontSize={{ base: "11px", md: "12.5px" }}
-				lineHeight="1.75"
-				whiteSpace="pre"
-				w="max-content"
-				minW="100%">
-				{lines.map(([text, tone], i) => (
-					<Box
-						as="span"
-						key={i}
-						display="block"
-						color={tone === "muted" ? muted : tone === "hot" ? hot : "page.text"}
-						fontWeight={tone === "hot" ? "700" : "400"}>
-						{text || " "}
-					</Box>
-				))}
-			</Box>
-		</Box>
-	);
-};
-
-const CodeFigure = ({ caption, children }) => (
-	<Box as="figure" my={{ base: 10, md: 14 }} mx={0}>
-		{children}
-		<Text
-			as="figcaption"
-			mt={3}
-			fontFamily="var(--font-mono)"
-			fontSize="11px"
-			lineHeight="1.6"
-			color="text.muted">
-			{caption}
-		</Text>
-	</Box>
 );
 
 // The grading rule and the closing line, in the words the drill skill uses.

@@ -15,6 +15,10 @@ import Section from "../components/Section";
 import SelectedWork from "../components/SelectedWork";
 
 const utilityLinkProps = {
+	display: "inline-flex",
+	alignItems: "center",
+	minH: "32px",
+	my: -1.5,
 	fontFamily: "var(--font-mono)",
 	fontSize: "12px",
 	fontWeight: "700",
@@ -64,17 +68,23 @@ function Introduction() {
 						fontSize={{ base: "19px", md: "23px" }}
 						lineHeight="1.45"
 						fontWeight="650">
-						AI infrastructure engineer at TikTok in Singapore. I build backend
-						systems for production AI, and a lot of small tools nobody asked for.
+						Software engineer at TikTok in Singapore, working on AI
+						infrastructure for global e-commerce. I built my team&apos;s agent
+						platform: a LangGraph runtime on the A2A protocol, a Go MCP server,
+						and a React chat SDK.
 					</Text>
 					<Text mt={5} maxW="640px" fontSize="16px" lineHeight="1.75" color="text.muted">
-						Agent runtimes, tool servers, data products, and the occasional two-day
-						experiment. Some of it is work. Most of the rest started because
-						something annoyed me enough to write code about it.
+						Before that, Go and gRPC promotion backends for the same platform,
+						and a one-person AI company I ran on the side and sold. The rest
+						of this site is small tools that started because something annoyed
+						me enough to write code about it.
 					</Text>
 					<Flex mt={6} wrap="wrap" columnGap={6} rowGap={3}>
 						<Link href="https://github.com/ong6" target="_blank" rel="noopener noreferrer" {...utilityLinkProps}>
 							GitHub ↗
+						</Link>
+						<Link href="https://www.linkedin.com/in/junx6/" target="_blank" rel="noopener noreferrer" {...utilityLinkProps}>
+							LinkedIn ↗
 						</Link>
 						<Link as={NextLink} href="/resume" {...utilityLinkProps}>
 							Résumé
@@ -130,18 +140,24 @@ function Now() {
 						LangGraph runtime, a Go MCP server, a React chat SDK, and the backend
 						systems around them.
 					</Text>
-					<Link as={NextLink} href="/resume" display="inline-block" mt={4} {...utilityLinkProps}>
+					<Link as={NextLink} href="/resume" {...utilityLinkProps} mt={4}>
 						Work history →
 					</Link>
 				</Box>
 				<Box>
 					<Heading as="h2" fontSize={{ base: "25px", md: "31px" }}>Away from work</Heading>
 					<Text mt={3} color="text.muted" fontSize="15px" lineHeight="1.75">
-						Tennis, a trading journal I actually keep up, and far too much
-						reading about home-server hardware I have not bought. I also build
-						small tools for decisions I would otherwise wing.
+						This month:{" "}
+						<Link as={NextLink} href="/groundplane">Groundplane</Link>, a
+						Python library that fails an agent&apos;s output when its prose
+						asserts a fact its tools never produced, at v0.1.0 and installable
+						from GitHub; and{" "}
+						<Link as={NextLink} href="/jobforge">Jobforge</Link>, a Claude
+						Code plugin that keeps a résumé, target roles and interview drills
+						in one corpus. Around that, tennis and a trading journal I actually
+						keep up.
 					</Text>
-					<Link as={NextLink} href="/hobbies" display="inline-block" mt={4} {...utilityLinkProps}>
+					<Link as={NextLink} href="/hobbies" {...utilityLinkProps} mt={4}>
 						Hobbies →
 					</Link>
 				</Box>

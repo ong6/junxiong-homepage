@@ -61,6 +61,11 @@ function LinkItem({ href, active, external, children }) {
 			}}
 			_hover={{ color: "page.text", textDecoration: "none", _after: { transform: "scaleX(1)" } }}>
 			{children}
+			{external && (
+				<Box as="span" aria-hidden="true" ml="3px" fontSize="11px">
+					↗
+				</Box>
+			)}
 		</Link>
 	);
 }
@@ -207,6 +212,11 @@ const Navbar = ({ path = "/", ...props }) => {
 										_hover={{ bg: "surface.quiet", color: "page.text", textDecoration: "none" }}
 										onClick={menu.onClose}>
 										{link.name}
+										{link.external && (
+											<Box as="span" aria-hidden="true" ml="4px" fontSize="12px">
+												↗
+											</Box>
+										)}
 									</Link>
 								</Box>
 							);

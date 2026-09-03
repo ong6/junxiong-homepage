@@ -63,8 +63,7 @@ const Hobbies = () => (
 				I trade stocks against a written playbook. Every trade is logged with
 				its R-multiple, every watchlist name has entry and exit triggers
 				written down before I touch it, and once a week I read back the log
-				looking for one repeating mistake. It is a craft I want to be slightly
-				better at each week, not a get-rich scheme.
+				looking for one repeating mistake.
 			</Entry>
 
 			<Entry index="03" label="Side projects" delay={0.15}>

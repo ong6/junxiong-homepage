@@ -6,7 +6,7 @@ export default function Education() {
 
 	return (
 		<Box>
-			<TermHeading kicker="School">education</TermHeading>
+			<TermHeading kicker="School">Education</TermHeading>
 			<Flex
 				direction={{ base: "column", smmd: "row" }}
 				justify="space-between"

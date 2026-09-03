@@ -96,7 +96,7 @@ function GroundplaneCard() {
 						<Text>groundplane / boundary.py</Text>
 						<Text>169 tests</Text>
 					</Flex>
-					<Box mt={5} fontFamily="var(--font-mono)" fontSize={{ base: "10px", md: "12px" }} lineHeight="1.9">
+					<Box mt={5} fontFamily="var(--font-mono)" fontSize={{ base: "11px", md: "12px" }} lineHeight="1.9">
 						<Text color="#A5B3AD">reg.record_ranking(&quot;campaign_ctr&quot;, rows, key=&quot;ctr&quot;, ...)</Text>
 						<Text color="#E6EBE8">with boundary(reg, facts=[...], checks=[superlative(...)]) as b:</Text>
 						<Text color="#E6EBE8" pl={4}>{'b.submit({"winner": "north"})'}</Text>
@@ -233,7 +233,7 @@ function JobforgeCard() {
 						<Text>skills / drill / SKILL.md</Text>
 						<Text>35 tests</Text>
 					</Flex>
-					<Box mt={5} fontFamily="var(--font-mono)" fontSize={{ base: "10px", md: "12px" }} lineHeight="1.9">
+					<Box mt={5} fontFamily="var(--font-mono)" fontSize={{ base: "11px", md: "12px" }} lineHeight="1.9">
 						<Text color="#28213E">/jobforge:drill</Text>
 						<Text color="#5A526E">&gt; Before you write anything: what are you going to do, and why that?</Text>
 						<Text color="#28213E">iteration-order  missing   &ldquo;then I fill in the table&rdquo;</Text>
@@ -258,7 +258,10 @@ const archiveProjects = [
 		description: "Two-day hackathon. Chrome extension that pauses and seeks YouTube with hand signs.",
 		href: "/works/youtubehandsfree",
 		image: handsfreeImage,
-		position: "center",
+		// The only capture is a 480px hackathon recording. Shown at its own pixel
+		// size on a matching dark ground rather than blown up to the card.
+		natural: true,
+		frameBg: "#0F0A08",
 	},
 	{
 		title: "CodeParty",
@@ -281,15 +284,26 @@ const archiveProjects = [
 function ArchiveCard({ project }) {
 	return (
 		<LinkBox as="article" border="1px solid" borderColor="border.subtle" bg="surface.raised" overflow="hidden">
-			<Box position="relative" aspectRatio="16 / 10" bg="surface.quiet" overflow="hidden">
-				<Image
-					src={project.image}
-					alt={`${project.title} interface`}
-					fill
-					sizes="(max-width: 768px) 100vw, 50vw"
-					style={{ objectFit: "cover", objectPosition: project.position }}
-				/>
-			</Box>
+			{project.natural ? (
+				<Flex aspectRatio="16 / 10" bg={project.frameBg} align="center" justify="center" overflow="hidden">
+					<Image
+						src={project.image}
+						alt={`${project.title} interface`}
+						sizes={`(max-width: 768px) 100vw, ${project.image.width}px`}
+						style={{ width: "100%", maxWidth: `${project.image.width}px`, height: "auto" }}
+					/>
+				</Flex>
+			) : (
+				<Box position="relative" aspectRatio="16 / 10" bg="surface.quiet" overflow="hidden">
+					<Image
+						src={project.image}
+						alt={`${project.title} interface`}
+						fill
+						sizes="(max-width: 768px) 100vw, 50vw"
+						style={{ objectFit: "cover", objectPosition: project.position }}
+					/>
+				</Box>
+			)}
 			<Box p={5}>
 				<Flex justify="space-between" align="baseline" gap={3}>
 					<LinkOverlay as={NextLink} href={project.href} fontSize="18px" fontWeight="750">
@@ -323,7 +337,7 @@ export default function SelectedWork() {
 					<Heading as="h3" mt={2} fontSize={{ base: "24px", md: "29px" }}>Older projects</Heading>
 				</Box>
 				<Link as={NextLink} href="/works" fontSize="13px" fontWeight="700">
-					All university projects →
+					Archive →
 				</Link>
 			</Flex>
 			<SimpleGrid columns={{ base: 1, md: 3 }} gap={{ base: 5, md: 6 }}>

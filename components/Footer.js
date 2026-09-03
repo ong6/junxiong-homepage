@@ -4,7 +4,7 @@ import NextLink from "next/link";
 const links = [
 	{ label: "Email", href: "mailto:junxiongong2@gmail.com" },
 	{ label: "Hobbies", href: "/hobbies", internal: true },
-	{ label: "University work", href: "/works", internal: true },
+	{ label: "Archive", href: "/works", internal: true },
 	{ label: "Notes", href: "https://notes.junxiong.dev" },
 	{ label: "GitHub", href: "https://github.com/ong6" },
 	{ label: "LinkedIn", href: "https://www.linkedin.com/in/junx6/" },
@@ -28,11 +28,21 @@ const Footer = () => (
 						href={link.href}
 						target={link.href.startsWith("http") ? "_blank" : undefined}
 						rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+						display="inline-flex"
+						alignItems="center"
+						minH="32px"
+						my={-1.5}
 						fontSize="12px"
 						fontWeight="650"
 						color="text.muted"
-						_hover={{ color: "page.text" }}>
+						textDecoration="none"
+						_hover={{ color: "page.text", textDecoration: "underline" }}>
 						{link.label}
+						{link.href.startsWith("http") && (
+							<Box as="span" aria-hidden="true" ml="3px" fontSize="11px">
+								↗
+							</Box>
+						)}
 					</Link>
 				))}
 			</Flex>

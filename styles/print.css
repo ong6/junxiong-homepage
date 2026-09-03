@@ -2,7 +2,8 @@
 @media print {
 	header,
 	footer,
-	button {
+	button,
+	a[download] {
 		display: none !important;
 	}
 

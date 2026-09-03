@@ -80,12 +80,12 @@ const Works = () => {
 
 	return (
 		<Layout
-			title="University Projects"
-			description="A dated ledger of Ong Jun Xiong's NUS projects, 2020 to 2023: hackathons, coursework, design work and open source. Current work lives on the resume.">
+			title="Archive"
+			description="Archive of Ong Jun Xiong's NUS projects, 2020 to 2023: hackathons, coursework, design work and open source. Current work lives on the resume.">
 			<Box pt={{ base: 10, md: 14 }}>
 				<Flex align="baseline" justify="space-between" wrap="wrap" gap={2}>
 					<Heading as="h1" fontSize={{ base: "26px", md: "30px" }}>
-						University projects, 2020&ndash;2023
+						Archive, 2020&ndash;2023
 					</Heading>
 					<Text fontFamily="var(--font-mono)" fontSize="11px" color="text.muted">
 						{workSlugs.length} entries

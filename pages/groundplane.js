@@ -2,6 +2,7 @@ import { Box, Container, Heading, Link, Text, useColorModeValue } from "@chakra-
 import NextLink from "next/link";
 import DiagramFigure from "../components/DiagramFigure";
 import * as GroundplaneArchitecture from "../components/diagrams/GroundplaneArchitecture";
+import { CodeBlock, CodeFigure } from "../components/CodeBlock";
 import Layout from "../components/layouts/Articles";
 
 // A written case study in the same shape as /compoze: one ~680px column of
@@ -23,71 +24,6 @@ const H2 = (props) => (
 		fontSize={{ base: "22px", md: "24px" }}
 		{...props}
 	/>
-);
-
-// Code rendered as text, not an image, so it stays selectable and readable in
-// both themes. `tone` marks the one line the figure is about.
-const CodeBlock = ({ title, lines }) => {
-	const muted = useColorModeValue("graphite.500", "graphite.300");
-	const hot = useColorModeValue("mint.700", "mint.300");
-	return (
-		<Box
-			mt={4}
-			border="1px solid"
-			borderColor="border.subtle"
-			bg="surface.raised"
-			px={{ base: 4, md: 5 }}
-			py={{ base: 4, md: 5 }}
-			maxW="100%"
-			overflowX="auto"
-			sx={{ WebkitOverflowScrolling: "touch" }}>
-			<Text
-				fontFamily="var(--font-mono)"
-				fontSize={{ base: "11px", md: "12px" }}
-				fontWeight="700"
-				letterSpacing=".08em"
-				textTransform="uppercase"
-				color="text.muted">
-				{title}
-			</Text>
-			<Box
-				as="pre"
-				mt={3}
-				m={0}
-				fontFamily="var(--font-mono)"
-				fontSize={{ base: "11px", md: "12.5px" }}
-				lineHeight="1.75"
-				whiteSpace="pre"
-				w="max-content"
-				minW="100%">
-				{lines.map(([text, tone], i) => (
-					<Box
-						as="span"
-						key={i}
-						display="block"
-						color={tone === "muted" ? muted : tone === "hot" ? hot : "page.text"}
-						fontWeight={tone === "hot" ? "700" : "400"}>
-						{text || " "}
-					</Box>
-				))}
-			</Box>
-		</Box>
-	);
-};
-
-const CodeFigure = ({ caption, children }) => (
-	<Box as="figure" my={{ base: 10, md: 14 }} mx={0}>
-		{children}
-		<Text
-			as="figcaption"
-			mt={3}
-			fontFamily="var(--font-mono)"
-			fontSize="11px"
-			lineHeight="1.6"
-			color="text.muted">
-			{caption}
-		</Text>
-	</Box>
 );
 
 // Straight from the README. The "before" is what most agents do today; the
@@ -133,7 +69,7 @@ const facts = [
 	["adapters", "2 · LangGraph, MCP"],
 	["typing", "mypy, disallow_untyped_defs"],
 	["library", "~2.6k lines · tests ~2.2k"],
-	["status", "v0.1.0 · MIT · PyPI release pending"],
+	["status", "v0.1.0 · MIT · install from GitHub"],
 ];
 
 export default function Groundplane() {
@@ -347,7 +283,7 @@ export default function Groundplane() {
 				<P>
 					The core has no dependencies and the adapters import neither
 					framework they adapt, so the whole thing is readable and testable
-					with a plain interpreter. A hundred and sixty-nine tests run on five Python
+					with a plain interpreter. 169 tests run on five Python
 					versions in CI, many of them adversarial cases where the plausible
 					model answer is provably wrong.
 				</P>

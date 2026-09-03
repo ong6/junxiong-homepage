@@ -1,4 +1,4 @@
-import { Box, Portal, Text, useColorModeValue, useToken } from "@chakra-ui/react";
+import { Box, Portal, Text, VisuallyHidden, useColorModeValue, useToken } from "@chakra-ui/react";
 import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
 
 // One figure wrapper for every hand-drawn SVG diagram. Inline it sits in the
@@ -23,8 +23,8 @@ const Ctl = forwardRef(function Ctl({ label, children, ...rest }, ref) {
 			type="button"
 			aria-label={label}
 			title={label}
-			w="40px"
-			h="40px"
+			w="44px"
+			h="44px"
 			display="grid"
 			placeItems="center"
 			border="1px solid"
@@ -286,7 +286,7 @@ function Overlay({ Wide, id, accent, caption, onClose }) {
 					</Ctl>
 				</Box>
 
-				<Text
+				<Box
 					position="absolute"
 					left={{ base: 3, md: 5 }}
 					right={{ base: 3, md: 5 }}
@@ -297,14 +297,16 @@ function Overlay({ Wide, id, accent, caption, onClose }) {
 					bg={scrim}
 					border="1px solid"
 					borderColor="border.subtle"
-					fontFamily="var(--font-mono)"
-					fontSize="11px"
-					lineHeight="1.6"
-					color="text.muted"
-					pointerEvents="none"
-					noOfLines={{ base: 2, md: 4 }}>
-					{caption}
-				</Text>
+					pointerEvents="none">
+					<Text
+						fontFamily="var(--font-mono)"
+						fontSize="11px"
+						lineHeight="1.6"
+						color="text.muted"
+						noOfLines={{ base: 2, md: 4 }}>
+						{caption}
+					</Text>
+				</Box>
 			</Box>
 		</Portal>
 	);
@@ -328,7 +330,6 @@ export default function DiagramFigure({ id, wide: Wide, narrow: Narrow, breakpoi
 			<Box
 				as="button"
 				type="button"
-				aria-label={`Expand diagram ${shortCaption(caption)}`}
 				aria-describedby={`${id}-caption`}
 				aria-haspopup="dialog"
 				onClick={() => setOpen(true)}
@@ -346,15 +347,14 @@ export default function DiagramFigure({ id, wide: Wide, narrow: Narrow, breakpoi
 				cursor="zoom-in"
 				_hover={{ borderColor: "page.text" }}
 				_focusVisible={{ outline: "2px solid", outlineColor: "mint.500", outlineOffset: "2px" }}>
-				<Box display={{ base: "none", [breakpoint]: "block" }}>
+				<Box display={{ base: "none", [breakpoint]: "block" }} aria-hidden="true">
 					<Wide accent={accent} />
 				</Box>
-				<Box display={{ base: "block", [breakpoint]: "none" }}>
+				<Box display={{ base: "block", [breakpoint]: "none" }} aria-hidden="true">
 					<Narrow accent={accent} />
 				</Box>
 				<Text
 					as="span"
-					aria-hidden="true"
 					position="absolute"
 					top={2}
 					right={2}
@@ -370,7 +370,8 @@ export default function DiagramFigure({ id, wide: Wide, narrow: Narrow, breakpoi
 					letterSpacing=".08em"
 					textTransform="uppercase"
 					color="text.muted">
-					⤢ expand
+					<Box as="span" aria-hidden="true">⤢ </Box>expand
+					<VisuallyHidden> diagram {shortCaption(caption)}</VisuallyHidden>
 				</Text>
 			</Box>
 			<Text

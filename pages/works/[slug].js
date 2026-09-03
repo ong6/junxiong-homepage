@@ -2,6 +2,7 @@ import {
 	AspectRatio,
 	Badge,
 	Box,
+	Button,
 	Center,
 	Heading,
 	Link,
@@ -9,8 +10,10 @@ import {
 	ListItem,
 	Stack,
 	Text,
+	usePrefersReducedMotion,
 } from "@chakra-ui/react";
-import { ExternalLinkIcon } from "@chakra-ui/icons";
+import { useEffect, useRef, useState } from "react";
+import { ExternalLinkIcon, TriangleUpIcon } from "@chakra-ui/icons";
 import { Title, WorkImage, Meta } from "../../components/Work";
 import P from "../../components/Paragraph";
 import Layout from "../../components/layouts/Articles";
@@ -41,7 +44,71 @@ const EmbedFallback = ({ href, children }) => (
 	</Text>
 );
 
+// Short silent screen recordings. Autoplays muted and looped unless the
+// visitor prefers reduced motion, in which case the poster sits still behind a
+// play control. Sized like WorkImage: never wider than the file's own pixels.
+const VideoBlock = ({ block }) => {
+	const videoRef = useRef(null);
+	const reducedMotion = usePrefersReducedMotion();
+	const [playing, setPlaying] = useState(false);
+
+	useEffect(() => {
+		const video = videoRef.current;
+		if (!video || reducedMotion) return undefined;
+		video.play().catch(() => {});
+		return () => video.pause();
+	}, [reducedMotion]);
+
+	const play = () => {
+		videoRef.current?.play();
+	};
+
+	return (
+		<Box mb={4} mx="auto" w="100%" maxW={`${block.width}px`} position="relative">
+			<Box
+				as="video"
+				ref={videoRef}
+				muted
+				loop
+				playsInline
+				preload="metadata"
+				poster={block.poster}
+				aria-label={block.alt}
+				onPlay={() => setPlaying(true)}
+				onPause={() => setPlaying(false)}
+				sx={{
+					width: "100%",
+					height: "auto",
+					aspectRatio: `${block.width} / ${block.height}`,
+					display: "block",
+					borderRadius: "lg",
+				}}>
+				<source src={block.webm} type="video/webm" />
+				<source src={block.src} type="video/mp4" />
+			</Box>
+			{reducedMotion && !playing && (
+				<Center position="absolute" inset={0}>
+					<Button
+						onClick={play}
+						size="sm"
+						bg="rgba(0,0,0,.72)"
+						color="white"
+						_hover={{ bg: "rgba(0,0,0,.88)" }}
+						leftIcon={<TriangleUpIcon transform="rotate(90deg)" boxSize={3} />}>
+						Play recording
+					</Button>
+				</Center>
+			)}
+		</Box>
+	);
+};
+
 const ShowcaseBlock = ({ block }) => {
+	if (block.type === "video") {
+		return <VideoBlock block={block} />;
+	}
+
+
 	if (block.type === "image") {
 		return (
 			<WorkImage

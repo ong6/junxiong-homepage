@@ -7,7 +7,7 @@
 \providecommand{\IfDocumentMetadataTF}[2]{#2}
 
 \usepackage{fontspec}
-\usepackage[margin=0.58in,top=0.46in,bottom=0.46in]{geometry}
+\usepackage[margin=0.56in,top=0.42in,bottom=0.42in]{geometry}
 \usepackage{titlesec}
 \usepackage{enumitem}
 \usepackage{hyperref}
@@ -24,6 +24,7 @@
 \definecolor{accent}{HTML}{087F6D}
 \definecolor{rule}{HTML}{B7C3BE}
 
+\linespread{0.96}
 \pagestyle{empty}
 \hypersetup{colorlinks=true,urlcolor=accent,linkcolor=accent}
 \color{ink}
@@ -39,7 +40,7 @@
   leftmargin=1.3em,
   topsep=2pt,
   parsep=0pt,
-  itemsep=1.5pt
+  itemsep=1pt
 }
 \renewcommand{\labelitemi}{\footnotesize\color{accent}$\bullet$}
 \setlength{\parskip}{0pt}
@@ -54,8 +55,9 @@
   \noindent\textit{#1} \hfill \textit{#2}\par
 }
 \newcommand{\earlier}[4]{%
-  \noindent\textbf{#1} \,\textbar\, \textit{#2} \,\textbar\, #3
-  \hfill \textit{#4}\par
+  \vspace{1pt}
+  \noindent\textbf{#1} \,\textbar\, \textit{#2} \hfill \textit{#4}\par
+  \noindent #3\par
 }
 
 \begin{document}
@@ -78,7 +80,7 @@
 
 \section{Profile}
 
-I build production agent runtimes, tool servers, and backend platforms. At TikTok, my work spans the shared AI layer and the Go services beneath global e-commerce operations. I also founded and sold a one-person AI solutions company.
+I build production agent runtimes, tool servers, and backend platforms. At TikTok, my work spans the shared AI layer and the Go services beneath global e-commerce operations. I also founded and sold a one-person AI company.
 
 \section{Experience}
 
@@ -86,32 +88,34 @@ I build production agent runtimes, tool servers, and backend platforms. At TikTo
 
 \role{AI Infrastructure Engineer}{Oct 2025 -- Present}
 \begin{itemize}
-  \item Built the team's agent platform from zero: an A2A and LangGraph runtime, a Go MCP server, and a React chat SDK that other product teams build on.
-  \item Put the platform into daily use with operations teams across the US, Southeast Asia, and the UK, where it automates multi-step operational workflows.
+  \item Built the team's shared AI platform from zero: a LangGraph agent service on Google's A2A protocol, a Go MCP server exposing 16 analysis tools over the data warehouse, and a React SDK that adds streaming AI chat to a page in about five lines.
+  \item Adding LLM analysis to a new surface went from a multi-file change to a single config directory, and analysis latency dropped from minutes to seconds. In daily use by operators and analysts across the team.
+  \item Built the Marketing Strategy Center with operations teams across the US, Southeast Asia, and the UK: a Go/gRPC service and React console enforcing product eligibility and budget stop-loss continuously, replacing a daily manual review.
 \end{itemize}
 
 \role{Software Engineer, Backend Platforms}{Apr 2024 -- Oct 2025}
 \begin{itemize}
-  \item Built Go and gRPC promotion backends and React tools serving campaigns across more than 13 markets.
-  \item Worked on seller analytics and creator systems backed by ClickHouse and Hive, including Campaign Workbench and video diagnosis products.
+  \item Shipped the Promotion Data Center analytics backend in Go with Kafka, Redis and Hive-backed OLAP: 26 statistics across 8 drill-down dimensions on 4 endpoints, serving \textasciitilde13 markets with real-time alerting.
+  \item Built the Video Diagnosis 2.0 recommendation backend in Go (candidate generation plus personalised ranking for creator-product matching), validated through A/B tests before rollout.
+  \item Supported five owned and two contributed Go/gRPC services on the seller platform, handled 20+ on-call escalations, and added cache observability and alerting that stopped a recurring class of outages.
 \end{itemize}
 
 \company{Compoze}{Singapore}{Jan 2025 -- Dec 2025}
 \role{Founder}{Built alongside TikTok}
 \begin{itemize}
-  \item Built and ran a one-person AI solutions company. I handled discovery, scoping, pricing, delivery, and client training.
+  \item Built and ran a one-person AI solutions company: discovery, scoping, pricing, delivery, and client training.
   \item Shipped retrieval-augmented chat products with LlamaIndex, FastAPI, Next.js, and LlamaCloud. A client acquired the company at the end of 2025.
 \end{itemize}
 
 \vspace{3pt}
 \noindent\textbf{Earlier experience}
 
-\earlier{Binance}{Payments Engineering Intern}{TypeScript and React payment experiences for Crypto Box and checkout systems on a platform serving more than 128 million users}{Aug -- Nov 2023}
-\earlier{Thought Machine}{Client Engineering Intern}{Python tooling and tailored core-banking delivery}{May -- Aug 2023}
-\earlier{Tanso, Munich}{Full-stack Engineering Intern}{TypeScript and Next.js carbon-accounting product}{Jul -- Dec 2022}
-\earlier{DBS Bank}{Backend Engineering Intern}{Java and Spring Boot transaction-banking services}{May -- Jul 2022}
+\earlier{Binance}{Software Engineering Intern, Payments \& Cards}{TypeScript and React UI, including the Crypto Box group-payment checkout flow.}{Aug -- Nov 2023}
+\earlier{Thought Machine}{Forward Deployment Engineer (Intern)}{Python remediation tool over the Vault REST API, removing 20+ hrs/week of client-configuration work.}{May -- Aug 2023}
+\earlier{Tanso, Munich}{Full-stack Engineering Intern}{Next.js, tRPC and PostgreSQL carbon-accounting dashboard; page load from 5s to under 50ms.}{Jul -- Dec 2022}
+\earlier{DBS Bank}{Backend Engineering Intern}{Java and Spring Boot services for 1,000+ daily B2B users.}{May -- Jul 2022}
 
-\section{Technical Skills}
+\section{Skills}
 
 \textbf{AI systems:} MCP, A2A, LangGraph, LlamaIndex, RAG, agentic workflows\\[2pt]
 \textbf{Backend:} Go, TypeScript, Python, Java, gRPC, REST, Kafka, Redis\\[2pt]
@@ -123,7 +127,7 @@ I build production agent runtimes, tool servers, and backend platforms. At TikTo
 \company{National University of Singapore}{Singapore}{Aug 2020 -- Dec 2023}
 \role{Bachelor of Computing (Honours), Computer Science}{AI and Software Engineering}
 \begin{itemize}
-  \item NUS Overseas Colleges in Munich. Teaching assistant and Student Mentor Award recipient; President of the NUS Fintech Society.
+  \item NUS Overseas Colleges in Munich. Teaching assistant, Student Mentor Award; President of the NUS Fintech Society.
 \end{itemize}
 
 \end{document}

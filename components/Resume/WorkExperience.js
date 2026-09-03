@@ -11,16 +11,18 @@ const currentExperience = [
 				subtitle: "AI Infrastructure Engineer, Global E-commerce",
 				date: "Oct 2025 – present",
 				description: [
-					"Built the team's agent platform from zero: an A2A and LangGraph runtime, a Go MCP server, and a React chat SDK that other product teams build on.",
-					"Put the platform into daily use with operations teams across the US, Southeast Asia, and the UK, where it automates multi-step operational workflows.",
+					"Built the team's shared AI platform from zero: a LangGraph agent service on Google's A2A protocol, a Go MCP server exposing 16 analysis tools over the data warehouse, and a React SDK that adds streaming AI chat to a page in about five lines.",
+					"Adding LLM analysis to a new surface went from a multi-file change to a single config directory, and analysis latency dropped from minutes to seconds. In daily use by operators and analysts across the team.",
+					"Built the Marketing Strategy Center with operations teams across the US, Southeast Asia, and the UK: a Go/gRPC service and React console that enforces product eligibility rules and budget stop-loss continuously, replacing a daily manual review.",
 				],
 			},
 			{
 				subtitle: "Software Engineer, Backend Platforms",
 				date: "Apr 2024 – Oct 2025",
 				description: [
-					"Built Go and gRPC promotion backends and React tools serving campaigns across more than 13 markets.",
-					"Worked on seller analytics and creator systems backed by ClickHouse and Hive, including Campaign Workbench and video diagnosis products.",
+					"Shipped the Promotion Data Center analytics backend in Go with Kafka, Redis and Hive-backed OLAP: 26 statistics across 8 drill-down dimensions on 4 endpoints, serving ~13 markets with real-time alerting.",
+					"Built the Video Diagnosis 2.0 recommendation backend in Go (candidate generation plus personalised ranking for creator-product matching), validated through A/B tests before rollout.",
+					"Supported five owned and two contributed Go/gRPC services on the seller platform, handled 20+ on-call escalations, and added cache observability and alerting that stopped a recurring class of outages.",
 				],
 			},
 		],
@@ -47,10 +49,10 @@ const earlierExperience = [
 		location: "Remote",
 		roles: [
 			{
-				subtitle: "Frontend Engineering Intern, Payments",
+				subtitle: "Software Engineering Intern, Payments & Cards",
 				date: "Aug 2023 – Nov 2023",
 				description: [
-					"Built TypeScript and React payment experiences for Crypto Box and checkout systems on a platform serving more than 128 million users.",
+					"Shipped TypeScript and React UI, including the Crypto Box group-payment checkout flow with idempotent, double-confirm submission.",
 				],
 			},
 		],
@@ -60,23 +62,23 @@ const earlierExperience = [
 		location: "Singapore",
 		roles: [
 			{
-				subtitle: "Client Engineering Intern",
+				subtitle: "Forward Deployment Engineer (Intern)",
 				date: "May 2023 – Aug 2023",
 				description: [
-					"Built a Python remediation tool and worked with engineers and analysts to deliver tailored core-banking products.",
+					"Forward-deployed on core-banking (Vault) client implementations. Built a Python remediation tool over the platform REST API with dry-run preview and idempotent apply, removing 20+ hrs/week of repetitive configuration work.",
 				],
 			},
 		],
 	},
 	{
-		title: "Tanso · DBS Bank",
-		location: "Munich · Singapore",
+		title: "DBS Bank · Tanso",
+		location: "Singapore · Munich",
 		roles: [
 			{
-				subtitle: "Full-stack and backend engineering internships",
+				subtitle: "Backend and full-stack engineering internships",
 				date: "2022",
 				description: [
-					"Built a TypeScript and Next.js carbon-accounting dashboard at Tanso, then Java and Spring Boot transaction-banking services at DBS.",
+					"Built Java and Spring Boot services for 1,000+ daily B2B users at DBS, then a Next.js, tRPC and PostgreSQL carbon-accounting dashboard at Tanso that cut page load from 5s to under 50ms.",
 				],
 			},
 		],
@@ -86,7 +88,7 @@ const earlierExperience = [
 export default function WorkExperience() {
 	return (
 		<Box>
-			<TermHeading kicker="Roles">experience</TermHeading>
+			<TermHeading kicker="Roles">Experience</TermHeading>
 			{currentExperience.map((detail) => (
 				<ResumeDetail key={detail.title} detail={detail} />
 			))}
