@@ -336,7 +336,15 @@ export default function SelectedWork() {
 					<Text color={quietLabel} sx={tagStyle}>2020 – 2023</Text>
 					<Heading as="h3" mt={2} fontSize={{ base: "24px", md: "29px" }}>Older projects</Heading>
 				</Box>
-				<Link as={NextLink} href="/works" fontSize="13px" fontWeight="700">
+				<Link
+					as={NextLink}
+					href="/works"
+					display="inline-flex"
+					alignItems="center"
+					minH="32px"
+					my={-1.5}
+					fontSize="13px"
+					fontWeight="700">
 					Archive →
 				</Link>
 			</Flex>

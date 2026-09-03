@@ -140,7 +140,15 @@ export default function Compoze() {
 			description="Compoze sold document-grounded assistants to businesses. I built and ran it alone alongside a full-time job in 2025, and one of its clients bought the company at the end of that year.">
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
-					<Link as={NextLink} href="/#work" fontSize="13px" fontWeight="700">
+					<Link
+						as={NextLink}
+						href="/#work"
+						display="inline-flex"
+						alignItems="center"
+						minH="32px"
+						my={-1.5}
+						fontSize="13px"
+						fontWeight="700">
 						← Selected projects
 					</Link>
 

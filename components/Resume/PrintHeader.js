@@ -52,11 +52,17 @@ export default function PrintHeader() {
 			</Text>
 
 			<Flex wrap="wrap" columnGap={5} rowGap={2} mt={4} fontSize="14px" fontWeight="700">
-				<Link href="https://junxiong.dev">junxiong.dev</Link>
+				<Link href="https://junxiong.dev" display="inline-flex" alignItems="center" minH="32px" my={-1.5}>
+					junxiong.dev
+				</Link>
 				{contactLinks.map((link) => (
 					<Link
 						key={link.label}
 						href={link.href}
+						display="inline-flex"
+						alignItems="center"
+						minH="32px"
+						my={-1.5}
 						target={link.href.startsWith("http") ? "_blank" : undefined}
 						rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}>
 						{link.label}

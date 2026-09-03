@@ -87,7 +87,15 @@ export default function Groundplane() {
 			description="Groundplane is an open-source Python library that draws a hard line between what a model may write and what must come from code, and raises when the model crosses it.">
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
-					<Link as={NextLink} href="/#work" fontSize="13px" fontWeight="700">
+					<Link
+						as={NextLink}
+						href="/#work"
+						display="inline-flex"
+						alignItems="center"
+						minH="32px"
+						my={-1.5}
+						fontSize="13px"
+						fontWeight="700">
 						← Selected projects
 					</Link>
 
