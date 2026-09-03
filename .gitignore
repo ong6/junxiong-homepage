@@ -32,3 +32,7 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# next dev writes these on first run
+AGENTS.md
+CLAUDE.md

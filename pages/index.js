@@ -16,7 +16,7 @@ import SelectedWork from "../components/SelectedWork";
 
 const utilityLinkProps = {
 	fontFamily: "var(--font-mono)",
-	fontSize: "11px",
+	fontSize: "12px",
 	fontWeight: "700",
 	letterSpacing: ".04em",
 	textDecoration: "underline",
@@ -27,7 +27,7 @@ function Eyebrow({ children }) {
 	return (
 		<Text
 			fontFamily="var(--font-mono)"
-			fontSize="10px"
+			fontSize={{ base: "11px", md: "12px" }}
 			fontWeight="700"
 			letterSpacing=".12em"
 			color={useColorModeValue("mint.700", "mint.300")}>
@@ -43,7 +43,7 @@ function Introduction() {
 	);
 
 	return (
-		<Box as="section" id="about" scrollMarginTop="96px" pt={{ base: 12, md: 20 }}>
+		<Box as="section" id="about" scrollMarginTop="96px" pt={{ base: 14, md: 20 }}>
 			<Eyebrow>{"// JUNXIONG.DEV / SINGAPORE"}</Eyebrow>
 
 			<Grid
@@ -102,7 +102,7 @@ function Introduction() {
 								objectPosition: "center 28%",
 							}}
 						/>
-						<Flex mt={3} justify="space-between" color="text.muted" fontFamily="var(--font-mono)" fontSize={{ base: "11px", md: "10px" }}>
+						<Flex mt={3} justify="space-between" color="text.muted" fontFamily="var(--font-mono)" fontSize={{ base: "11px", md: "12px" }}>
 							<Text>JX / 2026</Text>
 							<Text>SINGAPORE</Text>
 						</Flex>
@@ -116,7 +116,12 @@ function Introduction() {
 function Now() {
 	return (
 		<Box id="now" scrollMarginTop="96px" pt={{ base: 20, md: 28 }}>
-			<Eyebrow>{"// NOW"}</Eyebrow>
+			<Flex align="baseline" wrap="wrap" columnGap={4} rowGap={1}>
+				<Eyebrow>{"// NOW"}</Eyebrow>
+				<Text fontFamily="var(--font-mono)" fontSize={{ base: "11px", md: "12px" }} color="text.muted">
+					as of 2026-09
+				</Text>
+			</Flex>
 			<SimpleGrid columns={{ base: 1, md: 2 }} gap={{ base: 8, md: 16 }} mt={5}>
 				<Box>
 					<Heading as="h2" fontSize={{ base: "25px", md: "31px" }}>At work</Heading>
@@ -153,7 +158,7 @@ export default function Home() {
 			<Section>
 				<Box id="work" scrollMarginTop="96px" pt={{ base: 20, md: 28 }}>
 					<Eyebrow>{"// PROJECTS"}</Eyebrow>
-					<Heading as="h2" mt={3} mb={{ base: 7, md: 10 }} fontSize={{ base: "34px", md: "46px" }}>
+					<Heading as="h2" mt={3} mb={{ base: 8, md: 10 }} fontSize={{ base: "34px", md: "46px" }}>
 						Stuff I built
 					</Heading>
 					<SelectedWork />

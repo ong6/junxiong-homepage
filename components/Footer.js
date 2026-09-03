@@ -5,6 +5,7 @@ const links = [
 	{ label: "Email", href: "mailto:junxiongong2@gmail.com" },
 	{ label: "Hobbies", href: "/hobbies", internal: true },
 	{ label: "University work", href: "/works", internal: true },
+	{ label: "Notes", href: "https://notes.junxiong.dev" },
 	{ label: "GitHub", href: "https://github.com/ong6" },
 	{ label: "LinkedIn", href: "https://www.linkedin.com/in/junx6/" },
 	{ label: "Source", href: "https://github.com/ong6/junxiong-homepage" },
@@ -15,7 +16,7 @@ const Footer = () => (
 		<Flex direction={{ base: "column", md: "row" }} justify="space-between" align={{ md: "center" }} gap={5}>
 			<Box>
 				<Text fontWeight="700" fontSize="14px">Ong Jun Xiong</Text>
-				<Text mt={1} fontFamily="var(--font-mono)" fontSize={{ base: "11px", md: "10px" }} letterSpacing=".08em" color="text.muted">
+				<Text mt={1} fontFamily="var(--font-mono)" fontSize={{ base: "11px", md: "12px" }} letterSpacing=".08em" color="text.muted">
 					ENGINEER · BUILDER · SINGAPORE
 				</Text>
 			</Box>

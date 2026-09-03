@@ -1,0 +1,22 @@
+/* Printing (the résumé, mostly): drop the chrome and paint on white. */
+@media print {
+	header,
+	footer,
+	button {
+		display: none !important;
+	}
+
+	.fade-up {
+		animation: none !important;
+	}
+
+	html,
+	body {
+		background: #fff !important;
+		color: #000 !important;
+	}
+
+	a {
+		color: inherit !important;
+	}
+}

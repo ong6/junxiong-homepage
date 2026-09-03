@@ -12,20 +12,29 @@ export const Title = ({ children }) => (
 			{" "}
 			<ChevronRightIcon />{" "}
 		</span>
-		<Heading display="inline-block" as="h1" fontSize={{ base: "26px", md: "32px" }} letterSpacing="-.02em" ml={1}>
+		<Heading
+			display="inline-block"
+			as="h1"
+			fontSize={{ base: "26px", md: "32px" }}
+			letterSpacing="-.02em"
+			ml={1}>
 			{children}
 		</Heading>
 	</Box>
 );
 
-export const WorkImage = ({ src, alt, width, height }) => (
-	<Box mb={4}>
+// Capped at the file's own pixel width and centred, so small screenshots are
+// never upscaled to the column. Animated WebPs bypass the optimiser, which
+// would otherwise serve them as-is anyway.
+export const WorkImage = ({ src, alt, width, height, animated = false }) => (
+	<Box mb={4} mx="auto" w="100%" maxW={`${width}px`}>
 		<NextImage
 			src={src}
 			alt={alt}
 			width={width}
 			height={height}
-			sizes="(max-width: 768px) 100vw, 1120px"
+			sizes={`(max-width: 768px) 100vw, ${width}px`}
+			unoptimized={animated}
 			style={{
 				width: "100%",
 				height: "auto",

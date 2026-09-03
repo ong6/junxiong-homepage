@@ -1,5 +1,7 @@
-import { Box, Text, useColorModeValue, useToken } from "@chakra-ui/react";
 import { Badge, Defs, Group, Label, Line, Node } from "./primitives";
+
+export const CLAIM =
+	"Tool results are recorded as typed facts with provenance; a boundary declares which facts a block of model output may use; a deterministic checker resolves every claim against them and raises UnsupportedClaim on the first that fails.";
 
 // Claim: tool results are recorded as typed facts with provenance; a boundary
 // declares which facts a block of model output may use; a deterministic
@@ -9,9 +11,6 @@ import { Badge, Defs, Group, Label, Line, Node } from "./primitives";
 // Accent follows the model's output through the boundary and the checker to
 // the raise — the loud failure is what the library exists for. Recording facts
 // (tools, adapters, registry) stays in currentColor. 8px grid throughout.
-
-const CLAIM =
-	"Tool results are recorded as typed facts with provenance; a boundary declares which facts a block of model output may use; a deterministic checker resolves every claim against them and raises UnsupportedClaim on the first that fails.";
 
 const CHECKS = [
 	"superlative",
@@ -36,8 +35,7 @@ const FACTS = [
 	["Fact", "value + provenance"],
 ];
 
-function Wide({ accent }) {
-	const id = "gparch-w";
+export function Wide({ accent, id = "gparch-w" }) {
 	return (
 		<svg
 			viewBox="0 0 1120 656"
@@ -170,7 +168,7 @@ function Wide({ accent }) {
 
 // Mobile reads as one column: tools and adapters, the registry, the boundary
 // with the model feeding it from the right, the checker, the two outcomes.
-function Narrow({ accent }) {
+export function Narrow({ accent }) {
 	const id = "gparch-n";
 	return (
 		<svg
@@ -247,47 +245,3 @@ function Narrow({ accent }) {
 	);
 }
 
-export default function GroundplaneArchitecture({ figure }) {
-	const [mint600, mint300] = useToken("colors", ["mint.600", "mint.300"]);
-	const accent = useColorModeValue(mint600, mint300);
-
-	return (
-		<Box
-			as="figure"
-			my={{ base: 10, md: 14 }}
-			mx={0}
-			width={{ base: "100%", lg: "calc(100vw - 32px)" }}
-			maxW={{ base: "100%", lg: "1088px" }}>
-			<Box
-				border="1px solid"
-				borderColor="border.subtle"
-				px={{ base: 3, md: 5 }}
-				py={{ base: 4, md: 6 }}
-				lineHeight={0}>
-				<Box display={{ base: "none", lg: "block" }}>
-					<Wide accent={accent} />
-				</Box>
-				<Box display={{ base: "block", lg: "none" }}>
-					<Narrow accent={accent} />
-				</Box>
-			</Box>
-			<Text
-				as="figcaption"
-				mt={3}
-				maxW="680px"
-				fontFamily="var(--font-mono)"
-				fontSize="11px"
-				lineHeight="1.6"
-				color="text.muted">
-				{figure} — the whole library. ① Tool results are recorded as typed
-				facts, each with the tool call that produced it; the two adapters do
-				the same from inside LangGraph or MCP. ② A boundary names which facts
-				a block of output may use and which checks run. ③ The model submits
-				structured fields, never prose. ④ Five deterministic checks resolve
-				each field against the recorded facts. ⑤ The first unsupported claim
-				raises UnsupportedClaim with the provenance in the message; nothing is
-				logged and ignored.
-			</Text>
-		</Box>
-	);
-}

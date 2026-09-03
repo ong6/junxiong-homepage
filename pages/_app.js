@@ -1,4 +1,5 @@
 import "../styles/globals.css";
+import "../styles/print.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import Layout from "../components/layouts/Main";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -12,8 +13,9 @@ const plexSans = IBM_Plex_Sans({
 	variable: "--font-sans",
 });
 
+// Mono is only ever set at 400 or 700 (eyebrows, captions, code figures).
 const plexMono = IBM_Plex_Mono({
-	weight: ["400", "600", "700"],
+	weight: ["400", "700"],
 	subsets: ["latin"],
 	display: "swap",
 	variable: "--font-mono",

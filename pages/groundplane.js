@@ -1,6 +1,7 @@
 import { Box, Container, Heading, Link, Text, useColorModeValue } from "@chakra-ui/react";
 import NextLink from "next/link";
-import GroundplaneArchitecture from "../components/diagrams/GroundplaneArchitecture";
+import DiagramFigure from "../components/DiagramFigure";
+import * as GroundplaneArchitecture from "../components/diagrams/GroundplaneArchitecture";
 import Layout from "../components/layouts/Articles";
 
 // A written case study in the same shape as /compoze: one ~680px column of
@@ -37,10 +38,13 @@ const CodeBlock = ({ title, lines }) => {
 			bg="surface.raised"
 			px={{ base: 4, md: 5 }}
 			py={{ base: 4, md: 5 }}
-			overflowX="auto">
+			maxW="100%"
+			overflowX="auto"
+			sx={{ WebkitOverflowScrolling: "touch" }}>
 			<Text
 				fontFamily="var(--font-mono)"
-				fontSize="10px"
+				fontSize={{ base: "11px", md: "12px" }}
+				fontWeight="700"
 				letterSpacing=".08em"
 				textTransform="uppercase"
 				color="text.muted">
@@ -53,7 +57,9 @@ const CodeBlock = ({ title, lines }) => {
 				fontFamily="var(--font-mono)"
 				fontSize={{ base: "11px", md: "12.5px" }}
 				lineHeight="1.75"
-				whiteSpace="pre">
+				whiteSpace="pre"
+				w="max-content"
+				minW="100%">
 				{lines.map(([text, tone], i) => (
 					<Box
 						as="span"
@@ -136,6 +142,12 @@ export default function Groundplane() {
 	return (
 		<Layout
 			title="Groundplane"
+			schema={{
+				type: "SoftwareSourceCode",
+				codeRepository: "https://github.com/ong6/groundplane",
+				programmingLanguage: "Python",
+				license: "https://opensource.org/licenses/MIT",
+			}}
 			description="Groundplane is an open-source Python library that draws a hard line between what a model may write and what must come from code, and raises when the model crosses it.">
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
@@ -164,7 +176,7 @@ export default function Groundplane() {
 					</Text>
 
 					<Text
-						mt={7}
+						mt={8}
 						fontSize={{ base: "19px", md: "21px" }}
 						lineHeight="1.6"
 						fontWeight="600">
@@ -180,7 +192,13 @@ export default function Groundplane() {
 					</Text>
 				</Box>
 
-				<GroundplaneArchitecture figure="fig. 1" />
+				<DiagramFigure
+					id="gparch"
+					wide={GroundplaneArchitecture.Wide}
+					narrow={GroundplaneArchitecture.Narrow}
+					breakpoint="lg"
+					caption="fig. 1 — the whole library. ① Tool results are recorded as typed facts, each with the tool call that produced it; the two adapters do the same from inside LangGraph or MCP. ② A boundary names which facts a block of output may use and which checks run. ③ The model submits structured fields, never prose. ④ Six deterministic checks resolve each field against the recorded facts. ⑤ The first unsupported claim raises UnsupportedClaim with the provenance in the message; nothing is logged and ignored."
+				/>
 
 				<H2>Where it came from</H2>
 

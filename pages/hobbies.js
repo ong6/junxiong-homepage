@@ -1,4 +1,5 @@
 import { Box, Container, Link, Text, useColorModeValue } from "@chakra-ui/react";
+import NextLink from "next/link";
 import Layout from "../components/layouts/Articles";
 import Section from "../components/Section";
 
@@ -14,7 +15,7 @@ const Entry = ({ index, label, children, delay }) => {
 				borderLeftWidth="1px"
 				borderColor={rule}
 				pl={{ base: 5, md: 8 }}
-				pb={{ base: 7, md: 9 }}>
+				pb={{ base: 8, md: 10 }}>
 				<Text
 					fontFamily="var(--font-mono)"
 					fontSize="11px"
@@ -39,8 +40,8 @@ const Hobbies = () => (
 	<Layout
 		title="Hobbies"
 		description="What Ong Jun Xiong does away from work: tennis, trading against a written playbook, side projects, a home inference box, slow travel and reading.">
-		<Container maxW="720px" px={0} ml={0}>
-			<Box pt={{ base: 10, md: 14 }} pb={{ base: 6, md: 8 }}>
+		<Container maxW="680px" px={0} ml={0}>
+			<Box pt={{ base: 10, md: 16 }} pb={{ base: 6, md: 8 }}>
 				<Text
 					as="h1"
 					fontFamily="var(--font-mono)"
@@ -67,24 +68,40 @@ const Hobbies = () => (
 			</Entry>
 
 			<Entry index="03" label="Side projects" delay={0.15}>
-				Currently a{" "}
+				Currently{" "}
+				<Link as={NextLink} href="/groundplane">
+					Groundplane
+				</Link>
+				, a Python library that refuses agent output the tool results do not
+				support;{" "}
+				<Link as={NextLink} href="/jobforge">
+					Jobforge
+				</Link>
+				, a Claude Code plugin that grades the plan you say before you code;
+				my notes and life admin kept as a markdown repo that an AI agent tends
+				for me; and a{" "}
 				<Link
 					href="https://github.com/ong6/sg-property-analysis"
 					target="_blank"
 					rel="noopener noreferrer">
 					Singapore property data-analysis project
 				</Link>
-				, agent tooling for my own use, and my notes and life admin kept as a
-				markdown repo that an AI agent tends for me. The tools only have to
-				make sense to one user, which cuts out most of the arguing.
+				. The tools only have to make sense to one user, which cuts out most
+				of the arguing.
 			</Entry>
 
 			<Entry index="04" label="Home server" delay={0.2}>
 				I am speccing an always-on inference box that serves models to my own
 				tools. So far the hobby is mostly purchase arithmetic: tokens per
 				second is roughly memory bandwidth divided by model size, and that one
-				line settles more hardware arguments than any benchmark thread. I write
-				up what I learn as I go.
+				line settles more hardware arguments than any benchmark thread. I{" "}
+				<Link
+					href="https://notes.junxiong.dev"
+					target="_blank"
+					rel="noopener noreferrer">
+					write up what I learn as I go
+				</Link>
+				.
 			</Entry>
 
 			<Entry index="05" label="Travel" delay={0.25}>

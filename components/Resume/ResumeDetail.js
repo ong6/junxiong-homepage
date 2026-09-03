@@ -9,7 +9,6 @@ import {
 
 export default function ResumeDetail({ detail, compact = false }) {
 	const borderColor = useColorModeValue("rgba(65,54,45,0.2)", "whiteAlpha.200");
-	const muted = useColorModeValue("gray.600", "whiteAlpha.700");
 
 	return (
 		<Box
@@ -31,7 +30,7 @@ export default function ResumeDetail({ detail, compact = false }) {
 					fontWeight="700"
 					letterSpacing="0.06em"
 					textTransform="uppercase"
-					color={muted}>
+					color="text.muted">
 					{detail.location}
 				</Text>
 			</Flex>
@@ -50,7 +49,7 @@ export default function ResumeDetail({ detail, compact = false }) {
 							fontFamily="var(--font-mono)"
 							fontSize="11px"
 							whiteSpace="nowrap"
-							color={muted}>
+							color="text.muted">
 							{role.date}
 						</Text>
 					</Flex>

@@ -7,6 +7,8 @@ engineering through a restrained terminal-inspired interface.
 ## What is here
 
 - A project-first homepage with selected work and personal context
+- Case studies for Groundplane (`/groundplane`, a Python boundary for agent output) and Jobforge
+  (`/jobforge`, a Claude Code interview-prep plugin), each with a fact table verified against the repo
 - A public case study for Compoze, with client identity and financial terms kept private
 - A browser and print-friendly resume
 - An archive of university projects
@@ -15,7 +17,7 @@ engineering through a restrained terminal-inspired interface.
 
 ## Stack
 
-Next.js 15, React 18, Chakra UI, Emotion, and Framer Motion. Vercel deploys the `main` branch to
+Next.js 16, React 18, Chakra UI v2 and Emotion. Vercel deploys the `main` branch to
 [junxiong.dev](https://junxiong.dev).
 
 ## Run locally

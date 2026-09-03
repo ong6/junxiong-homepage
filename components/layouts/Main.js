@@ -9,7 +9,11 @@ export const DEFAULT_TITLE = "Ong Jun Xiong | AI Infrastructure Engineer in Sing
 export const DEFAULT_DESCRIPTION =
 	"Ong Jun Xiong is an AI infrastructure engineer at TikTok in Singapore. Explore his agent systems, backend platforms, open-source tools, and personal software projects.";
 
-const OG_IMAGE = `${SITE_URL}/images/og-card.jpg`;
+export const OG_IMAGE = `${SITE_URL}/images/og-card.jpg`;
+
+// Evaluated once at module load. Pages are prerendered at build time, so this
+// stamps the build date rather than a stale hardcoded one.
+export const BUILD_DATE = new Date().toISOString().slice(0, 10);
 
 // One canonical per route. Strip the hash and query so `/#selected-work` and
 // `/works?x=1` do not become separate canonicals, and keep the apex host with
@@ -60,10 +64,6 @@ const personSchema = {
 	sameAs: ["https://github.com/ong6", "https://www.linkedin.com/in/junx6/"],
 };
 
-// Evaluated once at module load. Pages are prerendered at build time, so this
-// stamps the build date rather than a stale hardcoded one.
-const BUILD_DATE = new Date().toISOString().slice(0, 10);
-
 const profileSchema = {
 	"@context": "https://schema.org",
 	"@graph": [
@@ -92,21 +92,25 @@ const profileSchema = {
 	],
 };
 
+// The generic subpage node. layouts/Articles.js replaces it (same `key`) with
+// one that carries the page's own name, description and type.
+const webPageSchema = (canonical) => ({
+	"@context": "https://schema.org",
+	"@type": "WebPage",
+	"@id": canonical,
+	url: canonical,
+	isPartOf: { "@id": `${SITE_URL}/#website` },
+	dateModified: BUILD_DATE,
+	about: { "@id": `${SITE_URL}/#person` },
+	primaryImageOfPage: OG_IMAGE,
+});
+
 const Main = ({ children, router }) => {
 	const canonical = canonicalFor(router?.asPath);
-	const structuredData =
-		canonical === `${SITE_URL}/`
-			? profileSchema
-			: {
-					"@context": "https://schema.org",
-					"@type": "WebPage",
-					"@id": canonical,
-					url: canonical,
-					isPartOf: { "@id": `${SITE_URL}/#website` },
-					dateModified: BUILD_DATE,
-					about: { "@id": `${SITE_URL}/#person` },
-					primaryImageOfPage: OG_IMAGE,
-			  };
+	const isHome = canonical === `${SITE_URL}/`;
+	// The 404 page answers on any URL, so it gets no canonical and no index.
+	const isNotFound = router?.pathname === "/404";
+	const structuredData = isHome ? profileSchema : webPageSchema(canonical);
 
 	return (
 		<Box pb={8} overflowX="hidden">
@@ -119,17 +123,22 @@ const Main = ({ children, router }) => {
 				<meta name="apple-mobile-web-app-capable" content="yes" />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<meta
+					key="robots"
 					name="robots"
-					content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+					content={
+						isNotFound
+							? "noindex, nofollow"
+							: "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+					}
 				/>
 				<meta name="description" content={DEFAULT_DESCRIPTION} />
 				<meta name="author" content="Ong Jun Xiong" />
 				<meta property="og:site_name" content="Ong Jun Xiong" />
 				<meta property="og:locale" content="en_SG" />
-				<meta property="og:type" content="website" />
+				<meta key="og:type" property="og:type" content="website" />
 				<meta key="og:title" property="og:title" content={DEFAULT_TITLE} />
 				<meta key="og:description" property="og:description" content={DEFAULT_DESCRIPTION} />
-				<meta property="og:url" content={canonical} />
+				{!isNotFound && <meta property="og:url" content={canonical} />}
 				<meta property="og:image" content={OG_IMAGE} />
 				<meta property="og:image:width" content="1200" />
 				<meta property="og:image:height" content="630" />
@@ -145,13 +154,17 @@ const Main = ({ children, router }) => {
 					name="twitter:image:alt"
 					content="Ong Jun Xiong — AI infrastructure and backend engineer"
 				/>
-				<link rel="canonical" href={canonical} />
+				{!isNotFound && <link rel="canonical" href={canonical} />}
 				<link rel="icon" href="/favicon.ico" />
+				<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 				<title>{DEFAULT_TITLE}</title>
-				<script
-					type="application/ld+json"
-					dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-				/>
+				{!isNotFound && (
+					<script
+						key="ld-page"
+						type="application/ld+json"
+						dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+					/>
+				)}
 			</Head>
 
 			<Link

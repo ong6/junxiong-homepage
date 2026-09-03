@@ -1,4 +1,5 @@
 import {
+	AspectRatio,
 	Badge,
 	Box,
 	Center,
@@ -7,6 +8,7 @@ import {
 	List,
 	ListItem,
 	Stack,
+	Text,
 } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { Title, WorkImage, Meta } from "../../components/Work";
@@ -16,12 +18,28 @@ import works, { workSlugs } from "../../lib/works";
 
 const embedStyle = {
 	width: "100%",
-	my: 4,
-	border: "2px solid",
-	borderColor: "blue.300",
+	border: "1px solid",
+	borderColor: "border.subtle",
 	borderRadius: "lg",
 	overflow: "hidden",
+	bg: "surface.quiet",
 };
+
+// A YouTube embed URL maps straight onto its watch URL, so the fallback link
+// needs no extra data; Figma blocks carry an explicit `href`.
+const youtubeWatchUrl = (src) => {
+	const id = src.split("/embed/")[1]?.split(/[?&]/)[0];
+	return id ? `https://www.youtube.com/watch?v=${id}` : src;
+};
+
+const EmbedFallback = ({ href, children }) => (
+	<Text mt={2} fontSize="14px" color="text.muted">
+		<Link href={href} target="_blank" rel="noopener noreferrer">
+			{children}
+			<ExternalLinkIcon mx="2px" />
+		</Link>
+	</Text>
+);
 
 const ShowcaseBlock = ({ block }) => {
 	if (block.type === "image") {
@@ -31,6 +49,7 @@ const ShowcaseBlock = ({ block }) => {
 				alt={block.alt}
 				width={block.width}
 				height={block.height}
+				animated={block.animated}
 			/>
 		);
 	}
@@ -38,32 +57,28 @@ const ShowcaseBlock = ({ block }) => {
 	if (block.type === "youtube") {
 		return (
 			<Box>
-				<iframe
-					title={block.title}
-					src={block.src}
-					width="100%"
-					height={block.height}
-					loading="lazy"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-					frameBorder="0"
-					allowFullScreen
-				/>
+				<AspectRatio ratio={16 / 9} {...embedStyle}>
+					<iframe
+						title={block.title}
+						src={block.src}
+						loading="lazy"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+						referrerPolicy="strict-origin-when-cross-origin"
+						allowFullScreen
+					/>
+				</AspectRatio>
+				<EmbedFallback href={youtubeWatchUrl(block.src)}>Watch on YouTube</EmbedFallback>
 			</Box>
 		);
 	}
 
 	if (block.type === "figma") {
 		return (
-			<Box {...embedStyle}>
-				<iframe
-					title={block.title}
-					src={block.src}
-					width="100%"
-					height={block.height}
-					loading="lazy"
-					style={{ border: "none", display: "block" }}
-					allowFullScreen
-				/>
+			<Box>
+				<AspectRatio ratio={16 / 9} {...embedStyle}>
+					<iframe title={block.title} src={block.src} loading="lazy" allowFullScreen />
+				</AspectRatio>
+				<EmbedFallback href={block.href}>Open in Figma</EmbedFallback>
 			</Box>
 		);
 	}
@@ -86,7 +101,7 @@ const WorkPage = ({ slug }) => {
 	const work = works[slug];
 
 	return (
-		<Layout title={work.title} description={work.description}>
+		<Layout title={work.title} description={work.description} schema={{ type: "Article" }}>
 			<Box>
 				<Title>
 					{work.heading} <Badge>{work.dateRange}</Badge>
@@ -101,7 +116,7 @@ const WorkPage = ({ slug }) => {
 					))}
 				</List>
 
-				<Heading as="h3" fontSize={16} my={8}>
+				<Heading as="h2" fontSize={16} my={8}>
 					<Center>Project Showcase</Center>
 				</Heading>
 

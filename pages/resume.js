@@ -10,7 +10,7 @@ const Resume = () => (
 	<Layout
 		title="Resume"
 		description="Ong Jun Xiong is an AI infrastructure and backend engineer at TikTok in Singapore. Experience includes production agent platforms, global e-commerce systems, and founding Compoze.">
-		<Box pt={{ base: 7, md: 10 }}>
+		<Box pt={{ base: 10, md: 16 }}>
 			<PrintHeader />
 			<Section delay={0.05}>
 				<WorkExperience />

@@ -1,5 +1,7 @@
-import { Box, Text, useColorModeValue, useToken } from "@chakra-ui/react";
 import { Defs, Group, Label, Line, Node } from "./primitives";
+
+export const CLAIM =
+	"Documents are deduplicated by content hash, redacted, and moved through a checkpointed async pipeline into pgvector, with failures landing in a dead-letter queue the admin UI shows.";
 
 // Claim: documents are deduplicated by content hash, redacted, and moved
 // through a checkpointed async pipeline into pgvector — with failures landing
@@ -7,9 +9,6 @@ import { Defs, Group, Label, Line, Node } from "./primitives";
 //
 // Accent marks the async region and the hop that hands work to it; the failure
 // rail is a dashed currentColor exit with a ✕ on it.
-
-const CLAIM =
-	"Documents are deduplicated by content hash, redacted, and moved through a checkpointed async pipeline into pgvector, with failures landing in a dead-letter queue the admin UI shows.";
 
 const STAGES = [
 	{ label: "Content hash", sub: "skip if seen", arrow: "new file" },
@@ -28,8 +27,7 @@ const Cross = ({ cx, cy, s = 5 }) => (
 	</g>
 );
 
-function Wide({ accent }) {
-	const id = "cif-w";
+export function Wide({ accent, id = "cif-w" }) {
 	const stages = STAGES.map((s, i) => ({ ...s, y: 336 + i * 88 }));
 	return (
 		<svg
@@ -134,7 +132,7 @@ function Wide({ accent }) {
 	);
 }
 
-function Narrow({ accent }) {
+export function Narrow({ accent }) {
 	const id = "cif-n";
 	const stages = STAGES.map((s, i) => ({ ...s, y: 288 + i * 80 }));
 	return (
@@ -267,38 +265,3 @@ function Narrow({ accent }) {
 	);
 }
 
-export default function CompozeIngestFlow({ figure }) {
-	const [mint600, mint300] = useToken("colors", ["mint.600", "mint.300"]);
-	const accent = useColorModeValue(mint600, mint300);
-
-	return (
-		<Box as="figure" my={{ base: 10, md: 14 }} mx={0}>
-			<Box
-				border="1px solid"
-				borderColor="border.subtle"
-				px={{ base: 3, md: 5 }}
-				py={{ base: 4, md: 6 }}
-				lineHeight={0}>
-				<Box display={{ base: "none", smmd: "block" }}>
-					<Wide accent={accent} />
-				</Box>
-				<Box display={{ base: "block", smmd: "none" }}>
-					<Narrow accent={accent} />
-				</Box>
-			</Box>
-			<Text
-				as="figcaption"
-				mt={3}
-				fontFamily="var(--font-mono)"
-				fontSize="11px"
-				lineHeight="1.6"
-				color="text.muted">
-				{figure} — a content hash drops files already seen, PII comes out
-				before chunking, and everything in the dashed region runs later on
-				QStash. Each stage is a checkpoint: a run that dies drops to the
-				dead-letter queue and the admin UI can retry it from the step that
-				broke.
-			</Text>
-		</Box>
-	);
-}

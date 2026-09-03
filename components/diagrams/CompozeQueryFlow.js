@@ -1,12 +1,11 @@
-import { Box, Text, useColorModeValue, useToken } from "@chakra-ui/react";
 import { Defs, Group, Label, Line, Node } from "./primitives";
+
+export const CLAIM =
+	"A question fans out across five knowledge bases with hybrid search, the survivors are reranked by a cross-encoder, and every citation is checked against its chunk before the answer ships.";
 
 // Claim: a question fans out across five knowledge bases with hybrid search,
 // the survivors are reranked by a cross-encoder, and every citation is checked
 // against its chunk before the answer ships. Accent follows the retrieval path.
-
-const CLAIM =
-	"A question fans out across five knowledge bases with hybrid search, the survivors are reranked by a cross-encoder, and every citation is checked against its chunk before the answer ships.";
 
 const KB_X_WIDE = [68, 188, 308, 428, 548];
 const KB_X_NARROW = [44, 100, 156, 212, 268];
@@ -35,8 +34,7 @@ const NARROW_TAIL = [
 	{ label: "Answer with citations", sub: "match score per chunk" },
 ];
 
-function Wide({ accent }) {
-	const id = "cqf-w";
+export function Wide({ accent, id = "cqf-w" }) {
 	return (
 		<svg
 			viewBox="0 0 720 1032"
@@ -164,7 +162,7 @@ function Wide({ accent }) {
 	);
 }
 
-function Narrow({ accent }) {
+export function Narrow({ accent }) {
 	const id = "cqf-n";
 	const tail = NARROW_TAIL.map((s, i) => ({ ...s, y: 480 + i * 104 }));
 	return (
@@ -255,38 +253,3 @@ function Narrow({ accent }) {
 	);
 }
 
-export default function CompozeQueryFlow({ figure }) {
-	const [mint600, mint300] = useToken("colors", ["mint.600", "mint.300"]);
-	const accent = useColorModeValue(mint600, mint300);
-
-	return (
-		<Box as="figure" my={{ base: 10, md: 14 }} mx={0}>
-			<Box
-				border="1px solid"
-				borderColor="border.subtle"
-				px={{ base: 3, md: 5 }}
-				py={{ base: 4, md: 6 }}
-				lineHeight={0}>
-				<Box display={{ base: "none", smmd: "block" }}>
-					<Wide accent={accent} />
-				</Box>
-				<Box display={{ base: "block", smmd: "none" }}>
-					<Narrow accent={accent} />
-				</Box>
-			</Box>
-			<Text
-				as="figcaption"
-				mt={3}
-				fontFamily="var(--font-mono)"
-				fontSize="11px"
-				lineHeight="1.6"
-				color="text.muted">
-				{figure} — one question, five knowledge bases searched at once, each
-				lane running keyword and vector search and fusing the two. Only chunks
-				over the 0.35 floor survive, a cross-encoder puts them in final order,
-				and every citation in the draft is checked against the chunk it points
-				at before the answer ships.
-			</Text>
-		</Box>
-	);
-}

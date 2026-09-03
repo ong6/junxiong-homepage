@@ -1,5 +1,7 @@
-import { Box, Text, useColorModeValue, useToken } from "@chakra-ui/react";
 import { Badge, Defs, Group, Label, Line, Node } from "./primitives";
+
+export const CLAIM =
+	"One multi-tenant Next.js app sits between the customer's document sources and three model providers, with Postgres and pgvector as the only store, QStash workers running ingest off the request path, and evaluation and tracing beside the request path.";
 
 // Claim: one multi-tenant Next.js app sits between the customer's document
 // sources and three model providers, with Postgres/pgvector as the only store,
@@ -9,9 +11,6 @@ import { Badge, Defs, Group, Label, Line, Node } from "./primitives";
 // Accent follows the request path (1-5); ingest (A-E) stays in currentColor so
 // the two paths never read as one. 8px grid throughout.
 
-const CLAIM =
-	"One multi-tenant Next.js app sits between the customer's document sources and three model providers, with Postgres and pgvector as the only store, QStash workers running ingest off the request path, and evaluation and tracing beside the request path.";
-
 const STAGES = [
 	["Download", "A", "source api"],
 	["Extract", "B", "LlamaParse"],
@@ -20,8 +19,7 @@ const STAGES = [
 	["Store", "E", "to pgvector"],
 ];
 
-function Wide({ accent }) {
-	const id = "carch-w";
+export function Wide({ accent, id = "carch-w" }) {
 	return (
 		<svg
 			viewBox="0 0 1200 792"
@@ -221,7 +219,7 @@ function Wide({ accent }) {
 
 // Mobile reads as one column: sources, the async pipeline, the store, the app,
 // the providers — with the two request-path arrows between store and app.
-function Narrow({ accent }) {
+export function Narrow({ accent }) {
 	const id = "carch-n";
 	const cell = (col, row, y0) => ({ x: col ? 184 : 44, y: y0 + row * 56 });
 	return (
@@ -308,45 +306,3 @@ function Narrow({ accent }) {
 	);
 }
 
-export default function CompozeArchitecture({ figure }) {
-	const [mint600, mint300] = useToken("colors", ["mint.600", "mint.300"]);
-	const accent = useColorModeValue(mint600, mint300);
-
-	return (
-		<Box
-			as="figure"
-			my={{ base: 10, md: 14 }}
-			mx={0}
-			width={{ base: "100%", lg: "calc(100vw - 32px)" }}
-			maxW={{ base: "100%", lg: "1088px" }}>
-			<Box
-				border="1px solid"
-				borderColor="border.subtle"
-				px={{ base: 3, md: 5 }}
-				py={{ base: 4, md: 6 }}
-				lineHeight={0}>
-				<Box display={{ base: "none", lg: "block" }}>
-					<Wide accent={accent} />
-				</Box>
-				<Box display={{ base: "block", lg: "none" }}>
-					<Narrow accent={accent} />
-				</Box>
-			</Box>
-			<Text
-				as="figcaption"
-				mt={3}
-				maxW="680px"
-				fontFamily="var(--font-mono)"
-				fontSize="11px"
-				lineHeight="1.6"
-				color="text.muted">
-				{figure} — the whole system. A question walks ① agent → ② retrieval → ③
-				pgvector → ④ gateway → ⑤ cited answer, all inside one request. Ingest
-				runs elsewhere: Ⓐ download, Ⓑ extract with LlamaParse, Ⓒ chunk at ~1000
-				characters, Ⓓ embed at 1536 dimensions, Ⓔ store. One database holds
-				everything, every row carries a tenant id under row-level security, and
-				evaluation and tracing sit beside the request path.
-			</Text>
-		</Box>
-	);
-}

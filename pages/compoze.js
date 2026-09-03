@@ -8,9 +8,10 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 import NextLink from "next/link";
-import CompozeArchitecture from "../components/diagrams/CompozeArchitecture";
-import CompozeIngestFlow from "../components/diagrams/CompozeIngestFlow";
-import CompozeQueryFlow from "../components/diagrams/CompozeQueryFlow";
+import DiagramFigure from "../components/DiagramFigure";
+import * as CompozeArchitecture from "../components/diagrams/CompozeArchitecture";
+import * as CompozeIngestFlow from "../components/diagrams/CompozeIngestFlow";
+import * as CompozeQueryFlow from "../components/diagrams/CompozeQueryFlow";
 import Layout from "../components/layouts/Articles";
 
 // A written case study: one ~680px column of prose, screenshots as inline
@@ -128,6 +129,7 @@ export default function Compoze() {
 	return (
 		<Layout
 			title="Compoze"
+			schema={{ type: "TechArticle" }}
 			description="Compoze sold document-grounded assistants to businesses. I built and ran it alone alongside a full-time job in 2025, and one of its clients bought the company at the end of that year.">
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
@@ -156,7 +158,7 @@ export default function Compoze() {
 					</Text>
 
 					<Text
-						mt={7}
+						mt={8}
 						fontSize={{ base: "19px", md: "21px" }}
 						lineHeight="1.6"
 						fontWeight="600">
@@ -167,7 +169,13 @@ export default function Compoze() {
 					</Text>
 				</Box>
 
-				<CompozeArchitecture figure="fig. 1" />
+				<DiagramFigure
+					id="carch"
+					wide={CompozeArchitecture.Wide}
+					narrow={CompozeArchitecture.Narrow}
+					breakpoint="lg"
+					caption="fig. 1 — the whole system. A question walks ① agent → ② retrieval → ③ pgvector → ④ gateway → ⑤ cited answer, all inside one request. Ingest runs elsewhere: Ⓐ download, Ⓑ extract with LlamaParse, Ⓒ chunk at ~1000 characters, Ⓓ embed at 1536 dimensions, Ⓔ store. One database holds everything, every row carries a tenant id under row-level security, and evaluation and tracing sit beside the request path."
+				/>
 
 				<P>
 					The pitch was narrow on purpose. A company has a few thousand
@@ -220,7 +228,13 @@ export default function Compoze() {
 					message and rendered with their match scores.
 				</P>
 
-				<CompozeQueryFlow figure="fig. 3" />
+				<DiagramFigure
+					id="cqf"
+					wide={CompozeQueryFlow.Wide}
+					narrow={CompozeQueryFlow.Narrow}
+					breakpoint="smmd"
+					caption="fig. 3 — one question, five knowledge bases searched at once, each lane running keyword and vector search and fusing the two. Only chunks over the 0.35 floor survive, a cross-encoder puts them in final order, and every citation in the draft is checked against the chunk it points at before the answer ships."
+				/>
 
 				<Figure
 					src="/images/compoze/compoze-02.webp"
@@ -315,7 +329,13 @@ export default function Compoze() {
 					document that looks uploaded and answers nothing.
 				</P>
 
-				<CompozeIngestFlow figure="fig. 5" />
+				<DiagramFigure
+					id="cif"
+					wide={CompozeIngestFlow.Wide}
+					narrow={CompozeIngestFlow.Narrow}
+					breakpoint="smmd"
+					caption="fig. 5 — a content hash drops files already seen, PII comes out before chunking, and everything in the dashed region runs later on QStash. Each stage is a checkpoint: a run that dies drops to the dead-letter queue and the admin UI can retry it from the step that broke."
+				/>
 
 				<Figure
 					src="/images/compoze/compoze-04.webp"

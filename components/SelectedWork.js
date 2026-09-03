@@ -19,7 +19,7 @@ import nusConnectImage from "../public/images/works/nusconnect_01.webp";
 
 const tagStyle = {
 	fontFamily: "var(--font-mono)",
-	fontSize: { base: "11px", md: "10px" },
+	fontSize: { base: "11px", md: "12px" },
 	fontWeight: "700",
 	letterSpacing: ".08em",
 	textTransform: "uppercase",
@@ -91,7 +91,7 @@ function GroundplaneCard() {
 					<Flex
 						justify="space-between"
 						fontFamily="var(--font-mono)"
-						fontSize="10px"
+						fontSize={{ base: "11px", md: "12px" }}
 						color="#7D9187">
 						<Text>groundplane / boundary.py</Text>
 						<Text>169 tests</Text>
@@ -109,6 +109,7 @@ function GroundplaneCard() {
 					<Text>Aggregate</Text>
 					<Text>Entity</Text>
 					<Text>Row</Text>
+					<Text>Comparison</Text>
 				</Flex>
 			</Box>
 		</ProjectCard>
@@ -136,7 +137,7 @@ function PropertyCard() {
 				</Text>
 			</Box>
 
-			<Box mt="auto" mx={{ base: 6, md: 8 }} mb={{ base: 6, md: 8 }} bg="#F7FBFE" border="1px solid rgba(16,35,60,.15)" p={5}>
+			<Box mt="auto" mx={{ base: 6, md: 8 }} mb={{ base: 6, md: 8 }} bg="#F7FBFE" border="1px solid rgba(16,35,60,.15)" p={{ base: 4, md: 5 }}>
 				<Flex justify="space-between" align="end" pb={4} borderBottom="1px solid rgba(16,35,60,.15)">
 					<Box>
 						<Text sx={tagStyle} color="#536C86">Sample report</Text>
@@ -203,32 +204,62 @@ function CompozeCard() {
 	);
 }
 
-function HandsfreeCard() {
+function JobforgeCard() {
 	return (
 		<ProjectCard span={7} bg="#E7E2F4" color="#28213E" minH="430px">
-			<Box position="relative" minH={{ base: "250px", md: "290px" }} bg="#181421" overflow="hidden">
-				<Image
-					src={handsfreeImage}
-					alt="YouTube Handsfree gesture controls"
-					fill
-					sizes="(max-width: 768px) 100vw, 58vw"
-					style={{ objectFit: "cover", objectPosition: "center" }}
-				/>
-			</Box>
-			<Box p={{ base: 6, md: 8 }}>
-				<Text color="#675C89" sx={tagStyle}>Two-day hackathon · computer vision</Text>
-				<Box mt={3}>
-					<ProjectHeading href="/works/youtubehandsfree">YouTube Handsfree</ProjectHeading>
+			<Box p={{ base: 6, md: 8 }} pb={4}>
+				<Flex justify="space-between" gap={4} color="#675C89" sx={tagStyle}>
+					<Text>Open source · 2026</Text>
+					<Text>Claude Code plugin</Text>
+				</Flex>
+				<Box mt={4}>
+					<ProjectHeading href="/jobforge">Jobforge</ProjectHeading>
 				</Box>
-				<Text mt={3} color="#5A526E" fontSize="15px" lineHeight="1.7">
-					Chrome extension that pauses and seeks YouTube with hand signs.
+				<Text mt={3} maxW="570px" color="#5A526E" fontSize="15px" lineHeight="1.7">
+					Coding-interview drills that grade the plan you say out loud, not
+					the code you submit. Résumé, targets and real interview debriefs in
+					one local markdown corpus, and a hook that can only ever talk about
+					today&apos;s rep.
 				</Text>
+			</Box>
+
+			<Box mt="auto" px={{ base: 6, md: 8 }} pb={{ base: 6, md: 8 }}>
+				<Box border="1px solid rgba(40,33,62,.18)" bg="#F6F3FC" p={{ base: 4, md: 5 }}>
+					<Flex
+						justify="space-between"
+						fontFamily="var(--font-mono)"
+						fontSize={{ base: "11px", md: "12px" }}
+						color="#675C89">
+						<Text>skills / drill / SKILL.md</Text>
+						<Text>35 tests</Text>
+					</Flex>
+					<Box mt={5} fontFamily="var(--font-mono)" fontSize={{ base: "10px", md: "12px" }} lineHeight="1.9">
+						<Text color="#28213E">/jobforge:drill</Text>
+						<Text color="#5A526E">&gt; Before you write anything: what are you going to do, and why that?</Text>
+						<Text color="#28213E">iteration-order  missing   &ldquo;then I fill in the table&rdquo;</Text>
+						<Text color="#8A3B5C">verdict: failed · due +3 days · written into the bank row</Text>
+					</Box>
+				</Box>
+				<Flex mt={4} wrap="wrap" columnGap={4} rowGap={1} color="#675C89" sx={tagStyle}>
+					<Text>Plan grading</Text>
+					<Text>16 patterns</Text>
+					<Text>SessionStart hook</Text>
+					<Text>No telemetry</Text>
+				</Flex>
 			</Box>
 		</ProjectCard>
 	);
 }
 
 const archiveProjects = [
+	{
+		title: "YouTube Handsfree",
+		year: "2020",
+		description: "Two-day hackathon. Chrome extension that pauses and seeks YouTube with hand signs.",
+		href: "/works/youtubehandsfree",
+		image: handsfreeImage,
+		position: "center",
+	},
 	{
 		title: "CodeParty",
 		year: "2023",
@@ -283,19 +314,19 @@ export default function SelectedWork() {
 				<GroundplaneCard />
 				<PropertyCard />
 				<CompozeCard />
-				<HandsfreeCard />
+				<JobforgeCard />
 			</Grid>
 
-			<Flex mt={{ base: 14, md: 20 }} mb={5} justify="space-between" align="end" gap={5}>
+			<Flex mt={{ base: 14, md: 20 }} mb={6} justify="space-between" align="end" gap={5}>
 				<Box>
-					<Text color={quietLabel} sx={tagStyle}>2021 – 2023</Text>
+					<Text color={quietLabel} sx={tagStyle}>2020 – 2023</Text>
 					<Heading as="h3" mt={2} fontSize={{ base: "24px", md: "29px" }}>Older projects</Heading>
 				</Box>
 				<Link as={NextLink} href="/works" fontSize="13px" fontWeight="700">
 					All university projects →
 				</Link>
 			</Flex>
-			<SimpleGrid columns={{ base: 1, md: 2 }} gap={6}>
+			<SimpleGrid columns={{ base: 1, md: 3 }} gap={{ base: 5, md: 6 }}>
 				{archiveProjects.map((project) => (
 					<ArchiveCard key={project.title} project={project} />
 				))}
