@@ -8,19 +8,20 @@ const currentExperience = [
 		location: "Singapore",
 		roles: [
 			{
-				subtitle: "AI Infrastructure Engineer, Global E-commerce",
+				subtitle: "AI Infrastructure Engineer, Promotion & Operations",
 				date: "Oct 2025 – present",
 				description: [
 					"Built the team's shared AI platform from zero: a LangGraph agent service on Google's A2A protocol, a Go MCP server exposing 16 analysis tools over the data warehouse, and a React SDK that adds streaming AI chat to a page in about five lines.",
 					"Adding LLM analysis to a new surface went from a multi-file change to a single config directory, and analysis latency dropped from minutes to seconds. In daily use by operators and analysts across the team.",
 					"Built the Marketing Strategy Center with operations teams across the US, Southeast Asia, and the UK: a Go/gRPC service and React console that enforces product eligibility rules and budget stop-loss continuously, replacing a daily manual review.",
+					"Shipped the Promotion Data Center analytics backend in Go with Kafka, Redis and Hive-backed OLAP: 26 statistics across 8 drill-down dimensions on 4 endpoints, serving ~13 markets with real-time alerting.",
 				],
 			},
 			{
-				subtitle: "Software Engineer, Backend Platforms",
+				subtitle: "Software Engineer, Seller Center & Creator Marketplace",
 				date: "Apr 2024 – Oct 2025",
 				description: [
-					"Shipped the Promotion Data Center analytics backend in Go with Kafka, Redis and Hive-backed OLAP: 26 statistics across 8 drill-down dimensions on 4 endpoints, serving ~13 markets with real-time alerting.",
+					"Refactored hardcoded region logic so EU and future markets launch by configuration, and delivered the related compliance, data-pipeline and API migrations.",
 					"Built the Video Diagnosis 2.0 recommendation backend in Go (candidate generation plus personalised ranking for creator-product matching), validated through A/B tests before rollout.",
 					"Supported five owned and two contributed Go/gRPC services on the seller platform, handled 20+ on-call escalations, and added cache observability and alerting that stopped a recurring class of outages.",
 				],

@@ -74,7 +74,8 @@ function Introduction() {
 						and a React chat SDK.
 					</Text>
 					<Text mt={5} maxW="640px" fontSize="16px" lineHeight="1.75" color="text.muted">
-						Before that, Go and gRPC promotion backends for the same platform,
+						Before that, Go and gRPC seller and creator-marketplace backends on
+						the same platform,
 						and a one-person AI company I ran on the side and sold. The rest
 						of this site is small tools that started because something annoyed
 						me enough to write code about it.
