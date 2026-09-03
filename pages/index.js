@@ -68,17 +68,17 @@ function Introduction() {
 						fontSize={{ base: "19px", md: "23px" }}
 						lineHeight="1.45"
 						fontWeight="650">
-						Software engineer at TikTok in Singapore, working on AI
-						infrastructure for global e-commerce. I built my team&apos;s agent
-						platform: a LangGraph runtime on the A2A protocol, a Go MCP server,
-						and a React chat SDK.
+						Software engineer at TikTok in Singapore. My day job is AI
+						infrastructure for global e-commerce: I built the agent platform
+						my team ships its AI features on, and I spend most of my time
+						making sure the model can&apos;t say something the data doesn&apos;t
+						support.
 					</Text>
 					<Text mt={5} maxW="640px" fontSize="16px" lineHeight="1.75" color="text.muted">
-						Before that, Go and gRPC seller and creator-marketplace backends on
-						the same platform,
-						and a one-person AI company I ran on the side and sold. The rest
-						of this site is small tools that started because something annoyed
-						me enough to write code about it.
+						Before that I wrote Go services for the seller platform, and on the
+						side I ran a one-person AI company until a client bought it. The
+						rest of this site is small tools that exist because something
+						annoyed me enough to write code about it.
 					</Text>
 					<Flex mt={6} wrap="wrap" columnGap={6} rowGap={3}>
 						<Link href="https://github.com/ong6" target="_blank" rel="noopener noreferrer" {...utilityLinkProps}>
@@ -137,9 +137,10 @@ function Now() {
 				<Box>
 					<Heading as="h2" fontSize={{ base: "25px", md: "31px" }}>At work</Heading>
 					<Text mt={3} color="text.muted" fontSize="15px" lineHeight="1.75">
-						I build shared AI infrastructure at TikTok in Singapore: an A2A and
-						LangGraph runtime, a Go MCP server, a React chat SDK, and the backend
-						systems around them.
+						Shared AI infrastructure at TikTok in Singapore. Most of this year
+						has gone into making agent output trustworthy enough that an
+						operations team will act on it without checking. Groundplane is
+						that idea, taken home.
 					</Text>
 					<Link as={NextLink} href="/resume" {...utilityLinkProps} mt={4}>
 						Work history →
