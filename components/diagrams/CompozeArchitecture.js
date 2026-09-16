@@ -1,4 +1,4 @@
-import { Badge, Defs, Flow, Group, Label, Lane, Line, Node, Packet } from "./parts";
+import { Badge, Defs, Floor, Flow, Group, Label, Lane, Line, Node, Packet } from "./parts";
 
 export const CLAIM =
 	"One multi-tenant Next.js app sits between the customer's document sources and three model providers, with Postgres and pgvector as the only store, QStash workers running ingest off the request path, and evaluation and tracing beside the request path.";
@@ -37,7 +37,7 @@ const STAGES = [
 
 export function Wide({ id }) {
 	return (
-		<>
+		<Floor min={13}>
 			<Defs id={id} />
 
 			{/* ---------- sources ---------- */}
@@ -173,8 +173,8 @@ export function Wide({ id }) {
 						x={104 + i * 104}
 						y={668}
 						textAnchor="middle"
-						fontSize="11"
-						fontFamily="var(--font-mono)"
+						fontSize="13"
+						fontFamily="var(--uipack-mono)"
 						fill="currentColor"
 						fillOpacity="0.7">
 						{param}
@@ -250,7 +250,7 @@ export function Wide({ id }) {
 				<Flow key={label} x1={144 + i * 104} y1={616} x2={168 + i * 104} y2={616} kind="change" dur={1.2} delay={-i * 0.3} />
 			))}
 			<Flow x1={560} y1={616} x2={648} y2={616} kind="change" dur={1.6} />
-		</>
+		</Floor>
 	);
 }
 

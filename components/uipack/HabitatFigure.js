@@ -74,12 +74,12 @@ export function HabitatWide() {
 	return (
 		<>
 			<Defs id={ID} />
-			<Lane x={24} w={176} y={44} title="Clients" />
-			<Lane x={328} w={600} y={44} title="Online storage platform" />
-			<Lane x={1024} w={200} y={44} title="Storage resources" />
+			<Lane x={24} w={176} y={44} title="Clients" size={14} />
+			<Lane x={328} w={600} y={44} title="Online storage platform" size={14} />
+			<Lane x={1024} w={200} y={44} title="Storage resources" size={14} />
 
 			{CLIENTS.map(([label, icon], i) => (
-				<Node key={label} x={24} y={96 + i * 56} w={176} h={40} label={label} icon={icon} />
+				<Node key={label} x={24} y={96 + i * 56} w={176} h={40} label={label} icon={icon} size={15} />
 			))}
 
 			<Group {...platform} title="Habitat">
@@ -93,13 +93,15 @@ export function HabitatWide() {
 						label={label}
 						sub={sub}
 						align="left"
+						size={14}
+						subSize={13.5}
 					/>
 				))}
-				<Node x={platform.x + 24} y={platform.y + 188} w={552} h={56} label="Routing" sub="Schema lookup · Data residency" align="left" />
+				<Node x={platform.x + 24} y={platform.y + 188} w={552} h={56} label="Routing" sub="Schema lookup · Data residency" align="left" size={15} subSize={13.5} />
 			</Group>
 
 			{STORES.map(([label, sub, icon], i) => (
-				<Node key={label} x={1024} y={96 + i * 64} w={200} h={48} label={label} sub={sub} icon={icon} />
+				<Node key={label} x={1024} y={96 + i * 64} w={200} h={48} label={label} sub={sub} icon={icon} size={15} subSize={13.5} />
 			))}
 
 			{clientPaths.map((p, i) => (
@@ -127,7 +129,7 @@ export function HabitatWide() {
 
 			<Connector points={cdcPath} defs={ID} kind="change" />
 			<Packet points={cdcPath} kind="change" dur={2} />
-			<Node {...cdc} label="CDC Services" sub="Change Data Capture" icon="queue" />
+			<Node {...cdc} label="CDC Services" sub="Change Data Capture" icon="queue" size={15} subSize={13.5} />
 			{sinkPaths.map((p, i) => (
 				<Connector key={i} points={p} defs={ID} kind="change" />
 			))}
@@ -135,9 +137,9 @@ export function HabitatWide() {
 				<Packet key={i} points={p} kind="change" dur={2.2} delay={-i * 0.55} />
 			))}
 			{SINKS.map((label, i) => (
-				<Node key={label} x={392 + i * 152} y={480} w={128} h={40} label={label} icon={i === 3 ? "more" : "service"} />
+				<Node key={label} x={392 + i * 152} y={480} w={128} h={40} label={label} icon={i === 3 ? "more" : "service"} size={15} />
 			))}
-			<Label x={platform.x + platform.w / 2 + 10} y={platform.y + platform.h + 28} text="changes" />
+			<Label x={platform.x + platform.w / 2 + 10} y={platform.y + platform.h + 28} text="changes" size={14} />
 		</>
 	);
 }

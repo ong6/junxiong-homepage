@@ -18,7 +18,9 @@ const H2 = (props) => (
 
 const Code = (props) => <Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em" {...props} />;
 
-const Wide = (props) => <Box my={{ base: 10, md: 14 }} {...props} />;
+// Figures break out of the prose column to the main container width, like
+// every case-study figure.
+const Wide = (props) => <Box my={{ base: 10, md: 14 }} w="min(100vw - 32px, 1088px)" maxW="none" {...props} />;
 
 const COMPONENTS = [
 	["Figure", "number · eyebrow · title · caption · legend · controls · viewBox · narrow · narrowViewBox · alt", "the frame: header, legend, Pause and Replay, dotted canvas, wide and narrow drawings swapped at 720px. Owns the SVG timeline."],
@@ -117,7 +119,7 @@ export default function Uipack() {
 				license: "https://opensource.org/licenses/MIT",
 			}}
 			description="uipack is the React and SVG component library behind every diagram on this site: framed figures, lanes, nodes, connectors, and packets that move along them.">
-			<Container maxW="1040px" px={0} ml={0}>
+			<Container maxW="680px" px={0} ml={0}>
 				<Box maxW="680px" pt={{ base: 10, md: 16 }}>
 					<Link as={NextLink} href="/" display="inline-flex" alignItems="center" minH="32px" my={-1.5} fontSize="13px" fontWeight="700">
 						← Home
@@ -199,9 +201,9 @@ export default function Uipack() {
 					</P>
 				</Box>
 
-				<Wide maxW="680px">
+				<Box my={{ base: 10, md: 14 }}>
 					<StaticFigure />
-				</Wide>
+				</Box>
 
 				<Box maxW="680px">
 					<H2>Install</H2>

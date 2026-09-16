@@ -1,4 +1,4 @@
-import { Badge, Defs, Flow, Group, Label, Lane, Line, Node } from "./parts";
+import { Badge, Defs, Floor, Flow, Group, Label, Lane, Line, Node } from "./parts";
 
 export const CLAIM =
 	"One skills repo is a git subtree inside every consumer repo. A SessionStart hook merges what upstream moved, a Stop hook commits local edits and pushes them back, so a skill edited where it is used reaches every other repo; the plugin marketplace reads the same repo one way.";
@@ -36,7 +36,7 @@ const UPSTREAM = [
 
 export function Wide({ id }) {
 	return (
-		<>
+		<Floor min={12}>
 			<Defs id={id} />
 
 			{/* ---------- upstream ---------- */}
@@ -120,7 +120,7 @@ export function Wide({ id }) {
 			<Flow x1={320} y1={140} x2={472} y2={140} kind="request" dur={2.2} delay={-1.1} />
 			<Flow x1={472} y1={348} x2={320} y2={348} kind="accent" dur={2.2} delay={-0.5} />
 			<Flow x1={180} y1={360} x2={180} y2={448} kind="change" dur={2} />
-		</>
+		</Floor>
 	);
 }
 

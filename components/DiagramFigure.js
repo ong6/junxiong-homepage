@@ -329,14 +329,18 @@ const shortCaption = (c) => {
 	return m ? m[0] : "";
 };
 
-export default function DiagramFigure({ id, diagram, caption }) {
+export default function DiagramFigure({ id, diagram, caption, headingLevel }) {
 	const { meta, CLAIM, Wide, Narrow } = diagram;
 	const [open, setOpen] = useState(false);
 
 	return (
-		<Box as="figure" my={{ base: 10, md: 14 }} mx={0} w="100%" maxW="100%">
+		// A drawing wider than the prose column breaks out to the main container's
+		// content width (1120px minus its 16px gutters), which the column's left
+		// edge already sits on, so the figure reads centred in the viewport.
+		<Box as="figure" my={{ base: 10, md: 14 }} mx={0} w="min(100vw - 32px, 1088px)" maxW="none">
 			<Figure
 				id={`${id}-figure`}
+				headingLevel={headingLevel}
 				number={meta.number}
 				eyebrow={meta.eyebrow}
 				title={meta.title}

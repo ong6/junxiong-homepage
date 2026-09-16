@@ -1,4 +1,4 @@
-import { Badge, Defs, Flow, Group, Label, Lane, Line, Node } from "./parts";
+import { Badge, Defs, Floor, Flow, Group, Label, Lane, Line, Node } from "./parts";
 
 export const CLAIM =
 	"Tool results are recorded as typed facts with provenance; a boundary declares which facts a block of model output may use; a deterministic checker resolves every claim against them and raises UnsupportedClaim on the first that fails.";
@@ -53,7 +53,7 @@ const FACTS = [
 
 export function Wide({ id }) {
 	return (
-		<>
+		<Floor min={12}>
 			<Defs id={id} />
 
 			{/* ---------- tools ---------- */}
@@ -188,7 +188,7 @@ export function Wide({ id }) {
 			<Flow x1={656} y1={248} x2={712} y2={248} kind="request" dur={1.6} delay={-0.8} />
 			<Flow x1={912} y1={208} x2={960} y2={208} kind="response" dur={1.6} />
 			<Flow x1={912} y1={320} x2={960} y2={320} kind="response" dur={1.6} delay={-0.8} />
-		</>
+		</Floor>
 	);
 }
 

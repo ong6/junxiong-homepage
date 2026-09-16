@@ -88,9 +88,3 @@ a {
 	outline: 2px solid var(--chakra-colors-brand-solid);
 	outline-offset: 2px;
 }
-/* With the controls hidden (controls={false}, or reduced motion) the caption
-   would auto-place into the header's second column and squeeze the title. */
-.uipack__title,
-.uipack__caption {
-	grid-column: 1;
-}

@@ -185,6 +185,7 @@ export default function Compoze() {
 
 				<DiagramFigure
 					id="carch"
+					headingLevel={2}
 					diagram={CompozeArchitecture}
 					caption="fig. 1 — the whole system. A question walks ① agent → ② retrieval → ③ pgvector → ④ gateway → ⑤ cited answer inside one request. Ingest runs elsewhere: Ⓐ download, Ⓑ extract, Ⓒ chunk, Ⓓ embed, Ⓔ store. One database, every row under a tenant id and row-level security."
 				/>

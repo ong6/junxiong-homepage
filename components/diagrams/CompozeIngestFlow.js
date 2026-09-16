@@ -1,4 +1,4 @@
-import { Badge, Defs, Flow, Group, Label, Lane, Line, Node } from "./parts";
+import { Badge, Defs, Floor, Flow, Group, Label, Lane, Line, Node } from "./parts";
 
 export const CLAIM =
 	"Documents are deduplicated by content hash, redacted, and moved through a checkpointed async pipeline into pgvector, with failures landing in a dead-letter queue the admin UI shows.";
@@ -45,7 +45,7 @@ const Cross = ({ cx, cy, s = 5 }) => (
 export function Wide({ id }) {
 	const stages = STAGES.map((s, i) => ({ ...s, y: 336 + i * 88 }));
 	return (
-		<>
+		<Floor min={12}>
 			<Defs id={id} />
 
 			<Node
@@ -151,7 +151,7 @@ export function Wide({ id }) {
 			<Flow x1={360} y1={920} x2={360} y2={1000} kind="change" dur={1.6} />
 			<Flow x1={592} y1={972} x2={592} y2={1000} kind="change" dur={1} delay={-0.5} />
 			<Flow x1={136} y1={364} x2={136} y2={1000} kind="neutral" dur={6} />
-		</>
+		</Floor>
 	);
 }
 

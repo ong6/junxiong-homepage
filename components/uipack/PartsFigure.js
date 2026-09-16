@@ -1,4 +1,5 @@
-import { Badge, Chip, Connector, Defs, Figure, Group, Label, Lane, Node, Packet, Token, icons, pointAlong, route } from "uipack";
+import { Chip, Connector, Defs, Figure, Group, Label, Lane, Node, Packet, Token, icons, pointAlong, route } from "uipack";
+import { Badge, Floor } from "../diagrams/parts";
 
 // Every component once, on the 8px grid. `id`s on the first connector and
 // packet are what the browser tests sample.
@@ -27,16 +28,17 @@ export default function PartsFigure() {
 			]}
 			viewBox="0 0 1120 360"
 			alt="A sampler of every uipack component: four node variants, three connector kinds with packets, a solid group of chips, a dashed boundary, and the icon set.">
+			<Floor min={12}>
 			<Defs id="parts" />
-			<Lane x={0} w={260} y={20} title="Nodes" />
+			<Lane x={0} w={260} y={20} title="Nodes" size={12} />
 			<Node x={16} y={40} w={200} h={40} label="Plain" />
-			<Node x={16} y={96} w={200} h={56} label="With sub" sub="mono second line" align="left" icon="service" />
+			<Node x={16} y={96} w={200} h={56} label="With sub" sub="mono second line" align="left" icon="service" subSize={12} />
 			<Node x={16} y={168} w={200} h={40} label="Accent" accent />
 			<Node x={16} y={224} w={200} h={40} label="Dashed" dashed />
-			<Badge cx={216} cy={40} text="1" />
-			<Badge cx={216} cy={168} text="A" accent />
+			<Badge cx={216} cy={40} text="1" r={10} />
+			<Badge cx={216} cy={168} text="A" accent r={10} />
 
-			<Lane x={280} w={380} y={20} title="Connectors + packets" />
+			<Lane x={280} w={380} y={20} title="Connectors + packets" size={12} />
 			<Connector points={a} defs="parts" kind="request" id="e2e-conn" />
 			<Packet points={a} kind="request" dur={2} id="e2e-packet" />
 			<Connector points={b} defs="parts" kind="response" dashed />
@@ -46,23 +48,23 @@ export default function PartsFigure() {
 			<Packet points={c} kind="change" dur={2} delay={-1} reverse />
 			<Connector points={d} defs="parts" />
 			<Packet points={d} kind="neutral" dur={3} />
-			<Label x={460} y={212} text="plain connector" anchor="middle" />
+			<Label x={460} y={212} text="plain connector" anchor="middle" size={12} />
 			<Label x={460} y={250} text="Label with underlay, sans" anchor="middle" font="sans" size={12} />
 
-			<Lane x={700} w={400} y={20} title="Groups + chips" />
+			<Lane x={700} w={400} y={20} title="Groups + chips" size={12} />
 			<Group x={700} y={40} w={400} h={120} title="Solid group">
-				<Chip x={716} y={80} w={72} label="A1" />
-				<Chip x={796} y={80} w={72} label="B2" kind="request" />
-				<Chip x={876} y={80} w={72} label="busy" kind="accent" />
+				<Chip x={716} y={80} w={72} label="A1" size={12} />
+				<Chip x={796} y={80} w={72} label="B2" kind="request" size={12} />
+				<Chip x={876} y={80} w={72} label="busy" kind="accent" size={12} />
 				<Chip x={956} y={80} w={72} dashed />
-				<Chip x={716} y={116} w={312} h={20} label="overloaded" kind="change" size={9} />
+				<Chip x={716} y={116} w={312} h={20} label="overloaded" kind="change" size={12} />
 			</Group>
-			<Group x={700} y={184} w={400} h={96} title="Dashed boundary" variant="dashed" accent>
+			<Group x={700} y={184} w={400} h={96} title="Dashed boundary" variant="dashed" accent titleSize={12}>
 				<Node x={716} y={220} w={176} h={40} label="Inside" icon="agent" />
 				<Node x={908} y={220} w={176} h={40} label="Tenant" icon="db" />
 			</Group>
 
-			<Lane x={0} w={260} y={300} title="Icons" />
+			<Lane x={0} w={260} y={300} title="Icons" size={12} />
 			{names.map((n, i) => (
 				<g
 					key={n}
@@ -75,6 +77,7 @@ export default function PartsFigure() {
 					{icons[n]}
 				</g>
 			))}
+			</Floor>
 		</Figure>
 	);
 }

@@ -111,6 +111,7 @@ export default function Skillpack() {
 
 				<DiagramFigure
 					id="sparch"
+					headingLevel={2}
 					diagram={SkillpackArchitecture}
 					caption="fig. 1 — the sync loop. ① Upstream holds the skills, a catalog that
 					regenerates the README, and the plugin manifest. ② A consumer repo
