@@ -7,8 +7,9 @@ engineering through a restrained terminal-inspired interface.
 ## What is here
 
 - A project-first homepage with selected work and personal context
-- Case studies for Groundplane (`/groundplane`, a Python boundary for agent output) and Jobforge
-  (`/jobforge`, a Claude Code interview-prep plugin), each with a fact table verified against the repo
+- Case studies for Groundplane (`/groundplane`, a Python boundary for agent output), Jobforge
+  (`/jobforge`, a Claude Code interview-prep plugin) and Skillpack (`/skillpack`, the shared
+  Claude Code and Codex skills with two-way subtree sync), each with a fact table verified against the repo
 - A public case study for Compoze, with client identity and financial terms kept private
 - A browser and print-friendly resume
 - An archive of university projects

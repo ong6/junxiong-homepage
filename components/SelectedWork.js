@@ -251,6 +251,61 @@ function JobforgeCard() {
 	);
 }
 
+function SkillpackCard() {
+	return (
+		<ProjectCard span={12} bg="#EFE8D6" color="#3A2F14" minH="300px">
+			<Flex direction={{ base: "column", md: "row" }} flex="1">
+				<Box p={{ base: 6, md: 8 }} flex="1">
+					<Flex justify="space-between" gap={4} color="#7A6224" sx={tagStyle}>
+						<Text>Open source · 2026</Text>
+						<Text>Claude Code + Codex</Text>
+					</Flex>
+					<Box mt={4}>
+						<ProjectHeading href="/skillpack">Skillpack</ProjectHeading>
+					</Box>
+					<Text mt={3} maxW="520px" color="#6B5B33" fontSize="15px" lineHeight="1.7">
+						The skills I run in every repo, kept as one git subtree that syncs
+						both ways. Edit a skill where you are using it and a Stop hook
+						pushes the change back; every other repo picks it up at its next
+						session start.
+					</Text>
+					<Flex mt={5} wrap="wrap" columnGap={4} rowGap={1} color="#7A6224" sx={tagStyle}>
+						<Text>8 skills</Text>
+						<Text>Subtree sync</Text>
+						<Text>Plugin marketplace</Text>
+						<Text>Catalog with links out</Text>
+					</Flex>
+				</Box>
+
+				<Box
+					flex={{ md: "0 0 46%" }}
+					px={{ base: 6, md: 8 }}
+					pb={{ base: 6, md: 8 }}
+					pt={{ base: 0, md: 8 }}
+					display="flex"
+					alignItems="stretch">
+					<Box border="1px solid rgba(58,47,20,.2)" bg="#FBF8F0" p={{ base: 4, md: 5 }} w="100%">
+						<Flex
+							justify="space-between"
+							fontFamily="var(--font-mono)"
+							fontSize={{ base: "11px", md: "12px" }}
+							color="#7A6224">
+							<Text>scripts / sync.sh</Text>
+							<Text>15 scenarios</Text>
+						</Flex>
+						<Box mt={5} fontFamily="var(--font-mono)" fontSize={{ base: "11px", md: "12px" }} lineHeight="1.9">
+							<Text color="#6B5B33">$ sync.sh --start</Text>
+							<Text color="#3A2F14">skills-sync: merged upstream changes into .claude/shared-skills</Text>
+							<Text color="#6B5B33">$ sync.sh --stop</Text>
+							<Text color="#3A2F14">skills-sync: pushed .claude/shared-skills to upstream</Text>
+						</Box>
+					</Box>
+				</Box>
+			</Flex>
+		</ProjectCard>
+	);
+}
+
 const archiveProjects = [
 	{
 		title: "YouTube Handsfree",
@@ -329,6 +384,7 @@ export default function SelectedWork() {
 				<PropertyCard />
 				<CompozeCard />
 				<JobforgeCard />
+				<SkillpackCard />
 			</Grid>
 
 			<Flex mt={{ base: 14, md: 20 }} mb={6} justify="space-between" align="end" gap={5}>
