@@ -80,6 +80,24 @@ a {
 	--uipack-token-response: #5fd39b;
 	--uipack-token-change: #c39aff;
 }
+/* The asset browser takes the same tokens, and its counts and status line
+   stay at full opacity: faded muted text on the warm page falls to 2.9:1. */
+.uipack-browser {
+	--uipack-fg: var(--chakra-colors-page-text);
+	--uipack-muted: var(--chakra-colors-text-muted);
+	--uipack-bg: var(--chakra-colors-page-bg);
+	--uipack-surface: var(--chakra-colors-surface-raised);
+	--uipack-border: var(--chakra-colors-border-subtle);
+	--uipack-accent: var(--chakra-colors-brand-solid);
+	--uipack-mono: var(--font-mono);
+	--uipack-sans: var(--font-sans);
+}
+.uipack-browser__count,
+.uipack-browser__status,
+.uipack-browser__empty {
+	opacity: 1;
+	color: var(--uipack-muted);
+}
 .uipack__ctl,
 .uipack-browser__action {
 	min-height: 44px;
