@@ -12,7 +12,7 @@ import { connectorRule, deploy, fieldpack, groundplane, skillforge, skillpack } 
 
 // Playwright cases in e2e/*.spec.js, quoted in Figure 05. Update with the
 // suite.
-export const E2E_CASES = 49;
+export const E2E_CASES = 52;
 
 // The service-map preset folds every platform cell into one line for its
 // narrow drawing, which runs off a 360px canvas with fieldpack's six cells.

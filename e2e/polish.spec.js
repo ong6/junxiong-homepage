@@ -52,13 +52,14 @@ test("figure controls and asset actions are 44px targets at 390", async ({ page 
 	await page.locator(".uipack-browser__action").first().waitFor();
 	const short = await page.evaluate(() =>
 		[...document.querySelectorAll(".uipack-browser__cat, .uipack-browser__action, .uipack-browser__search input")]
-			.filter((b) => b.getBoundingClientRect().height < 44)
+			// offsetHeight: layout height, unaffected by the entrance animation's transform.
+			.filter((b) => b.offsetHeight < 44)
 			.map((b) => b.className || b.tagName),
 	);
 	expect(short).toEqual([]);
 	await page.goto("/uipack");
 	await page.locator(".uipack__ctl").first().waitFor();
-	const ctl = await page.evaluate(() => [...document.querySelectorAll(".uipack__ctl")].filter((b) => b.getBoundingClientRect().height < 44).length);
+	const ctl = await page.evaluate(() => [...document.querySelectorAll(".uipack__ctl")].filter((b) => b.offsetHeight < 44).length);
 	expect(ctl).toBe(0);
 });
 
@@ -96,3 +97,44 @@ test("/uipack gallery does not repeat a case-study figure title or sentence", as
 		expect(gallery.sentences.filter((s) => study.sentences.includes(s))).toEqual([]);
 	}
 });
+
+// Lighthouse flagged both on 2026-09-16: axe reads an aria-hidden glyph as
+// visible text, and uipack fades the category counts to 0.7 opacity.
+test("expand button's accessible name contains its visible text", async ({ page }) => {
+	await page.goto("/groundplane");
+	const btn = page.getByRole("button", { name: /Expand diagram/ }).first();
+	const visible = (await btn.textContent()).trim().toLowerCase();
+	expect(visible.length).toBeGreaterThan(0);
+	expect((await btn.getAttribute("aria-label")).toLowerCase()).toContain(visible);
+});
+
+for (const theme of ["light", "dark"]) {
+	test(`/assets counts and status read at 4.5:1 in ${theme}`, async ({ page }) => {
+		await page.addInitScript((t) => localStorage.setItem("chakra-ui-color-mode", t), theme);
+		await page.goto("/assets");
+		await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
+		// The body background transitions between modes; measure once it lands.
+		await expect.poll(() => page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe(theme === "dark" ? "rgb(14, 21, 18)" : "rgb(241, 238, 230)");
+		await page.locator(".uipack-browser__count").first().waitFor();
+		const ratios = await page.evaluate(() => {
+			const lum = (c) => {
+				const [r, g, b] = c.match(/\d+/g).map((n) => +n / 255).map((v) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4));
+				return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+			};
+			const bg = (el) => {
+				for (let e = el; e; e = e.parentElement) {
+					const c = getComputedStyle(e).backgroundColor;
+					if (c && !/rgba\(0, 0, 0, 0\)/.test(c)) return c;
+				}
+				return "rgb(255, 255, 255)";
+			};
+			return [...document.querySelectorAll(".uipack-browser__count, .uipack-browser__status")].map((el) => {
+				const cs = getComputedStyle(el);
+				const l1 = lum(cs.color), l2 = lum(bg(el));
+				return { text: el.textContent.trim(), fg: cs.color, bg: bg(el), opacity: +cs.opacity, ratio: +((Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05)).toFixed(2) };
+			});
+		});
+		expect(ratios.length).toBeGreaterThan(0);
+		expect(ratios.filter((r) => r.opacity < 1 || r.ratio < 4.5)).toEqual([]);
+	});
+}
