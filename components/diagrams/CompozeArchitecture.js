@@ -107,7 +107,7 @@ export function Wide({ id }) {
 				w={160}
 				h={64}
 				label="RAG search"
-				sub="9 tools · spotlighting"
+				sub="9 tools · spotlight"
 				size={13}
 				subSize={10} flow="request" />
 			<Badge cx={384} cy={224} text="2" accent />
