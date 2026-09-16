@@ -1,6 +1,7 @@
 import { Box, Container, Heading, Link, Text, useColorModeValue } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { agentLoop, beforeAfter, pipeline, serviceMap, skillLifecycle, syncLoop } from "uipack/presets";
+import { Figure } from "uipack";
+import { NARROW_W, Stack, agentLoop, beforeAfter, pipeline, serviceMapParts, skillLifecycle, stackHeight, syncLoop } from "uipack/presets";
 import Layout from "../components/layouts/Articles";
 import { connectorRule, deploy, fieldpack, groundplane, skillforge, skillpack } from "../lib/uipackGallery";
 
@@ -11,7 +12,37 @@ import { connectorRule, deploy, fieldpack, groundplane, skillforge, skillpack } 
 
 // Playwright cases in e2e/*.spec.js, quoted in Figure 05. Update with the
 // suite.
-export const E2E_CASES = 29;
+export const E2E_CASES = 49;
+
+// The service-map preset folds every platform cell into one line for its
+// narrow drawing, which runs off a 360px canvas with fieldpack's six cells.
+// The wide drawing is the preset's; the narrow one is these four rows.
+const FIELDPACK_NARROW = [
+	{ label: "Laptop · Agent · Customer", sub: "who", icon: "client", flow: "read" },
+	{ label: "fieldpack", sub: "deckforge · skillforge · proofpack", icon: "service", flow: "read" },
+	{ label: "setup · doctor · verification", sub: "integration.mjs · three pinned repos", icon: "tool", flow: "read" },
+	{ label: "Deck library · Chromium · handover", sub: "what it keeps", icon: "db", flow: "read" },
+];
+
+const fieldpackFigure = (id) => {
+	const parts = serviceMapParts(fieldpack, id);
+	const f = fieldpack.figure;
+	return (
+		<Figure
+			id={id}
+			number={f.number}
+			eyebrow={f.eyebrow}
+			title={f.title}
+			caption={f.caption}
+			alt={f.alt}
+			legend={parts.legend}
+			viewBox={parts.viewBox}
+			narrow={<Stack steps={FIELDPACK_NARROW} id={`${id}-n`} />}
+			narrowViewBox={`0 0 ${NARROW_W} ${stackHeight(FIELDPACK_NARROW.length)}`}>
+			{parts.wide}
+		</Figure>
+	);
+};
 
 const P = (props) => <Text mt={5} fontSize={{ base: "17px", md: "18px" }} lineHeight="1.8" {...props} />;
 const H2 = (props) => <Heading as="h2" mt={{ base: 12, md: 16 }} fontSize={{ base: "22px", md: "24px" }} {...props} />;
@@ -48,7 +79,7 @@ const GALLERY = [
 	},
 	{
 		id: "fp",
-		render: () => serviceMap(fieldpack, "fp"),
+		render: () => fieldpackFigure("fp"),
 		note: "fig. 4 — fieldpack. A bus on each side of the platform. Stubs carry no heads, the junction dot marks the join.",
 	},
 	{
