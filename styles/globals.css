@@ -98,7 +98,6 @@ a {
 	opacity: 1;
 	color: var(--uipack-muted);
 }
-.uipack__ctl,
 .uipack-browser__action {
 	min-height: 44px;
 	min-width: 44px;
