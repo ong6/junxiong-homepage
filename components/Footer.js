@@ -6,6 +6,7 @@ const links = [
 	{ label: "Hobbies", href: "/hobbies", internal: true },
 	{ label: "Archive", href: "/works", internal: true },
 	{ label: "Notes", href: "https://notes.junxiong.dev" },
+	{ label: "Components", href: "/uipack", internal: true },
 	{ label: "GitHub", href: "https://github.com/ong6" },
 	{ label: "LinkedIn", href: "https://www.linkedin.com/in/junx6/" },
 	{ label: "Source", href: "https://github.com/ong6/junxiong-homepage" },
