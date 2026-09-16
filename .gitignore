@@ -40,3 +40,6 @@ CLAUDE.md
 # playwright
 /playwright-report
 /test-results
+
+# derived from the pinned uipack commit at build time
+public/uipack-assets/
