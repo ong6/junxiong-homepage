@@ -385,8 +385,9 @@ export default function DiagramFigure({ id, diagram, caption, headingLevel }) {
 					textTransform="uppercase"
 					cursor="zoom-in"
 					_hover={{ borderColor: "page.text", color: "page.text" }}
+					_before={{ content: '"⤢ "' }}
 					_focusVisible={{ outline: "2px solid", outlineColor: "brand.solid", outlineOffset: "2px" }}>
-					<Box as="span" aria-hidden="true">⤢ </Box>expand
+					expand
 				</Box>
 			</Box>
 			{open ? (
