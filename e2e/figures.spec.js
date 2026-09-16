@@ -61,12 +61,13 @@ for (const path of PAGES) {
 			expect(bg).toBe(theme === "dark" ? "rgb(14, 21, 18)" : "rgb(241, 238, 230)");
 			const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
 			expect(overflow).toBe(0);
+			if (path === "/uipack") expect(await page.locator("figure.uipack").count()).toBe(6);
 			expect(errors).toEqual([]);
 		});
 	}
 }
 
-test("/uipack expand opens the wide drawing full-screen and Esc closes it", async ({ page }) => {
+test("/groundplane expand opens the wide drawing full-screen and Esc closes it", async ({ page }) => {
 	await page.goto("/groundplane");
 	await page.getByRole("button", { name: /Expand diagram/ }).first().click();
 	const dialog = page.getByRole("dialog");
@@ -75,3 +76,12 @@ test("/uipack expand opens the wide drawing full-screen and Esc closes it", asyn
 	await page.keyboard.press("Escape");
 	await expect(dialog).toHaveCount(0);
 });
+
+for (const path of ["/uipack", "/groundplane"]) {
+	test(`${path} at 390 has no horizontal overflow`, async ({ page }) => {
+		await page.setViewportSize({ width: 390, height: 844 });
+		await page.goto(path);
+		await page.locator("figure.uipack").first().waitFor();
+		expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBe(0);
+	});
+}
