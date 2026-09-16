@@ -38,7 +38,7 @@ const Ctl = forwardRef(function Ctl({ label, children, ...rest }, ref) {
 			lineHeight="1"
 			cursor="pointer"
 			_hover={{ borderColor: "page.text" }}
-			_focusVisible={{ outline: "2px solid", outlineColor: "mint.500", outlineOffset: "2px" }}
+			_focusVisible={{ outline: "2px solid", outlineColor: "brand.solid", outlineOffset: "2px" }}
 			ref={ref}
 			{...rest}>
 			{children}
@@ -385,7 +385,7 @@ export default function DiagramFigure({ id, diagram, caption, headingLevel }) {
 					textTransform="uppercase"
 					cursor="zoom-in"
 					_hover={{ borderColor: "page.text", color: "page.text" }}
-					_focusVisible={{ outline: "2px solid", outlineColor: "mint.500", outlineOffset: "2px" }}>
+					_focusVisible={{ outline: "2px solid", outlineColor: "brand.solid", outlineOffset: "2px" }}>
 					<Box as="span" aria-hidden="true">⤢ </Box>expand
 				</Box>
 			</Box>
