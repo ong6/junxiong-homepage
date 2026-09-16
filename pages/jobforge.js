@@ -1,12 +1,13 @@
 import { Box, Container, Heading, Link, Text, useColorModeValue } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { CodeBlock, CodeFigure } from "../components/CodeBlock";
+import DiagramFigure from "../components/DiagramFigure";
+import * as JobforgeArchitecture from "../components/diagrams/JobforgeArchitecture";
 import Layout from "../components/layouts/Articles";
 
-// Same shape as /groundplane: one ~680px column of prose, two code figures
-// rendered as text, and a single mono fact table. No architecture diagram;
-// the plugin is a hook, six skills and some markdown, and a figure of the
-// actual banner says more than boxes would.
+// Same shape as /groundplane: one ~680px column of prose, one architecture
+// figure of the drill loop, two code figures rendered as text, and a single
+// mono fact table.
 
 const P = (props) => (
 	<Text
@@ -154,6 +155,13 @@ export default function Jobforge() {
 					</Text>
 				</Box>
 
+				<DiagramFigure
+					id="jfarch"
+					headingLevel={2}
+					diagram={JobforgeArchitecture}
+					caption="fig. 1 — the drill loop. ① The SessionStart hook reads rep-log.md, the only file it may open, and prints one banner. ② You state the plan before any code. ③ The drill picks the pattern bank.md says is due and generates a problem from that pattern's discriminator. ④ It grades the plan against the pattern's required elements. ⑤ It writes one row: verdict, missing element, due date. ⑥ An interview debrief writes each failed question into the same bank, due three days on."
+				/>
+
 				<H2>What it is</H2>
 
 				<P>
@@ -196,7 +204,7 @@ export default function Jobforge() {
 					the room.
 				</P>
 
-				<CodeFigure caption="fig. 1 — a graded plan and the row it writes. The verdict is on the stated
+				<CodeFigure caption="fig. 2 — a graded plan and the row it writes. The verdict is on the stated
 				plan. A recovery after prompting does not change it, because an
 				interview measures what you produced unprompted. The due date is
 				computed at grading time and stored in the row. No scheduler, no queue
@@ -232,7 +240,7 @@ export default function Jobforge() {
 					interviews. Add a helpful second line and CI fails.
 				</P>
 
-				<CodeFigure caption="fig. 2 — the hook and what it prints. The banner stays silent on a day
+				<CodeFigure caption="fig. 3 — the hook and what it prints. The banner stays silent on a day
 				already logged, past the target date, and before setup. The fact on the
 				second line rotates by day so it does not become furniture.">
 					<CodeBlock title="hooks/drill-banner.py" lines={HOOK} />

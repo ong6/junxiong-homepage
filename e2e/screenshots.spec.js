@@ -4,7 +4,7 @@ const { test } = require("@playwright/test");
 // Run with `SHOTS=1 npx playwright test e2e/screenshots.spec.js`.
 const OUT = process.env.SHOTS_DIR || "/Users/bytedance/Sideproject/personal-data-store/.playwright-mcp";
 
-for (const path of ["/uipack", "/assets", "/groundplane"]) {
+for (const path of ["/uipack", "/assets", "/groundplane", "/jobforge"]) {
 	for (const theme of ["light", "dark"]) {
 		for (const [w, h] of [
 			[1440, 1000],
