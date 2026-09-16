@@ -43,3 +43,5 @@ CLAUDE.md
 
 # derived from the pinned uipack commit at build time
 public/uipack-assets/
+
+.playwright-mcp/

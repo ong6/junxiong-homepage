@@ -2,7 +2,7 @@ const { test } = require("@playwright/test");
 
 // Not a test: writes QA screenshots into the store's gitignored folder.
 // Run with `SHOTS=1 npx playwright test e2e/screenshots.spec.js`.
-const OUT = process.env.SHOTS_DIR || "/Users/bytedance/Sideproject/personal-data-store/.playwright-mcp";
+const OUT = process.env.SHOTS_DIR || require("path").join(__dirname, "../.playwright-mcp");
 
 for (const path of ["/uipack", "/assets", "/groundplane", "/jobforge"]) {
 	for (const theme of ["light", "dark"]) {
