@@ -80,7 +80,8 @@ a {
 	--uipack-token-response: #5fd39b;
 	--uipack-token-change: #c39aff;
 }
-.uipack__ctl {
+.uipack__ctl,
+.uipack-browser__action {
 	min-height: 44px;
 	min-width: 44px;
 }
