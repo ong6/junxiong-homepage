@@ -56,3 +56,41 @@ a {
 @media (prefers-reduced-motion: reduce) {
 	.fade-up { animation: none; }
 }
+
+/* uipack figures take the site's tokens. Chakra flips the semantic colours
+   with its colour mode and sets data-theme on <html>, so the figure follows
+   the site toggle, not only the OS. */
+.uipack {
+	--uipack-fg: var(--chakra-colors-page-text);
+	--uipack-muted: var(--chakra-colors-text-muted);
+	--uipack-bg: var(--chakra-colors-page-bg);
+	--uipack-surface: var(--chakra-colors-surface-raised);
+	--uipack-border: var(--chakra-colors-border-subtle);
+	--uipack-accent: var(--chakra-colors-brand-solid);
+	--uipack-mono: var(--font-mono);
+	--uipack-sans: var(--font-sans);
+	--uipack-grid: rgba(26, 36, 32, 0.14);
+	--uipack-token-request: #3d63d9;
+	--uipack-token-response: #2fa778;
+	--uipack-token-change: #8a55d6;
+}
+[data-theme="dark"] .uipack {
+	--uipack-grid: rgba(230, 235, 232, 0.14);
+	--uipack-token-request: #8ea4ff;
+	--uipack-token-response: #5fd39b;
+	--uipack-token-change: #c39aff;
+}
+.uipack__ctl {
+	min-height: 44px;
+	min-width: 44px;
+}
+.uipack__ctl:focus-visible {
+	outline: 2px solid var(--chakra-colors-brand-solid);
+	outline-offset: 2px;
+}
+/* With the controls hidden (controls={false}, or reduced motion) the caption
+   would auto-place into the header's second column and squeeze the title. */
+.uipack__title,
+.uipack__caption {
+	grid-column: 1;
+}

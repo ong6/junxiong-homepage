@@ -1,7 +1,23 @@
-import { Badge, Defs, Group, Label, Line, Node } from "./primitives";
+import { Badge, Defs, Flow, Group, Label, Lane, Line, Node } from "./parts";
 
 export const CLAIM =
 	"One skills repo is a git subtree inside every consumer repo. A SessionStart hook merges what upstream moved, a Stop hook commits local edits and pushes them back, so a skill edited where it is used reaches every other repo; the plugin marketplace reads the same repo one way.";
+
+export const meta = {
+	number: "Figure 01",
+	eyebrow: "The sync loop",
+	title: "Edit where you use it, push back where it lives",
+	caption:
+		"Every consumer repo carries the skills as a git subtree. A SessionStart hook merges what upstream moved; a Stop hook commits local edits and pushes them back. The plugin path reads the same repo one way.",
+	legend: [
+		{ label: "Fetch + merge", kind: "request" },
+		{ label: "Commit + push back", kind: "accent" },
+		{ label: "Plugin install", kind: "change" },
+	],
+	viewBox: "0 0 1120 528",
+	narrowViewBox: "0 0 360 652",
+};
+
 
 // Claim: one skills repo is a git subtree inside every consumer repo. A
 // SessionStart hook merges what upstream moved, a Stop hook commits local
@@ -18,14 +34,10 @@ const UPSTREAM = [
 	[".claude-plugin/", "marketplace + plugin"],
 ];
 
-export function Wide({ accent, id = "sparch-w" }) {
+export function Wide({ id }) {
 	return (
-		<svg
-			viewBox="0 0 1120 528"
-			style={{ width: "100%", height: "auto", display: "block" }}
-			role="img"
-			aria-label={CLAIM}>
-			<Defs id={id} accent={accent} />
+		<>
+			<Defs id={id} />
 
 			{/* ---------- upstream ---------- */}
 			<Group x={40} y={64} w={280} h={296} title="UPSTREAM · ong6/skillpack" />
@@ -75,16 +87,16 @@ export function Wide({ accent, id = "sparch-w" }) {
 				subSize={11}
 			/>
 			<Node x={688} y={320} w={168} h={56} label="Stop hook" sub="sync.sh --stop" size={13} subSize={11} />
-			<Badge cx={688} cy={320} text="3" accent={accent} />
+			<Badge cx={688} cy={320} text="3" accent />
 
 			{/* ---------- the loop ---------- */}
 			<Line id={id} x1={320} y1={140} x2={472} y2={140} />
 			<Label x={396} y={132} text="fetch in background" anchor="middle" size={11} />
 			<Label x={396} y={158} text="merge at start" anchor="middle" size={11} />
 
-			<Line id={id} x1={472} y1={348} x2={320} y2={348} accent={accent} />
-			<Label x={396} y={340} text="commit folder edits" anchor="middle" accent={accent} size={11} />
-			<Label x={396} y={366} text="merge upstream, push" anchor="middle" accent={accent} size={11} />
+			<Line id={id} x1={472} y1={348} x2={320} y2={348} accent />
+			<Label x={396} y={340} text="commit folder edits" anchor="middle" accent size={11} />
+			<Label x={396} y={366} text="merge upstream, push" anchor="middle" accent size={11} />
 
 			{/* ---------- plugin path ---------- */}
 			<Line id={id} x1={180} y1={360} x2={180} y2={448} />
@@ -100,21 +112,24 @@ export function Wide({ accent, id = "sparch-w" }) {
 				subSize={11}
 			/>
 			<Badge cx={64} cy={448} text="4" />
-		</svg>
+
+			{/* ---------- lanes + packets ---------- */}
+			<Lane x={40} w={280} y={40} title="Upstream" />
+			<Lane x={472} w={408} y={40} title="Consumer" />
+			<Flow x1={320} y1={140} x2={472} y2={140} kind="request" dur={2.2} />
+			<Flow x1={320} y1={140} x2={472} y2={140} kind="request" dur={2.2} delay={-1.1} />
+			<Flow x1={472} y1={348} x2={320} y2={348} kind="accent" dur={2.2} delay={-0.5} />
+			<Flow x1={180} y1={360} x2={180} y2={448} kind="change" dur={2} />
+		</>
 	);
 }
 
 // Mobile reads as one column: upstream, the two arrows of the loop side by
 // side, the consumer with its symlinks and hooks, then the plugin consumer.
-export function Narrow({ accent }) {
-	const id = "sparch-n";
+export function Narrow({ id }) {
 	return (
-		<svg
-			viewBox="0 0 360 652"
-			style={{ width: "100%", height: "auto", display: "block" }}
-			role="img"
-			aria-label={CLAIM}>
-			<Defs id={id} accent={accent} />
+		<>
+			<Defs id={id} />
 
 			<Group x={20} y={24} w={320} h={200} title="UPSTREAM · ong6/skillpack" titleSize={10} />
 			<Badge cx={20} cy={24} text="1" r={8} />
@@ -135,9 +150,9 @@ export function Narrow({ accent }) {
 			<Line id={id} x1={110} y1={224} x2={110} y2={296} />
 			<Label x={120} y={252} text="fetch, merge" size={10} />
 			<Label x={120} y={268} text="at start" size={10} />
-			<Line id={id} x1={250} y1={296} x2={250} y2={224} accent={accent} />
-			<Label x={260} y={252} text="commit, push" accent={accent} size={10} />
-			<Label x={260} y={268} text="at stop" accent={accent} size={10} />
+			<Line id={id} x1={250} y1={296} x2={250} y2={224} accent />
+			<Label x={260} y={252} text="commit, push" accent size={10} />
+			<Label x={260} y={268} text="at stop" accent size={10} />
 
 			<Group x={20} y={296} w={320} h={252} title="CONSUMER REPO · EVERY REPO OF MINE" titleSize={10} />
 			<Badge cx={20} cy={296} text="2" r={8} />
@@ -149,10 +164,13 @@ export function Narrow({ accent }) {
 			<Node x={184} y={412} w={132} h={44} label=".agents/skills/" sub="Codex" size={11} subSize={9} />
 			<Node x={44} y={480} w={132} h={44} label="SessionStart" sub="sync.sh --start" size={11} subSize={9} />
 			<Node x={184} y={480} w={132} h={44} label="Stop hook" sub="sync.sh --stop" size={11} subSize={9} />
-			<Badge cx={184} cy={480} text="3" accent={accent} r={8} />
+			<Badge cx={184} cy={480} text="3" accent r={8} />
 
 			<Node x={44} y={580} w={272} h={44} label="Plugin consumer" sub="installs upstream read-only" size={12} subSize={9} />
 			<Badge cx={44} cy={580} text="4" r={8} />
-		</svg>
+
+			<Flow x1={110} y1={224} x2={110} y2={296} kind="request" dur={1.6} />
+			<Flow x1={250} y1={296} x2={250} y2={224} kind="accent" dur={1.6} delay={-0.8} />
+		</>
 	);
 }

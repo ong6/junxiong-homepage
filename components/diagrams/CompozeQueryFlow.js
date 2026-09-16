@@ -1,7 +1,23 @@
-import { Defs, Group, Label, Line, Node } from "./primitives";
+import { Badge, Defs, Flow, Group, Label, Lane, Line, Node, Packet } from "./parts";
 
 export const CLAIM =
 	"A question fans out across five knowledge bases with hybrid search, the survivors are reranked by a cross-encoder, and every citation is checked against its chunk before the answer ships.";
+
+export const meta = {
+	number: "Figure 03",
+	eyebrow: "Query",
+	title: "One question, five knowledge bases, every citation checked",
+	caption:
+		"A question fans out across five knowledge bases with hybrid search. Only chunks over the 0.35 floor survive, a cross-encoder orders them, and each citation is checked against its chunk before the answer ships.",
+	legend: [
+		{ label: "Question", kind: "request" },
+		{ label: "Retrieval", kind: "accent" },
+		{ label: "Answer", kind: "response" },
+	],
+	viewBox: "0 0 720 1032",
+	narrowViewBox: "0 0 360 984",
+};
+
 
 // Claim: a question fans out across five knowledge bases with hybrid search,
 // the survivors are reranked by a cross-encoder, and every citation is checked
@@ -34,14 +50,10 @@ const NARROW_TAIL = [
 	{ label: "Answer with citations", sub: "match score per chunk" },
 ];
 
-export function Wide({ accent, id = "cqf-w" }) {
+export function Wide({ id }) {
 	return (
-		<svg
-			viewBox="0 0 720 1032"
-			style={{ width: "100%", height: "auto", display: "block" }}
-			role="img"
-			aria-label={CLAIM}>
-			<Defs id={id} accent={accent} />
+		<>
+			<Defs id={id} />
 
 			<Node x={232} y={32} w={256} h={56} label="User question" />
 			<Line id={id} x1={360} y1={88} x2={360} y2={128} />
@@ -68,11 +80,11 @@ export function Wide({ accent, id = "cqf-w" }) {
 			/>
 
 			{/* fan-out: one stub, one bus, five hybrid lanes — the accented path */}
-			<Line id={id} x1={360} y1={312} x2={360} y2={384} arrow={false} accent={accent} />
-			<Label x={372} y={340} text="BM25 + vector · RRF" accent={accent} />
-			<Line id={id} x1={120} y1={384} x2={600} y2={384} arrow={false} accent={accent} />
+			<Line id={id} x1={360} y1={312} x2={360} y2={384} arrow={false} accent />
+			<Label x={372} y={340} text="BM25 + vector · RRF" accent />
+			<Line id={id} x1={120} y1={384} x2={600} y2={384} arrow={false} accent />
 			{KB_X_WIDE.map((x) => (
-				<Line key={x} id={id} x1={x + 52} y1={384} x2={x + 52} y2={408} accent={accent} />
+				<Line key={x} id={id} x1={x + 52} y1={384} x2={x + 52} y2={408} accent />
 			))}
 
 			<Group
@@ -96,12 +108,12 @@ export function Wide({ accent, id = "cqf-w" }) {
 					x2={x + 52}
 					y2={496}
 					arrow={false}
-					accent={accent}
+					accent
 				/>
 			))}
-			<Line id={id} x1={120} y1={496} x2={600} y2={496} arrow={false} accent={accent} />
-			<Line id={id} x1={360} y1={496} x2={360} y2={536} accent={accent} />
-			<Label x={372} y={521} text="floor 0.35" accent={accent} />
+			<Line id={id} x1={120} y1={496} x2={600} y2={496} arrow={false} accent />
+			<Line id={id} x1={360} y1={496} x2={360} y2={536} accent />
+			<Label x={372} y={521} text="floor 0.35" accent />
 
 			<Node
 				x={232}
@@ -158,20 +170,53 @@ export function Wide({ accent, id = "cqf-w" }) {
 				label="Answer with citations"
 				sub="match score per chunk"
 			/>
-		</svg>
+
+			{/* ---------- packets ---------- */}
+			<Flow x1={360} y1={88} x2={360} y2={128} kind="request" dur={1.2} />
+			<Flow x1={360} y1={200} x2={360} y2={240} kind="request" dur={1.2} delay={-0.6} />
+			{KB_X_WIDE.map((x, i) => (
+				<Packet
+					key={x}
+					points={[
+						[360, 312],
+						[360, 384],
+						[x + 52, 384],
+						[x + 52, 408],
+					]}
+					kind="accent"
+					dur={2.4}
+					delay={-i * 0.25}
+					r={4.5}
+				/>
+			))}
+			{KB_X_WIDE.map((x, i) => (
+				<Packet
+					key={x}
+					points={[
+						[x + 52, 464],
+						[x + 52, 496],
+						[360, 496],
+						[360, 536],
+					]}
+					kind="accent"
+					dur={2.4}
+					delay={-1.2 - i * 0.25}
+					r={4.5}
+				/>
+			))}
+			<Flow x1={360} y1={608} x2={360} y2={648} kind="request" dur={1.2} />
+			<Flow x1={360} y1={720} x2={360} y2={760} kind="request" dur={1.2} delay={-0.6} />
+			<Flow x1={360} y1={832} x2={360} y2={928} kind="response" dur={2} />
+			<Flow x1={360} y1={880} x2={488} y2={880} kind="response" dur={1.6} delay={-0.8} />
+		</>
 	);
 }
 
-export function Narrow({ accent }) {
-	const id = "cqf-n";
+export function Narrow({ id }) {
 	const tail = NARROW_TAIL.map((s, i) => ({ ...s, y: 480 + i * 104 }));
 	return (
-		<svg
-			viewBox="0 0 360 984"
-			style={{ width: "100%", height: "auto", display: "block" }}
-			role="img"
-			aria-label={CLAIM}>
-			<Defs id={id} accent={accent} />
+		<>
+			<Defs id={id} />
 
 			<Node x={40} y={24} w={280} h={52} label="User question" size={14} />
 			<Line id={id} x1={180} y1={76} x2={180} y2={116} />
@@ -201,11 +246,11 @@ export function Narrow({ accent }) {
 				subSize={11}
 			/>
 
-			<Line id={id} x1={180} y1={284} x2={180} y2={352} arrow={false} accent={accent} />
-			<Label x={190} y={310} text="BM25 + vector · RRF" accent={accent} size={11} />
-			<Line id={id} x1={68} y1={352} x2={292} y2={352} arrow={false} accent={accent} />
+			<Line id={id} x1={180} y1={284} x2={180} y2={352} arrow={false} accent />
+			<Label x={190} y={310} text="BM25 + vector · RRF" accent size={11} />
+			<Line id={id} x1={68} y1={352} x2={292} y2={352} arrow={false} accent />
 			{KB_X_NARROW.map((x) => (
-				<Line key={x} id={id} x1={x + 24} y1={352} x2={x + 24} y2={368} accent={accent} />
+				<Line key={x} id={id} x1={x + 24} y1={352} x2={x + 24} y2={368} accent />
 			))}
 
 			<Group x={20} y={324} w={320} h={116} title="5 KBS · PARALLEL" titleSize={10} />
@@ -222,12 +267,12 @@ export function Narrow({ accent }) {
 					x2={x + 24}
 					y2={448}
 					arrow={false}
-					accent={accent}
+					accent
 				/>
 			))}
-			<Line id={id} x1={68} y1={448} x2={292} y2={448} arrow={false} accent={accent} />
-			<Line id={id} x1={180} y1={448} x2={180} y2={480} accent={accent} />
-			<Label x={190} y={469} text="floor 0.35" accent={accent} size={11} />
+			<Line id={id} x1={68} y1={448} x2={292} y2={448} arrow={false} accent />
+			<Line id={id} x1={180} y1={448} x2={180} y2={480} accent />
+			<Label x={190} y={469} text="floor 0.35" accent size={11} />
 
 			{tail.map((s) => (
 				<g key={s.label}>
@@ -249,7 +294,45 @@ export function Narrow({ accent }) {
 					) : null}
 				</g>
 			))}
-		</svg>
+
+			<Flow x1={180} y1={76} x2={180} y2={116} kind="request" dur={1.2} />
+			<Flow x1={180} y1={180} x2={180} y2={220} kind="request" dur={1.2} delay={-0.6} />
+			{KB_X_NARROW.map((x, i) => (
+				<Packet
+					key={x}
+					points={[
+						[180, 284],
+						[180, 352],
+						[x + 24, 352],
+						[x + 24, 368],
+					]}
+					kind="accent"
+					dur={2}
+					delay={-i * 0.25}
+					r={4}
+				/>
+			))}
+			{KB_X_NARROW.map((x, i) => (
+				<Packet
+					key={x}
+					points={[
+						[x + 24, 416],
+						[x + 24, 448],
+						[180, 448],
+						[180, 480],
+					]}
+					kind="accent"
+					dur={2}
+					delay={-1 - i * 0.25}
+					r={4}
+				/>
+			))}
+			{tail
+				.filter((s) => s.arrow)
+				.map((s, i) => (
+					<Flow key={s.label} x1={180} y1={s.y + 64} x2={180} y2={s.y + 104} kind={i < 2 ? "request" : "response"} dur={1.2} delay={-i * 0.3} />
+				))}
+		</>
 	);
 }
 

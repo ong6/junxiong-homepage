@@ -138,9 +138,7 @@ export default function Groundplane() {
 
 				<DiagramFigure
 					id="gparch"
-					wide={GroundplaneArchitecture.Wide}
-					narrow={GroundplaneArchitecture.Narrow}
-					breakpoint="lg"
+					diagram={GroundplaneArchitecture}
 					caption="fig. 1 — the whole library. ① Tool results are recorded as typed facts, each with the tool call that produced it; the two adapters do the same from inside LangGraph or MCP. ② A boundary names which facts a block of output may use and which checks run. ③ The model submits structured fields, never prose. ④ Six deterministic checks resolve each field against the recorded facts. ⑤ The first unsupported claim raises UnsupportedClaim with the provenance in the message; nothing is logged and ignored."
 				/>
 

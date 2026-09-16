@@ -111,9 +111,7 @@ export default function Skillpack() {
 
 				<DiagramFigure
 					id="sparch"
-					wide={SkillpackArchitecture.Wide}
-					narrow={SkillpackArchitecture.Narrow}
-					breakpoint="lg"
+					diagram={SkillpackArchitecture}
 					caption="fig. 1 — the sync loop. ① Upstream holds the skills, a catalog that
 					regenerates the README, and the plugin manifest. ② A consumer repo
 					carries the folder as a squashed subtree and symlinks it into the paths

@@ -1,7 +1,23 @@
-import { Badge, Defs, Group, Label, Line, Node } from "./primitives";
+import { Badge, Defs, Flow, Group, Label, Lane, Line, Node } from "./parts";
 
 export const CLAIM =
 	"Tool results are recorded as typed facts with provenance; a boundary declares which facts a block of model output may use; a deterministic checker resolves every claim against them and raises UnsupportedClaim on the first that fails.";
+
+export const meta = {
+	number: "Figure 01",
+	eyebrow: "The whole library",
+	title: "Facts recorded, claims checked, one raise",
+	caption:
+		"Tools write typed facts into a registry. A boundary names which facts and checks apply, the model submits fields, and six deterministic checks pass the output or raise on the first unsupported claim.",
+	legend: [
+		{ label: "Facts", kind: "change" },
+		{ label: "Model output", kind: "request" },
+		{ label: "Verdict", kind: "response" },
+	],
+	viewBox: "0 0 1120 656",
+	narrowViewBox: "0 0 360 968",
+};
+
 
 // Claim: tool results are recorded as typed facts with provenance; a boundary
 // declares which facts a block of model output may use; a deterministic
@@ -35,14 +51,10 @@ const FACTS = [
 	["Fact", "value + provenance"],
 ];
 
-export function Wide({ accent, id = "gparch-w" }) {
+export function Wide({ id }) {
 	return (
-		<svg
-			viewBox="0 0 1120 656"
-			style={{ width: "100%", height: "auto", display: "block" }}
-			role="img"
-			aria-label={CLAIM}>
-			<Defs id={id} accent={accent} />
+		<>
+			<Defs id={id} />
 
 			{/* ---------- tools ---------- */}
 			<Group x={40} y={64} w={136} h={288} title="TOOLS" />
@@ -107,9 +119,9 @@ export function Wide({ accent, id = "gparch-w" }) {
 				size={14}
 				subSize={11}
 			/>
-			<Badge cx={512} cy={64} text="3" accent={accent} />
-			<Line id={id} x1={584} y1={128} x2={584} y2={216} accent={accent} />
-			<Label x={596} y={176} text="submit()" accent={accent} size={11} />
+			<Badge cx={512} cy={64} text="3" accent />
+			<Line id={id} x1={584} y1={128} x2={584} y2={216} accent />
+			<Label x={596} y={176} text="submit()" accent size={11} />
 
 			<Node
 				x={512}
@@ -121,16 +133,16 @@ export function Wide({ accent, id = "gparch-w" }) {
 				size={14}
 				subSize={11}
 			/>
-			<Badge cx={512} cy={216} text="2" accent={accent} />
+			<Badge cx={512} cy={216} text="2" accent />
 			<Line id={id} x1={456} y1={248} x2={512} y2={248} />
 			<Label x={484} y={240} text="facts" anchor="middle" size={11} />
 
-			<Line id={id} x1={656} y1={248} x2={712} y2={248} accent={accent} />
-			<Label x={684} y={240} text="checks" anchor="middle" accent={accent} size={11} />
+			<Line id={id} x1={656} y1={248} x2={712} y2={248} accent />
+			<Label x={684} y={240} text="checks" anchor="middle" accent size={11} />
 
 			{/* ---------- checker ---------- */}
 			<Group x={712} y={64} w={200} h={488} title="CHECKER · DETERMINISTIC" />
-			<Badge cx={712} cy={64} text="4" accent={accent} />
+			<Badge cx={712} cy={64} text="4" accent />
 			{CHECKS.map((name, i) => (
 				<Node key={name} x={736} y={112 + i * 72} w={152} h={56} label={name} size={12} />
 			))}
@@ -149,8 +161,8 @@ export function Wide({ accent, id = "gparch-w" }) {
 				subSize={11}
 			/>
 
-			<Line id={id} x1={912} y1={320} x2={960} y2={320} accent={accent} />
-			<Label x={936} y={312} text="fails" anchor="middle" accent={accent} size={10} />
+			<Line id={id} x1={912} y1={320} x2={960} y2={320} accent />
+			<Label x={936} y={312} text="fails" anchor="middle" accent size={10} />
 			<Node
 				x={960}
 				y={288}
@@ -161,22 +173,31 @@ export function Wide({ accent, id = "gparch-w" }) {
 				size={14}
 				subSize={10}
 			/>
-			<Badge cx={960} cy={288} text="5" accent={accent} />
-		</svg>
+			<Badge cx={960} cy={288} text="5" accent />
+
+			{/* ---------- lanes + packets ---------- */}
+			<Lane x={40} w={416} y={40} title="Record" />
+			<Lane x={512} w={144} y={40} title="Generate" />
+			<Lane x={712} w={376} y={40} title="Check" />
+			{TOOLS.map(([label], i) => (
+				<Flow key={label} x1={176} y1={140 + i * 80} x2={248} y2={140 + i * 80} kind="change" dur={1.8} delay={-i * 0.6} />
+			))}
+			<Flow x1={352} y1={496} x2={352} y2={432} kind="change" dur={1.8} delay={-0.9} />
+			<Flow x1={456} y1={248} x2={512} y2={248} kind="change" dur={1.6} />
+			<Flow x1={584} y1={128} x2={584} y2={216} kind="request" dur={1.8} />
+			<Flow x1={656} y1={248} x2={712} y2={248} kind="request" dur={1.6} delay={-0.8} />
+			<Flow x1={912} y1={208} x2={960} y2={208} kind="response" dur={1.6} />
+			<Flow x1={912} y1={320} x2={960} y2={320} kind="response" dur={1.6} delay={-0.8} />
+		</>
 	);
 }
 
 // Mobile reads as one column: tools and adapters, the registry, the boundary
 // with the model feeding it from the right, the checker, the two outcomes.
-export function Narrow({ accent }) {
-	const id = "gparch-n";
+export function Narrow({ id }) {
 	return (
-		<svg
-			viewBox="0 0 360 968"
-			style={{ width: "100%", height: "auto", display: "block" }}
-			role="img"
-			aria-label={CLAIM}>
-			<Defs id={id} accent={accent} />
+		<>
+			<Defs id={id} />
 
 			<Group x={20} y={24} w={320} h={208} title="TOOLS" titleSize={10} />
 			{TOOLS.map(([label], i) => (
@@ -209,18 +230,18 @@ export function Narrow({ accent }) {
 			<Label x={120} y={492} text="facts" size={10} />
 
 			<Node x={184} y={468} w={132} h={44} label="Model" sub="structured output" size={12} subSize={9} />
-			<Badge cx={184} cy={468} text="3" accent={accent} r={8} />
-			<Line id={id} x1={250} y1={512} x2={250} y2={544} accent={accent} />
-			<Label x={260} y={532} text="submit()" accent={accent} size={10} />
+			<Badge cx={184} cy={468} text="3" accent r={8} />
+			<Line id={id} x1={250} y1={512} x2={250} y2={544} accent />
+			<Label x={260} y={532} text="submit()" accent size={10} />
 
 			<Node x={44} y={544} w={272} h={52} label="boundary(...)" sub="facts= · checks=" size={13} subSize={10} />
-			<Badge cx={44} cy={544} text="2" accent={accent} r={8} />
+			<Badge cx={44} cy={544} text="2" accent r={8} />
 
-			<Line id={id} x1={180} y1={596} x2={180} y2={644} accent={accent} />
-			<Label x={190} y={624} text="checks" accent={accent} size={10} />
+			<Line id={id} x1={180} y1={596} x2={180} y2={644} accent />
+			<Label x={190} y={624} text="checks" accent size={10} />
 
 			<Group x={20} y={644} w={320} h={192} title="CHECKER · DETERMINISTIC" titleSize={10} />
-			<Badge cx={20} cy={644} text="4" accent={accent} r={8} />
+			<Badge cx={20} cy={644} text="4" accent r={8} />
 			{CHECKS.map((name, i) => (
 				<Node
 					key={name}
@@ -237,11 +258,18 @@ export function Narrow({ accent }) {
 			<Label x={120} y={864} text="ok" size={10} />
 			<Node x={44} y={884} w={132} h={52} label="pass" sub="output returned" size={12} subSize={9} />
 
-			<Line id={id} x1={250} y1={836} x2={250} y2={884} accent={accent} />
-			<Label x={260} y={864} text="fails" accent={accent} size={10} />
+			<Line id={id} x1={250} y1={836} x2={250} y2={884} accent />
+			<Label x={260} y={864} text="fails" accent size={10} />
 			<Node x={184} y={884} w={132} h={52} label="raise" sub="UnsupportedClaim" size={12} subSize={9} />
-			<Badge cx={184} cy={884} text="5" accent={accent} r={8} />
-		</svg>
+			<Badge cx={184} cy={884} text="5" accent r={8} />
+
+			<Flow x1={180} y1={232} x2={180} y2={280} kind="change" dur={1.6} />
+			<Flow x1={110} y1={436} x2={110} y2={544} kind="change" dur={1.8} />
+			<Flow x1={250} y1={512} x2={250} y2={544} kind="request" dur={1.2} />
+			<Flow x1={180} y1={596} x2={180} y2={644} kind="request" dur={1.4} />
+			<Flow x1={110} y1={836} x2={110} y2={884} kind="response" dur={1.4} />
+			<Flow x1={250} y1={836} x2={250} y2={884} kind="response" dur={1.4} delay={-0.7} />
+		</>
 	);
 }
 

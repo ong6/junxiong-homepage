@@ -1,7 +1,22 @@
-import { Defs, Group, Label, Line, Node } from "./primitives";
+import { Badge, Defs, Flow, Group, Label, Lane, Line, Node } from "./parts";
 
 export const CLAIM =
 	"Documents are deduplicated by content hash, redacted, and moved through a checkpointed async pipeline into pgvector, with failures landing in a dead-letter queue the admin UI shows.";
+
+export const meta = {
+	number: "Figure 05",
+	eyebrow: "Ingest",
+	title: "Hash, redact, chunk, embed, store, or fail into a queue you can see",
+	caption:
+		"A content hash drops files already seen. PII comes out before chunking. The dashed region runs later on QStash, and every stage can drop out to a dead-letter queue the admin UI shows.",
+	legend: [
+		{ label: "Document", kind: "change" },
+		{ label: "Failure", kind: "neutral" },
+	],
+	viewBox: "0 0 720 1104",
+	narrowViewBox: "0 0 360 1032",
+};
+
 
 // Claim: documents are deduplicated by content hash, redacted, and moved
 // through a checkpointed async pipeline into pgvector — with failures landing
@@ -27,15 +42,11 @@ const Cross = ({ cx, cy, s = 5 }) => (
 	</g>
 );
 
-export function Wide({ accent, id = "cif-w" }) {
+export function Wide({ id }) {
 	const stages = STAGES.map((s, i) => ({ ...s, y: 336 + i * 88 }));
 	return (
-		<svg
-			viewBox="0 0 720 1104"
-			style={{ width: "100%", height: "auto", display: "block" }}
-			role="img"
-			aria-label={CLAIM}>
-			<Defs id={id} accent={accent} />
+		<>
+			<Defs id={id} />
 
 			<Node
 				x={40}
@@ -54,8 +65,8 @@ export function Wide({ accent, id = "cif-w" }) {
 			<Label x={372} y={162} text="file selected" />
 
 			<Node x={232} y={176} w={256} h={72} label="Ingest job" sub="status: queued" />
-			<Line id={id} x1={360} y1={248} x2={360} y2={336} accent={accent} />
-			<Label x={372} y={278} text="async · Upstash QStash" accent={accent} />
+			<Line id={id} x1={360} y1={248} x2={360} y2={336} accent />
+			<Label x={372} y={278} text="async · Upstash QStash" accent />
 
 			<Group
 				x={160}
@@ -63,7 +74,7 @@ export function Wide({ accent, id = "cif-w" }) {
 				w={400}
 				h={648}
 				title="ASYNC · QSTASH JOB"
-				accent={accent}
+				accent
 			/>
 
 			{stages.map((s) => (
@@ -128,20 +139,27 @@ export function Wide({ accent, id = "cif-w" }) {
 				size={13}
 				subSize={11}
 			/>
-		</svg>
+
+			{/* ---------- packets ---------- */}
+			<Flow x1={360} y1={136} x2={360} y2={176} kind="change" dur={1.2} />
+			<Flow x1={360} y1={248} x2={360} y2={336} kind="change" dur={1.8} />
+			{stages
+				.filter((s) => s.arrow)
+				.map((s, i) => (
+					<Flow key={s.label} x1={360} y1={s.y + 56} x2={360} y2={s.y + 88} kind="change" dur={1.2} delay={-i * 0.2} />
+				))}
+			<Flow x1={360} y1={920} x2={360} y2={1000} kind="change" dur={1.6} />
+			<Flow x1={592} y1={972} x2={592} y2={1000} kind="change" dur={1} delay={-0.5} />
+			<Flow x1={136} y1={364} x2={136} y2={1000} kind="neutral" dur={6} />
+		</>
 	);
 }
 
-export function Narrow({ accent }) {
-	const id = "cif-n";
+export function Narrow({ id }) {
 	const stages = STAGES.map((s, i) => ({ ...s, y: 288 + i * 80 }));
 	return (
-		<svg
-			viewBox="0 0 360 1032"
-			style={{ width: "100%", height: "auto", display: "block" }}
-			role="img"
-			aria-label={CLAIM}>
-			<Defs id={id} accent={accent} />
+		<>
+			<Defs id={id} />
 
 			<Node
 				x={60}
@@ -179,8 +197,8 @@ export function Narrow({ accent }) {
 				size={14}
 				subSize={11}
 			/>
-			<Line id={id} x1={200} y1={208} x2={200} y2={288} accent={accent} />
-			<Label x={210} y={240} text="async · QStash" accent={accent} size={11} />
+			<Line id={id} x1={200} y1={208} x2={200} y2={288} accent />
+			<Label x={210} y={240} text="async · QStash" accent size={11} />
 
 			<Group
 				x={60}
@@ -188,7 +206,7 @@ export function Narrow({ accent }) {
 				w={280}
 				h={592}
 				title="ASYNC · QSTASH"
-				accent={accent}
+				accent
 				titleSize={10}
 			/>
 
@@ -261,7 +279,18 @@ export function Narrow({ accent }) {
 				size={11}
 				subSize={9}
 			/>
-		</svg>
+
+			<Flow x1={200} y1={112} x2={200} y2={144} kind="change" dur={1} />
+			<Flow x1={200} y1={208} x2={200} y2={288} kind="change" dur={1.6} />
+			{stages
+				.filter((s) => s.arrow)
+				.map((s, i) => (
+					<Flow key={s.label} x1={200} y1={s.y + 48} x2={200} y2={s.y + 80} kind="change" dur={1.2} delay={-i * 0.2} />
+				))}
+			<Flow x1={200} y1={816} x2={200} y2={864} kind="change" dur={1.4} />
+			<Flow x1={272} y1={920} x2={272} y2={952} kind="change" dur={1} delay={-0.5} />
+			<Flow x1={36} y1={312} x2={36} y2={928} kind="neutral" dur={6} />
+		</>
 	);
 }
 

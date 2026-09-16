@@ -1,11 +1,13 @@
-import { Box, Portal, Text, VisuallyHidden, useColorModeValue, useToken } from "@chakra-ui/react";
+import { Box, Portal, Text, useColorModeValue } from "@chakra-ui/react";
 import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
+import { Figure } from "uipack";
 
-// One figure wrapper for every hand-drawn SVG diagram. Inline it sits in the
-// prose column at the column's width (the SVG keeps its viewBox, so it scales),
-// with a wide and a narrow drawing swapped by CSS at `breakpoint`. Clicking
-// opens the wide drawing full-screen with wheel / pinch zoom and drag pan,
-// written by hand on a CSS transform so nothing new ships in the bundle.
+// One figure wrapper for every diagram. Inline, the drawing sits in a uipack
+// Figure (eyebrow, title, caption, legend, Pause and Replay, dotted canvas)
+// with a wide and a narrow drawing swapped by uipack's own 720px breakpoint.
+// An expand control under the card opens the wide drawing full-screen with
+// wheel / pinch zoom and drag pan, written by hand on a CSS transform so
+// nothing new ships in the bundle.
 
 // Zoom floor is MIN or the fit-to-screen scale, whichever is smaller.
 const MIN = 0.5;
@@ -44,7 +46,7 @@ const Ctl = forwardRef(function Ctl({ label, children, ...rest }, ref) {
 	);
 });
 
-function Overlay({ Wide, id, accent, caption, onClose }) {
+function Overlay({ Wide, id, viewBox, alt, caption, onClose }) {
 	// Chakra's Portal mounts its children a tick after the overlay renders, so
 	// the stage is tracked as state rather than a ref: effects wait for it.
 	const [stage, setStage] = useState(null);
@@ -53,6 +55,7 @@ function Overlay({ Wide, id, accent, caption, onClose }) {
 	const closeRef = useRef(null);
 	const [size, setSize] = useState({ w: 0, h: 0 });
 	const [view, setView] = useState({ s: 1, x: 0, y: 0, fit: 1 });
+	void alt;
 	const [dragging, setDragging] = useState(false);
 	const pointers = useRef(new Map());
 	const gesture = useRef(null);
@@ -252,7 +255,11 @@ function Overlay({ Wide, id, accent, caption, onClose }) {
 							transformOrigin: "0 0",
 							willChange: "transform",
 						}}>
-						<Wide accent={accent} id={id} />
+						<div className="uipack" style={{ border: "none", background: "transparent" }}>
+							<svg viewBox={viewBox} style={{ width: "100%", height: "auto", display: "block" }} role="img" aria-label={alt}>
+								<Wide id={id} />
+							</svg>
+						</div>
 					</Box>
 				</Box>
 
@@ -312,80 +319,81 @@ function Overlay({ Wide, id, accent, caption, onClose }) {
 	);
 }
 
-// `wide` and `narrow` are components taking `{ accent, id }`; `id` prefixes the
-// overlay copy's marker ids so they never collide with the inline drawing.
-// `breakpoint` is the Chakra breakpoint at which the wide drawing takes over.
+// `diagram` is a module exporting `meta` (number, eyebrow, title, caption,
+// legend, viewBox, narrowViewBox), `CLAIM` (the accessible description) and
+// `Wide` / `Narrow`, each a fragment of uipack parts taking `{ id }`. `id`
+// prefixes marker ids so the inline drawing, the narrow drawing and the
+// overlay copy never collide.
 const shortCaption = (c) => {
 	const m = /^fig\.\s*\d+/i.exec(c || "");
 	return m ? m[0] : "";
 };
 
-export default function DiagramFigure({ id, wide: Wide, narrow: Narrow, breakpoint = "lg", caption }) {
-	const [mint600, mint300] = useToken("colors", ["mint.600", "mint.300"]);
-	const accent = useColorModeValue(mint600, mint300);
+export default function DiagramFigure({ id, diagram, caption }) {
+	const { meta, CLAIM, Wide, Narrow } = diagram;
 	const [open, setOpen] = useState(false);
 
 	return (
 		<Box as="figure" my={{ base: 10, md: 14 }} mx={0} w="100%" maxW="100%">
-			<Box
-				as="button"
-				type="button"
-				aria-describedby={`${id}-caption`}
-				aria-haspopup="dialog"
-				onClick={() => setOpen(true)}
-				display="block"
-				w="100%"
-				position="relative"
-				textAlign="left"
-				border="1px solid"
-				borderColor="border.subtle"
-				bg="transparent"
-				color="page.text"
-				px={{ base: 3, md: 5 }}
-				py={{ base: 4, md: 6 }}
-				lineHeight={0}
-				cursor="zoom-in"
-				_hover={{ borderColor: "page.text" }}
-				_focusVisible={{ outline: "2px solid", outlineColor: "mint.500", outlineOffset: "2px" }}>
-				<Box display={{ base: "none", [breakpoint]: "block" }} aria-hidden="true">
-					<Wide accent={accent} />
-				</Box>
-				<Box display={{ base: "block", [breakpoint]: "none" }} aria-hidden="true">
-					<Narrow accent={accent} />
-				</Box>
+			<Figure
+				id={`${id}-figure`}
+				number={meta.number}
+				eyebrow={meta.eyebrow}
+				title={meta.title}
+				caption={meta.caption}
+				legend={meta.legend}
+				viewBox={meta.viewBox}
+				narrow={Narrow ? <Narrow id={`${id}-n`} /> : undefined}
+				narrowViewBox={meta.narrowViewBox}
+				alt={CLAIM}>
+				<Wide id={`${id}-w`} />
+			</Figure>
+			<Box display="flex" alignItems="flex-start" gap={3} mt={2}>
 				<Text
-					as="span"
-					position="absolute"
-					top={2}
-					right={2}
-					px={2}
-					py={1}
-					bg="surface.raised"
+					as="figcaption"
+					id={`${id}-caption`}
+					flex="1"
+					pt={2}
+					fontFamily="var(--font-mono)"
+					fontSize="11px"
+					lineHeight="1.6"
+					color="text.muted">
+					{caption}
+				</Text>
+				<Box
+					as="button"
+					type="button"
+					aria-describedby={`${id}-caption`}
+					aria-haspopup="dialog"
+					aria-label={`Expand diagram ${shortCaption(caption)}`}
+					onClick={() => setOpen(true)}
+					flexShrink={0}
+					minH="44px"
+					px={3}
 					border="1px solid"
 					borderColor="border.subtle"
+					bg="surface.raised"
+					color="text.muted"
 					fontFamily="var(--font-mono)"
-					fontSize={{ base: "11px", md: "12px" }}
+					fontSize="11px"
 					fontWeight="700"
-					lineHeight="1"
 					letterSpacing=".08em"
 					textTransform="uppercase"
-					color="text.muted">
+					cursor="zoom-in"
+					_hover={{ borderColor: "page.text", color: "page.text" }}
+					_focusVisible={{ outline: "2px solid", outlineColor: "mint.500", outlineOffset: "2px" }}>
 					<Box as="span" aria-hidden="true">⤢ </Box>expand
-					<VisuallyHidden> diagram {shortCaption(caption)}</VisuallyHidden>
-				</Text>
+				</Box>
 			</Box>
-			<Text
-				as="figcaption"
-				id={`${id}-caption`}
-				mt={3}
-				fontFamily="var(--font-mono)"
-				fontSize="11px"
-				lineHeight="1.6"
-				color="text.muted">
-				{caption}
-			</Text>
 			{open ? (
-				<Overlay Wide={Wide} id={`${id}-zoom`} accent={accent} caption={caption} onClose={() => setOpen(false)} />
+				<Overlay
+					Wide={Wide}
+					id={`${id}-zoom`}
+					viewBox={meta.viewBox}
+					alt={CLAIM}
+					caption={caption}
+					onClose={() => setOpen(false)}
+				/>
 			) : null}
 		</Box>
 	);

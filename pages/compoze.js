@@ -185,9 +185,7 @@ export default function Compoze() {
 
 				<DiagramFigure
 					id="carch"
-					wide={CompozeArchitecture.Wide}
-					narrow={CompozeArchitecture.Narrow}
-					breakpoint="lg"
+					diagram={CompozeArchitecture}
 					caption="fig. 1 — the whole system. A question walks ① agent → ② retrieval → ③ pgvector → ④ gateway → ⑤ cited answer inside one request. Ingest runs elsewhere: Ⓐ download, Ⓑ extract, Ⓒ chunk, Ⓓ embed, Ⓔ store. One database, every row under a tenant id and row-level security."
 				/>
 
@@ -239,9 +237,7 @@ export default function Compoze() {
 
 				<DiagramFigure
 					id="cqf"
-					wide={CompozeQueryFlow.Wide}
-					narrow={CompozeQueryFlow.Narrow}
-					breakpoint="smmd"
+					diagram={CompozeQueryFlow}
 					caption="fig. 3 — one question, five knowledge bases at once. Only chunks over the 0.35 floor survive, and a cross-encoder orders them."
 				/>
 
@@ -315,9 +311,7 @@ export default function Compoze() {
 
 				<DiagramFigure
 					id="cif"
-					wide={CompozeIngestFlow.Wide}
-					narrow={CompozeIngestFlow.Narrow}
-					breakpoint="smmd"
+					diagram={CompozeIngestFlow}
 					caption="fig. 5 — a content hash drops files already seen, PII comes out before chunking, and the dashed region runs later on QStash. Each stage is a checkpoint, so a dead run can be retried from the step that broke."
 				/>
 

@@ -1,3 +1,4 @@
+import "uipack/theme.css";
 import "../styles/globals.css";
 import "../styles/print.css";
 import { ChakraProvider } from "@chakra-ui/react";

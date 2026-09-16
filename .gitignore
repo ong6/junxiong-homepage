@@ -36,3 +36,7 @@ yarn-error.log*
 # next dev writes these on first run
 AGENTS.md
 CLAUDE.md
+
+# playwright
+/playwright-report
+/test-results
