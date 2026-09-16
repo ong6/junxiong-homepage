@@ -60,14 +60,14 @@ export function Wide({ id }) {
 			<Group x={40} y={64} w={136} h={288} title="TOOLS" />
 			{TOOLS.map(([label, carries], i) => (
 				<g key={label}>
-					<Node x={64} y={112 + i * 80} w={88} h={56} label={label} size={13} />
-					<Line id={id} x1={176} y1={140 + i * 80} x2={248} y2={140 + i * 80} />
+					<Node x={64} y={112 + i * 80} w={88} h={56} label={label} size={13} flow="record" />
+					<Line id={id} x1={176} y1={140 + i * 80} x2={248} y2={140 + i * 80} flow="record" />
 					<Label x={212} y={132 + i * 80} text={carries} anchor="middle" size={11} />
 				</g>
 			))}
 
 			{/* ---------- registry ---------- */}
-			<Group x={248} y={64} w={208} h={368} title="FACTREGISTRY · WRITE-ONCE" />
+			<Group x={248} y={64} w={208} h={368} title="FACTREGISTRY · WRITE-ONCE" flow="record" />
 			<Badge cx={248} cy={64} text="1" />
 			{FACTS.map(([label, sub], i) => (
 				<Node
@@ -79,12 +79,11 @@ export function Wide({ id }) {
 					label={label}
 					sub={sub}
 					size={13}
-					subSize={11}
-				/>
+					subSize={11} flow="record" />
 			))}
 
 			{/* ---------- adapters ---------- */}
-			<Group x={40} y={496} w={416} h={128} title="ADAPTERS · OPTIONAL EXTRAS" />
+			<Group x={40} y={496} w={416} h={128} title="ADAPTERS · OPTIONAL EXTRAS" flow="record" />
 			<Node
 				x={64}
 				y={544}
@@ -93,8 +92,7 @@ export function Wide({ id }) {
 				label="LangGraph node"
 				sub="guarded_node()"
 				size={13}
-				subSize={11}
-			/>
+				subSize={11} flow="record" />
 			<Node
 				x={256}
 				y={544}
@@ -103,9 +101,8 @@ export function Wide({ id }) {
 				label="MCP tool result"
 				sub="record_result()"
 				size={13}
-				subSize={11}
-			/>
-			<Line id={id} x1={352} y1={496} x2={352} y2={432} />
+				subSize={11} flow="record" />
+			<Line id={id} x1={352} y1={496} x2={352} y2={432} flow="record" />
 			<Label x={364} y={468} text="as facts" size={11} />
 
 			{/* ---------- model + boundary ---------- */}
@@ -117,10 +114,9 @@ export function Wide({ id }) {
 				label="Model"
 				sub="structured output"
 				size={14}
-				subSize={11}
-			/>
+				subSize={11} flow="check" />
 			<Badge cx={512} cy={64} text="3" accent />
-			<Line id={id} x1={584} y1={128} x2={584} y2={216} accent />
+			<Line id={id} x1={584} y1={128} x2={584} y2={216} accent flow="check" />
 			<Label x={596} y={176} text="submit()" accent size={11} />
 
 			<Node
@@ -131,24 +127,23 @@ export function Wide({ id }) {
 				label="boundary(...)"
 				sub="facts= · checks="
 				size={14}
-				subSize={11}
-			/>
+				subSize={11} flow={["record", "check"]} />
 			<Badge cx={512} cy={216} text="2" accent />
-			<Line id={id} x1={456} y1={248} x2={512} y2={248} />
+			<Line id={id} x1={456} y1={248} x2={512} y2={248} flow="record" />
 			<Label x={484} y={240} text="facts" anchor="middle" size={11} />
 
-			<Line id={id} x1={656} y1={248} x2={712} y2={248} accent />
+			<Line id={id} x1={656} y1={248} x2={712} y2={248} accent flow="check" />
 			<Label x={684} y={240} text="checks" anchor="middle" accent size={11} />
 
 			{/* ---------- checker ---------- */}
-			<Group x={712} y={64} w={200} h={488} title="CHECKER · DETERMINISTIC" />
+			<Group x={712} y={64} w={200} h={488} title="CHECKER · DETERMINISTIC" flow="check" />
 			<Badge cx={712} cy={64} text="4" accent />
 			{CHECKS.map((name, i) => (
-				<Node key={name} x={736} y={112 + i * 72} w={152} h={56} label={name} size={12} />
+				<Node key={name} x={736} y={112 + i * 72} w={152} h={56} label={name} size={12} flow="check" />
 			))}
 
 			{/* ---------- outcomes ---------- */}
-			<Line id={id} x1={912} y1={208} x2={960} y2={208} />
+			<Line id={id} x1={912} y1={208} x2={960} y2={208} flow="check" />
 			<Label x={936} y={200} text="ok" anchor="middle" size={10} />
 			<Node
 				x={960}
@@ -158,10 +153,9 @@ export function Wide({ id }) {
 				label="pass"
 				sub="output returned"
 				size={14}
-				subSize={11}
-			/>
+				subSize={11} flow="check" />
 
-			<Line id={id} x1={912} y1={320} x2={960} y2={320} accent />
+			<Line id={id} x1={912} y1={320} x2={960} y2={320} accent flow="check" />
 			<Label x={936} y={312} text="fails" anchor="middle" accent size={10} />
 			<Node
 				x={960}
@@ -171,8 +165,7 @@ export function Wide({ id }) {
 				label="raise"
 				sub="UnsupportedClaim"
 				size={14}
-				subSize={10}
-			/>
+				subSize={10} flow="check" />
 			<Badge cx={960} cy={288} text="5" accent />
 
 			{/* ---------- lanes + packets ---------- */}
@@ -180,14 +173,14 @@ export function Wide({ id }) {
 			<Lane x={512} w={144} y={40} title="Generate" />
 			<Lane x={712} w={376} y={40} title="Check" />
 			{TOOLS.map(([label], i) => (
-				<Flow key={label} x1={176} y1={140 + i * 80} x2={248} y2={140 + i * 80} kind="change" dur={1.8} delay={-i * 0.6} />
+				<Flow key={label} x1={176} y1={140 + i * 80} x2={248} y2={140 + i * 80} kind="change" dur={1.8} delay={-i * 0.6} flow="record" />
 			))}
-			<Flow x1={352} y1={496} x2={352} y2={432} kind="change" dur={1.8} delay={-0.9} />
-			<Flow x1={456} y1={248} x2={512} y2={248} kind="change" dur={1.6} />
-			<Flow x1={584} y1={128} x2={584} y2={216} kind="request" dur={1.8} />
-			<Flow x1={656} y1={248} x2={712} y2={248} kind="request" dur={1.6} delay={-0.8} />
-			<Flow x1={912} y1={208} x2={960} y2={208} kind="response" dur={1.6} />
-			<Flow x1={912} y1={320} x2={960} y2={320} kind="response" dur={1.6} delay={-0.8} />
+			<Flow x1={352} y1={496} x2={352} y2={432} kind="change" dur={1.8} delay={-0.9} flow="record" />
+			<Flow x1={456} y1={248} x2={512} y2={248} kind="change" dur={1.6} flow="record" />
+			<Flow x1={584} y1={128} x2={584} y2={216} kind="request" dur={1.8} flow="check" />
+			<Flow x1={656} y1={248} x2={712} y2={248} kind="request" dur={1.6} delay={-0.8} flow="check" />
+			<Flow x1={912} y1={208} x2={960} y2={208} kind="response" dur={1.6} flow="check" />
+			<Flow x1={912} y1={320} x2={960} y2={320} kind="response" dur={1.6} delay={-0.8} flow="check" />
 		</Floor>
 	);
 }
@@ -207,7 +200,7 @@ export function Narrow({ id }) {
 			<Node x={44} y={148} w={132} h={44} label="LangGraph node" sub="guarded_node()" size={12} subSize={9} />
 			<Node x={184} y={148} w={132} h={44} label="MCP tool result" sub="record_result()" size={12} subSize={9} />
 
-			<Line id={id} x1={180} y1={232} x2={180} y2={280} />
+			<Line id={id} x1={180} y1={232} x2={180} y2={280} flow="record" />
 			<Label x={190} y={260} text="scores · rows · names" size={10} />
 
 			<Group x={20} y={280} w={320} h={156} title="FACTREGISTRY · WRITE-ONCE" titleSize={10} />
@@ -226,18 +219,18 @@ export function Narrow({ id }) {
 				/>
 			))}
 
-			<Line id={id} x1={110} y1={436} x2={110} y2={544} />
+			<Line id={id} x1={110} y1={436} x2={110} y2={544} flow="record" />
 			<Label x={120} y={492} text="facts" size={10} />
 
-			<Node x={184} y={468} w={132} h={44} label="Model" sub="structured output" size={12} subSize={9} />
+			<Node x={184} y={468} w={132} h={44} label="Model" sub="structured output" size={12} subSize={9} flow="check" />
 			<Badge cx={184} cy={468} text="3" accent r={8} />
-			<Line id={id} x1={250} y1={512} x2={250} y2={544} accent />
+			<Line id={id} x1={250} y1={512} x2={250} y2={544} accent flow="check" />
 			<Label x={260} y={532} text="submit()" accent size={10} />
 
-			<Node x={44} y={544} w={272} h={52} label="boundary(...)" sub="facts= · checks=" size={13} subSize={10} />
+			<Node x={44} y={544} w={272} h={52} label="boundary(...)" sub="facts= · checks=" size={13} subSize={10} flow={["record", "check"]} />
 			<Badge cx={44} cy={544} text="2" accent r={8} />
 
-			<Line id={id} x1={180} y1={596} x2={180} y2={644} accent />
+			<Line id={id} x1={180} y1={596} x2={180} y2={644} accent flow="check" />
 			<Label x={190} y={624} text="checks" accent size={10} />
 
 			<Group x={20} y={644} w={320} h={192} title="CHECKER · DETERMINISTIC" titleSize={10} />
@@ -254,21 +247,21 @@ export function Narrow({ id }) {
 				/>
 			))}
 
-			<Line id={id} x1={110} y1={836} x2={110} y2={884} />
+			<Line id={id} x1={110} y1={836} x2={110} y2={884} flow="check" />
 			<Label x={120} y={864} text="ok" size={10} />
-			<Node x={44} y={884} w={132} h={52} label="pass" sub="output returned" size={12} subSize={9} />
+			<Node x={44} y={884} w={132} h={52} label="pass" sub="output returned" size={12} subSize={9} flow="check" />
 
-			<Line id={id} x1={250} y1={836} x2={250} y2={884} accent />
+			<Line id={id} x1={250} y1={836} x2={250} y2={884} accent flow="check" />
 			<Label x={260} y={864} text="fails" accent size={10} />
-			<Node x={184} y={884} w={132} h={52} label="raise" sub="UnsupportedClaim" size={12} subSize={9} />
+			<Node x={184} y={884} w={132} h={52} label="raise" sub="UnsupportedClaim" size={12} subSize={9} flow="check" />
 			<Badge cx={184} cy={884} text="5" accent r={8} />
 
-			<Flow x1={180} y1={232} x2={180} y2={280} kind="change" dur={1.6} />
-			<Flow x1={110} y1={436} x2={110} y2={544} kind="change" dur={1.8} />
-			<Flow x1={250} y1={512} x2={250} y2={544} kind="request" dur={1.2} />
-			<Flow x1={180} y1={596} x2={180} y2={644} kind="request" dur={1.4} />
-			<Flow x1={110} y1={836} x2={110} y2={884} kind="response" dur={1.4} />
-			<Flow x1={250} y1={836} x2={250} y2={884} kind="response" dur={1.4} delay={-0.7} />
+			<Flow x1={180} y1={232} x2={180} y2={280} kind="change" dur={1.6} flow="record" />
+			<Flow x1={110} y1={436} x2={110} y2={544} kind="change" dur={1.8} flow="record" />
+			<Flow x1={250} y1={512} x2={250} y2={544} kind="request" dur={1.2} flow="check" />
+			<Flow x1={180} y1={596} x2={180} y2={644} kind="request" dur={1.4} flow="check" />
+			<Flow x1={110} y1={836} x2={110} y2={884} kind="response" dur={1.4} flow="check" />
+			<Flow x1={250} y1={836} x2={250} y2={884} kind="response" dur={1.4} delay={-0.7} flow="check" />
 		</>
 	);
 }

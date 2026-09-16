@@ -46,7 +46,7 @@ export const Lane = ({ size = 11, ...rest }) => <ULane {...rest} size={atLeast(s
 
 // Straight segment or arrow. `kind` colours it by token kind; `accent` is the
 // figure's one highlighted path.
-export const Line = ({ x1, y1, x2, y2, id, arrow = true, accent, dashed, kind }) => (
+export const Line = ({ x1, y1, x2, y2, id, arrow = true, accent, dashed, kind, flow }) => (
 	<Connector
 		points={[
 			[x1, y1],
@@ -56,6 +56,7 @@ export const Line = ({ x1, y1, x2, y2, id, arrow = true, accent, dashed, kind })
 		arrow={arrow}
 		dashed={dashed}
 		kind={kind || (accent ? "accent" : undefined)}
+		flow={flow}
 	/>
 );
 
@@ -78,7 +79,7 @@ export const Badge = ({ cx, cy, text, accent, r = 10 }) => {
 
 // A packet on a straight segment; the figure passes the same coordinates it
 // gave the Line.
-export const Flow = ({ x1, y1, x2, y2, kind = "request", dur = 2.4, delay = 0, reverse, r = 4.5 }) => (
+export const Flow = ({ x1, y1, x2, y2, kind = "request", dur = 2.4, delay = 0, reverse, r = 4.5, flow }) => (
 	<Packet
 		points={[
 			[x1, y1],
@@ -89,5 +90,6 @@ export const Flow = ({ x1, y1, x2, y2, kind = "request", dur = 2.4, delay = 0, r
 		delay={delay}
 		reverse={reverse}
 		r={r}
+		flow={flow}
 	/>
 );

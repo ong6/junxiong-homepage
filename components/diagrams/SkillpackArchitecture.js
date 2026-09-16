@@ -40,7 +40,7 @@ export function Wide({ id }) {
 			<Defs id={id} />
 
 			{/* ---------- upstream ---------- */}
-			<Group x={40} y={64} w={280} h={296} title="UPSTREAM · ong6/skillpack" />
+			<Group x={40} y={64} w={280} h={296} title="UPSTREAM · ong6/skillpack" flow={["pull", "push", "plugin"]} />
 			<Badge cx={40} cy={64} text="1" />
 			{UPSTREAM.map(([label, sub], i) => (
 				<Node
@@ -52,12 +52,11 @@ export function Wide({ id }) {
 					label={label}
 					sub={sub}
 					size={13}
-					subSize={11}
-				/>
+					subSize={11} flow={["pull", "push"]} />
 			))}
 
 			{/* ---------- consumer ---------- */}
-			<Group x={472} y={64} w={408} h={352} title="CONSUMER REPO · THIS STORE, EVERY OTHER REPO" />
+			<Group x={472} y={64} w={408} h={352} title="CONSUMER REPO · THIS STORE, EVERY OTHER REPO" flow={["pull", "push"]} />
 			<Badge cx={472} cy={64} text="2" />
 			<Node
 				x={496}
@@ -67,14 +66,13 @@ export function Wide({ id }) {
 				label=".claude/shared-skills/"
 				sub="git subtree, squashed"
 				size={13}
-				subSize={11}
-			/>
+				subSize={11} flow={["pull", "push"]} />
 
-			<Line id={id} x1={580} y1={168} x2={580} y2={208} />
-			<Line id={id} x1={772} y1={168} x2={772} y2={208} />
+			<Line id={id} x1={580} y1={168} x2={580} y2={208} flow="pull" />
+			<Line id={id} x1={772} y1={168} x2={772} y2={208} flow="pull" />
 			<Label x={676} y={192} text="symlinks" anchor="middle" size={11} />
-			<Node x={496} y={208} w={168} h={56} label=".claude/skills/" sub="Claude Code" size={13} subSize={11} />
-			<Node x={688} y={208} w={168} h={56} label=".agents/skills/" sub="Codex" size={13} subSize={11} />
+			<Node x={496} y={208} w={168} h={56} label=".claude/skills/" sub="Claude Code" size={13} subSize={11} flow="pull" />
+			<Node x={688} y={208} w={168} h={56} label=".agents/skills/" sub="Codex" size={13} subSize={11} flow="pull" />
 
 			<Node
 				x={496}
@@ -84,22 +82,21 @@ export function Wide({ id }) {
 				label="SessionStart hook"
 				sub="sync.sh --start"
 				size={13}
-				subSize={11}
-			/>
-			<Node x={688} y={320} w={168} h={56} label="Stop hook" sub="sync.sh --stop" size={13} subSize={11} />
+				subSize={11} flow="pull" />
+			<Node x={688} y={320} w={168} h={56} label="Stop hook" sub="sync.sh --stop" size={13} subSize={11} flow="push" />
 			<Badge cx={688} cy={320} text="3" accent />
 
 			{/* ---------- the loop ---------- */}
-			<Line id={id} x1={320} y1={140} x2={472} y2={140} />
+			<Line id={id} x1={320} y1={140} x2={472} y2={140} flow="pull" />
 			<Label x={396} y={132} text="fetch in background" anchor="middle" size={11} />
 			<Label x={396} y={158} text="merge at start" anchor="middle" size={11} />
 
-			<Line id={id} x1={472} y1={348} x2={320} y2={348} accent />
+			<Line id={id} x1={472} y1={348} x2={320} y2={348} accent flow="push" />
 			<Label x={396} y={340} text="commit folder edits" anchor="middle" accent size={11} />
 			<Label x={396} y={366} text="merge upstream, push" anchor="middle" accent size={11} />
 
 			{/* ---------- plugin path ---------- */}
-			<Line id={id} x1={180} y1={360} x2={180} y2={448} />
+			<Line id={id} x1={180} y1={360} x2={180} y2={448} flow="plugin" />
 			<Label x={192} y={408} text="/plugin install" size={11} />
 			<Node
 				x={64}
@@ -109,17 +106,16 @@ export function Wide({ id }) {
 				label="Plugin consumer"
 				sub="read-only, no edits back"
 				size={13}
-				subSize={11}
-			/>
+				subSize={11} flow="plugin" />
 			<Badge cx={64} cy={448} text="4" />
 
 			{/* ---------- lanes + packets ---------- */}
 			<Lane x={40} w={280} y={40} title="Upstream" />
 			<Lane x={472} w={408} y={40} title="Consumer" />
-			<Flow x1={320} y1={140} x2={472} y2={140} kind="request" dur={2.2} />
-			<Flow x1={320} y1={140} x2={472} y2={140} kind="request" dur={2.2} delay={-1.1} />
-			<Flow x1={472} y1={348} x2={320} y2={348} kind="accent" dur={2.2} delay={-0.5} />
-			<Flow x1={180} y1={360} x2={180} y2={448} kind="change" dur={2} />
+			<Flow x1={320} y1={140} x2={472} y2={140} kind="request" dur={2.2} flow="pull" />
+			<Flow x1={320} y1={140} x2={472} y2={140} kind="request" dur={2.2} delay={-1.1} flow="pull" />
+			<Flow x1={472} y1={348} x2={320} y2={348} kind="accent" dur={2.2} delay={-0.5} flow="push" />
+			<Flow x1={180} y1={360} x2={180} y2={448} kind="change" dur={2} flow="plugin" />
 		</Floor>
 	);
 }
@@ -147,10 +143,10 @@ export function Narrow({ id }) {
 				/>
 			))}
 
-			<Line id={id} x1={110} y1={224} x2={110} y2={296} />
+			<Line id={id} x1={110} y1={224} x2={110} y2={296} flow="pull" />
 			<Label x={120} y={252} text="fetch, merge" size={10} />
 			<Label x={120} y={268} text="at start" size={10} />
-			<Line id={id} x1={250} y1={296} x2={250} y2={224} accent />
+			<Line id={id} x1={250} y1={296} x2={250} y2={224} accent flow="push" />
 			<Label x={260} y={252} text="commit, push" accent size={10} />
 			<Label x={260} y={268} text="at stop" accent size={10} />
 
@@ -162,15 +158,15 @@ export function Narrow({ id }) {
 			<Label x={180} y={396} text="symlinks" anchor="middle" size={10} />
 			<Node x={44} y={412} w={132} h={44} label=".claude/skills/" sub="Claude Code" size={11} subSize={9} />
 			<Node x={184} y={412} w={132} h={44} label=".agents/skills/" sub="Codex" size={11} subSize={9} />
-			<Node x={44} y={480} w={132} h={44} label="SessionStart" sub="sync.sh --start" size={11} subSize={9} />
-			<Node x={184} y={480} w={132} h={44} label="Stop hook" sub="sync.sh --stop" size={11} subSize={9} />
+			<Node x={44} y={480} w={132} h={44} label="SessionStart" sub="sync.sh --start" size={11} subSize={9} flow="pull" />
+			<Node x={184} y={480} w={132} h={44} label="Stop hook" sub="sync.sh --stop" size={11} subSize={9} flow="push" />
 			<Badge cx={184} cy={480} text="3" accent r={8} />
 
-			<Node x={44} y={580} w={272} h={44} label="Plugin consumer" sub="installs upstream read-only" size={12} subSize={9} />
+			<Node x={44} y={580} w={272} h={44} label="Plugin consumer" sub="installs upstream read-only" size={12} subSize={9} flow="plugin" />
 			<Badge cx={44} cy={580} text="4" r={8} />
 
-			<Flow x1={110} y1={224} x2={110} y2={296} kind="request" dur={1.6} />
-			<Flow x1={250} y1={296} x2={250} y2={224} kind="accent" dur={1.6} delay={-0.8} />
+			<Flow x1={110} y1={224} x2={110} y2={296} kind="request" dur={1.6} flow="pull" />
+			<Flow x1={250} y1={296} x2={250} y2={224} kind="accent" dur={1.6} delay={-0.8} flow="push" />
 		</>
 	);
 }
