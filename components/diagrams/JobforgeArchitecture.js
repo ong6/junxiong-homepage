@@ -1,4 +1,4 @@
-import { Badge, Connector, Defs, Floor, Flow, Group, Label, Lane, Line, Node, Packet } from "./parts";
+import { Badge, Connector, Defs, Flow, Group, Label, Lane, Line, Node, Packet } from "./parts";
 
 export const CLAIM =
 	"A SessionStart hook that reads one file prints the drill banner; the drill picks the due pattern from bank.md, generates a problem from the pattern's discriminator, grades the plan you say out loud against that pattern's required elements, and writes one row with the verdict, the missing element and the next due date; an interview debrief writes its failures into the same bank.";
@@ -40,7 +40,7 @@ const FILES = [
 
 export function Wide({ id }) {
 	return (
-		<Floor min={12}>
+		<>
 			<Defs id={id} />
 
 			{/* ---------- lanes ---------- */}
@@ -116,7 +116,7 @@ export function Wide({ id }) {
 			<Packet points={[[616, 492], [824, 492], [824, 240], [872, 240]]} kind="response" dur={2.6} flow="rep" />
 			<Packet points={[[872, 316], [840, 316], [840, 628], [616, 628]]} kind="change" dur={2.8} delay={-1.2} flow="debrief" />
 			<Packet points={[[616, 612], [824, 612], [824, 492], [824, 240], [872, 240]]} kind="response" dur={3} delay={-1.5} flow="debrief" />
-		</Floor>
+		</>
 	);
 }
 

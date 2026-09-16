@@ -92,16 +92,6 @@ a {
 	--uipack-mono: var(--font-mono);
 	--uipack-sans: var(--font-sans);
 }
-.uipack-browser__count,
-.uipack-browser__status,
-.uipack-browser__empty {
-	opacity: 1;
-	color: var(--uipack-muted);
-}
-.uipack-browser__action {
-	min-height: 44px;
-	min-width: 44px;
-}
 .uipack__ctl:focus-visible {
 	outline: 2px solid var(--chakra-colors-brand-solid);
 	outline-offset: 2px;

@@ -1,4 +1,4 @@
-import { Badge, Defs, Floor, Flow, Group, Label, Lane, Line, Node, Packet } from "./parts";
+import { Badge, Defs, Flow, Group, Label, Lane, Line, Node, Packet } from "./parts";
 
 export const CLAIM =
 	"One multi-tenant Next.js app sits between the customer's document sources and three model providers, with Postgres and pgvector as the only store, QStash workers running ingest off the request path, and evaluation and tracing beside the request path.";
@@ -37,7 +37,7 @@ const STAGES = [
 
 export function Wide({ id }) {
 	return (
-		<Floor min={13}>
+		<>
 			<Defs id={id} />
 
 			{/* ---------- sources ---------- */}
@@ -188,7 +188,7 @@ export function Wide({ id }) {
 				y={532}
 				w={464}
 				h={204}
-				title="TENANT ID ON EVERY ROW · ROW-LEVEL SECURITY"
+				title="TENANT ID ON EVERY ROW · RLS"
 			/>
 			<Node x={680} y={576} w={208} h={64} label="tenants" sub="users · roles" size={13} subSize={11} />
 			<Node x={912} y={576} w={208} h={64} label="documents" sub="status" size={13} subSize={11} flow="ingest" />
@@ -241,7 +241,7 @@ export function Wide({ id }) {
 				<Flow key={label} x1={144 + i * 104} y1={616} x2={168 + i * 104} y2={616} kind="change" dur={1.2} delay={-i * 0.3} flow="ingest" />
 			))}
 			<Flow x1={560} y1={616} x2={648} y2={616} kind="change" dur={1.6} flow="ingest" />
-		</Floor>
+		</>
 	);
 }
 
@@ -281,7 +281,7 @@ export function Narrow({ id }) {
 				y={520}
 				w={296}
 				h={144}
-				title="TENANT ID ON EVERY ROW · ROW-LEVEL SECURITY"
+				title="TENANT ID ON EVERY ROW · RLS"
 				titleSize={9}
 			/>
 			<Node {...cell(0, 0, 548)} w={132} h={44} label="tenants" sub="users · roles" size={12} subSize={9} />

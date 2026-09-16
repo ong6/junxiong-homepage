@@ -1,4 +1,4 @@
-import { Badge, Defs, Floor, Flow, Group, Label, Lane, Line, Node, Packet } from "./parts";
+import { Badge, Defs, Flow, Group, Label, Lane, Line, Node, Packet } from "./parts";
 
 export const CLAIM =
 	"A question fans out across five knowledge bases with hybrid search, the survivors are reranked by a cross-encoder, and every citation is checked against its chunk before the answer ships.";
@@ -52,7 +52,7 @@ const NARROW_TAIL = [
 
 export function Wide({ id }) {
 	return (
-		<Floor min={12}>
+		<>
 			<Defs id={id} />
 
 			<Node x={232} y={32} w={256} h={56} label="User question" flow="ask" />
@@ -207,7 +207,7 @@ export function Wide({ id }) {
 			<Flow x1={360} y1={720} x2={360} y2={760} kind="request" dur={1.2} delay={-0.6} flow="retrieval" />
 			<Flow x1={360} y1={832} x2={360} y2={928} kind="response" dur={2} flow="answer" />
 			<Flow x1={360} y1={880} x2={488} y2={880} kind="response" dur={1.6} delay={-0.8} flow="answer" />
-		</Floor>
+		</>
 	);
 }
 
