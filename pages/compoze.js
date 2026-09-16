@@ -194,8 +194,8 @@ export default function Compoze() {
 				<P>
 					The pitch was narrow. A company has a few thousand documents nobody
 					reads and staff who ask the same handful of questions about them
-					every week. Compoze answered those questions with the documents
-					attached, so the answer could be checked rather than believed.
+					every week. Compoze answered those questions with the documents attached, so the answer
+					could be checked, not believed.
 				</P>
 
 				<Figure
@@ -216,27 +216,25 @@ export default function Compoze() {
 					Next.js 15 and React 19 on the front, Postgres with pgvector behind
 					Drizzle. Every core table carries a tenant id, checked in the
 					application layer and again by Postgres row-level security, so the
-					database refuses the query the code forgot to scope. One database is
-					one migration and one bill; the price is that a forgotten where
-					clause leaks one customer&apos;s documents into another&apos;s
-					answers. On top of
-					that, three roles (Admin, Manager, User), an admin portal per tenant,
-					and nine models from OpenAI, Anthropic and Google behind one gateway,
-					chosen per environment through configuration.
+					database refuses the query the code forgot to scope. One database is one migration and one bill. The price is that a forgotten
+					where clause leaks one customer&apos;s documents into another&apos;s
+					answers. On top: three roles (Admin, Manager, User), an admin portal
+					per tenant, and nine models from OpenAI, Anthropic and Google behind
+					one gateway, picked per environment in configuration.
 				</P>
 
 				<H2>Retrieval is the part you get judged on</H2>
 
 				<P>
-					Documents are chunked at roughly a thousand characters, each chunk
-					given a one-sentence header placing it in its document, and embedded
-					with OpenAI at 1536 dimensions. A question runs across up to five
-					knowledge bases in parallel. Each lane is hybrid: cosine search over
-					an HNSW index, keyword search beside it because dense search alone
-					misses exact tokens, the two ranked lists merged with reciprocal
-					rank fusion. Chunks under a 0.35 similarity floor are dropped, an LLM
-					scores the survivors per database, and a cross-encoder reading
-					question and chunk together sets the final order.
+										Documents are chunked at about a thousand characters. Each chunk gets a
+					one-sentence header placing it in its document and is embedded with
+					OpenAI at 1536 dimensions. A question runs across up to five knowledge
+					bases in parallel. Each lane is hybrid: cosine search over an HNSW
+					index, keyword search beside it because dense search misses exact
+					tokens, the two ranked lists merged with reciprocal rank fusion. Chunks
+					under a 0.35 similarity floor are dropped. An LLM scores the survivors
+					per database, and a cross-encoder reading question and chunk together
+					sets the final order.
 				</P>
 
 				<DiagramFigure
@@ -255,9 +253,8 @@ export default function Compoze() {
 
 				<P>
 					Citations are stored with the message, checked for entailment against
-					the sentence they support, and rendered with their match scores. A
-					visible score is what gets people to open two or three citations and
-					check, and nobody trusts the answer before they have.
+					the sentence they support, and rendered with their match scores. A visible score gets people to open two or
+					three citations and check. Nobody trusts the answer before they have.
 				</P>
 
 				<P>
@@ -272,11 +269,11 @@ export default function Compoze() {
 				<P>
 					A fixed set of question and answer pairs: logged questions, every
 					question a tester asked, and adversarial questions the corpus cannot
-					answer, where the right reply is a refusal. Retrieval and generation
-					are scored apart, context precision for whether the good chunks
-					ranked high, faithfulness for whether each claim is entailed by what
-					came back. The set runs in CI and a prompt, chunker or model change
-					fails on a regression against main. Deltas, not absolute thresholds.
+					answer, where the right reply is a refusal. Retrieval and generation are scored apart: context precision for whether the
+					good chunks ranked high, faithfulness for whether each claim is
+					entailed by what came back. The set runs in CI. A prompt, chunker or
+					model change fails on a regression against main. Deltas, not absolute
+					thresholds.
 				</P>
 
 				<Box
@@ -353,12 +350,12 @@ export default function Compoze() {
 				<H2>Things I optimised</H2>
 
 				<P>
-					Chat streams by default. If the client disconnected mid-answer, an
-					abort listener handed the job to a QStash workflow, only if the
-					stream had not completed, so a request was never billed twice. Each
-					phase (init, load context, RAG query, generation, finalise) was a
-					durable step, so a retry resumed after the last completed one. When
-					QStash was unreachable the route fell back to plain streaming.
+										Chat streams by default. If the client disconnected mid-answer and the
+					stream had not completed, an abort listener handed the job to a QStash
+					workflow, so a request was never billed twice. Each phase (init, load
+					context, RAG query, generation, finalise) was a durable step, so a
+					retry resumed after the last one that completed. When QStash was
+					unreachable the route fell back to plain streaming.
 				</P>
 
 				<P>
@@ -383,23 +380,22 @@ export default function Compoze() {
 				<H2>Working alone</H2>
 
 				<P>
-					With no reviewer, CI is the reviewer. Route contracts are typed,
-					every payload is validated at runtime with Zod, and contract tests
-					run on each push, which is what let me keep changing 53 routes and
-					23 tables alone. Each request is traced as one span tree with tokens,
-					model and tenant on every span, so cost per tenant per answer is the
-					number pricing is built on. Time to first token is the latency I
-					watched.
+										With no reviewer, CI is the reviewer. Route contracts are typed, every
+					payload is validated at runtime with Zod, and contract tests run on
+					each push. That is what let me keep changing 53 routes and 23 tables
+					alone. Each request is traced as one span tree with tokens, model and
+					tenant on every span, so pricing is built on cost per tenant per
+					answer. Time to first token is the latency I watched.
 				</P>
 
 				<P>
-					I did all six stages of selling and delivering it, discovery through
-					deployment and training. Knowledge engineering was the slow one: deciding what belongs in a
-					knowledge base, and what should never go near it, is not a technical
-					question and you cannot do it for the customer. Running it next to a
-					full-time job shaped the product more than any opinion I had about
-					architecture. Anything that needed me awake to work did not get
-					built.
+										I did all six stages of selling and delivering it, discovery through
+					deployment and training. Knowledge engineering was the slow one.
+					Deciding what belongs in a knowledge base, and what must never go near
+					it, is not a technical question, and you cannot do it for the customer.
+					Running it beside a full-time job shaped the product more than any
+					opinion I had about architecture. Anything that needed me awake did not
+					get built.
 				</P>
 
 				<Box h={{ base: 12, md: 20 }} />

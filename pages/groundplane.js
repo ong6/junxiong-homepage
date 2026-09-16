@@ -147,35 +147,34 @@ export default function Groundplane() {
 				<H2>Where it came from</H2>
 
 				<P>
-					I first built this shape inside a production AI platform at TikTok.
-					Summaries there rank things, and a ranking a model writes from a table
-					of numbers is right most of the time. Most of the time is not a
-					guarantee, and a senior stakeholder was not going to sign off on
-					output that could quietly name the wrong winner. The pushback was
-					right, and it is what produced the design.
+										I first built this shape inside a production AI platform at TikTok.
+					Summaries there rank things, and a model ranking a table of numbers is
+					right most of the time. Most of the time is not a guarantee. A senior
+					stakeholder would not sign off on output that could name the wrong
+					winner, and that pushback produced the design.
 				</P>
 
 				<P>
-					The fix was to compute the ranking in code and constrain the model to
-					phrasing it. The model could describe the winner. It could no longer
-					choose one. Groundplane is that idea taken out of the platform,
-					generalised past the argmax case, and published under MIT.
+										The fix: compute the ranking in code and limit the model to phrasing
+					it. The model could describe the winner but no longer choose one.
+					Groundplane is that idea taken out of the platform, generalised past
+					argmax, and published under MIT.
 				</P>
 
 				<H2>Declared facts, not detected hallucinations</H2>
 
 				<P>
-					You cannot prompt this away. &ldquo;Only state what is in the
-					data&rdquo; is an instruction to the component that failed. You also
-					cannot grade it with a second model, because an LLM judge is the same
-					class of component making the same class of mistake with a rubber
-					stamp. So the library does neither. Tool results go into a{" "}
+										You cannot prompt this away. &ldquo;Only state what is in the
+					data&rdquo; is an instruction to the component that failed. A second
+					model as judge is the same class of component making the same class of
+					mistake, with a rubber stamp. The library does neither. Tool results go
+					into a{" "}
 					<Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">
 						FactRegistry
 					</Box>{" "}
-					as typed facts, each carrying the tool call and arguments that
-					produced it. Facts are write-once. If a later call changes the value,
-					that is a new fact with a new name, so provenance never lies.
+										as typed facts, each carrying the tool call and arguments that produced
+					it. Facts are write-once: a later call that changes the value is a new
+					fact with a new name, so provenance never lies.
 				</P>
 
 				<P>
@@ -183,14 +182,16 @@ export default function Groundplane() {
 					<Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">
 						boundary
 					</Box>{" "}
-					wraps the block of model output and names the facts it may lean on.
-					The model emits structured fields, never prose; submitting a plain
-					string is a TypeError. Leaving the block without submitting anything
-					also raises, because a check that silently never ran is worse than no
-					check.
+										wraps a block of model output and names the facts it may use. The model
+					emits structured fields, never prose. Submitting a plain string is a
+					TypeError. Leaving the block without submitting also raises, because a
+					check that silently never ran is worse than no check.
 				</P>
 
-				<CodeFigure caption="fig. 2 — the README before and after. The before trusts whatever the model wrote. The after records the ranking with its provenance, lets the model fill in a winner field, and the boundary refuses it. The error text is what the library actually raises for this input.">
+				<CodeFigure caption="fig. 2 — the README before and after. The before trusts whatever the model
+				wrote. The after records the ranking with its provenance, lets the model
+				fill a winner field, and the boundary refuses it. The error text is what
+				the library raises for this input.">
 					<CodeBlock title="before" lines={BEFORE} />
 					<CodeBlock title="after" lines={AFTER} />
 					<CodeBlock title="raised" lines={ERROR} />
@@ -209,13 +210,13 @@ export default function Groundplane() {
 					<Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">superlative</Box>{" "}
 					checks that the named winner is the computed argmax and any quoted
 					score is the computed score. <Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">ranking_prefix</Box>{" "}
-					checks a top-k list against the computed order, including a cut that
-					falls inside a block of tied scores. <Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">aggregate_reconciles</Box>{" "}
-					recomputes a stated sum, mean, count, min, max or median over the
-					recorded rows and refuses to do it over a truncated table. <Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">entities_recorded</Box>{" "}
+										checks a top-k list against the computed order, including a cut inside
+					a block of tied scores. <Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">aggregate_reconciles</Box>{" "}
+										recomputes a stated sum, mean, count, min, max or median over the
+					recorded rows and refuses a truncated table. <Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">entities_recorded</Box>{" "}
 					checks that every name the model used came from a recorded set. <Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">row_integrity</Box>{" "}
-					resolves the named row first and reads every other field off that
-					one row, which catches the neighbour&apos;s value in the wrong column.{" "}
+										resolves the named row first and reads every other field off that row,
+					which catches a neighbour&apos;s value in the wrong column.{" "}
 					<Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">comparison</Box>{" "}
 					recomputes &ldquo;A beat B by 12%&rdquo; in code and, when the
 					number is wrong, says which convention it does match: percentage
@@ -223,10 +224,10 @@ export default function Groundplane() {
 				</P>
 
 				<P>
-					Numeric comparisons are exact by default. Every check takes a
-					tolerance, but it starts at zero rather than the usual nine digits of
-					forgiveness, because a checker built to catch a wrong number should
-					not quietly wave one through.
+										Numeric comparisons are exact by default. Every check takes a
+					tolerance, but it starts at zero, not the usual nine digits of
+					forgiveness. A checker built to catch a wrong number should not wave
+					one through.
 				</P>
 
 				<Box
@@ -258,42 +259,39 @@ export default function Groundplane() {
 				<H2>Failing loudly</H2>
 
 				<P>
-					The error message is most of the product. It carries the field, what
+										The error message is most of the product. It carries the field, what
 					the model said, what the facts support, the tool call with its
-					arguments, and where the model&apos;s pick actually ranked. Whoever
-					is reading it at 2am can tell at once whether the data or the prose
-					was wrong, without opening a trace.
+					arguments, and where the model&apos;s pick ranked. Whoever reads it at
+					2am can tell whether the data or the prose was wrong without opening a
+					trace.
 				</P>
 
 				<P>
-					Inside a LangGraph graph the same failure can become a state update
-					instead of a crash, so the graph routes back to the model with the
+										Inside a LangGraph graph the same failure can become a state update
+					instead of a crash. The graph routes back to the model with the
 					checker&apos;s message as the correction. A misconfigured check still
-					propagates, because a developer bug is not something to reask the
-					model about. The MCP adapter records a tool result as a fact with the
-					call as provenance, and prefers the structured payload over the text
-					blocks, since text is a rendering and reading it is parsing prose
-					again.
+					propagates: a developer bug is not something to reask the model about.
+					The MCP adapter records a tool result as a fact with the call as
+					provenance. It prefers the structured payload over the text blocks,
+					because text is a rendering and reading it is parsing prose again.
 				</P>
 
 				<H2>What it is not</H2>
 
 				<P>
-					It is not a hallucination detector. It validates declared fields
-					against declared facts, and if the model names the right winner and
-					then editorialises misleadingly around it, that passes. I kept the
-					scope that narrow on purpose. Every system I looked at that tried to
-					verify open prose ended up handing the verdict to embeddings or a
-					judge model, which brings back the probabilistic answer this exists
-					to remove.
+										It is not a hallucination detector. It validates declared fields
+					against declared facts. If the model names the right winner and
+					editorialises misleadingly around it, that passes. I kept the scope
+					that narrow on purpose. Every system I saw that tried to verify open
+					prose handed the verdict to embeddings or a judge model, which brings
+					back the probabilistic answer this exists to remove.
 				</P>
 
 				<P>
-					The core has no dependencies and the adapters import neither
-					framework they adapt, so the whole thing is readable and testable
-					with a plain interpreter. 169 tests run on five Python
-					versions in CI, many of them adversarial cases where the plausible
-					model answer is provably wrong.
+										The core has no dependencies and the adapters import neither framework
+					they adapt, so a plain interpreter can read and test all of it. 169
+					tests run on five Python versions in CI, many of them adversarial cases
+					where the plausible model answer is provably wrong.
 				</P>
 
 				<Box h={{ base: 12, md: 20 }} />

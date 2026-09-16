@@ -99,7 +99,9 @@ export default function Jobforge() {
 				programmingLanguage: "Python",
 				license: "https://opensource.org/licenses/MIT",
 			}}
-			description="Jobforge is an open-source Claude Code plugin for coding-interview prep that grades the plan you say out loud, not the code you submit, and keeps résumé, targets and interview debriefs in one local markdown corpus.">
+			description="Jobforge is an open-source Claude Code plugin for coding-interview prep. It
+			grades the plan you say out loud, not the code you submit, and keeps
+			résumé, targets and interview debriefs in one local markdown corpus.">
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
 					<Link
@@ -140,7 +142,7 @@ export default function Jobforge() {
 						lineHeight="1.6"
 						fontWeight="600">
 						Every coding-interview tool I tried grades the submitted code.
-						My failures were in the two minutes before it, where I said
+												My failures were in the two minutes before it, when I said
 						&ldquo;I&apos;ll DP this&rdquo; and started typing. Jobforge is a
 						Claude Code plugin that asks for the plan first and grades that.
 						Résumé, target list, teaching and interview debriefs live in the
@@ -158,17 +160,16 @@ export default function Jobforge() {
 					A plugin, not a service. One SessionStart hook, six skills, sixteen
 					pattern files and a Python harness that runs your solution. State is
 					markdown in <Code>~/jobforge</Code> that you can read, edit and{" "}
-					<Code>rm -rf</Code>. I built it mid-prep, with interviews on the
-					calendar, out of a private version that had been running for a few
-					weeks. The constants in it are what that log produced, not what a
-					paper said.
+					<Code>rm -rf</Code>. I built it mid-prep, interviews on the calendar, from a private version that
+					had run for a few weeks. The constants come from that log, not from a
+					paper.
 				</P>
 
 				<P>
 					<Code>/jobforge:drill</Code> generates a problem for a due pattern
 					and asks what you would do before you write anything.{" "}
-					<Code>/jobforge:interview-debrief</Code> records an interview you
-					actually sat, with the same vocabulary, and queues whatever broke.{" "}
+					<Code>/jobforge:interview-debrief</Code> records an interview you sat, with the same vocabulary, and queues whatever
+					broke.{" "}
 					<Code>/jobforge:status</Code> shows the streak and which element
 					keeps failing. <Code>/jobforge:archive</Code> is the intended
 					ending: past your target date, it stops.
@@ -177,12 +178,11 @@ export default function Jobforge() {
 				<H2>The plan, not the code</H2>
 
 				<P>
-					Every mistake-classifier in this space fires on a rejected
-					submission. None of them can fire when you wrote correct code for
-					the wrong reason, and none of them has any notion of a plan you
-					stated before typing. That is the one gap I found after reading
-					six of them at source level, and it is the only thing this plugin
-					claims.
+										Every mistake classifier in this space fires on a rejected submission.
+					None fires when you wrote correct code for the wrong reason, and none
+					knows about a plan you stated before typing. That is the one gap I
+					found after reading six of them at source level, and the only thing
+					this plugin claims.
 				</P>
 
 				<P>
@@ -192,61 +192,60 @@ export default function Jobforge() {
 					<Code>present</Code>, <Code>vague</Code> or <Code>missing</Code>{" "}
 					under one rule: no quote of your own words, not present.
 					&ldquo;I&apos;ll build up the table&rdquo; is a vague{" "}
-					<Code>transition</Code>. It passes casual listening, and it is the
-					exact sentence that turns into a stall in the room.
+					<Code>transition</Code>. It passes casual listening, and it is the sentence that becomes a stall in
+					the room.
 				</P>
 
-				<CodeFigure caption="fig. 1 — a graded plan and the row it writes. The verdict is on the stated plan; a recovery after prompting does not change it, because an interview measures what you produced unprompted. The due date is computed at grading time and stored in the row. There is no scheduler and no queue file, so there is nothing to desynchronise.">
+				<CodeFigure caption="fig. 1 — a graded plan and the row it writes. The verdict is on the stated
+				plan. A recovery after prompting does not change it, because an
+				interview measures what you produced unprompted. The due date is
+				computed at grading time and stored in the row. No scheduler, no queue
+				file, nothing to desynchronise.">
 					<CodeBlock title="/jobforge:drill · grading" lines={GRADE} />
 					<CodeBlock title="bank.md · one row per rep" lines={ROW} />
 				</CodeFigure>
 
 				<P>
-					The element ids being global is the point. A missing{" "}
+										Global element ids are the point. A missing{" "}
 					<Code>base-case</Code> on <Code>dp-2d</Code> and a missing{" "}
-					<Code>base-case</Code> on <Code>prefix-sum</Code> land in the same
-					column, so after sixty days <Code>/jobforge:status</Code> can say
-					that one seed has been missed on five unrelated patterns. The
-					element you missed is also what gets scheduled: the next rep is a
-					different pattern that depends on it, never the same problem again
-					in three days.
+					<Code>base-case</Code> on <Code>prefix-sum</Code> land in the same column, so after sixty days <Code>/jobforge:status</Code> can say one seed was missed on five unrelated patterns. The missed element
+					is also what gets scheduled: the next rep is a different pattern that
+					depends on it, never the same problem three days later.
 				</P>
 
 				<H2>One banner, one subject</H2>
 
 				<P>
-					The hook prints one line at session start when you have not drilled
-					today, and it is the only surface that speaks before you do. It
-					reads <Code>rep-log.md</Code> and nothing else. There is no code
-					path from it to the résumé, the target list or the bank, so it
-					cannot nag about them. The first time a banner can also say{" "}
-					<em>your LinkedIn headline is stale</em>, it stops being an
-					instruction and becomes wallpaper, and the drill loop dies with it.
+										The hook prints one line at session start when you have not drilled
+					today. It is the only surface that speaks before you do. It reads <Code>rep-log.md</Code> and nothing else. No code path leads from it to the résumé, the target list
+					or the bank, so it cannot nag about them. The first time a banner can
+					also say{" "}
+					<em>your LinkedIn headline is stale</em>, it becomes wallpaper, and the drill loop dies with it.
 				</P>
 
 				<P>
-					That line is enforced by a test, not a comment.{" "}
+										A test enforces that line, not a comment.{" "}
 					<Code>tests/test_push_pull_boundary.py</Code> strips the comments
 					and asserts the hook contains exactly one <Code>os.path.join</Code>,
 					one <Code>open(</Code>, one markdown filename, no networking
-					imports, and no occurrence of resume, targets, profile, bank or
-					interviews. A contributor who adds a helpful second line fails
-					CI.
+										imports, and no mention of resume, targets, profile, bank or
+					interviews. Add a helpful second line and CI fails.
 				</P>
 
-				<CodeFigure caption="fig. 2 — the hook and what it prints. The banner is silent on a day already logged, silent past the target date, and silent before setup. The fact on the second line rotates by day so it does not become furniture.">
+				<CodeFigure caption="fig. 2 — the hook and what it prints. The banner stays silent on a day
+				already logged, past the target date, and before setup. The fact on the
+				second line rotates by day so it does not become furniture.">
 					<CodeBlock title="hooks/drill-banner.py" lines={HOOK} />
 					<CodeBlock title="session start" lines={BANNER} />
 				</CodeFigure>
 
 				<P>
 					The same tiering runs inside the skills. The drill reads the rep
-					log, the bank and the pattern files. It never opens the résumé,
-					because a tool that reads a résumé to pick a graph problem has no
-					reason to, and you cannot audit what it never opened. Nothing in
-					the plugin sends anything anywhere, so there is no telemetry
-					setting. The README says the quiet part: if your employer manages
-					the machine, put <Code>JOBFORGE_HOME</Code> on a personal volume.
+										log, the bank and the pattern files. It never opens the résumé: a tool
+					picking a graph problem has no reason to, and you cannot audit what it
+					never opened. Nothing in the plugin sends anything anywhere, so there
+					is no telemetry setting. The README says the quiet part: if your
+					employer manages the machine, put <Code>JOBFORGE_HOME</Code> on a personal volume.
 				</P>
 
 				<Box
@@ -278,22 +277,20 @@ export default function Jobforge() {
 				<H2>What it is not</H2>
 
 				<P>
-					It does not capture submissions. A browser extension sits at the
-					moment you hit submit and can interrupt you; a CLI agent exists
-					only when invoked. Several extensions already do auto-capture with
-					FSRS scheduling well, and I read them before deciding not to
-					compete there. An agent wins only where thinking out loud is the
-					input, and anything drifting away from that is drifting onto
-					ground where an extension is structurally better.
+										It does not capture submissions. A browser extension sits at the moment
+					you hit submit and can interrupt you. A CLI agent exists only when
+					invoked. Several extensions already do auto-capture with FSRS
+					scheduling well, and I read them before deciding not to compete there.
+					An agent wins only where thinking out loud is the input. Anything
+					drifting from that lands on ground where an extension is better.
 				</P>
 
 				<P>
-					It is not a problem bank. Nothing ships and nothing generated is
+										It is not a problem bank. Nothing ships and nothing generated is
 					written to disk. Problems come from the pattern&apos;s discriminator,
-					never from a title, re-skinned to your own domain, and the state
-					files hold a pattern, a verdict, an element id and a date. A
-					problems directory would slowly become a derivative-works corpus,
-					so there is none.
+					never from a title, re-skinned to your own domain. The state files hold
+					a pattern, a verdict, an element id and a date. A problems directory
+					would become a derivative-works corpus, so there is none.
 				</P>
 
 				<P>
@@ -303,9 +300,9 @@ export default function Jobforge() {
 						swe-interview-coach
 					</Link>{" "}
 					under MIT, with attribution per file. The taxonomy, the grading
-					mechanism, the hook, the bank and the interview schema are new.
-					Every constant generalises from one person&apos;s log, so they sit in
-					frontmatter and are meant to be changed.
+										mechanism, the hook, the bank and the interview schema are new. Every
+					constant generalises from one person&apos;s log, so it sits in
+					frontmatter and is meant to be changed.
 				</P>
 
 				<Box h={{ base: 12, md: 20 }} />
