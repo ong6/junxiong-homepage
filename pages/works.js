@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Flex, Heading, Link, Text, useColorModeValue } from "@chakra-ui/react";
 import Image from "next/image";
 import NextLink from "next/link";
 import Layout from "../components/layouts/Articles";
@@ -81,7 +81,7 @@ const Works = () => {
 	return (
 		<Layout
 			title="Archive"
-			description="Archive of Ong Jun Xiong's NUS projects, 2020 to 2023: hackathons, coursework, design work and open source. Current work lives on the resume.">
+			description="Archive of Ong Jun Xiong's NUS projects, 2020 to 2023: hackathons, coursework, design work and open source. Current projects are on the homepage.">
 			<Box pt={{ base: 10, md: 14 }}>
 				<Flex align="baseline" justify="space-between" wrap="wrap" gap={2}>
 					<Heading as="h1" fontSize={{ base: "26px", md: "30px" }}>
@@ -93,7 +93,11 @@ const Works = () => {
 				</Flex>
 				<Text mt={3} maxW="620px" fontSize="15px" lineHeight="1.7" color="text.muted">
 					Everything I built during my NUS years. I keep the list as a record of what we made back
-					then. What I work on now is on my resume.
+					then. Current projects are on the{" "}
+					<Link as={NextLink} href="/#work">
+						homepage
+					</Link>
+					.
 				</Text>
 
 				<Box mt={{ base: 8, md: 12 }}>

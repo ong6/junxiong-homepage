@@ -1,7 +1,7 @@
 const { expect, test } = require("@playwright/test");
 const { SEL, packetCentre, dist, collectErrors } = require("./helpers");
 
-const PAGES = ["/groundplane", "/jobforge", "/uipack"];
+const PAGES = ["/compoze", "/groundplane", "/jobforge", "/trading-engine", "/uipack"];
 
 for (const path of PAGES) {
 	test.describe(`${path} figures`, () => {
@@ -77,7 +77,7 @@ test("/groundplane expand opens the wide drawing full-screen and Esc closes it",
 	await expect(dialog).toHaveCount(0);
 });
 
-for (const path of ["/uipack", "/groundplane", "/jobforge"]) {
+for (const path of ["/uipack", "/compoze", "/groundplane", "/jobforge", "/trading-engine"]) {
 	test(`${path} at 390 has no horizontal overflow`, async ({ page }) => {
 		await page.setViewportSize({ width: 390, height: 844 });
 		await page.goto(path);

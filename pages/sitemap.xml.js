@@ -7,15 +7,16 @@ const SITE = "https://junxiong.dev";
 // detail pages are appended from lib/works.js so the sitemap can never drift
 // from the actual routes.
 const topRoutes = [
-	{ path: "/", lastmod: "2026-09-16", changefreq: "weekly", priority: "1.0" },
+	{ path: "/", lastmod: "2026-09-19", changefreq: "weekly", priority: "1.0" },
 	{ path: "/resume", lastmod: "2026-09-01", changefreq: "weekly", priority: "0.9" },
 	{ path: "/compoze", lastmod: "2026-09-16", changefreq: "yearly", priority: "0.8" },
 	{ path: "/groundplane", lastmod: "2026-09-16", changefreq: "yearly", priority: "0.8" },
+	{ path: "/trading-engine", lastmod: "2026-09-18", changefreq: "yearly", priority: "0.8" },
 	{ path: "/jobforge", lastmod: "2026-09-03", changefreq: "yearly", priority: "0.8" },
 	{ path: "/skillpack", lastmod: "2026-09-16", changefreq: "yearly", priority: "0.8" },
 	{ path: "/uipack", lastmod: "2026-09-16", changefreq: "monthly", priority: "0.6" },
 	{ path: "/works", lastmod: "2026-09-01", changefreq: "monthly", priority: "0.7" },
-	{ path: "/hobbies", lastmod: "2026-09-01", changefreq: "monthly", priority: "0.5" },
+	{ path: "/hobbies", lastmod: "2026-09-19", changefreq: "monthly", priority: "0.5" },
 ];
 
 const WORKS_LASTMOD = "2026-08-28";

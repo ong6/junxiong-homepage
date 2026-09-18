@@ -8,15 +8,19 @@ const skills = [
 	},
 	{
 		label: "Backend",
-		value: "Go · TypeScript · Python · Java · gRPC · REST · Kafka · Redis",
+		value: "Go · TypeScript · Python · Java · gRPC · REST · distributed systems",
 	},
 	{
 		label: "Data & infra",
-		value: "MySQL · PostgreSQL · ClickHouse · Hive · Docker · Kubernetes · AWS",
+		value: "MySQL · PostgreSQL · ClickHouse · Hive · Kafka · Redis · Docker · Kubernetes · AWS",
 	},
 	{
-		label: "Product",
-		value: "React · Next.js · distributed systems · client delivery · technical scoping",
+		label: "Frontend",
+		value: "React · Next.js",
+	},
+	{
+		label: "Delivery",
+		value: "client delivery · technical scoping",
 	},
 ];
 

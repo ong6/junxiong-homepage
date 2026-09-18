@@ -1,14 +1,14 @@
 import { Badge, Defs, Flow, Group, Label, Lane, Line, Node } from "./parts";
 
 export const CLAIM =
-	"One skills repo is a git subtree inside every consumer repo. A SessionStart hook merges what upstream moved, a Stop hook commits local edits and pushes them back, so a skill edited where it is used reaches every other repo; the plugin marketplace reads the same repo one way.";
+	"Each consumer carries the skills as a git subtree. SessionStart merges fetched changes and Stop commits only the skills folder, then merges and pushes when the checkout is clean. Unrelated work or an existing Git operation defers sync; the plugin marketplace reads upstream one way.";
 
 export const meta = {
 	number: "Figure 01",
 	eyebrow: "The sync loop",
 	title: "Edit where you use it, push back where it lives",
 	caption:
-		"Every consumer repo carries the skills as a git subtree. A SessionStart hook merges what upstream moved; a Stop hook commits local edits and pushes them back. The plugin path reads the same repo one way.",
+		"SessionStart merges fetched changes; the first fetch is synchronous. Stop commits only the skills folder. Unrelated work defers merging and pushing, and an existing Git operation defers the whole sync. The plugin path reads upstream one way.",
 	legend: [
 		{ label: "Fetch + merge", kind: "request" },
 		{ label: "Commit + push back", kind: "accent" },
@@ -18,11 +18,8 @@ export const meta = {
 	narrowViewBox: "0 0 360 652",
 };
 
-
-// Claim: one skills repo is a git subtree inside every consumer repo. A
-// SessionStart hook merges what upstream moved, a Stop hook commits local
-// edits and pushes them back, so a skill edited where it is used reaches every
-// other repo; the plugin marketplace reads the same repo one way.
+// Claim: fetched changes merge at SessionStart and folder edits push at Stop
+// when the checkout is ready. Unrelated work and existing operations defer sync.
 //
 // Accent follows the return path: the Stop hook and the push back upstream,
 // because that direction is the point. Fetching, symlinks and the plugin path
@@ -40,7 +37,14 @@ export function Wide({ id }) {
 			<Defs id={id} />
 
 			{/* ---------- upstream ---------- */}
-			<Group x={40} y={64} w={280} h={296} title="UPSTREAM · ong6/skillpack" flow={["pull", "push", "plugin"]} />
+			<Group
+				x={40}
+				y={64}
+				w={280}
+				h={296}
+				title="UPSTREAM · ong6/skillpack"
+				flow={["pull", "push", "plugin"]}
+			/>
 			<Badge cx={40} cy={64} text="1" />
 			{UPSTREAM.map(([label, sub], i) => (
 				<Node
@@ -52,11 +56,20 @@ export function Wide({ id }) {
 					label={label}
 					sub={sub}
 					size={13}
-					subSize={11} flow={["pull", "push"]} />
+					subSize={11}
+					flow={["pull", "push"]}
+				/>
 			))}
 
 			{/* ---------- consumer ---------- */}
-			<Group x={472} y={64} w={408} h={352} title="CONSUMER REPO · THIS STORE, EVERY OTHER REPO" flow={["pull", "push"]} />
+			<Group
+				x={472}
+				y={64}
+				w={408}
+				h={352}
+				title="CONSUMER REPO · THIS STORE, EVERY OTHER REPO"
+				flow={["pull", "push"]}
+			/>
 			<Badge cx={472} cy={64} text="2" />
 			<Node
 				x={496}
@@ -66,13 +79,35 @@ export function Wide({ id }) {
 				label=".claude/shared-skills/"
 				sub="git subtree, squashed"
 				size={13}
-				subSize={11} flow={["pull", "push"]} />
+				subSize={11}
+				flow={["pull", "push"]}
+			/>
 
 			<Line id={id} x1={580} y1={168} x2={580} y2={208} flow="pull" />
 			<Line id={id} x1={772} y1={168} x2={772} y2={208} flow="pull" />
 			<Label x={676} y={192} text="symlinks" anchor="middle" size={11} />
-			<Node x={496} y={208} w={168} h={56} label=".claude/skills/" sub="Claude Code" size={13} subSize={11} flow="pull" />
-			<Node x={688} y={208} w={168} h={56} label=".agents/skills/" sub="Codex" size={13} subSize={11} flow="pull" />
+			<Node
+				x={496}
+				y={208}
+				w={168}
+				h={56}
+				label=".claude/skills/"
+				sub="Claude Code"
+				size={13}
+				subSize={11}
+				flow="pull"
+			/>
+			<Node
+				x={688}
+				y={208}
+				w={168}
+				h={56}
+				label=".agents/skills/"
+				sub="Codex"
+				size={13}
+				subSize={11}
+				flow="pull"
+			/>
 
 			<Node
 				x={496}
@@ -82,18 +117,30 @@ export function Wide({ id }) {
 				label="SessionStart hook"
 				sub="sync.sh --start"
 				size={13}
-				subSize={11} flow="pull" />
-			<Node x={688} y={320} w={168} h={56} label="Stop hook" sub="sync.sh --stop" size={13} subSize={11} flow="push" />
+				subSize={11}
+				flow="pull"
+			/>
+			<Node
+				x={688}
+				y={320}
+				w={168}
+				h={56}
+				label="Stop hook"
+				sub="sync.sh --stop"
+				size={13}
+				subSize={11}
+				flow="push"
+			/>
 			<Badge cx={688} cy={320} text="3" accent />
 
 			{/* ---------- the loop ---------- */}
 			<Line id={id} x1={320} y1={140} x2={472} y2={140} flow="pull" />
-			<Label x={396} y={132} text="fetch in background" anchor="middle" size={11} />
-			<Label x={396} y={158} text="merge at start" anchor="middle" size={11} />
+			<Label x={396} y={132} text="fetched changes" anchor="middle" size={11} />
+			<Label x={396} y={158} text="merge when clean" anchor="middle" size={11} />
 
 			<Line id={id} x1={472} y1={348} x2={320} y2={348} accent flow="push" />
 			<Label x={396} y={340} text="commit folder edits" anchor="middle" accent size={11} />
-			<Label x={396} y={366} text="merge upstream, push" anchor="middle" accent size={11} />
+			<Label x={396} y={366} text="push when clean" anchor="middle" accent size={11} />
 
 			{/* ---------- plugin path ---------- */}
 			<Line id={id} x1={180} y1={360} x2={180} y2={448} flow="plugin" />
@@ -106,7 +153,9 @@ export function Wide({ id }) {
 				label="Plugin consumer"
 				sub="read-only, no edits back"
 				size={13}
-				subSize={11} flow="plugin" />
+				subSize={11}
+				flow="plugin"
+			/>
 			<Badge cx={64} cy={448} text="4" />
 
 			{/* ---------- lanes + packets ---------- */}
@@ -144,25 +193,89 @@ export function Narrow({ id }) {
 			))}
 
 			<Line id={id} x1={110} y1={224} x2={110} y2={296} flow="pull" />
-			<Label x={120} y={252} text="fetch, merge" size={10} />
-			<Label x={120} y={268} text="at start" size={10} />
+			<Label x={120} y={252} text="merge fetched" size={10} />
+			<Label x={120} y={268} text="when clean" size={10} />
 			<Line id={id} x1={250} y1={296} x2={250} y2={224} accent flow="push" />
 			<Label x={260} y={252} text="commit, push" accent size={10} />
-			<Label x={260} y={268} text="at stop" accent size={10} />
+			<Label x={260} y={268} text="when clean" accent size={10} />
 
-			<Group x={20} y={296} w={320} h={252} title="CONSUMER REPO · EVERY REPO OF MINE" titleSize={10} />
+			<Group
+				x={20}
+				y={296}
+				w={320}
+				h={252}
+				title="CONSUMER REPO · EVERY REPO OF MINE"
+				titleSize={10}
+			/>
 			<Badge cx={20} cy={296} text="2" r={8} />
-			<Node x={44} y={328} w={272} h={44} label=".claude/shared-skills/" sub="git subtree, squashed" size={12} subSize={9} />
+			<Node
+				x={44}
+				y={328}
+				w={272}
+				h={44}
+				label=".claude/shared-skills/"
+				sub="git subtree, squashed"
+				size={12}
+				subSize={9}
+			/>
 			<Line id={id} x1={110} y1={372} x2={110} y2={412} />
 			<Line id={id} x1={250} y1={372} x2={250} y2={412} />
 			<Label x={180} y={396} text="symlinks" anchor="middle" size={10} />
-			<Node x={44} y={412} w={132} h={44} label=".claude/skills/" sub="Claude Code" size={11} subSize={9} />
-			<Node x={184} y={412} w={132} h={44} label=".agents/skills/" sub="Codex" size={11} subSize={9} />
-			<Node x={44} y={480} w={132} h={44} label="SessionStart" sub="sync.sh --start" size={11} subSize={9} flow="pull" />
-			<Node x={184} y={480} w={132} h={44} label="Stop hook" sub="sync.sh --stop" size={11} subSize={9} flow="push" />
+			<Node
+				x={44}
+				y={412}
+				w={132}
+				h={44}
+				label=".claude/skills/"
+				sub="Claude Code"
+				size={11}
+				subSize={9}
+			/>
+			<Node
+				x={184}
+				y={412}
+				w={132}
+				h={44}
+				label=".agents/skills/"
+				sub="Codex"
+				size={11}
+				subSize={9}
+			/>
+			<Node
+				x={44}
+				y={480}
+				w={132}
+				h={44}
+				label="SessionStart"
+				sub="sync.sh --start"
+				size={11}
+				subSize={9}
+				flow="pull"
+			/>
+			<Node
+				x={184}
+				y={480}
+				w={132}
+				h={44}
+				label="Stop hook"
+				sub="sync.sh --stop"
+				size={11}
+				subSize={9}
+				flow="push"
+			/>
 			<Badge cx={184} cy={480} text="3" accent r={8} />
 
-			<Node x={44} y={580} w={272} h={44} label="Plugin consumer" sub="installs upstream read-only" size={12} subSize={9} flow="plugin" />
+			<Node
+				x={44}
+				y={580}
+				w={272}
+				h={44}
+				label="Plugin consumer"
+				sub="installs upstream read-only"
+				size={12}
+				subSize={9}
+				flow="plugin"
+			/>
 			<Badge cx={44} cy={580} text="4" r={8} />
 
 			<Flow x1={110} y1={224} x2={110} y2={296} kind="request" dur={1.6} flow="pull" />

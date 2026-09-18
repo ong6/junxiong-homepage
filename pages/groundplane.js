@@ -26,6 +26,36 @@ const H2 = (props) => (
 	/>
 );
 
+const Details = ({ title, children }) => (
+	<Box
+		as="details"
+		mt={{ base: 8, md: 10 }}
+		borderTop="1px solid"
+		borderBottom="1px solid"
+		borderColor="border.subtle"
+		sx={{
+			"@media print": {
+				"&::details-content": { contentVisibility: "visible", height: "auto" },
+				"& > .case-study-details-body": { display: "block" },
+			},
+		}}>
+		<Box
+			as="summary"
+			minH="44px"
+			py={3}
+			px={1}
+			fontSize="17px"
+			fontWeight="700"
+			cursor="pointer"
+			_focusVisible={{ outline: "2px solid", outlineColor: "brand.solid", outlineOffset: "2px" }}>
+			{title}
+		</Box>
+		<Box className="case-study-details-body" pb={5}>
+			{children}
+		</Box>
+	</Box>
+);
+
 // Straight from the README. The "before" is what most agents do today; the
 // "after" is the same question with the argmax computed in code.
 const BEFORE = [
@@ -84,7 +114,7 @@ export default function Groundplane() {
 				programmingLanguage: "Python",
 				license: "https://opensource.org/licenses/MIT",
 			}}
-			description="Groundplane is an open-source Python library that draws a hard line between what a model may write and what must come from code, and raises when the model crosses it.">
+			description="Groundplane is an open-source Python library that checks declared fields in agent output against recorded tool facts, with deterministic checks and errors that include provenance.">
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
 					<Link
@@ -124,11 +154,9 @@ export default function Groundplane() {
 						fontSize={{ base: "19px", md: "21px" }}
 						lineHeight="1.6"
 						fontWeight="600">
-						An agent calls tools, gets ground truth, then writes prose. The
-						prose usually matches. When it does not, nothing throws and the
-						customer reads it. Groundplane records the tool results as typed
-						facts, lets the model fill in fields, and raises the moment a field
-						says something the facts do not support. Code on{" "}
+						Groundplane checks declared fields in an agent&apos;s structured
+						output against facts recorded from tool calls. A failed check raises
+						an error with the supporting tool call attached. Code on{" "}
 						<Link href="https://github.com/ong6/groundplane" isExternal>
 							GitHub
 						</Link>
@@ -136,17 +164,10 @@ export default function Groundplane() {
 					</Text>
 				</Box>
 
-				<DiagramFigure
-					id="gparch"
-					headingLevel={2}
-					diagram={GroundplaneArchitecture}
-					caption="fig. 1 — the whole library. ① Tool results are recorded as typed facts, each with the tool call that produced it; the two adapters do the same from inside LangGraph or MCP. ② A boundary names which facts a block of output may use and which checks run. ③ The model submits structured fields, never prose. ④ Six deterministic checks resolve each field against the recorded facts. ⑤ The first unsupported claim raises UnsupportedClaim with the provenance in the message; nothing is logged and ignored."
-				/>
-
 				<H2>Where it came from</H2>
 
 				<P>
-										I first built this shape inside a production AI platform at TikTok.
+					I first built this shape inside a production AI platform at TikTok.
 					Summaries there rank things, and a model ranking a table of numbers is
 					right most of the time. Most of the time is not a guarantee. A senior
 					stakeholder would not sign off on output that could name the wrong
@@ -154,40 +175,13 @@ export default function Groundplane() {
 				</P>
 
 				<P>
-										The fix: compute the ranking in code and limit the model to phrasing
+					The fix: compute the ranking in code and limit the model to phrasing
 					it. The model could describe the winner but no longer choose one.
 					Groundplane is that idea taken out of the platform, generalised past
 					argmax, and published under MIT.
 				</P>
 
-				<H2>Declared facts, not detected hallucinations</H2>
-
-				<P>
-										You cannot prompt this away. &ldquo;Only state what is in the
-					data&rdquo; is an instruction to the component that failed. A second
-					model as judge is the same class of component making the same class of
-					mistake, with a rubber stamp. The library does neither. Tool results go
-					into a{" "}
-					<Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">
-						FactRegistry
-					</Box>{" "}
-										as typed facts, each carrying the tool call and arguments that produced
-					it. Facts are write-once: a later call that changes the value is a new
-					fact with a new name, so provenance never lies.
-				</P>
-
-				<P>
-					A{" "}
-					<Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">
-						boundary
-					</Box>{" "}
-										wraps a block of model output and names the facts it may use. The model
-					emits structured fields, never prose. Submitting a plain string is a
-					TypeError. Leaving the block without submitting also raises, because a
-					check that silently never ran is worse than no check.
-				</P>
-
-				<CodeFigure caption="fig. 2 — the README before and after. The before trusts whatever the model
+				<CodeFigure caption="fig. 1 — the README before and after. The before trusts whatever the model
 				wrote. The after records the ranking with its provenance, lets the model
 				fill a winner field, and the boundary refuses it. The error text is what
 				the library raises for this input.">
@@ -195,6 +189,48 @@ export default function Groundplane() {
 					<CodeBlock title="after" lines={AFTER} />
 					<CodeBlock title="raised" lines={ERROR} />
 				</CodeFigure>
+
+				<H2>Scope</H2>
+
+				<P>
+					It validates declared fields against declared facts. If the model
+					names the right winner and editorialises misleadingly around it,
+					that passes. I kept the scope that narrow on purpose. I compute
+					rankings in code and check the model&apos;s structured output against
+					them. A judge model would make this check probabilistic.
+					Groundplane&apos;s check needs to return the same result for the same facts.
+				</P>
+
+				<DiagramFigure
+					id="gparch"
+					headingLevel={2}
+					diagram={GroundplaneArchitecture}
+					caption="fig. 2 — the whole library. ① Tool results are recorded as typed facts, each with the tool call that produced it; the two adapters do the same from inside LangGraph or MCP. ② A boundary names which facts a block of output may use and which checks run. ③ The model submits structured fields, never prose. ④ The configured checks validate declared fields against the recorded facts. ⑤ The first failed claim check raises UnsupportedClaim with the provenance in the message; nothing is logged and ignored."
+				/>
+
+				<H2>Recording facts and checking fields</H2>
+
+				<P>
+					The check runs in code after the model submits its fields. Tool results go
+					into a{" "}
+					<Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">
+						FactRegistry
+					</Box>{" "}
+					as typed facts, each carrying the tool call and arguments that produced
+					it. Facts are write-once: a later call that changes the value is a new
+					fact with a new name, preserving the earlier value and its provenance.
+				</P>
+
+				<P>
+					A{" "}
+					<Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">
+						boundary
+					</Box>{" "}
+					wraps a block of model output and names the facts it may use. The model
+					emits structured fields, never prose. Submitting a plain string is a
+					TypeError. Leaving the block without submitting also raises, because a
+					check that silently never ran is worse than no check.
+				</P>
 
 				<H2>Six checks, one question each</H2>
 
@@ -209,12 +245,12 @@ export default function Groundplane() {
 					<Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">superlative</Box>{" "}
 					checks that the named winner is the computed argmax and any quoted
 					score is the computed score. <Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">ranking_prefix</Box>{" "}
-										checks a top-k list against the computed order, including a cut inside
+					checks a top-k list against the computed order, including a cut inside
 					a block of tied scores. <Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">aggregate_reconciles</Box>{" "}
-										recomputes a stated sum, mean, count, min, max or median over the
+					recomputes a stated sum, mean, count, min, max or median over the
 					recorded rows and refuses a truncated table. <Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">entities_recorded</Box>{" "}
 					checks that every name the model used came from a recorded set. <Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">row_integrity</Box>{" "}
-										resolves the named row first and reads every other field off that row,
+					resolves the named row first and reads every other field off that row,
 					which catches a neighbour&apos;s value in the wrong column.{" "}
 					<Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">comparison</Box>{" "}
 					recomputes &ldquo;A beat B by 12%&rdquo; in code and, when the
@@ -223,50 +259,24 @@ export default function Groundplane() {
 				</P>
 
 				<P>
-										Numeric comparisons are exact by default. Every check takes a
+					Numeric comparisons are exact by default. Every check takes a
 					tolerance, but it starts at zero, not the usual nine digits of
 					forgiveness. A checker built to catch a wrong number should not wave
 					one through.
 				</P>
 
-				<Box
-					as="dl"
-					mt={{ base: 12, md: 16 }}
-					borderTop="1px solid"
-					borderColor="border.subtle"
-					fontFamily="var(--font-mono)"
-					fontSize="12px">
-					{facts.map(([label, value]) => (
-						<Box
-							key={label}
-							display="flex"
-							justifyContent="space-between"
-							gap={4}
-							py={2}
-							borderBottom="1px solid"
-							borderColor="border.subtle">
-							<Box as="dt" color="text.muted">
-								{label}
-							</Box>
-							<Box as="dd" ml={0} textAlign="right" fontWeight="700">
-								{value}
-							</Box>
-						</Box>
-					))}
-				</Box>
-
 				<H2>Failing loudly</H2>
 
 				<P>
-										The error message is most of the product. It carries the field, what
+					The error message is most of the product. It carries the field, what
 					the model said, what the facts support, the tool call with its
 					arguments, and where the model&apos;s pick ranked. Whoever reads it at
-					2am can tell whether the data or the prose was wrong without opening a
-					trace.
+					2am can tell whether the data or the submitted field was wrong
+					without opening a trace.
 				</P>
 
 				<P>
-										Inside a LangGraph graph the same failure can become a state update
+					Inside a LangGraph graph the same failure can become a state update
 					instead of a crash. The graph routes back to the model with the
 					checker&apos;s message as the correction. A misconfigured check still
 					propagates: a developer bug is not something to reask the model about.
@@ -275,23 +285,42 @@ export default function Groundplane() {
 					because text is a rendering and reading it is parsing prose again.
 				</P>
 
-				<H2>What it is not</H2>
+				<H2>Testing the checks</H2>
 
 				<P>
-										It is not a hallucination detector. It validates declared fields
-					against declared facts. If the model names the right winner and
-					editorialises misleadingly around it, that passes. I kept the scope
-					that narrow on purpose. Every system I saw that tried to verify open
-					prose handed the verdict to embeddings or a judge model, which brings
-					back the probabilistic answer this exists to remove.
-				</P>
-
-				<P>
-										The core has no dependencies and the adapters import neither framework
+					The core has no dependencies and the adapters import neither framework
 					they adapt, so a plain interpreter can read and test all of it. 169
 					tests run on five Python versions in CI, many of them adversarial cases
 					where the plausible model answer is provably wrong.
 				</P>
+
+				<Details title="Package details">
+					<Box
+						as="dl"
+						mt={3}
+						borderTop="1px solid"
+						borderColor="border.subtle"
+						fontFamily="var(--font-mono)"
+						fontSize="12px">
+						{facts.map(([label, value]) => (
+							<Box
+								key={label}
+								display="flex"
+								justifyContent="space-between"
+								gap={4}
+								py={2}
+								borderBottom="1px solid"
+								borderColor="border.subtle">
+								<Box as="dt" color="text.muted">
+									{label}
+								</Box>
+								<Box as="dd" ml={0} textAlign="right" fontWeight="700">
+									{value}
+								</Box>
+							</Box>
+						))}
+					</Box>
+				</Details>
 
 				<Box h={{ base: 12, md: 20 }} />
 			</Container>

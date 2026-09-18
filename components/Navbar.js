@@ -7,6 +7,7 @@ import {
 	Flex,
 	IconButton,
 	Link,
+	VisuallyHidden,
 	useDisclosure,
 	Stack,
 	useColorModeValue,
@@ -19,15 +20,25 @@ import ThemeToggleButton from "./ThemeToggleButton";
 const NAV_HEIGHT = "56px";
 
 const navigationLinks = [
-	{ href: "/#work", homeHref: "#work", name: "Projects" },
-	{ href: "/#about", homeHref: "#about", name: "About" },
-	{ href: "/#now", homeHref: "#now", name: "Now" },
+	{
+		href: "/#work",
+		homeHref: "#work",
+		name: "Projects",
+		activePaths: ["/", "/compoze", "/groundplane", "/jobforge", "/skillpack", "/trading-engine", "/works"],
+	},
+	{ href: "/uipack", name: "UI Pack" },
+	{ href: "/hobbies", name: "Hobbies" },
+	{ href: "https://notes.junxiong.dev", name: "Writing", external: true },
 	{ href: "/resume", name: "Résumé" },
-	{ href: "/works", name: "Archive" },
-	{ href: "https://notes.junxiong.dev", name: "Notes", external: true },
 ];
 
-const isActive = (link, path) => !link.homeHref && !link.external && path.startsWith(link.href);
+const pathname = (path) => (path || "/").split(/[?#]/)[0].replace(/\/+$/, "") || "/";
+
+const isActive = (link, path) => {
+	if (link.external) return false;
+	const current = pathname(path);
+	return link.activePaths ? link.activePaths.includes(current) : current === link.href;
+};
 
 function LinkItem({ href, active, external, children }) {
 	return (
@@ -62,9 +73,12 @@ function LinkItem({ href, active, external, children }) {
 			_hover={{ color: "page.text", textDecoration: "none", _after: { transform: "scaleX(1)" } }}>
 			{children}
 			{external && (
-				<Box as="span" aria-hidden="true" ml="3px" fontSize="11px">
-					↗
-				</Box>
+				<>
+					<Box as="span" aria-hidden="true" ml="3px" fontSize="11px">
+						↗
+					</Box>
+					<VisuallyHidden> (opens in a new tab)</VisuallyHidden>
+				</>
 			)}
 		</Link>
 	);
@@ -77,17 +91,20 @@ const Navbar = ({ path = "/", ...props }) => {
 	const menu = useDisclosure();
 	const menuRef = useRef(null);
 	const toggleRef = useRef(null);
+	const restoreFocusRef = useRef(false);
 
 	// Mobile menu: Esc closes, a click outside closes, focus moves into the
 	// menu on open and back to the toggle on close.
 	const { isOpen, onClose } = menu;
 	useEffect(() => {
 		if (!isOpen) return undefined;
-		const toggle = toggleRef.current;
 		const first = menuRef.current && menuRef.current.querySelector("a");
 		if (first) first.focus();
 		const onKey = (e) => {
-			if (e.key === "Escape") onClose();
+			if (e.key === "Escape") {
+				restoreFocusRef.current = true;
+				onClose();
+			}
 		};
 		const onPointer = (e) => {
 			const inMenu = menuRef.current && menuRef.current.contains(e.target);
@@ -99,9 +116,21 @@ const Navbar = ({ path = "/", ...props }) => {
 		return () => {
 			document.removeEventListener("keydown", onKey);
 			document.removeEventListener("pointerdown", onPointer);
-			if (toggle) toggle.focus();
 		};
 	}, [isOpen, onClose]);
+
+	useEffect(() => {
+		if (!isOpen && restoreFocusRef.current) {
+			restoreFocusRef.current = false;
+			toggleRef.current?.focus();
+		}
+	}, [isOpen]);
+
+	// The layout persists between pages, so browser Back/Forward must not leave
+	// a menu from the previous route hanging open.
+	useEffect(() => {
+		onClose();
+	}, [path, onClose]);
 
 	return (
 		<Box
@@ -121,11 +150,15 @@ const Navbar = ({ path = "/", ...props }) => {
 			{...props}>
 			<Container maxW="1120px" px={4}>
 				<Flex h="100%" align="center" justify="space-between" gap={4}>
-					<Box flexShrink={0} display="flex" alignItems="center">
+					<Box
+						flexShrink={0}
+						display="flex"
+						alignItems="center"
+						sx={{ "> a": { display: "inline-flex", alignItems: "center", minH: "44px" } }}>
 						<Logo />
 					</Box>
 
-					<Flex align="center" gap={{ base: 1, md: 3 }} flexShrink={0}>
+					<Flex align="center" gap={{ base: 2, md: 3 }} flexShrink={0}>
 						<Stack
 							as="ul"
 							listStyleType="none"
@@ -186,7 +219,13 @@ const Navbar = ({ path = "/", ...props }) => {
 						border="1px solid"
 						borderColor="border.subtle"
 						borderRadius="md"
-						boxShadow="0 18px 48px rgba(0,0,0,.18)">
+						boxShadow="0 18px 48px rgba(0,0,0,.18)"
+						onBlur={(event) => {
+							const next = event.relatedTarget;
+							if (!menuRef.current?.contains(next) && !toggleRef.current?.contains(next)) {
+								onClose();
+							}
+						}}>
 						{navigationLinks.map((link) => {
 							const href = onHome && link.homeHref ? link.homeHref : link.href;
 							const active = isActive(link, path);
@@ -213,9 +252,12 @@ const Navbar = ({ path = "/", ...props }) => {
 										onClick={menu.onClose}>
 										{link.name}
 										{link.external && (
-											<Box as="span" aria-hidden="true" ml="4px" fontSize="12px">
-												↗
-											</Box>
+											<>
+												<Box as="span" aria-hidden="true" ml="4px" fontSize="12px">
+													↗
+												</Box>
+												<VisuallyHidden> (opens in a new tab)</VisuallyHidden>
+											</>
 										)}
 									</Link>
 								</Box>

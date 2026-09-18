@@ -1,0 +1,163 @@
+.page {
+	--chapter-gutter: clamp(20px, 5vw, 72px);
+	position: relative;
+	width: 100vw;
+	margin-left: calc(50% - 50vw);
+}
+.page::before {
+	content: "";
+	position: absolute;
+	z-index: 1;
+	top: min(76dvh, 760px);
+	bottom: 0;
+	left: 41%;
+	width: 1px;
+	background: var(--chakra-colors-brand-solid);
+	opacity: .58;
+	pointer-events: none;
+}
+
+.intro {
+	min-height: min(76dvh, 760px);
+	display: flex;
+	align-items: flex-end;
+	padding: clamp(64px, 11vw, 140px) max(var(--chapter-gutter), calc((100vw - 1120px) / 2 + 16px));
+	border-bottom: 1px solid var(--chakra-colors-border-subtle);
+}
+
+.introInner { max-width: 820px; }
+.eyebrow {
+	font-family: var(--font-mono);
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: .1em;
+	color: var(--chakra-colors-brand-solid);
+}
+.title {
+	margin: 16px 0 20px;
+	max-width: 12ch;
+	font-size: clamp(52px, 9vw, 124px);
+	font-weight: 720;
+	letter-spacing: -.065em;
+	line-height: .88;
+}
+.lede { max-width: 640px; font-size: clamp(18px, 2vw, 22px); line-height: 1.6; color: var(--chakra-colors-text-muted); }
+.chapterNav { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+.chapterNav a {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	padding: 0 14px;
+	border: 1px solid var(--chakra-colors-border-subtle);
+	border-radius: 999px;
+	font-family: var(--font-mono);
+	font-size: 12px;
+	font-weight: 700;
+	text-decoration: none;
+}
+.chapterNav a:hover { border-color: var(--chakra-colors-brand-solid); background: var(--chakra-colors-surface-quiet); }
+.chapterNav a[aria-current="location"] { border-color: var(--chakra-colors-brand-solid); background: var(--chakra-colors-surface-quiet); }
+
+.chapter {
+	position: relative;
+	min-height: 82dvh;
+	display: grid;
+	grid-template-columns: minmax(280px, .82fr) minmax(420px, 1.18fr);
+	align-items: stretch;
+	scroll-margin-top: 56px;
+	border-bottom: 1px solid var(--chakra-colors-border-subtle);
+}
+.copy {
+	position: relative;
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	max-width: 650px;
+	padding: 80px var(--chapter-gutter) 80px max(var(--chapter-gutter), calc((100vw - 1120px) / 2 + 16px));
+}
+.number {
+	font-family: var(--font-mono);
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: .12em;
+	color: var(--chakra-colors-brand-solid);
+}
+.heading { margin: 10px 0 24px; font-size: clamp(38px, 5.4vw, 78px); line-height: .98; letter-spacing: -.052em; }
+.prose { max-width: 64ch; font-size: 17px; line-height: 1.75; color: var(--chakra-colors-text-muted); }
+.prose a { color: var(--chakra-colors-brand-solid); }
+.visual { position: relative; min-width: 0; min-height: 82dvh; }
+.visualSticky { position: sticky; top: 72px; height: calc(82dvh - 16px); padding: clamp(18px, 3vw, 44px); }
+.scene {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	border: 1px solid var(--chakra-colors-border-subtle);
+	border-radius: 18px;
+	background-color: var(--chakra-colors-surface-raised);
+	background-image: linear-gradient(var(--chakra-colors-border-subtle) 1px, transparent 1px), linear-gradient(90deg, var(--chakra-colors-border-subtle) 1px, transparent 1px);
+	background-size: 42px 42px;
+}
+.canvas, .fallback { position: absolute; inset: 0; width: 100%; height: 100%; }
+.canvas { z-index: 2; opacity: 0; transition: opacity 300ms ease; }
+.canvas[data-ready="true"] { opacity: 1; }
+.fallback { z-index: 1; display: grid; place-items: center; }
+.fallbackSvg { width: min(74%, 440px); height: min(72%, 360px); color: var(--chakra-colors-brand-solid); opacity: .82; }
+.fallbackSvg :global(.soft) { color: var(--chakra-colors-text-muted); opacity: .55; }
+.pause { position: absolute !important; z-index: 6; right: 16px; bottom: 16px; background: var(--chakra-colors-surface-raised) !important; border-color: var(--chakra-colors-border-subtle) !important; font-size: 12px !important; }
+
+.tradingDashboard {
+	position: absolute;
+	inset: 5%;
+	z-index: 3;
+	display: grid;
+	grid-template-rows: auto 1fr auto;
+	padding: clamp(16px, 2vw, 28px);
+	background: color-mix(in srgb, var(--chakra-colors-surface-raised) 94%, transparent);
+	border: 1px solid var(--chakra-colors-brand-solid);
+	box-shadow: 0 28px 90px rgba(0,0,0,.22);
+	opacity: 0;
+	transform: scale(.92) translateY(24px);
+	transition: opacity 520ms ease, transform 720ms cubic-bezier(.2,.8,.2,1);
+}
+.scene[data-active="true"] .tradingDashboard { opacity: 1; transform: none; }
+.scene[data-kind="trading"][data-active="true"] .canvas { opacity: .14; }
+.tradingTopbar, .tradeLog { display: flex; justify-content: space-between; gap: 16px; font: 700 12px/1.2 var(--font-mono); letter-spacing: .08em; }
+.tradingTopbar { padding-bottom: 16px; border-bottom: 1px solid var(--chakra-colors-border-subtle); color: var(--chakra-colors-brand-solid); }
+.tradingGrid { display: grid; grid-template-columns: 1fr minmax(150px, .38fr); gap: 14px; padding: 14px 0; min-height: 0; }
+.chartPanel, .riskPanel { border: 1px solid var(--chakra-colors-border-subtle); background: var(--chakra-colors-page-bg); padding: 16px; }
+.ticker { font: 700 12px/1.2 var(--font-mono); }
+.ticker b, .riskPanel b { color: var(--chakra-colors-brand-solid); }
+.riskLadder { display: grid; align-content: end; gap: 8px; height: calc(100% - 24px); min-height: 160px; padding-top: 20px; }
+.riskLadder span { display: flex; align-items: center; justify-content: space-between; min-height: 42px; padding: 0 14px; border: 1px solid var(--chakra-colors-border-subtle); font: 700 12px/1 var(--font-mono); }
+.riskLadder [data-grade="b"] { width: 58%; }
+.riskLadder [data-grade="a"] { width: 78%; }
+.riskLadder [data-grade="aplus"] { width: 100%; border-color: var(--chakra-colors-brand-solid); color: var(--chakra-colors-brand-solid); }
+.riskPanel { display: grid; align-content: center; gap: 22px; }
+.riskPanel p { display: flex; justify-content: space-between; gap: 10px; font: 700 12px/1.4 var(--font-mono); }
+.tradeLog { padding-top: 16px; border-top: 1px solid var(--chakra-colors-border-subtle); }
+
+@media (max-width: 767px) {
+	.page::before { top: 430px; left: 20px; }
+	.intro { min-height: 0; padding-top: 48px; padding-bottom: 40px; }
+	.title { font-size: clamp(48px, 17vw, 74px); }
+	.chapter { grid-template-columns: 1fr; grid-template-rows: auto minmax(32dvh, 280px); min-height: auto; }
+	.copy { min-height: 0; padding: 56px 20px 32px 40px; justify-content: flex-end; }
+	.heading { font-size: clamp(42px, 13vw, 62px); }
+	.prose { font-size: 16px; }
+	.visual { min-height: 32dvh; }
+	.visualSticky { position: relative; top: auto; height: 32dvh; min-height: 280px; padding: 0 12px 24px; }
+	.scene { border-radius: 14px; }
+	.tradingDashboard { inset: 3%; }
+	.tradingGrid { grid-template-columns: 1fr; }
+	.riskPanel { grid-template-columns: 1fr 1fr 1fr; gap: 8px; align-content: start; }
+	.riskPanel p { display: block; }
+	.riskPanel b { display: block; margin-top: 4px; }
+	.riskLadder { min-height: 90px; gap: 4px; padding-top: 8px; }
+	.riskLadder span { min-height: 28px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.canvas, .tradingDashboard { transition: none; }
+}

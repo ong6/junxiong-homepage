@@ -37,6 +37,36 @@ const H2 = (props) => (
 	/>
 );
 
+const Details = ({ title, children }) => (
+	<Box
+		as="details"
+		mt={{ base: 8, md: 10 }}
+		borderTop="1px solid"
+		borderBottom="1px solid"
+		borderColor="border.subtle"
+		sx={{
+			"@media print": {
+				"&::details-content": { contentVisibility: "visible", height: "auto" },
+				"& > .case-study-details-body": { display: "block" },
+			},
+		}}>
+		<Box
+			as="summary"
+			minH="44px"
+			py={3}
+			px={1}
+			fontSize="17px"
+			fontWeight="700"
+			cursor="pointer"
+			_focusVisible={{ outline: "2px solid", outlineColor: "brand.solid", outlineOffset: "2px" }}>
+			{title}
+		</Box>
+		<Box className="case-study-details-body" pb={5}>
+			{children}
+		</Box>
+	</Box>
+);
+
 // The product shots are light-UI captures. In dark mode they are pulled down
 // a step so they sit in the page rather than glow off it.
 const Figure = ({ src, alt, caption }) => (
@@ -183,24 +213,42 @@ export default function Compoze() {
 					</Text>
 				</Box>
 
+				<P>
+					The pitch was narrow. A company has a few thousand documents nobody
+					reads and staff who ask the same handful of questions about them
+					every week. Compoze answered those questions with the documents
+					attached, so the answer could be checked, not believed.
+				</P>
+
+				<Figure
+					src="/images/compoze/compoze-02.webp"
+					alt="An answered question in Compoze: a knowledge base search over three documents, a structured answer containing a table, and cited sources listed with match scores."
+					caption="fig. 1 — the tool call is shown, the answer is structured, and the sources sit under it with their match scores."
+				/>
+
+				<H2>Working alone</H2>
+
+				<P>
+					I did all six stages of selling and delivering it, discovery through
+					deployment and training. Knowledge engineering was the slow one.
+					Deciding what belongs in a knowledge base, and what must never go near
+					it, is not a technical question, and you cannot do it for the customer.
+					Running it beside a full-time job shaped the product more than any
+					opinion I had about architecture. Anything that needed me awake did not
+					get built.
+				</P>
+
 				<DiagramFigure
 					id="carch"
 					headingLevel={2}
 					diagram={CompozeArchitecture}
-					caption="fig. 1 — the whole system. A question walks ① agent → ② retrieval → ③ pgvector → ④ gateway → ⑤ cited answer inside one request. Ingest runs elsewhere: Ⓐ download, Ⓑ extract, Ⓒ chunk, Ⓓ embed, Ⓔ store. One database, every row under a tenant id and row-level security."
+					caption="fig. 2 — the whole system. A question walks ① agent → ② retrieval → ③ pgvector → ④ gateway → ⑤ cited answer inside one request. Ingest runs elsewhere: Ⓐ download, Ⓑ extract, Ⓒ chunk, Ⓓ embed, Ⓔ store. One database, every row under a tenant id and row-level security."
 				/>
-
-				<P>
-					The pitch was narrow. A company has a few thousand documents nobody
-					reads and staff who ask the same handful of questions about them
-					every week. Compoze answered those questions with the documents attached, so the answer
-					could be checked, not believed.
-				</P>
 
 				<Figure
 					src="/images/compoze/compoze-01.webp"
 					alt="Compoze chat in its empty state, showing the selected agent, four example prompts and the list of tools it can use."
-					caption="fig. 2 — the empty state. Each agent arrives with its own example prompts and a visible list of what it can reach."
+					caption="fig. 3 — the empty state. Each agent arrives with its own example prompts and a visible list of what it can reach."
 				/>
 
 				<P>
@@ -213,11 +261,11 @@ export default function Compoze() {
 
 				<P>
 					Next.js 15 and React 19 on the front, Postgres with pgvector behind
-					Drizzle. Every core table carries a tenant id, checked in the
-					application layer and again by Postgres row-level security, so the
-					database refuses the query the code forgot to scope. One database is one migration and one bill. The price is that a forgotten
-					where clause leaks one customer&apos;s documents into another&apos;s
-					answers. On top: three roles (Admin, Manager, User), an admin portal
+					Drizzle. Every core table carries a tenant id. Tenant checks in the
+					application and Postgres row-level security provide two layers of
+					isolation. One shared database keeps migrations and billing in one
+					place, while tenant scoping has to stay consistent across both layers.
+					On top: three roles (Admin, Manager, User), an admin portal
 					per tenant, and nine models from OpenAI, Anthropic and Google behind
 					one gateway, picked per environment in configuration.
 				</P>
@@ -225,7 +273,7 @@ export default function Compoze() {
 				<H2>Retrieval is the part you get judged on</H2>
 
 				<P>
-										Documents are chunked at about a thousand characters. Each chunk gets a
+					Documents are chunked at about a thousand characters. Each chunk gets a
 					one-sentence header placing it in its document and is embedded with
 					OpenAI at 1536 dimensions. A question runs across up to five knowledge
 					bases in parallel. Each lane is hybrid: cosine search over an HNSW
@@ -239,19 +287,14 @@ export default function Compoze() {
 				<DiagramFigure
 					id="cqf"
 					diagram={CompozeQueryFlow}
-					caption="fig. 3 — one question, five knowledge bases at once. Only chunks over the 0.35 floor survive, and a cross-encoder orders them."
-				/>
-
-				<Figure
-					src="/images/compoze/compoze-02.webp"
-					alt="An answered question in Compoze: a knowledge base search over three documents, a structured answer containing a table, and cited sources listed with match scores."
-					caption="fig. 4 — the tool call is shown, the answer is structured, and the sources sit under it with their match scores."
+					caption="fig. 4 — one question, five knowledge bases at once. Only chunks over the 0.35 floor survive, and a cross-encoder orders them."
 				/>
 
 				<P>
 					Citations are stored with the message, checked for entailment against
-					the sentence they support, and rendered with their match scores. A visible score gets people to open two or
-					three citations and check. Nobody trusts the answer before they have.
+					the sentence they support, and rendered with their match scores. A
+					visible score gets people to open two or three citations and check.
+					Nobody trusts the answer before they have.
 				</P>
 
 				<P>
@@ -266,38 +309,13 @@ export default function Compoze() {
 				<P>
 					A fixed set of question and answer pairs: logged questions, every
 					question a tester asked, and adversarial questions the corpus cannot
-					answer, where the right reply is a refusal. Retrieval and generation are scored apart: context precision for whether the
+					answer, where the right reply is a refusal. Retrieval and generation
+					are scored apart: context precision for whether the
 					good chunks ranked high, faithfulness for whether each claim is
 					entailed by what came back. The set runs in CI. A prompt, chunker or
 					model change fails on a regression against main. Deltas, not absolute
 					thresholds.
 				</P>
-
-				<Box
-					as="dl"
-					mt={{ base: 12, md: 16 }}
-					borderTop="1px solid"
-					borderColor="border.subtle"
-					fontFamily="var(--font-mono)"
-					fontSize="12px">
-					{facts.map(([label, value]) => (
-						<Box
-							key={label}
-							display="flex"
-							justifyContent="space-between"
-							gap={4}
-							py={2}
-							borderBottom="1px solid"
-							borderColor="border.subtle">
-							<Box as="dt" color="text.muted">
-								{label}
-							</Box>
-							<Box as="dd" ml={0} textAlign="right" fontWeight="700">
-								{value}
-							</Box>
-						</Box>
-					))}
-				</Box>
 
 				<H2>Getting the documents in</H2>
 
@@ -342,56 +360,72 @@ export default function Compoze() {
 					caption="fig. 7 — four domain agents, each with its own prompt, tools and examples. Which ones a tenant sees is configuration."
 				/>
 
-				<H2>Things I optimised</H2>
-
-				<P>
-										Chat streams by default. If the client disconnected mid-answer and the
-					stream had not completed, an abort listener handed the job to a QStash
-					workflow, so a request was never billed twice. Each phase (init, load
-					context, RAG query, generation, finalise) was a durable step, so a
-					retry resumed after the last one that completed. When QStash was
-					unreachable the route fell back to plain streaming.
-				</P>
-
-				<P>
-					Edge middleware replaced any client-supplied identity header with
-					the user and tenant id from the verified JWT, so routes trusted it
-					and skipped a database round trip. Indexes led with the tenant id,
-					and chat creation was an atomic insert-on-conflict.
-				</P>
-
-				<MonoTable rows={optimisations} />
-
 				<H2>Safety</H2>
 
 				<P>
-					Retrieved text is untrusted input: an instruction planted in a synced
-					document gets retrieved and runs with the user&apos;s tool
-					permissions. So context arrives in a delimited block the prompt
-					declares as data, and tools are scoped per agent so a
-					document-triggered path reaches nothing with a side effect.
+					Retrieved text is untrusted input. An instruction planted in a synced
+					document can influence the model, so context arrives in a delimited
+					block the prompt declares as data. Tools are scoped per agent and
+					tenant connector. These controls limit the available tool surface.
+					They do not guarantee that the model will ignore a planted instruction.
 				</P>
 
-				<H2>Working alone</H2>
+				<Details title="Implementation inventory">
+					<Box
+						as="dl"
+						mt={3}
+						borderTop="1px solid"
+						borderColor="border.subtle"
+						fontFamily="var(--font-mono)"
+						fontSize="12px">
+						{facts.map(([label, value]) => (
+							<Box
+								key={label}
+								display="flex"
+								justifyContent="space-between"
+								gap={4}
+								py={2}
+								borderBottom="1px solid"
+								borderColor="border.subtle">
+								<Box as="dt" color="text.muted">
+									{label}
+								</Box>
+								<Box as="dd" ml={0} textAlign="right" fontWeight="700">
+									{value}
+								</Box>
+							</Box>
+						))}
+					</Box>
+				</Details>
 
-				<P>
-										With no reviewer, CI is the reviewer. Route contracts are typed, every
-					payload is validated at runtime with Zod, and contract tests run on
-					each push. That is what let me keep changing 53 routes and 23 tables
-					alone. Each request is traced as one span tree with tokens, model and
-					tenant on every span, so pricing is built on cost per tenant per
-					answer. Time to first token is the latency I watched.
-				</P>
+				<Details title="Optimisations and operating details">
+					<P>
+						Chat streams by default. If the client disconnected mid-answer and
+						the stream had not completed, an abort listener handed the job to a
+						QStash workflow. Each phase (init, load context, RAG query,
+						generation, finalise) was a durable step, so a retry could resume
+						after the last completed phase. When QStash was unreachable the
+						route fell back to plain streaming.
+					</P>
 
-				<P>
-										I did all six stages of selling and delivering it, discovery through
-					deployment and training. Knowledge engineering was the slow one.
-					Deciding what belongs in a knowledge base, and what must never go near
-					it, is not a technical question, and you cannot do it for the customer.
-					Running it beside a full-time job shaped the product more than any
-					opinion I had about architecture. Anything that needed me awake did not
-					get built.
-				</P>
+					<P>
+						Edge middleware replaced any client-supplied identity header with
+						the user and tenant id from the verified JWT, so routes trusted it
+						and skipped a database round trip. Indexes led with the tenant id,
+						and chat creation was an atomic insert-on-conflict.
+					</P>
+
+					<MonoTable rows={optimisations} />
+
+					<P>
+						With no reviewer, CI is the reviewer. Route contracts are typed,
+						every payload is validated at runtime with Zod, and contract tests
+						run on each push. That is what let me keep changing 53 routes and
+						23 tables alone. Each request is traced as one span tree with
+						tokens, model and tenant on every span, so pricing is built on cost
+						per tenant per answer. Time to first token is the latency I watched.
+					</P>
+				</Details>
 
 				<Box h={{ base: 12, md: 20 }} />
 			</Container>

@@ -1,120 +1,105 @@
-import { Box, Container, Link, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Link, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { useEffect, useRef, useState } from "react";
+import HobbyScene from "../components/HobbyScene";
 import Layout from "../components/layouts/Articles";
-import Section from "../components/Section";
+import styles from "../styles/Hobbies.module.css";
 
-// A running log, not a grid of cards: one narrow column, numbered entries, a
-// single rule down the left margin. Deliberately unlike /works and the homepage.
-const Entry = ({ index, label, children, delay }) => {
-	const rule = useColorModeValue("rgba(26,36,32,.16)", "rgba(230,235,232,.14)");
-	const num = useColorModeValue("mint.700", "mint.300");
+const chapters = [
+	{ id: "coding-ai", index: "01", label: "Coding & AI", kind: "ai" },
+	{ id: "tennis", index: "02", label: "Tennis", kind: "tennis" },
+	{ id: "trading", index: "03", label: "Trading", kind: "trading" },
+	{ id: "home-servers", index: "04", label: "Home servers", kind: "server" },
+	{ id: "travel", index: "05", label: "Travel", kind: "travel" },
+	{ id: "reading", index: "06", label: "Reading", kind: "reading" },
+];
+
+function Chapter({ id, index, label, kind, active, children }) {
+	return (
+		<Box as="section" id={id} className={styles.chapter} data-chapter={kind}>
+			<Box className={styles.copy}>
+				<Text className={styles.number}>{index} / 06</Text>
+				<Text as="h2" className={styles.heading}>{label}</Text>
+				<Text className={styles.prose}>{children}</Text>
+			</Box>
+			<Box className={styles.visual} aria-label={`${label} visual`}>
+				<Box className={styles.visualSticky}>
+					<HobbyScene kind={kind} label={label} active={active} />
+				</Box>
+			</Box>
+		</Box>
+	);
+}
+
+export default function Hobbies() {
+	const pageRef = useRef(null);
+	const [active, setActive] = useState("coding-ai");
+
+	useEffect(() => {
+		const sections = [...pageRef.current.querySelectorAll("[data-chapter]")];
+		const chooseCentred = () => {
+			const centre = window.innerHeight / 2;
+			const centred = sections.find((section) => {
+				const rect = section.getBoundingClientRect();
+				return rect.top <= centre && rect.bottom >= centre;
+			});
+			if (centred) setActive(centred.id);
+		};
+		const observer = new IntersectionObserver(chooseCentred, { threshold: [0, 0.5] });
+		sections.forEach((section) => observer.observe(section));
+		window.addEventListener("scroll", chooseCentred, { passive: true });
+		chooseCentred();
+		return () => {
+			observer.disconnect();
+			window.removeEventListener("scroll", chooseCentred);
+		};
+	}, []);
 
 	return (
-		<Section delay={delay}>
-			<Box
-				borderLeftWidth="1px"
-				borderColor={rule}
-				pl={{ base: 5, md: 8 }}
-				pb={{ base: 8, md: 10 }}>
-				<Text
-					fontFamily="var(--font-mono)"
-					fontSize="11px"
-					fontWeight="700"
-					letterSpacing=".1em"
-					color={num}
-					mb={1}>
-					{index}
-				</Text>
-				<Text fontSize={{ base: "19px", md: "21px" }} fontWeight="700" mb={2}>
-					{label}
-				</Text>
-				<Text fontSize="16px" lineHeight="1.75" color="text.muted">
-					{children}
-				</Text>
+		<Layout title="Hobbies" description="Coding and experimenting with AI are Ong Jun Xiong’s main hobbies, alongside tennis, trading, home servers, travel and reading.">
+			<Box ref={pageRef} className={styles.page}>
+				<Box as="header" className={styles.intro}>
+					<Box className={styles.introInner}>
+						<Text className={styles.eyebrow}>{"// OFF THE CLOCK"}</Text>
+						<Text as="h1" className={styles.title}>Things I keep returning to.</Text>
+						<Text className={styles.lede}>Six interests, from agent experiments to a quiet stack of books. Scroll normally; the objects are just here to keep you company.</Text>
+						<Box as="nav" aria-label="Hobby chapters" className={styles.chapterNav}>
+							{chapters.map((chapter) => (
+								<Link
+									key={chapter.id}
+									href={`#${chapter.id}`}
+									aria-current={active === chapter.id ? "location" : undefined}>
+									{chapter.index} {chapter.label}
+								</Link>
+							))}
+						</Box>
+					</Box>
+				</Box>
+
+				<Chapter {...chapters[0]} active={active === chapters[0].id}>
+					This is my main hobby. I like trying models, building little tools, and seeing what I can get an agent to do. That is how I end up with <Link as={NextLink} href="/groundplane">Groundplane</Link>, a Python library that checks declared output fields against recorded tool results; <Link as={NextLink} href="/jobforge">Jobforge</Link>, a Claude Code plugin that grades the plan you say before you code; my notes and life admin kept as a markdown repo that an AI agent tends for me; and a <Link href="https://github.com/ong6/sg-property-analysis" target="_blank" rel="noopener noreferrer">Singapore property data-analysis project</Link>. Most of it starts with something I want to try or a problem I want to fix for myself.
+				</Chapter>
+
+				<Chapter {...chapters[1]} active={active === chapters[1].id}>
+					My main sport. Getting better means picking one flaw and drilling it until it is boring. I play with two forehands, swapping my Wilson Blade between hands instead of hitting a backhand. It is also the only hour in a day where I am not thinking about software.
+				</Chapter>
+
+				<Chapter {...chapters[2]} active={active === chapters[2].id}>
+					I trade stocks against a written playbook. A setup needs entry, exit and invalidation rules before I touch it; the journal is designed to record each trade in R and make one repeating mistake visible at review time.
+				</Chapter>
+
+				<Chapter {...chapters[3]} active={active === chapters[3].id}>
+					I am speccing an always-on inference box that serves models to my own tools. So far the hobby is mostly purchase arithmetic: tokens per second is roughly memory bandwidth divided by model size, and that one line settles more hardware arguments than any benchmark thread. I <Link href="https://notes.junxiong.dev" target="_blank" rel="noopener noreferrer">write up what I learn as I go</Link>.
+				</Chapter>
+
+				<Chapter {...chapters[4]} active={active === chapters[4].id}>
+					Six months in Munich on NUS Overseas Colleges, which was long enough to have a regular grocery store. That is the part I want from a trip now, so I go slow: fewer places, more days in each.
+				</Chapter>
+
+				<Chapter {...chapters[5]} active={active === chapters[5].id}>
+					Non-fiction, usually tied to whatever I am building or trading at the time. Fiction in between to reset.
+				</Chapter>
 			</Box>
-		</Section>
+		</Layout>
 	);
-};
-
-const Hobbies = () => (
-	<Layout
-		title="Hobbies"
-		description="What Ong Jun Xiong does away from work: tennis, trading against a written playbook, side projects, a home inference box, slow travel and reading.">
-		<Container maxW="680px" px={0} ml={0}>
-			<Box pt={{ base: 10, md: 16 }} pb={{ base: 6, md: 8 }}>
-				<Text
-					as="h1"
-					fontFamily="var(--font-mono)"
-					fontSize={{ base: "13px", md: "14px" }}
-					fontWeight="700"
-					letterSpacing=".08em"
-					textTransform="uppercase">
-					Things I do when I&apos;m not working
-				</Text>
-			</Box>
-
-			<Entry index="01" label="Tennis" delay={0.05}>
-				My main sport. Getting better means picking one flaw and drilling it
-				until it is boring. It is also the only hour in a day where I am not
-				thinking about software.
-			</Entry>
-
-			<Entry index="02" label="Trading" delay={0.1}>
-				I trade stocks against a written playbook. Every trade is logged with
-				its R-multiple, every watchlist name has entry and exit triggers
-				written down before I touch it, and once a week I read back the log
-				looking for one repeating mistake.
-			</Entry>
-
-			<Entry index="03" label="Side projects" delay={0.15}>
-				Currently{" "}
-				<Link as={NextLink} href="/groundplane">
-					Groundplane
-				</Link>
-				, a Python library that refuses agent output the tool results do not
-				support;{" "}
-				<Link as={NextLink} href="/jobforge">
-					Jobforge
-				</Link>
-				, a Claude Code plugin that grades the plan you say before you code;
-				my notes and life admin kept as a markdown repo that an AI agent tends
-				for me; and a{" "}
-				<Link
-					href="https://github.com/ong6/sg-property-analysis"
-					target="_blank"
-					rel="noopener noreferrer">
-					Singapore property data-analysis project
-				</Link>
-				. The tools only have to make sense to one user, which cuts out most
-				of the arguing.
-			</Entry>
-
-			<Entry index="04" label="Home server" delay={0.2}>
-				I am speccing an always-on inference box that serves models to my own
-				tools. So far the hobby is mostly purchase arithmetic: tokens per
-				second is roughly memory bandwidth divided by model size, and that one
-				line settles more hardware arguments than any benchmark thread. I{" "}
-				<Link
-					href="https://notes.junxiong.dev"
-					target="_blank"
-					rel="noopener noreferrer">
-					write up what I learn as I go
-				</Link>
-				.
-			</Entry>
-
-			<Entry index="05" label="Travel" delay={0.25}>
-				Six months in Munich on NUS Overseas Colleges, which was long enough to
-				have a regular grocery store. That is the part I want from a trip now,
-				so I go slow: fewer places, more days in each.
-			</Entry>
-
-			<Entry index="06" label="Reading" delay={0.3}>
-				Non-fiction, usually tied to whatever I am building or trading at the
-				time. Fiction in between to reset.
-			</Entry>
-		</Container>
-	</Layout>
-);
-
-export default Hobbies;
+}

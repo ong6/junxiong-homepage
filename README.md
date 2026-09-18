@@ -6,12 +6,15 @@ engineering through a restrained terminal-inspired interface.
 
 ## What is here
 
-- A project-first homepage with selected work and personal context
+- A project-first homepage led by Groundplane and Compoze, with UI Pack and a compact archive
 - Case studies for Groundplane (`/groundplane`, a Python boundary for agent output), Jobforge
   (`/jobforge`, a Claude Code interview-prep plugin) and Skillpack (`/skillpack`, the shared
-  Claude Code and Codex skills with two-way subtree sync), each with a fact table verified against the repo
+  Claude Code and Codex skills with two-way subtree sync that defers around unrelated edits)
 - A public case study for Compoze, with client identity and financial terms kept private
+- A case study for the trading engine (`/trading-engine`, a paper-trading research engine with
+  pre-registered strategies and a next-open fill model), with the nightly-loop diagram
 - A browser and print-friendly resume
+- UI Pack with Web design and Slide creation views, shared styling and downloadable SVG slide starters
 - An archive of university projects
 - Light and dark themes with reduced-motion support
 - Search and social metadata, a sitemap, and structured `Person` data
@@ -33,9 +36,19 @@ Then open [http://localhost:3000](http://localhost:3000).
 ## Verify a production build
 
 ```bash
+npm run lint
 npm run build
 npm start
 ```
+
+For the full browser suite, leave port 3011 free and run:
+
+```bash
+CI=1 npm run test:e2e -- --reporter=line
+```
+
+Lint, build, and browser checks run manually before publishing. Vercel deploys pushes to `main`;
+the repository does not configure an automatic test gate for those deployments.
 
 ## Structure
 
@@ -45,6 +58,9 @@ components/     Shared layout, navigation, resume, and work components
 public/         Images, robots.txt, and sitemap.xml
 lib/theme.js    Chakra theme and colour-mode configuration
 ```
+
+Slide starters are generated from `lib/uipackSlides.mjs`. After editing them, run
+`node scripts/build-uipack-slides.mjs` to refresh `public/uipack-slides/`.
 
 ## License
 

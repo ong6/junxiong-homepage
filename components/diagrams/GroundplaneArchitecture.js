@@ -1,14 +1,14 @@
 import { Badge, Defs, Flow, Group, Label, Lane, Line, Node } from "./parts";
 
 export const CLAIM =
-	"Tool results are recorded as typed facts with provenance; a boundary declares which facts a block of model output may use; a deterministic checker resolves every claim against them and raises UnsupportedClaim on the first that fails.";
+	"Tool results are recorded as typed facts with provenance. A boundary names the facts and checks for structured model output. Configured checks validate declared fields and raise UnsupportedClaim when a claim check fails; free-form prose is outside their scope.";
 
 export const meta = {
-	number: "Figure 01",
+	number: "Figure 02",
 	eyebrow: "The whole library",
-	title: "Facts recorded, claims checked, one raise",
+	title: "Facts recorded, declared fields checked",
 	caption:
-		"Tools write typed facts into a registry. A boundary names which facts and checks apply, the model submits fields, and six deterministic checks pass the output or raise on the first unsupported claim.",
+		"Tools write typed facts into a registry. A boundary names the facts and checks that apply to structured fields. Its configured checks return the output or raise on the first failed claim check; prose is not checked.",
 	legend: [
 		{ label: "Facts", kind: "change" },
 		{ label: "Model output", kind: "request" },
@@ -21,8 +21,8 @@ export const meta = {
 
 // Claim: tool results are recorded as typed facts with provenance; a boundary
 // declares which facts a block of model output may use; a deterministic
-// checker resolves every claim against them and raises UnsupportedClaim on the
-// first that fails.
+// checker validates declared fields and raises UnsupportedClaim on the first
+// failed claim check. Free-form prose stays outside this boundary.
 //
 // Accent follows the model's output through the boundary and the checker to
 // the raise — the loud failure is what the library exists for. Recording facts
