@@ -102,6 +102,7 @@
 .canvas, .fallback { position: absolute; inset: 0; width: 100%; height: 100%; }
 .canvas { z-index: 2; opacity: 0; transition: opacity 300ms ease; }
 .canvas[data-ready="true"] { opacity: 1; }
+.scene:has(.canvas[data-ready="true"]) .fallback { opacity: 0; }
 .fallback { z-index: 1; display: grid; place-items: center; }
 .fallbackSvg { width: min(74%, 440px); height: min(72%, 360px); color: var(--chakra-colors-brand-solid); opacity: .82; }
 .fallbackSvg :global(.soft) { color: var(--chakra-colors-text-muted); opacity: .55; }
@@ -134,6 +135,16 @@
 .riskLadder [data-grade="b"] { width: 58%; }
 .riskLadder [data-grade="a"] { width: 78%; }
 .riskLadder [data-grade="aplus"] { width: 100%; border-color: var(--chakra-colors-brand-solid); color: var(--chakra-colors-brand-solid); }
+.riskLadder span, .riskPanel p, .tradeLog { opacity: .35; transform: translateY(6px); transition: opacity 240ms ease, transform 320ms ease, border-color 240ms ease; }
+.scene[data-phase="observe"] .riskLadder [data-grade="b"],
+.scene[data-phase="plan"] .riskLadder [data-grade="b"],
+.scene[data-phase="review"] .riskLadder span,
+.scene[data-phase="rest"] .riskLadder span { opacity: 1; transform: none; }
+.scene[data-phase="plan"] .riskLadder [data-grade="a"],
+.scene[data-phase="review"] .riskPanel p,
+.scene[data-phase="rest"] .riskPanel p { opacity: 1; transform: none; }
+.scene[data-phase="review"] .tradeLog,
+.scene[data-phase="rest"] .tradeLog { opacity: 1; transform: none; }
 .riskPanel { display: grid; align-content: center; gap: 22px; }
 .riskPanel p { display: flex; justify-content: space-between; gap: 10px; font: 700 12px/1.4 var(--font-mono); }
 .tradeLog { padding-top: 16px; border-top: 1px solid var(--chakra-colors-border-subtle); }
@@ -149,6 +160,7 @@
 	.visual { min-height: 32dvh; }
 	.visualSticky { position: relative; top: auto; height: 32dvh; min-height: 280px; padding: 0 12px 24px; }
 	.scene { border-radius: 14px; }
+	.pause { right: 12px; bottom: auto; top: 12px; }
 	.tradingDashboard { inset: 3%; }
 	.tradingGrid { grid-template-columns: 1fr; }
 	.riskPanel { grid-template-columns: 1fr 1fr 1fr; gap: 8px; align-content: start; }
@@ -159,5 +171,5 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.canvas, .tradingDashboard { transition: none; }
+	.canvas, .tradingDashboard, .riskLadder span, .riskPanel p, .tradeLog { transition: none; }
 }

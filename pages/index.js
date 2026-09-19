@@ -23,7 +23,7 @@ function Eyebrow({ children }) {
 			fontSize="12px"
 			fontWeight="700"
 			letterSpacing=".12em"
-			color={useColorModeValue("mint.700", "mint.300")}>
+			color={useColorModeValue("cobalt.700", "cobalt.300")}>
 			{children}
 		</Text>
 	);
@@ -62,7 +62,8 @@ function Introduction() {
 						e-commerce.
 					</Text>
 					<Text mt={5} maxW="640px" fontSize="16px" lineHeight="1.75" color="text.muted">
-						Outside work, I built and ran{" "}
+						Before AI infrastructure, I wrote Go services for TikTok&apos;s seller platform. Outside
+						work, I built and ran{" "}
 						<Link as={NextLink} href="/compoze">
 							Compoze
 						</Link>{" "}
@@ -111,7 +112,7 @@ function Introduction() {
 
 				<Grid
 					gridArea="links"
-					templateColumns={{ base: "repeat(2, minmax(0, 1fr))", md: "repeat(4, max-content)" }}
+					templateColumns={{ base: "repeat(2, minmax(0, 1fr))", md: "repeat(3, max-content)" }}
 					columnGap={{ base: 2, md: 6 }}
 					rowGap={1}>
 					<Link
@@ -129,10 +130,7 @@ function Introduction() {
 						LinkedIn ↗
 					</Link>
 					<Link as={NextLink} href="/resume" {...utilityLinkProps}>
-						Résumé
-					</Link>
-					<Link href="mailto:junxiongong2@gmail.com" {...utilityLinkProps}>
-						Email
+						Resume
 					</Link>
 				</Grid>
 			</Grid>
@@ -142,7 +140,7 @@ function Introduction() {
 
 export default function Home() {
 	return (
-		<Layout>
+		<Layout animate={false}>
 			<Introduction />
 			<SelectedWork />
 		</Layout>

@@ -33,7 +33,7 @@ function Chapter({ id, index, label, kind, active, children }) {
 
 export default function Hobbies() {
 	const pageRef = useRef(null);
-	const [active, setActive] = useState("coding-ai");
+	const [active, setActive] = useState(null);
 
 	useEffect(() => {
 		const sections = [...pageRef.current.querySelectorAll("[data-chapter]")];
@@ -43,20 +43,22 @@ export default function Hobbies() {
 				const rect = section.getBoundingClientRect();
 				return rect.top <= centre && rect.bottom >= centre;
 			});
-			if (centred) setActive(centred.id);
+			setActive(centred?.id ?? null);
 		};
 		const observer = new IntersectionObserver(chooseCentred, { threshold: [0, 0.5] });
 		sections.forEach((section) => observer.observe(section));
 		window.addEventListener("scroll", chooseCentred, { passive: true });
+		window.addEventListener("resize", chooseCentred);
 		chooseCentred();
 		return () => {
 			observer.disconnect();
 			window.removeEventListener("scroll", chooseCentred);
+			window.removeEventListener("resize", chooseCentred);
 		};
 	}, []);
 
 	return (
-		<Layout title="Hobbies" description="Coding and experimenting with AI are Ong Jun Xiong’s main hobbies, alongside tennis, trading, home servers, travel and reading.">
+		<Layout animate={false} title="Hobbies" description="Coding and experimenting with AI are Ong Jun Xiong’s main hobbies, alongside tennis, trading, home servers, travel and reading.">
 			<Box ref={pageRef} className={styles.page}>
 				<Box as="header" className={styles.intro}>
 					<Box className={styles.introInner}>

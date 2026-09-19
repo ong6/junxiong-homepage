@@ -15,7 +15,8 @@ engineering through a restrained terminal-inspired interface.
   pre-registered strategies and a next-open fill model), with the nightly-loop diagram
 - A browser and print-friendly resume
 - UI Pack with Web design and Slide creation views, shared styling and downloadable SVG slide starters
-- An immersive Hobbies page with procedural Three.js scenes, native scroll and readable fallbacks
+- A Hobbies page with procedural Three.js scenes, native scroll and readable fallbacks; 3D loads
+  when a chapter reaches the centre of the viewport and unloads when you return to the introduction
 - An archive of university projects
 - Light and dark themes with reduced-motion support
 - Search and social metadata, a sitemap, and structured `Person` data

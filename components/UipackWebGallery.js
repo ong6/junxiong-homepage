@@ -36,7 +36,7 @@ const Wide = ({ note, children }) => (
 );
 
 // Match the discovered browser-suite count when its coverage changes.
-const E2E_CASES = 76;
+const E2E_CASES = 101;
 
 const GALLERY = [
 	{

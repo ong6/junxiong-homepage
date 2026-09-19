@@ -2,9 +2,7 @@ const { expect, test } = require("@playwright/test");
 
 const internalDestinations = [
 	["Projects", "/#work"],
-	["UI Pack", "/uipack"],
 	["Hobbies", "/hobbies"],
-	["Résumé", "/resume"],
 ];
 
 test("desktop navigation exposes the primary destinations and current section", async ({ page }) => {
@@ -16,10 +14,17 @@ test("desktop navigation exposes the primary destinations and current section", 
 		await expect(nav.getByRole("link", { name })).toHaveAttribute("href", href);
 	}
 	await expect(nav.getByRole("link", { name: "Projects" })).toHaveAttribute("aria-current", "page");
-	await expect(nav.getByRole("link", { name: "Writing (opens in a new tab)" })).toHaveAttribute(
+	await expect(nav.getByRole("link", { name: "Notes (opens in a new tab)" })).toHaveAttribute(
 		"href",
 		"https://notes.junxiong.dev",
 	);
+	await expect(nav.getByRole("link", { name: "Contact me" })).toHaveAttribute(
+		"href",
+		"mailto:junxiongong2@gmail.com",
+	);
+	for (const name of ["Archive", "Resume"]) {
+		await expect(nav.getByRole("link", { name, exact: true })).toBeHidden();
+	}
 });
 
 test("mobile menu is touch-sized and keyboard-dismissible", async ({ page }) => {
@@ -31,7 +36,11 @@ test("mobile menu is touch-sized and keyboard-dismissible", async ({ page }) => 
 	await toggle.focus();
 	await page.keyboard.press("Enter");
 	await expect(nav.getByRole("link", { name: "Projects" })).toBeFocused();
-	await expect(nav.getByRole("link", { name: "UI Pack" })).toHaveAttribute("aria-current", "page");
+	for (const name of ["Projects", "Hobbies", "Notes", "Archive", "Resume"]) {
+		await expect(nav.getByRole("link", { name: new RegExp(`^${name}`) })).toBeVisible();
+	}
+	await expect(nav.getByText("Theme", { exact: true })).toBeVisible();
+	await expect(nav.getByRole("button", { name: /Use (dark|light) theme/ })).toBeVisible();
 
 	const undersized = await nav.locator("a:visible, button:visible").evaluateAll((controls) =>
 		controls
@@ -45,6 +54,17 @@ test("mobile menu is touch-sized and keyboard-dismissible", async ({ page }) => 
 
 	await page.keyboard.press("Escape");
 	await expect(nav.getByRole("button", { name: "Open navigation menu" })).toBeFocused();
+	await expect(nav.locator("#navbar-menu")).toHaveCount(0);
+});
+
+test("mobile menu closes after an outside click", async ({ page }) => {
+	await page.setViewportSize({ width: 390, height: 844 });
+	await page.goto("/");
+	const nav = page.getByRole("navigation", { name: "Site" });
+
+	await nav.getByRole("button", { name: "Open navigation menu" }).click();
+	await expect(nav.locator("#navbar-menu")).toBeVisible();
+	await page.locator("main").click({ position: { x: 8, y: 120 } });
 	await expect(nav.locator("#navbar-menu")).toHaveCount(0);
 });
 

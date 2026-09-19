@@ -87,7 +87,7 @@ test("slide starters download as SVG in both themes", async ({ page, request }) 
 
 test("hobbies leads with coding and playing with AI", async ({ page }) => {
 	await page.goto("/hobbies");
-	const copy = await page.locator("main").innerText();
-	expect(copy.indexOf("Coding & playing with AI")).toBeLessThan(copy.indexOf("Tennis"));
-	expect(copy).toContain("This is my main hobby.");
+	const firstChapter = page.locator("[data-chapter]").first();
+	await expect(firstChapter.getByRole("heading", { level: 2 })).toHaveText("Coding & AI");
+	await expect(firstChapter).toContainText("This is my main hobby.");
 });

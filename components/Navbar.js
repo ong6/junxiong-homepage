@@ -24,12 +24,15 @@ const navigationLinks = [
 		href: "/#work",
 		homeHref: "#work",
 		name: "Projects",
-		activePaths: ["/", "/compoze", "/groundplane", "/jobforge", "/skillpack", "/trading-engine", "/works"],
+		activePaths: ["/compoze", "/groundplane", "/jobforge", "/skillpack", "/trading-engine", "/uipack"],
 	},
-	{ href: "/uipack", name: "UI Pack" },
 	{ href: "/hobbies", name: "Hobbies" },
-	{ href: "https://notes.junxiong.dev", name: "Writing", external: true },
-	{ href: "/resume", name: "Résumé" },
+	{ href: "https://notes.junxiong.dev", name: "Notes", external: true },
+];
+
+const mobileOnlyLinks = [
+	{ href: "/works", name: "Archive" },
+	{ href: "/resume", name: "Resume" },
 ];
 
 const pathname = (path) => (path || "/").split(/[?#]/)[0].replace(/\/+$/, "") || "/";
@@ -65,7 +68,7 @@ function LinkItem({ href, active, external, children }) {
 				right: 2,
 				bottom: "10px",
 				h: "1px",
-				bg: "mint.500",
+				bg: "cobalt.500",
 				transform: active ? "scaleX(1)" : "scaleX(0)",
 				transformOrigin: "left",
 				transition: "transform 160ms ease",
@@ -86,7 +89,7 @@ function LinkItem({ href, active, external, children }) {
 
 const Navbar = ({ path = "/", ...props }) => {
 	const onHome = path === "/" || path.startsWith("/#");
-	const navBg = useColorModeValue("rgba(241,238,230,.86)", "rgba(14,21,18,.86)");
+	const navBg = useColorModeValue("rgba(243,239,231,.9)", "rgba(21,19,17,.9)");
 	const menuBg = useColorModeValue("warm.50", "graphite.800");
 	const menu = useDisclosure();
 	const menuRef = useRef(null);
@@ -145,7 +148,7 @@ const Navbar = ({ path = "/", ...props }) => {
 			h={NAV_HEIGHT}
 			borderBottom="1px solid"
 			borderColor="border.subtle"
-			css={{ backdropFilter: "blur(16px) saturate(140%)" }}
+			css={{ backdropFilter: "blur(14px)" }}
 			zIndex={20}
 			{...props}>
 			<Container maxW="1120px" px={4}>
@@ -158,7 +161,7 @@ const Navbar = ({ path = "/", ...props }) => {
 						<Logo />
 					</Box>
 
-					<Flex align="center" gap={{ base: 2, md: 3 }} flexShrink={0}>
+					<Flex align="center" gap={{ base: 1, md: 3 }} flexShrink={0}>
 						<Stack
 							as="ul"
 							listStyleType="none"
@@ -181,7 +184,27 @@ const Navbar = ({ path = "/", ...props }) => {
 							})}
 						</Stack>
 
-						<ThemeToggleButton />
+						<Link
+							href="mailto:junxiongong2@gmail.com"
+							display="inline-flex"
+							alignItems="center"
+							justifyContent="center"
+							minH="44px"
+							px={{ base: 3, md: 4 }}
+							border="1px solid"
+							borderColor="border.subtle"
+							borderRadius="4px"
+							fontSize={{ base: "12px", md: "13px" }}
+							fontWeight="700"
+							color="page.text"
+							textDecoration="none"
+							_hover={{ bg: "surface.quiet", textDecoration: "none" }}>
+							Contact me
+						</Link>
+
+						<Box display={{ base: "none", md: "block" }}>
+							<ThemeToggleButton />
+						</Box>
 
 						<Box display={{ base: "block", md: "none" }}>
 							<IconButton
@@ -226,7 +249,7 @@ const Navbar = ({ path = "/", ...props }) => {
 								onClose();
 							}
 						}}>
-						{navigationLinks.map((link) => {
+						{[...navigationLinks, ...mobileOnlyLinks].map((link) => {
 							const href = onHome && link.homeHref ? link.homeHref : link.href;
 							const active = isActive(link, path);
 							return (
@@ -246,7 +269,7 @@ const Navbar = ({ path = "/", ...props }) => {
 										fontWeight={active ? "700" : "500"}
 										color={active ? "page.text" : "text.muted"}
 										borderLeft="2px solid"
-										borderColor={active ? "mint.500" : "transparent"}
+										borderColor={active ? "cobalt.500" : "transparent"}
 										textDecoration="none"
 										_hover={{ bg: "surface.quiet", color: "page.text", textDecoration: "none" }}
 										onClick={menu.onClose}>
@@ -263,6 +286,15 @@ const Navbar = ({ path = "/", ...props }) => {
 								</Box>
 							);
 						})}
+						<Box as="li">
+							<Flex minH="52px" px={4} align="center" justify="space-between" gap={4}>
+								<Box>
+									<Box fontSize="15px" fontWeight="600">Theme</Box>
+									<Box color="text.muted" fontSize="12px">Light or dark</Box>
+								</Box>
+								<ThemeToggleButton />
+							</Flex>
+						</Box>
 					</Stack>
 				</Container>
 			)}

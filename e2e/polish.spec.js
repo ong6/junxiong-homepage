@@ -113,8 +113,8 @@ for (const theme of ["light", "dark"]) {
 		await page.addInitScript((t) => localStorage.setItem("chakra-ui-color-mode", t), theme);
 		await page.goto("/assets");
 		await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
-		// The body background transitions between modes; measure once it lands.
-		await expect.poll(() => page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe(theme === "dark" ? "rgb(14, 21, 18)" : "rgb(241, 238, 230)");
+		// The body background transitions between modes; measure once the site palette lands.
+		await expect.poll(() => page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe(theme === "dark" ? "rgb(21, 19, 17)" : "rgb(243, 239, 231)");
 		await page.locator(".uipack-browser__count").first().waitFor();
 		const ratios = await page.evaluate(() => {
 			const lum = (c) => {

@@ -47,13 +47,13 @@ const pageSchema = ({ canonical, name, description, schema }) => {
 	};
 };
 
-const Layout = ({ children, title, description, schema, noindex = false }) => {
+const Layout = ({ children, title, description, schema, noindex = false, animate = true }) => {
 	const router = useRouter();
 	const pageTitle = title ? `${title} — Ong Jun Xiong` : null;
 	const canonical = canonicalFor(router?.asPath);
 
 	return (
-		<article className="fade-up" style={{ position: "relative" }}>
+		<article className={animate ? "fade-up" : undefined} style={{ position: "relative" }}>
 			{(pageTitle || description || noindex) && (
 				<Head>
 					{pageTitle && <title>{pageTitle}</title>}

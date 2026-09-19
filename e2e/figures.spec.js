@@ -57,8 +57,9 @@ for (const path of PAGES) {
 			await page.goto(path);
 			await page.locator("figure.uipack").first().waitFor();
 			await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
-			const bg = await page.locator("figure.uipack").first().evaluate((el) => getComputedStyle(el).backgroundColor);
-			expect(bg).toBe(theme === "dark" ? "rgb(14, 21, 18)" : "rgb(241, 238, 230)");
+			const expectedBg = theme === "dark" ? "rgb(21, 19, 17)" : "rgb(243, 239, 231)";
+			await expect.poll(() => page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe(expectedBg);
+			await expect.poll(() => page.locator("figure.uipack").first().evaluate((el) => getComputedStyle(el).backgroundColor)).toBe(expectedBg);
 			const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
 			expect(overflow).toBe(0);
 			if (path === "/uipack") expect(await page.locator("figure.uipack").count()).toBe(6);
