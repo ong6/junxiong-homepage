@@ -27,14 +27,13 @@ const Logo = () => {
 	return (
 		<Link href="/" aria-label="Ong Jun Xiong — home">
 			<LogoBox>
-				<Image src={codeImg} width={20} height={20} alt="" />
 				<Text
 					color={useColorModeValue("gray.800", "whiteAlpha.900")}
 					fontFamily="var(--font-sans)"
-					fontWeight="bold"
-					ml={3}>
+					fontWeight="bold">
 					Jun Xiong
 				</Text>
+				<Image src={codeImg} width={20} height={20} alt="" style={{ marginLeft: "10px" }} />
 			</LogoBox>
 		</Link>
 	);

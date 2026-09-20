@@ -28,6 +28,8 @@ const UipackWebGallery = dynamic(() => import("../components/UipackWebGallery"),
 	),
 });
 
+const UipackObjects = dynamic(() => import("../components/UipackObjects"));
+
 const P = (props) => (
 	<Text mt={5} fontSize={{ base: "17px", md: "18px" }} lineHeight="1.8" {...props} />
 );
@@ -58,7 +60,7 @@ export default function Uipack() {
 				programmingLanguage: "TypeScript",
 				license: "https://opensource.org/licenses/MIT",
 			}}
-			description="UI Pack brings my reusable web design, animation and slide layouts into one place, with a shared visual style across projects and presentations.">
+			description="UI Pack brings reusable web design, animation and presentation systems into one place, including slide layouts and the words used to present them.">
 			<Container maxW="1088px" px={0} ml={0}>
 				<Box maxW="680px" pt={{ base: 10, md: 16 }}>
 					<Link
@@ -111,8 +113,8 @@ export default function Uipack() {
 					</Text>
 					<P color="text.muted">
 						It started with the diagrams on this site. I&apos;m building it out in two directions:
-						web design for my projects, and slide creation for the things I need to explain. The
-						figures, motion and icons are already in the library; the first slide layouts are below.
+						web design for my projects, and presentations for the things I need to explain. The
+						first slide starters now keep the visual and the talk track together.
 					</P>
 					<Link
 						href="https://github.com/ong6/uipack"
@@ -173,7 +175,7 @@ export default function Uipack() {
 									to typed figures, adapted to the type and colours I use here.
 								</P>
 							</Box>
-							{hydrated && router.isReady && category === 0 && <UipackWebGallery />}
+							{hydrated && router.isReady && category === 0 && <><UipackObjects /><UipackWebGallery /></>}
 
 							<Box maxW="680px">
 								<H2>Assets</H2>

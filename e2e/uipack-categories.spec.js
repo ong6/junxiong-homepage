@@ -28,9 +28,13 @@ for (const width of [390, 1440]) {
 				await button.click();
 				await expect(button).toHaveAttribute("aria-pressed", "true");
 				await expect(
-					page.getByRole("img", { name: `UI Pack ${name.toLowerCase()} slide starter` }),
+					page.getByRole("img", { name: new RegExp(`^${name}:`) }),
 				).toBeVisible();
 			}
+			await expect(page.getByRole("complementary", { name: "Speaker guide" })).toBeVisible();
+			await expect(page.getByRole("heading", { name: "Say this" })).toBeVisible();
+			await expect(page.getByRole("heading", { name: "Delivery" })).toBeVisible();
+			await expect(page.getByRole("button", { name: "Copy talk track" })).toBeVisible();
 			const controls = await page
 				.getByRole("tabpanel")
 				.locator("button, a")
@@ -66,6 +70,17 @@ test("UI Pack links restore the category through reload and browser history", as
 		"aria-selected",
 		"true",
 	);
+});
+
+test("slide starter copies its talk track and keeps speech out of the SVG download", async ({ page, context, request }) => {
+	await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+	await page.goto("/uipack?category=slides");
+	await page.getByRole("button", { name: "Copy talk track" }).click();
+	await expect(page.getByRole("status")).toHaveText("Opening talk track copied.");
+	expect(await page.evaluate(() => navigator.clipboard.readText())).toContain("Every project used to start");
+	const svg = await (await request.get("/uipack-slides/opening-light.svg")).text();
+	expect(svg).toContain("<title>Opening: A familiar look, wherever I build.</title>");
+	expect(svg).not.toContain("Every project used to start");
 });
 
 test("slide starters download as SVG in both themes", async ({ page, request }) => {

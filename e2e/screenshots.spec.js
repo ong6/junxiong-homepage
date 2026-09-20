@@ -6,6 +6,7 @@ const OUT = process.env.SHOTS_DIR || require("path").join(__dirname, "../.playwr
 
 for (const path of [
 	"/",
+	"/contact",
 	"/compoze",
 	"/skillpack",
 	"/trading-engine",

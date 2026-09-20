@@ -120,13 +120,26 @@ test("hobbies returns to the labelled fallback when a WebGL context is lost", as
 	await expect(page.locator("#tennis").getByRole("button", { name: /motion/i })).toHaveCount(0);
 });
 
-test("trading chapter expands into its full visual workspace", async ({ page }) => {
-	await page.goto("/hobbies#trading");
-	const chapter = page.locator("#trading");
-	await chapter.scrollIntoViewIfNeeded();
-	await expect(chapter.locator('[data-kind="trading"]')).toHaveAttribute("data-active", "true");
-	await expect(chapter.getByText("PAPER MODE", { exact: true })).toBeVisible();
-	await expect(chapter.getByText("NO LIVE DATA", { exact: true })).toBeVisible();
-	await expect(chapter.getByText("RISK LADDER / SETUP QUALITY")).toBeVisible();
-	await expect(chapter.getByText("PROCESS BEFORE OUTCOME")).toBeVisible();
+test("trading uses the shared journal and UI Pack exposes all library objects", async ({ page }) => {
+ await page.goto("/hobbies#trading");
+ await expect(page.locator('#trading canvas')).toHaveAttribute('data-renderer','webgl');
+ await page.goto('/uipack');
+ const collection=page.getByRole('region',{name:'3D object collection'});
+ await expect(collection.getByRole('button',{name:'Trading journal',exact:true})).toBeVisible();
+ await collection.getByRole('button',{name:'Trading journal',exact:true}).click();
+ await expect(collection.locator('canvas')).toHaveAttribute('data-renderer','webgl');
+ await expect(collection.getByText("A fast market replay with red and green candles, order flow and a reversal. Simulation; no live data.", { exact: true })).toBeVisible();
+ await expect(collection.getByRole('group',{name:'Choose an object'}).getByRole('button')).toHaveCount(7);
+});
+
+test("UI Pack changes the tennis edition without leaving the shared player", async ({ page }) => {
+ await page.goto('/uipack');
+ const collection = page.getByRole('region', { name: '3D object collection' });
+ await collection.getByRole('button', { name: 'Tennis practice', exact: true }).click();
+ const object = collection.locator('.uipack-object');
+ await expect(object.locator('canvas')).toHaveAttribute('data-source', 'blender');
+ const before = Number(await object.getAttribute('data-variant'));
+ await collection.getByRole('button', { name: 'Another look', exact: true }).click();
+ await expect(object).toHaveAttribute('data-variant', String((before + 1) % 3));
+ await expect(object.locator('canvas')).toHaveAttribute('data-renderer', 'webgl');
 });

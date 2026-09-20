@@ -185,7 +185,9 @@ const Navbar = ({ path = "/", ...props }) => {
 						</Stack>
 
 						<Link
-							href="mailto:junxiongong2@gmail.com"
+							as={NextLink}
+							href="/contact"
+							aria-current={pathname(path) === "/contact" ? "page" : undefined}
 							display="inline-flex"
 							alignItems="center"
 							justifyContent="center"

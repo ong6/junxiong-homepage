@@ -20,11 +20,26 @@ test("desktop navigation exposes the primary destinations and current section", 
 	);
 	await expect(nav.getByRole("link", { name: "Contact me" })).toHaveAttribute(
 		"href",
-		"mailto:junxiongong2@gmail.com",
+		"/contact",
 	);
 	for (const name of ["Archive", "Resume"]) {
 		await expect(nav.getByRole("link", { name, exact: true })).toBeHidden();
 	}
+});
+
+test("header content shares the page grid at desktop widths", async ({ page }) => {
+	await page.setViewportSize({ width: 1440, height: 900 });
+	await page.goto("/");
+	const brand = await page.getByRole("link", { name: "Ong Jun Xiong — home" }).boundingBox();
+	const eyebrow = await page.getByText("// JUNXIONG.DEV / SINGAPORE").boundingBox();
+	expect(Math.abs(brand.x - eyebrow.x)).toBeLessThan(1);
+});
+
+test("contact affordance opens the contact page", async ({ page }) => {
+	await page.goto("/");
+	await page.getByRole("navigation", { name: "Site" }).getByRole("link", { name: "Contact me" }).click();
+	await expect(page).toHaveURL(/\/contact$/);
+	await expect(page.getByRole("heading", { level: 1, name: "Let's talk." })).toBeVisible();
 });
 
 test("mobile menu is touch-sized and keyboard-dismissible", async ({ page }) => {

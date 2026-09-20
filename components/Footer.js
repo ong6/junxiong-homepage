@@ -2,7 +2,7 @@ import { Box, Flex, Link, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 
 const links = [
-	{ label: "Email", href: "mailto:junxiongong2@gmail.com" },
+	{ label: "Contact", href: "/contact", internal: true },
 	{ label: "Hobbies", href: "/hobbies", internal: true },
 	{ label: "Archive", href: "/works", internal: true },
 	{ label: "Notes", href: "https://notes.junxiong.dev" },

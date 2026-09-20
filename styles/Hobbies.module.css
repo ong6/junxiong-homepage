@@ -88,67 +88,6 @@
 .prose a { color: var(--chakra-colors-brand-solid); }
 .visual { position: relative; min-width: 0; min-height: 82dvh; }
 .visualSticky { position: sticky; top: 72px; height: calc(82dvh - 16px); padding: clamp(18px, 3vw, 44px); }
-.scene {
-	position: relative;
-	width: 100%;
-	height: 100%;
-	overflow: hidden;
-	border: 1px solid var(--chakra-colors-border-subtle);
-	border-radius: 18px;
-	background-color: var(--chakra-colors-surface-raised);
-	background-image: linear-gradient(var(--chakra-colors-border-subtle) 1px, transparent 1px), linear-gradient(90deg, var(--chakra-colors-border-subtle) 1px, transparent 1px);
-	background-size: 42px 42px;
-}
-.canvas, .fallback { position: absolute; inset: 0; width: 100%; height: 100%; }
-.canvas { z-index: 2; opacity: 0; transition: opacity 300ms ease; }
-.canvas[data-ready="true"] { opacity: 1; }
-.scene:has(.canvas[data-ready="true"]) .fallback { opacity: 0; }
-.fallback { z-index: 1; display: grid; place-items: center; }
-.fallbackSvg { width: min(74%, 440px); height: min(72%, 360px); color: var(--chakra-colors-brand-solid); opacity: .82; }
-.fallbackSvg :global(.soft) { color: var(--chakra-colors-text-muted); opacity: .55; }
-.pause { position: absolute !important; z-index: 6; right: 16px; bottom: 16px; background: var(--chakra-colors-surface-raised) !important; border-color: var(--chakra-colors-border-subtle) !important; font-size: 12px !important; }
-
-.tradingDashboard {
-	position: absolute;
-	inset: 5%;
-	z-index: 3;
-	display: grid;
-	grid-template-rows: auto 1fr auto;
-	padding: clamp(16px, 2vw, 28px);
-	background: color-mix(in srgb, var(--chakra-colors-surface-raised) 94%, transparent);
-	border: 1px solid var(--chakra-colors-brand-solid);
-	box-shadow: 0 28px 90px rgba(0,0,0,.22);
-	opacity: 0;
-	transform: scale(.92) translateY(24px);
-	transition: opacity 520ms ease, transform 720ms cubic-bezier(.2,.8,.2,1);
-}
-.scene[data-active="true"] .tradingDashboard { opacity: 1; transform: none; }
-.scene[data-kind="trading"][data-active="true"] .canvas { opacity: .14; }
-.tradingTopbar, .tradeLog { display: flex; justify-content: space-between; gap: 16px; font: 700 12px/1.2 var(--font-mono); letter-spacing: .08em; }
-.tradingTopbar { padding-bottom: 16px; border-bottom: 1px solid var(--chakra-colors-border-subtle); color: var(--chakra-colors-brand-solid); }
-.tradingGrid { display: grid; grid-template-columns: 1fr minmax(150px, .38fr); gap: 14px; padding: 14px 0; min-height: 0; }
-.chartPanel, .riskPanel { border: 1px solid var(--chakra-colors-border-subtle); background: var(--chakra-colors-page-bg); padding: 16px; }
-.ticker { font: 700 12px/1.2 var(--font-mono); }
-.ticker b, .riskPanel b { color: var(--chakra-colors-brand-solid); }
-.riskLadder { display: grid; align-content: end; gap: 8px; height: calc(100% - 24px); min-height: 160px; padding-top: 20px; }
-.riskLadder span { display: flex; align-items: center; justify-content: space-between; min-height: 42px; padding: 0 14px; border: 1px solid var(--chakra-colors-border-subtle); font: 700 12px/1 var(--font-mono); }
-.riskLadder [data-grade="b"] { width: 58%; }
-.riskLadder [data-grade="a"] { width: 78%; }
-.riskLadder [data-grade="aplus"] { width: 100%; border-color: var(--chakra-colors-brand-solid); color: var(--chakra-colors-brand-solid); }
-.riskLadder span, .riskPanel p, .tradeLog { opacity: .35; transform: translateY(6px); transition: opacity 240ms ease, transform 320ms ease, border-color 240ms ease; }
-.scene[data-phase="observe"] .riskLadder [data-grade="b"],
-.scene[data-phase="plan"] .riskLadder [data-grade="b"],
-.scene[data-phase="review"] .riskLadder span,
-.scene[data-phase="rest"] .riskLadder span { opacity: 1; transform: none; }
-.scene[data-phase="plan"] .riskLadder [data-grade="a"],
-.scene[data-phase="review"] .riskPanel p,
-.scene[data-phase="rest"] .riskPanel p { opacity: 1; transform: none; }
-.scene[data-phase="review"] .tradeLog,
-.scene[data-phase="rest"] .tradeLog { opacity: 1; transform: none; }
-.riskPanel { display: grid; align-content: center; gap: 22px; }
-.riskPanel p { display: flex; justify-content: space-between; gap: 10px; font: 700 12px/1.4 var(--font-mono); }
-.tradeLog { padding-top: 16px; border-top: 1px solid var(--chakra-colors-border-subtle); }
-
 @media (max-width: 767px) {
 	.page::before { top: 430px; left: 20px; }
 	.intro { min-height: 0; padding-top: 48px; padding-bottom: 40px; }
@@ -159,17 +98,4 @@
 	.prose { font-size: 16px; }
 	.visual { min-height: 32dvh; }
 	.visualSticky { position: relative; top: auto; height: 32dvh; min-height: 280px; padding: 0 12px 24px; }
-	.scene { border-radius: 14px; }
-	.pause { right: 12px; bottom: auto; top: 12px; }
-	.tradingDashboard { inset: 3%; }
-	.tradingGrid { grid-template-columns: 1fr; }
-	.riskPanel { grid-template-columns: 1fr 1fr 1fr; gap: 8px; align-content: start; }
-	.riskPanel p { display: block; }
-	.riskPanel b { display: block; margin-top: 4px; }
-	.riskLadder { min-height: 90px; gap: 4px; padding-top: 8px; }
-	.riskLadder span { min-height: 28px; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-	.canvas, .tradingDashboard, .riskLadder span, .riskPanel p, .tradeLog { transition: none; }
 }

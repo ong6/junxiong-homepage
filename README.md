@@ -14,7 +14,9 @@ engineering through a restrained terminal-inspired interface.
 - A case study for the trading engine (`/trading-engine`, a paper-trading research engine with
   pre-registered strategies and a next-open fill model), with the nightly-loop diagram
 - A browser and print-friendly resume
-- UI Pack with Web design and Slide creation views, shared styling and downloadable SVG slide starters
+- UI Pack with Web design and Slide creation views, shared styling, downloadable SVG starters and
+  speaker guides for what to say, how to deliver it and how to enter the next slide
+- A Contact page with email, LinkedIn, GitHub, résumé and notes around a shared UI Pack 3D scene
 - A Hobbies page with procedural Three.js scenes, native scroll and readable fallbacks; 3D loads
   when a chapter reaches the centre of the viewport and unloads when you return to the introduction
 - An archive of university projects
@@ -61,10 +63,15 @@ public/         Images, robots.txt, and sitemap.xml
 lib/theme.js    Chakra theme and colour-mode configuration
 ```
 
-Slide starters are generated from `lib/uipackSlides.mjs`. After editing them, run
+Slide examples live in `lib/uipackSlides.mjs`; layout, SVG rendering and speaker guidance come from
+`uipack/presentations`. After editing the examples, run
 `node scripts/build-uipack-slides.mjs` to refresh `public/uipack-slides/`.
 
 ## License
 
 The source is available for reference. Personal copy, work history, and images remain the property
 of Ong Jun Xiong.
+
+## UI Pack first
+
+Significant visuals are authored and registered in [UI Pack](../uipack/docs/component-first.md) before use here. Run `npm run check:ui-ownership` to verify the shared imports and renderer boundary. `ui-inventory.json` tracks collection ownership and existing page-specific compositions. The six hobby scenes are imported from `uipack/objects` and previewed in `/uipack`.
