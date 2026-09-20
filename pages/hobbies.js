@@ -90,11 +90,11 @@ export default function Hobbies() {
 				</Chapter>
 
 				<Chapter {...chapters[1]} active={active === chapters[1].id}>
-					My main sport. Getting better means picking one flaw and drilling it until it is boring. I play with two forehands, swapping my Wilson Blade between hands instead of hitting a backhand. It is also the only hour in a day where I am not thinking about software.
+					My main sport. Getting better means picking one flaw and drilling it until it is boring. I play with two forehands, swapping my Wilson Blade between hands instead of hitting a backhand. Most sessions are long rallies with one other person, and it is the only hour in a day where I am not thinking about software.
 				</Chapter>
 
 				<Chapter {...chapters[2]} active={active === chapters[2].id}>
-					I trade stocks against a written playbook. A setup needs entry, exit and invalidation rules before I touch it; the journal is designed to record each trade in R and make one repeating mistake visible at review time.
+					I trade stocks against a written playbook. A setup needs entry, exit and invalidation rules before I touch it; the journal records each trade in R so one repeating mistake is visible at review time. The chart beside this is a simulation, not my account.
 				</Chapter>
 
 				<Chapter {...chapters[3]} active={active === chapters[3].id}>

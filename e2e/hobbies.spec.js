@@ -145,7 +145,7 @@ test("trading uses the shared journal and UI Pack exposes all library objects", 
  await expect(collection.getByRole('button',{name:'Trading journal',exact:true})).toBeVisible();
  await collection.getByRole('button',{name:'Trading journal',exact:true}).click();
  await expect(collection.locator('canvas')).toHaveAttribute('data-renderer','webgl');
- await expect(collection.getByText("A fast market replay with red and green candles, order flow and a reversal. Simulation; no live data.", { exact: true })).toBeVisible();
+ await expect(collection.getByText("A continuously panning candlestick chart with consistent OHLC prices and volume. Simulation; no live data.", { exact: true })).toBeVisible();
  await expect(collection.getByRole('group',{name:'Choose an object'}).getByRole('button')).toHaveCount(7);
 });
 
