@@ -22,7 +22,11 @@ function Chapter({ id, index, label, kind, active, children }) {
 				<Text as="h2" className={styles.heading}>{label}</Text>
 				<Text className={styles.prose}>{children}</Text>
 			</Box>
-			<Box className={styles.visual} aria-label={`${label} visual`}>
+			<Box
+				className={styles.visual}
+				aria-label={`${label} visual`}
+				data-hobby-visual
+				data-chapter-id={id}>
 				<Box className={styles.visualSticky}>
 					<HobbyScene kind={kind} label={label} active={active} />
 				</Box>
@@ -36,24 +40,27 @@ export default function Hobbies() {
 	const [active, setActive] = useState(null);
 
 	useEffect(() => {
-		const sections = [...pageRef.current.querySelectorAll("[data-chapter]")];
-		const chooseCentred = () => {
+		const visuals = [...pageRef.current.querySelectorAll("[data-hobby-visual]")];
+		const chooseVisible = () => {
 			const centre = window.innerHeight / 2;
-			const centred = sections.find((section) => {
-				const rect = section.getBoundingClientRect();
-				return rect.top <= centre && rect.bottom >= centre;
-			});
-			setActive(centred?.id ?? null);
+			const visible = visuals
+				.map((visual) => ({ visual, rect: visual.getBoundingClientRect() }))
+				.filter(({ rect }) => rect.top < window.innerHeight * 0.9 && rect.bottom > window.innerHeight * 0.1)
+				.sort((a, b) =>
+					Math.abs((a.rect.top + a.rect.bottom) / 2 - centre) -
+					Math.abs((b.rect.top + b.rect.bottom) / 2 - centre),
+				)[0];
+			setActive(visible?.visual.dataset.chapterId ?? null);
 		};
-		const observer = new IntersectionObserver(chooseCentred, { threshold: [0, 0.5] });
-		sections.forEach((section) => observer.observe(section));
-		window.addEventListener("scroll", chooseCentred, { passive: true });
-		window.addEventListener("resize", chooseCentred);
-		chooseCentred();
+		const observer = new IntersectionObserver(chooseVisible, { threshold: [0, 0.25, 0.6] });
+		visuals.forEach((visual) => observer.observe(visual));
+		window.addEventListener("scroll", chooseVisible, { passive: true });
+		window.addEventListener("resize", chooseVisible);
+		chooseVisible();
 		return () => {
 			observer.disconnect();
-			window.removeEventListener("scroll", chooseCentred);
-			window.removeEventListener("resize", chooseCentred);
+			window.removeEventListener("scroll", chooseVisible);
+			window.removeEventListener("resize", chooseVisible);
 		};
 	}, []);
 

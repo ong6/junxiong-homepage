@@ -13,7 +13,7 @@ export default function UipackObjects() {
 			<Flex wrap="wrap" gap={2} role="group" aria-label="Choose an object">
 				{objectScenes.map((item) => <Button key={item.id} minH="44px" variant={selected === item.id ? "solid" : "outline"} aria-pressed={selected === item.id} onClick={() => setSelected(item.id)}>{item.title}</Button>)}
 			</Flex>
-			<Box mt={4} h={{ base: "340px", md: "480px" }}><HobbyScene key={scene.id} kind={scene.id} label={scene.title} active /></Box>
+			<Box mt={4} h={{ base: "340px", md: "480px" }}><HobbyScene key={scene.id} kind={scene.id} label={scene.title} active controls="full" /></Box>
 			<Text mt={3} color="text.muted">{scene.description}</Text>
 		</Box>
 	);

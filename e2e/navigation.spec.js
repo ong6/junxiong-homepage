@@ -35,6 +35,17 @@ test("header content shares the page grid at desktop widths", async ({ page }) =
 	expect(Math.abs(brand.x - eyebrow.x)).toBeLessThan(1);
 });
 
+test("header has deliberate vertical room at desktop and mobile widths", async ({ page }) => {
+	for (const [width, expectedHeight] of [[390, 64], [1440, 72]]) {
+		await page.setViewportSize({ width, height: 900 });
+		await page.goto("/");
+		const nav = await page.getByRole("navigation", { name: "Site" }).boundingBox();
+		expect(nav.height).toBe(expectedHeight);
+		const mainTop = await page.locator("main").evaluate((main) => parseFloat(getComputedStyle(main).paddingTop));
+		expect(mainTop).toBe(expectedHeight);
+	}
+});
+
 test("contact affordance opens the contact page", async ({ page }) => {
 	await page.goto("/");
 	await page.getByRole("navigation", { name: "Site" }).getByRole("link", { name: "Contact me" }).click();

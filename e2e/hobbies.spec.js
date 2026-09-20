@@ -21,7 +21,10 @@ for (const width of [390, 1440]) {
 			await expect(page.locator("h1")).toHaveText("Things I keep returning to.");
 			await expect(page.locator("main h2")).toHaveText(labels);
 			await settleLayout(page);
-			await expect(page.locator("main canvas")).toHaveCount(0);
+			await expect(page.locator("main canvas")).toHaveCount(width === 1440 ? 1 : 0);
+			if (width === 1440) {
+				await expect(page.locator('#coding-ai canvas[data-renderer="webgl"]')).toBeVisible();
+			}
 			expect(await page.locator("[data-chapter]").count()).toBe(6);
 			expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
 			expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollSnapType)).toBe("none");
@@ -30,9 +33,12 @@ for (const width of [390, 1440]) {
 			await page.locator("#tennis").scrollIntoViewIfNeeded();
 			await expect(page.locator('#tennis canvas[data-renderer="webgl"]')).toBeVisible();
 			expect(await page.locator("main canvas").count()).toBe(1);
+			await expect(page.locator("#tennis").getByRole("button", { name: "Pause motion" })).toBeVisible();
+			await expect(page.locator("#tennis").getByRole("button", { name: "Open canvas" })).toHaveCount(0);
+			await expect(page.locator("#tennis").getByRole("button", { name: "Another look" })).toHaveCount(0);
 			await expect(page.locator('#tennis [role="img"]')).toHaveAttribute("aria-label", "Tennis illustration");
 			await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
-			await expect(page.locator("main canvas")).toHaveCount(0);
+			await expect(page.locator("main canvas")).toHaveCount(width === 1440 ? 1 : 0);
 			expect(errors).toEqual([]);
 		});
 	}
@@ -58,6 +64,17 @@ test("hobbies pauses motion explicitly and while a chapter is offscreen", async 
 	await page.locator("#trading").scrollIntoViewIfNeeded();
 	await expect(scene).toHaveCount(0);
 	expect(await page.locator("main canvas").count()).toBeLessThanOrEqual(1);
+});
+
+test("hobby artwork starts when its visual enters the viewport", async ({ page }) => {
+	await page.setViewportSize({ width: 390, height: 900 });
+	await page.goto("/hobbies");
+	await settleLayout(page);
+	await expect(page.locator("main canvas")).toHaveCount(0);
+	await page.locator("#coding-ai [data-hobby-visual]").scrollIntoViewIfNeeded();
+	const canvas = page.locator('#coding-ai canvas[data-renderer="webgl"]');
+	await canvas.waitFor();
+	await expect.poll(() => canvas.getAttribute("data-frames")).not.toBe("0");
 });
 
 test("hobby motion advances through an authored sequence, settles, then replays on demand", async ({ page }) => {
