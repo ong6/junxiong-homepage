@@ -46,6 +46,26 @@ test("header has deliberate vertical room at desktop and mobile widths", async (
 	}
 });
 
+for (const theme of ["light", "dark"]) {
+	test(`header touches a non-transparent root canvas in ${theme}`, async ({ page }) => {
+		await page.setViewportSize({ width: 1440, height: 900 });
+		await page.addInitScript((mode) => localStorage.setItem("chakra-ui-color-mode", mode), theme);
+		await page.goto("/");
+		const geometry = await page.getByRole("navigation", { name: "Site" }).evaluate((nav) => {
+			const navBox = nav.getBoundingClientRect();
+			const root = getComputedStyle(document.documentElement);
+			return {
+				navTop: navBox.top,
+				rootBackground: root.backgroundColor,
+				overscrollY: root.overscrollBehaviorY,
+			};
+		});
+		expect(geometry.navTop).toBe(0);
+		expect(geometry.rootBackground).not.toBe("rgba(0, 0, 0, 0)");
+		expect(geometry.overscrollY).toBe("none");
+	});
+}
+
 test("contact affordance opens the contact page", async ({ page }) => {
 	await page.goto("/");
 	await page.getByRole("navigation", { name: "Site" }).getByRole("link", { name: "Contact me" }).click();
