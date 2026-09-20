@@ -1,5 +1,5 @@
 .page {
-	--page-edge: max(24px, calc((100vw - 1120px) / 2 + 16px));
+	--page-edge: max(16px, calc((100vw - 1120px) / 2 + 16px));
 	position: relative;
 	width: 100vw;
 	margin-left: calc(50% - 50vw);
@@ -85,7 +85,6 @@
 }
 
 @media (max-width: 959px) {
-	.page { --page-edge: clamp(20px, 6vw, 48px); }
 	.intro { min-height: 0; padding-top: 72px; padding-bottom: 56px; }
 	.title { max-width: 10ch; font-size: clamp(50px, 10vw, 76px); }
 	.chapter {
@@ -101,7 +100,6 @@
 }
 
 @media (max-width: 479px) {
-	.page { --page-edge: 20px; }
 	.intro { padding-top: 56px; padding-bottom: 40px; }
 	.title { margin-top: 12px; font-size: clamp(44px, 14vw, 58px); line-height: .94; }
 	.lede { font-size: 16px; }

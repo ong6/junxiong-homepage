@@ -150,7 +150,7 @@ const Navbar = ({ path = "/", ...props }) => {
 			css={{ backdropFilter: "blur(14px)" }}
 			zIndex={20}
 			{...props}>
-			<Container maxW="1120px" px={4}>
+			<Container maxW="1120px" px={4} h="100%">
 				<Flex h="100%" align="center" justify="space-between" gap={4}>
 					<Box
 						flexShrink={0}

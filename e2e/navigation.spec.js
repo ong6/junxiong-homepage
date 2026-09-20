@@ -43,6 +43,22 @@ test("header has deliberate vertical room at desktop and mobile widths", async (
 		expect(nav.height).toBe(expectedHeight);
 		const mainTop = await page.locator("main").evaluate((main) => parseFloat(getComputedStyle(main).paddingTop));
 		expect(mainTop).toBe(expectedHeight);
+		// The brand and controls sit on the bar's vertical centre, not its top edge.
+		const brand = await page.getByRole("link", { name: "Ong Jun Xiong — home" }).boundingBox();
+		const contact = await page.getByRole("navigation", { name: "Site" }).getByRole("link", { name: "Contact me" }).boundingBox();
+		for (const box of [brand, contact]) {
+			expect(Math.abs(box.y + box.height / 2 - nav.height / 2)).toBeLessThan(1);
+		}
+	}
+});
+
+test("hobbies content shares the header's left edge at every width", async ({ page }) => {
+	for (const width of [390, 768, 960, 1440]) {
+		await page.setViewportSize({ width, height: 900 });
+		await page.goto("/hobbies");
+		const brand = await page.getByRole("link", { name: "Ong Jun Xiong — home" }).boundingBox();
+		const title = await page.locator("main h1").boundingBox();
+		expect(Math.abs(brand.x - title.x)).toBeLessThan(1);
 	}
 });
 
