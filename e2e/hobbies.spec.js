@@ -156,7 +156,21 @@ test("UI Pack changes the tennis edition without leaving the shared player", asy
  const object = collection.locator('.uipack-object');
  await expect(object.locator('canvas')).toHaveAttribute('data-source', 'blender');
  const before = Number(await object.getAttribute('data-variant'));
- await collection.getByRole('button', { name: 'Another look', exact: true }).click();
+ await collection.getByRole('group', { name: 'Choose a look' }).getByRole('button').nth((before + 1) % 3).click();
  await expect(object).toHaveAttribute('data-variant', String((before + 1) % 3));
  await expect(object.locator('canvas')).toHaveAttribute('data-renderer', 'webgl');
+});
+
+test("the object gallery preserves named looks in its review URL", async ({ page }) => {
+  await page.goto("/uipack?category=web&object=travel&look=1#objects");
+  const collection=page.getByRole("region",{name:"3D object collection"});
+  await expect(collection.locator(".uipack-object")).toHaveAttribute("data-kind","travel");
+  await expect(collection.getByRole("button",{name:"Coastal atlas",exact:true})).toHaveAttribute("aria-pressed","true");
+  await collection.getByRole("button",{name:"Desert atlas",exact:true}).click();
+  await expect(page).toHaveURL(/look=2/);
+  await page.reload();
+  await expect(collection.locator(".uipack-object")).toHaveAttribute("data-variant","2");
+  await collection.getByRole("button",{name:"Open book",exact:true}).click();
+  await expect(page).toHaveURL(/object=reading/);
+  await expect(collection.getByRole("button",{name:"Midnight cloth",exact:true})).toHaveAttribute("aria-pressed","true");
 });

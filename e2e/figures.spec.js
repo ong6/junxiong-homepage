@@ -1,7 +1,7 @@
 const { expect, test } = require("@playwright/test");
 const { SEL, packetCentre, dist, collectErrors } = require("./helpers");
 
-const PAGES = ["/compoze", "/groundplane", "/jobforge", "/trading-engine", "/uipack"];
+const PAGES = ["/compoze", "/groundplane", "/jobforge", "/skill-eval-pack", "/trading-engine", "/uipack"];
 
 for (const path of PAGES) {
 	test.describe(`${path} figures`, () => {
@@ -62,7 +62,7 @@ for (const path of PAGES) {
 			await expect.poll(() => page.locator("figure.uipack").first().evaluate((el) => getComputedStyle(el).backgroundColor)).toBe(expectedBg);
 			const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
 			expect(overflow).toBe(0);
-			if (path === "/uipack") expect(await page.locator("figure.uipack").count()).toBe(6);
+			if (path === "/uipack") expect(await page.locator("figure.uipack").count()).toBe(7);
 			expect(errors).toEqual([]);
 		});
 	}
@@ -78,7 +78,7 @@ test("/groundplane expand opens the wide drawing full-screen and Esc closes it",
 	await expect(dialog).toHaveCount(0);
 });
 
-for (const path of ["/uipack", "/compoze", "/groundplane", "/jobforge", "/trading-engine"]) {
+for (const path of ["/uipack", "/compoze", "/groundplane", "/jobforge", "/skill-eval-pack", "/trading-engine"]) {
 	test(`${path} at 390 has no horizontal overflow`, async ({ page }) => {
 		await page.setViewportSize({ width: 390, height: 844 });
 		await page.goto(path);

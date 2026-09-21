@@ -7,9 +7,9 @@ engineering through a restrained terminal-inspired interface.
 ## What is here
 
 - A single-surface homepage led by Groundplane and Compoze, with the rest of the site exposed through global navigation
-- Case studies for Groundplane (`/groundplane`, a Python boundary for agent output), Jobforge
-  (`/jobforge`, a Claude Code interview-prep plugin) and Skillpack (`/skillpack`, the shared
-  Claude Code and Codex skills with two-way subtree sync that defers around unrelated edits)
+- Case studies for Groundplane (`/groundplane`, a Python boundary for agent output), Skillpack
+  (`/skillpack`, shared Claude Code and Codex skills), Skill Eval Pack (`/skill-eval-pack`, a blind
+  no-skill baseline gate) and Jobforge (`/jobforge`, a Claude Code interview-prep plugin)
 - A public case study for Compoze, with client identity and financial terms kept private
 - A case study for the trading engine (`/trading-engine`, a paper-trading research engine with
   pre-registered strategies and a next-open fill model), with the nightly-loop diagram
@@ -75,3 +75,11 @@ of Ong Jun Xiong.
 ## UI Pack first
 
 Significant visuals are authored and registered in [UI Pack](../uipack/docs/component-first.md) before use here. Run `npm run check:ui-ownership` to verify the shared imports and renderer boundary. `ui-inventory.json` tracks collection ownership and existing page-specific compositions. The six hobby scenes are imported from `uipack/objects` and previewed in `/uipack`.
+
+
+## Object variants
+
+The shared object gallery supports stable review links such as
+[/uipack?category=web&object=travel&look=1#objects](https://junxiong.dev/uipack?category=web&object=travel&look=1#objects).
+Use object IDs ai, contact, tennis, trading, server, travel or reading, and look 0–2.
+The named look buttons preserve the choice in the URL across reloads.

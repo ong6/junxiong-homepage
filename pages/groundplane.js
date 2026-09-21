@@ -1,5 +1,6 @@
 import { Box, Container, Heading, Link, Text, useColorModeValue } from "@chakra-ui/react";
 import NextLink from "next/link";
+import AiToolFamily from "../components/AiToolFamily";
 import DiagramFigure from "../components/DiagramFigure";
 import * as GroundplaneArchitecture from "../components/diagrams/GroundplaneArchitecture";
 import { CodeBlock, CodeFigure } from "../components/CodeBlock";
@@ -321,6 +322,8 @@ export default function Groundplane() {
 						))}
 					</Box>
 				</Details>
+
+				<AiToolFamily current="/groundplane" />
 
 				<Box h={{ base: 12, md: 20 }} />
 			</Container>

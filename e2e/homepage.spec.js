@@ -21,19 +21,23 @@ for (const width of [390, 1440]) {
 				"UI Pack",
 				"Trading engine",
 				"Skillpack",
+				"Skill Eval Pack",
 				"Jobforge",
 			]);
 			await expect(page.getByRole("heading", { name: "Selected work" })).toBeVisible();
-			await expect(page.getByRole("heading", { name: "The rest of the cabinet" })).toBeVisible();
+			await expect(page.getByRole("heading", { name: "Also building" })).toBeVisible();
+			await expect(page.getByRole("heading", { name: "Around the site" })).toBeVisible();
+			await expect(page.getByText("04 more", { exact: true })).toHaveCount(0);
 			const firstProject = await page.locator("#work h3").first().boundingBox();
 			expect(firstProject.y + firstProject.height).toBeLessThan(900);
 			expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(
 				false,
 			);
-			for (const label of ["GitHub ↗", "LinkedIn ↗", "Resume"]) {
+			for (const label of ["GitHub ↗", "LinkedIn ↗"]) {
 				const target = await page.getByRole("link", { name: label, exact: true }).first().boundingBox();
 				expect(target.height).toBeGreaterThanOrEqual(43.9);
 			}
+			await expect(page.locator("#about").getByRole("link", { name: "Resume", exact: true })).toHaveCount(0);
 			await expect(page.locator("main").getByRole("link", { name: "Email", exact: true })).toHaveCount(0);
 			await expect(page.getByText("Before AI infrastructure, I wrote Go services", { exact: false })).toBeVisible();
 			await expect(
@@ -44,12 +48,13 @@ for (const width of [390, 1440]) {
 				["UI Pack", "/uipack"],
 				["Trading engine", "/trading-engine"],
 				["Skillpack", "/skillpack"],
+				["Skill Eval Pack", "/skill-eval-pack"],
 				["Jobforge", "/jobforge"],
 			]) {
 				await expect(page.locator("#work").getByRole("link", { name, exact: true })).toHaveAttribute("href", href);
 			}
 			for (const name of ["Hobbies", "Notes", "Archive", "Resume"]) {
-				await expect(page.getByRole("region", { name: "The rest of the cabinet" }).getByRole("link", { name: new RegExp(`^${name}`) })).toBeVisible();
+				await expect(page.getByRole("region", { name: "Around the site" }).getByRole("link", { name: new RegExp(`^${name}`) })).toBeVisible();
 			}
 			expect(errors).toEqual([]);
 		});

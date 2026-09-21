@@ -12,6 +12,7 @@ import {
 	deploy,
 	fieldpack,
 	groundplane,
+	aiToolchain,
 	skillforge,
 	skillpack,
 } from "../lib/uipackGallery";
@@ -36,38 +37,43 @@ const Wide = ({ note, children }) => (
 );
 
 // Match the discovered browser-suite count when its coverage changes.
-const E2E_CASES = 101;
+const E2E_CASES = 127;
 
 const GALLERY = [
 	{
+		id: "ai",
+		render: () => pipeline(aiToolchain, "ai"),
+		note: "fig. 1 — the AI toolchain. Each project owns one decision: what the agent reads, whether the instruction helps, and whether the output agrees with recorded facts.",
+	},
+	{
 		id: "gp",
 		render: () => agentLoop(groundplane, "gp"),
-		note: "fig. 1 — groundplane. Hover the agent or a tool: the flow it belongs to lights up, the rest dims.",
+		note: "fig. 2 — groundplane. Hover the agent or a tool: the flow it belongs to lights up, the rest dims.",
 	},
 	{
 		id: "sp",
 		render: () => syncLoop(skillpack, "sp"),
-		note: "fig. 2 — skillpack. The pull and push are two connectors; each carries one head and one packet direction.",
+		note: "fig. 3 — skillpack. The pull and push are two connectors; each carries one head and one packet direction.",
 	},
 	{
 		id: "sf",
 		render: () => skillLifecycle(skillforge, "sf"),
-		note: "fig. 3 — skillforge. The dashed edge is feedback. It runs against the loop on purpose.",
+		note: "fig. 4 — skillforge. The dashed edge is feedback. It runs against the loop on purpose.",
 	},
 	{
 		id: "fp",
 		render: () => serviceMap(fieldpack, "fp"),
-		note: "fig. 4 — fieldpack. A bus on each side of the platform. Stubs carry no heads, the junction dot marks the join.",
+		note: "fig. 5 — fieldpack. A bus on each side of the platform. Stubs carry no heads, the junction dot marks the join.",
 	},
 	{
 		id: "dp",
 		render: () => pipeline(deploy(E2E_CASES), "dp"),
-		note: "fig. 5 — this site. I run the browser suite before pushing. Vercel deploys main automatically; these checks are not an enforced deployment gate.",
+		note: "fig. 6 — this site. I run the browser suite before pushing. Vercel deploys main automatically; these checks are not an enforced deployment gate.",
 	},
 	{
 		id: "cr",
 		render: () => beforeAfter(connectorRule, "cr"),
-		note: "fig. 6 — the rule the earlier figures broke. The changed stages and their inbound edges are in accent.",
+		note: "fig. 7 — the rule the earlier figures broke. The changed stages and their inbound edges are in accent.",
 	},
 ];
 

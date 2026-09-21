@@ -9,6 +9,7 @@ for (const path of [
 	"/contact",
 	"/compoze",
 	"/skillpack",
+	"/skill-eval-pack",
 	"/trading-engine",
 	"/uipack",
 	"/assets",

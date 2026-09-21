@@ -174,15 +174,22 @@ const supportingProjects = [
 		title: "Skillpack",
 		href: "/skillpack",
 		label: "Agent tooling",
-		description: "One home for the coding-agent skills I use across repos, synced as a git subtree.",
+		description: "The eight reusable instructions I keep in one place for Claude Code and Codex.",
 		mark: "03 / CLAUDE + CODEX",
+	},
+	{
+		title: "Skill Eval Pack",
+		href: "/skill-eval-pack",
+		label: "Agent evaluation",
+		description: "A blind A/B gate for deciding whether a new agent skill has earned its place.",
+		mark: "04 / KEEP OR RETIRE",
 	},
 	{
 		title: "Jobforge",
 		href: "/jobforge",
 		label: "Interview practice",
 		description: "Coding drills that grade the plan I say out loud before I touch the keyboard.",
-		mark: "04 / LOCAL FIRST",
+		mark: "05 / LOCAL FIRST",
 	},
 ];
 
@@ -226,7 +233,7 @@ function Elsewhere() {
 				{"// ELSEWHERE"}
 			</Text>
 			<Heading id="elsewhere-heading" as="h2" mt={2} fontSize={{ base: "25px", md: "30px" }}>
-				The rest of the cabinet
+				Around the site
 			</Heading>
 			<SimpleGrid columns={{ base: 1, smmd: 2, lg: 4 }} mt={6} borderTop="1px solid" borderColor="border.subtle">
 				{elsewhereLinks.map((item) => (
@@ -281,14 +288,9 @@ export default function SelectedWork() {
 				</Grid>
 
 				<Box mt={{ base: 8, md: 10 }}>
-					<Flex align="baseline" justify="space-between" gap={4}>
-						<Heading as="h2" fontSize={{ base: "22px", md: "25px" }}>
-							On the shelf
-						</Heading>
-						<Text color="text.muted" sx={labelStyle}>
-							04 more
-						</Text>
-					</Flex>
+					<Heading as="h2" fontSize={{ base: "22px", md: "25px" }}>
+						Also building
+					</Heading>
 					<SimpleGrid columns={{ base: 1, md: 2 }} mt={4} gap={4}>
 						{supportingProjects.map((project) => (
 							<SupportingCard key={project.title} project={project} />

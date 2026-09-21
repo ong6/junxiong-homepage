@@ -1,5 +1,6 @@
 import { Box, Container, Heading, Link, Text, useColorModeValue } from "@chakra-ui/react";
 import NextLink from "next/link";
+import AiToolFamily from "../components/AiToolFamily";
 import DiagramFigure from "../components/DiagramFigure";
 import * as SkillpackArchitecture from "../components/diagrams/SkillpackArchitecture";
 import { CodeBlock, CodeFigure } from "../components/CodeBlock";
@@ -225,11 +226,12 @@ export default function Skillpack() {
 				<P>
 					Only generic skills go in. Anything naming a private path, an account or a price stays in
 					the consumer repo beside the subtree. The store this grew out of keeps more of those than
-					it publishes. The eight here survived being pulled out of that context: writing, web
-					extraction, diagrams, a PDF builder, a session handoff, and the feedback loop that patches
-					whichever skill or rule earned the complaint.
+					it publishes. The eight here cover web and video research, system diagrams, 3D and Blender
+					authoring, printable PDFs, session handoffs and the feedback loop that patches whichever
+					skill or rule earned the complaint.
 				</P>
 
+				<AiToolFamily current="/skillpack" />
 				<Box h={{ base: 12, md: 20 }} />
 			</Container>
 		</Layout>

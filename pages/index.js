@@ -57,7 +57,7 @@ function Introduction() {
 						letterSpacing="-.06em">
 						Ong Jun Xiong
 					</Heading>
-					<Text mt={5} fontSize={{ base: "19px", md: "23px" }} lineHeight="1.45" fontWeight="600">
+					<Text mt={5} fontSize={{ base: "19px", md: "23px" }} lineHeight="1.45">
 						I&apos;m a software engineer at TikTok in Singapore, building AI infrastructure for
 						e-commerce.
 					</Text>
@@ -112,7 +112,7 @@ function Introduction() {
 
 				<Grid
 					gridArea="links"
-					templateColumns={{ base: "repeat(2, minmax(0, 1fr))", md: "repeat(3, max-content)" }}
+					templateColumns={{ base: "repeat(2, minmax(0, 1fr))", md: "repeat(2, max-content)" }}
 					columnGap={{ base: 2, md: 6 }}
 					rowGap={1}>
 					<Link
@@ -128,9 +128,6 @@ function Introduction() {
 						rel="noopener noreferrer"
 						{...utilityLinkProps}>
 						LinkedIn ↗
-					</Link>
-					<Link as={NextLink} href="/resume" {...utilityLinkProps}>
-						Resume
 					</Link>
 				</Grid>
 			</Grid>
