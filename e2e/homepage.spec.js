@@ -112,7 +112,7 @@ for (const route of ["/compoze", "/groundplane"]) {
 			.map((caption) => caption.match(/^fig\.\s*(\d+)/i))
 			.filter(Boolean)
 			.map((match) => Number(match[1]));
-		expect(numbers).toEqual(route === "/compoze" ? [1, 2, 3, 4, 5, 6, 7] : [1, 2]);
+		expect(numbers).toEqual(route === "/compoze" ? [1, 2, 3, 4, 5, 6, 7, 8, 9] : [1, 2]);
 		const first = await page.locator("main figure").first().boundingBox();
 		const architecture = await page.locator("figure.uipack").first().boundingBox();
 		expect(first.y).toBeLessThan(architecture.y);

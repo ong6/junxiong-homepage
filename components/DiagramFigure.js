@@ -1,9 +1,10 @@
 import { Box, Portal, Text, useColorModeValue } from "@chakra-ui/react";
 import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
 import { Figure } from "uipack";
+import { MOBILE_MIN_FONT, SwipeHint, mobileScrollSx, useIsMobile, useOverflow, viewBoxWidth } from "./figureMobile";
 // One figure wrapper for every diagram. Inline, the drawing sits in a uipack
 // Figure (eyebrow, title, caption, legend, Pause and Replay, dotted canvas).
-// Phones keep the wide drawing and scroll it sideways (see MOBILE_SCALE).
+// Phones keep the wide drawing and scroll it sideways (see figureMobile.js).
 // An expand control under the card opens the wide drawing full-screen with
 // wheel / pinch zoom and drag pan, written by hand on a CSS transform so
 // nothing new ships in the bundle.
@@ -328,53 +329,12 @@ const shortCaption = (c) => {
 	return m ? m[0] : "";
 };
 
-// Phones get the wide drawing, not a squeezed or re-laid-out one. It renders
-// at MOBILE_SCALE of its designed width and the canvas scrolls sideways, so the
-// layout stays intact and text is only slightly smaller. The font floor drops
-// to MOBILE_MIN_FONT there so uipack doesn't enlarge labels past their boxes.
-const MOBILE_QUERY = "(max-width: 720px)";
-const MOBILE_SCALE = 0.85;
-const MOBILE_MIN_FONT = 9.5;
-
-function useIsMobile() {
-	const [mobile, setMobile] = useState(false);
-	useEffect(() => {
-		if (typeof window === "undefined" || !window.matchMedia) return;
-		const mq = window.matchMedia(MOBILE_QUERY);
-		const read = () => setMobile(mq.matches);
-		read();
-		mq.addEventListener("change", read);
-		return () => mq.removeEventListener("change", read);
-	}, []);
-	return mobile;
-}
-
-// True while the inline canvas is wider than its box, so the swipe hint only
-// shows when there is something to swipe to.
-function useOverflow(ref, active) {
-	const [overflow, setOverflow] = useState(false);
-	useEffect(() => {
-		const canvas = ref.current && ref.current.querySelector(".uipack__canvas");
-		if (!active || !canvas || typeof ResizeObserver === "undefined") {
-			setOverflow(false);
-			return;
-		}
-		const read = () => setOverflow(canvas.scrollWidth > canvas.clientWidth + 1);
-		read();
-		const ro = new ResizeObserver(read);
-		ro.observe(canvas);
-		return () => ro.disconnect();
-	}, [ref, active]);
-	return overflow;
-}
-
 export default function DiagramFigure({ id, diagram, caption, headingLevel }) {
 	const { meta, CLAIM, Wide } = diagram;
 	const [open, setOpen] = useState(false);
 	const boxRef = useRef(null);
 	const mobile = useIsMobile();
 	const overflow = useOverflow(boxRef, mobile);
-	const vbWidth = Number(String(meta.viewBox).trim().split(/\s+/)[2]) || 1088;
 
 	return (
 		// A drawing wider than the prose column breaks out to the main container's
@@ -387,16 +347,7 @@ export default function DiagramFigure({ id, diagram, caption, headingLevel }) {
 			mx={0}
 			w="min(100vw - 32px, 1088px)"
 			maxW="none"
-			sx={{
-				[`@media ${MOBILE_QUERY}`]: {
-					"& .uipack .uipack__canvas": { WebkitOverflowScrolling: "touch" },
-					"& .uipack .uipack__canvas > svg.uipack--wide": {
-						width: `${Math.round(vbWidth * MOBILE_SCALE)}px`,
-						minWidth: "100%",
-						maxWidth: "none",
-					},
-				},
-			}}>
+			sx={mobileScrollSx(viewBoxWidth(meta.viewBox))}>
 			<Figure
 				id={`${id}-figure`}
 				headingLevel={headingLevel}
@@ -410,19 +361,7 @@ export default function DiagramFigure({ id, diagram, caption, headingLevel }) {
 				alt={CLAIM}>
 				<Wide id={`${id}-w`} />
 			</Figure>
-			{overflow ? (
-				<Text
-					mt={2}
-					fontFamily="var(--font-mono)"
-					fontSize="11px"
-					fontWeight="700"
-					letterSpacing=".08em"
-					textTransform="uppercase"
-					color="text.muted"
-					aria-hidden="true">
-					Swipe to see the whole diagram →
-				</Text>
-			) : null}
+			{overflow ? <SwipeHint /> : null}
 			<Box display="flex" alignItems="flex-start" gap={3} mt={2}>
 				<Text
 					as="figcaption"
