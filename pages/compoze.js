@@ -209,8 +209,7 @@ export default function Compoze() {
 						fontSize={{ base: "19px", md: "21px" }}
 						lineHeight="1.6"
 						fontWeight="600">
-						I built Compoze on evenings and weekends while working full time at
-						TikTok. I built assistants that answered questions using a company&apos;s own documents. Compoze was sold to a client at the end of 2025.
+						Compoze was an evenings-and-weekends company, run alongside my full-time job at TikTok. It built assistants that answer questions from a company&apos;s own documents, and it was sold to a client at the end of 2025.
 					</Text>
 				</Box>
 
@@ -233,7 +232,7 @@ export default function Compoze() {
 				<H2>Working alone</H2>
 
 				<P>
-					I handled the work from the first customer conversation through deployment and training. Organising the knowledge base took the most time. I needed the customer to decide which documents belonged in it and which should stay out. Running Compoze alongside a full-time job also meant designing it to work without my constant attention.
+					Each engagement ran from the first customer conversation through deployment and training, and I handled all of it. Organising the knowledge base took the longest, because only the customer could decide which documents belonged in it and which should stay out. Running Compoze beside a full-time job also meant it had to keep working without constant attention.
 				</P>
 
 				<DiagramFigure
@@ -250,7 +249,7 @@ export default function Compoze() {
 				/>
 
 				<P>
-					I added example prompts and a visible tool list so someone opening the chat could see what to ask. Past conversations stayed in the sidebar.
+					The chat opens with example prompts and a list of the tools it can use, so someone new can see what to ask. Past conversations stay in the sidebar.
 				</P>
 
 				<H2>One codebase, configured per customer</H2>
@@ -301,11 +300,7 @@ export default function Compoze() {
 				<H2>How I knew it worked</H2>
 
 				<P>
-					I kept a fixed set of question and answer pairs from logs and testing, including questions the documents could not answer. For those, the expected reply was a refusal. Retrieval and generation
-					are scored apart: context precision for whether the
-					good chunks ranked high, faithfulness for whether each claim is
-					entailed by what came back. The set runs in CI. A prompt, chunker or
-					model change fails on a regression against main. The comparison was against the previous version rather than a fixed score threshold.
+					A fixed set of question and answer pairs came from logs and testing, including questions the documents couldn&apos;t answer, where the expected reply was a refusal. Retrieval and generation are scored apart: context precision for whether the good chunks ranked high, faithfulness for whether each claim is entailed by what came back. The set runs in CI, and a prompt, chunker or model change fails on a regression against main. The comparison is against the previous version rather than a fixed score threshold.
 				</P>
 
 				<H2>Getting the documents in</H2>
@@ -414,12 +409,7 @@ export default function Compoze() {
 					<MonoTable rows={optimisations} />
 
 					<P>
-						Working alone made automated checks especially useful. Route contracts are typed,
-						every payload is validated at runtime with Zod, and contract tests
-						run on each push. That is what let me keep changing 53 routes and
-						23 tables alone. Each request is traced as one span tree with
-						tokens, model and tenant on every span, so pricing is built on cost
-						per tenant per answer. Time to first token is the latency I watched.
+						With no one else reviewing the code, automated checks did that job. Route contracts are typed, every payload is validated at runtime with Zod, and contract tests run on each push. That&apos;s what made it safe to keep changing 53 routes and 23 tables. Each request is traced as one span tree with tokens, model and tenant on every span, so pricing is built on cost per tenant per answer. Time to first token was the latency that mattered most.
 					</P>
 				</Details>
 
