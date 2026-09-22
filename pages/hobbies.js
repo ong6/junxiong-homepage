@@ -3,6 +3,7 @@ import NextLink from "next/link";
 import { useEffect, useRef, useState } from "react";
 import HobbyScene from "../components/HobbyScene";
 import Layout from "../components/layouts/Articles";
+import ProjectLinks from "../components/ProjectLinks";
 import styles from "../styles/Hobbies.module.css";
 
 const chapters = [
@@ -14,13 +15,14 @@ const chapters = [
 	{ id: "trading", index: "06", label: "Trading", kind: "trading", variant: 0 },
 ];
 
-function Chapter({ id, index, label, kind, active, variant, children }) {
+function Chapter({ id, index, label, kind, active, variant, after, children }) {
 	return (
 		<Box as="section" id={id} className={styles.chapter} data-chapter={kind}>
 			<Box className={styles.copy}>
 				<Text className={styles.number}>{index} / 06</Text>
 				<Text as="h2" className={styles.heading}>{label}</Text>
 				<Text className={styles.prose}>{children}</Text>
+				{after}
 			</Box>
 			<Box
 				className={styles.visual}
@@ -90,7 +92,21 @@ export default function Hobbies() {
 					I spent six months in Munich on NUS Overseas Colleges. I like having enough time in a place to get familiar with it, so I tend to plan fewer stops and stay longer in each.
 				</Chapter>
 
-				<Chapter {...chapters[1]} active={active === chapters[1].id}>
+				<Chapter
+					{...chapters[1]}
+					active={active === chapters[1].id}
+					after={
+						<ProjectLinks
+							heading="Built from this hobby"
+							compact
+							mt={6}
+							maxW="64ch"
+							links={[
+								{ name: "Groundplane", detail: "Checks declared fields against recorded tool results", href: "/groundplane" },
+								{ name: "Jobforge", detail: "Grades the plan you say before you code", href: "/jobforge" },
+							]}
+						/>
+					}>
 					This is my main hobby. I like trying models, building little tools, and seeing what I can get an agent to do. That is how I end up with <Link as={NextLink} href="/groundplane">Groundplane</Link>, a Python library that checks declared output fields against recorded tool results; <Link as={NextLink} href="/jobforge">Jobforge</Link>, a Claude Code plugin that grades the plan you say before you code; my notes and life admin kept as a markdown repo that an AI agent tends for me; and a <Link href="https://github.com/ong6/sg-property-analysis" target="_blank" rel="noopener noreferrer">Singapore property data-analysis project</Link>. Most of it starts with something I want to try or a problem I want to fix for myself.
 				</Chapter>
 

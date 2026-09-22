@@ -142,7 +142,7 @@ function Overlay({ Wide, id, viewBox, alt, caption, onClose }) {
 		if (e.button != null && e.button !== 0) return;
 		try {
 			e.currentTarget.setPointerCapture(e.pointerId);
-		} catch (err) {
+		} catch {
 			// Synthetic or already-released pointers: capture is a nicety, not a need.
 		}
 		pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });

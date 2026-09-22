@@ -1,4 +1,4 @@
-import { Badge, Defs, Flow, Group, Label, Lane, Line, Node, Packet } from "./parts";
+import { Defs, Flow, Group, Label, Line, Node, Packet } from "./parts";
 
 export const CLAIM =
 	"A question fans out across five knowledge bases with hybrid search, the survivors are reranked by a cross-encoder, and every citation is checked against its chunk before the answer ships.";
@@ -15,7 +15,6 @@ export const meta = {
 		{ label: "Answer", kind: "response" },
 	],
 	viewBox: "0 0 720 1032",
-	narrowViewBox: "0 0 360 984",
 };
 
 
@@ -24,31 +23,7 @@ export const meta = {
 // against its chunk before the answer ships. Accent follows the retrieval path.
 
 const KB_X_WIDE = [68, 188, 308, 428, 548];
-const KB_X_NARROW = [44, 100, 156, 212, 268];
 
-const NARROW_TAIL = [
-	{
-		label: "Cross-encoder rerank",
-		sub: "final order",
-		arrow: "top chunks",
-	},
-	{
-		label: "Summarise references",
-		sub: "kept chunks only",
-		arrow: "prompt context",
-	},
-	{
-		label: "Model gateway",
-		sub: "9 models · prompt cache",
-		arrow: "writes",
-	},
-	{
-		label: "Citation entailment check",
-		sub: "claim ⊨ chunk",
-		arrow: "verified",
-	},
-	{ label: "Answer with citations", sub: "match score per chunk" },
-];
 
 export function Wide({ id }) {
 	return (
@@ -210,128 +185,3 @@ export function Wide({ id }) {
 		</>
 	);
 }
-
-export function Narrow({ id }) {
-	const tail = NARROW_TAIL.map((s, i) => ({ ...s, y: 480 + i * 104 }));
-	return (
-		<>
-			<Defs id={id} />
-
-			<Node x={40} y={24} w={280} h={52} label="User question" size={14} />
-			<Line id={id} x1={180} y1={76} x2={180} y2={116} />
-			<Label x={190} y={101} text="asks" size={11} />
-
-			<Node
-				x={40}
-				y={116}
-				w={280}
-				h={64}
-				label="Domain agent"
-				sub="1 of 4 · tenant-gated"
-				size={14}
-				subSize={11}
-			/>
-			<Line id={id} x1={180} y1={180} x2={180} y2={220} />
-			<Label x={190} y={205} text="tool call" size={11} />
-
-			<Node
-				x={40}
-				y={220}
-				w={280}
-				h={64}
-				label="Contextual RAG search"
-				sub="OpenAI embed · 1536-dim"
-				size={14}
-				subSize={11}
-			/>
-
-			<Line id={id} x1={180} y1={284} x2={180} y2={352} arrow={false} accent />
-			<Label x={190} y={310} text="BM25 + vector · RRF" accent size={11} />
-			<Line id={id} x1={68} y1={352} x2={292} y2={352} arrow={false} accent />
-			{KB_X_NARROW.map((x) => (
-				<Line key={x} id={id} x1={x + 24} y1={352} x2={x + 24} y2={368} accent />
-			))}
-
-			<Group x={20} y={324} w={320} h={116} title="5 KBS · PARALLEL" titleSize={10} />
-			{KB_X_NARROW.map((x, i) => (
-				<Node key={x} x={x} y={368} w={48} h={48} label={`${i + 1}`} size={13} />
-			))}
-
-			{KB_X_NARROW.map((x) => (
-				<Line
-					key={x}
-					id={id}
-					x1={x + 24}
-					y1={416}
-					x2={x + 24}
-					y2={448}
-					arrow={false}
-					accent
-				/>
-			))}
-			<Line id={id} x1={68} y1={448} x2={292} y2={448} arrow={false} accent />
-			<Line id={id} x1={180} y1={448} x2={180} y2={480} accent />
-			<Label x={190} y={469} text="floor 0.35" accent size={11} />
-
-			{tail.map((s) => (
-				<g key={s.label}>
-					<Node
-						x={40}
-						y={s.y}
-						w={280}
-						h={64}
-						label={s.label}
-						sub={s.sub}
-						size={14}
-						subSize={11}
-					/>
-					{s.arrow ? (
-						<>
-							<Line id={id} x1={180} y1={s.y + 64} x2={180} y2={s.y + 104} />
-							<Label x={190} y={s.y + 89} text={s.arrow} size={11} />
-						</>
-					) : null}
-				</g>
-			))}
-
-			<Flow x1={180} y1={76} x2={180} y2={116} kind="request" dur={1.2} />
-			<Flow x1={180} y1={180} x2={180} y2={220} kind="request" dur={1.2} delay={-0.6} />
-			{KB_X_NARROW.map((x, i) => (
-				<Packet
-					key={x}
-					points={[
-						[180, 284],
-						[180, 352],
-						[x + 24, 352],
-						[x + 24, 368],
-					]}
-					kind="accent"
-					dur={2}
-					delay={-i * 0.25}
-					r={4}
-				/>
-			))}
-			{KB_X_NARROW.map((x, i) => (
-				<Packet
-					key={x}
-					points={[
-						[x + 24, 416],
-						[x + 24, 448],
-						[180, 448],
-						[180, 480],
-					]}
-					kind="accent"
-					dur={2}
-					delay={-1 - i * 0.25}
-					r={4}
-				/>
-			))}
-			{tail
-				.filter((s) => s.arrow)
-				.map((s, i) => (
-					<Flow key={s.label} x1={180} y1={s.y + 64} x2={180} y2={s.y + 104} kind={i < 2 ? "request" : "response"} dur={1.2} delay={-i * 0.3} />
-				))}
-		</>
-	);
-}
-

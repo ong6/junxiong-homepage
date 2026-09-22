@@ -15,7 +15,6 @@ export const meta = {
 		{ label: "Plugin install", kind: "change" },
 	],
 	viewBox: "0 0 1120 528",
-	narrowViewBox: "0 0 360 652",
 };
 
 // Claim: fetched changes merge at SessionStart and folder edits push at Stop
@@ -165,121 +164,6 @@ export function Wide({ id }) {
 			<Flow x1={320} y1={140} x2={472} y2={140} kind="request" dur={2.2} delay={-1.1} flow="pull" />
 			<Flow x1={472} y1={348} x2={320} y2={348} kind="accent" dur={2.2} delay={-0.5} flow="push" />
 			<Flow x1={180} y1={360} x2={180} y2={448} kind="change" dur={2} flow="plugin" />
-		</>
-	);
-}
-
-// Mobile reads as one column: upstream, the two arrows of the loop side by
-// side, the consumer with its symlinks and hooks, then the plugin consumer.
-export function Narrow({ id }) {
-	return (
-		<>
-			<Defs id={id} />
-
-			<Group x={20} y={24} w={320} h={200} title="UPSTREAM · ong6/skillpack" titleSize={10} />
-			<Badge cx={20} cy={24} text="1" r={8} />
-			{UPSTREAM.map(([label, sub], i) => (
-				<Node
-					key={label}
-					x={44}
-					y={56 + i * 52}
-					w={272}
-					h={44}
-					label={label}
-					sub={sub}
-					size={12}
-					subSize={9}
-				/>
-			))}
-
-			<Line id={id} x1={110} y1={224} x2={110} y2={296} flow="pull" />
-			<Label x={120} y={252} text="merge fetched" size={10} />
-			<Label x={120} y={268} text="when clean" size={10} />
-			<Line id={id} x1={250} y1={296} x2={250} y2={224} accent flow="push" />
-			<Label x={260} y={252} text="commit, push" accent size={10} />
-			<Label x={260} y={268} text="when clean" accent size={10} />
-
-			<Group
-				x={20}
-				y={296}
-				w={320}
-				h={252}
-				title="CONSUMER REPO · EVERY REPO OF MINE"
-				titleSize={10}
-			/>
-			<Badge cx={20} cy={296} text="2" r={8} />
-			<Node
-				x={44}
-				y={328}
-				w={272}
-				h={44}
-				label=".claude/shared-skills/"
-				sub="git subtree, squashed"
-				size={12}
-				subSize={9}
-			/>
-			<Line id={id} x1={110} y1={372} x2={110} y2={412} />
-			<Line id={id} x1={250} y1={372} x2={250} y2={412} />
-			<Label x={180} y={396} text="symlinks" anchor="middle" size={10} />
-			<Node
-				x={44}
-				y={412}
-				w={132}
-				h={44}
-				label=".claude/skills/"
-				sub="Claude Code"
-				size={11}
-				subSize={9}
-			/>
-			<Node
-				x={184}
-				y={412}
-				w={132}
-				h={44}
-				label=".agents/skills/"
-				sub="Codex"
-				size={11}
-				subSize={9}
-			/>
-			<Node
-				x={44}
-				y={480}
-				w={132}
-				h={44}
-				label="SessionStart"
-				sub="sync.sh --start"
-				size={11}
-				subSize={9}
-				flow="pull"
-			/>
-			<Node
-				x={184}
-				y={480}
-				w={132}
-				h={44}
-				label="Stop hook"
-				sub="sync.sh --stop"
-				size={11}
-				subSize={9}
-				flow="push"
-			/>
-			<Badge cx={184} cy={480} text="3" accent r={8} />
-
-			<Node
-				x={44}
-				y={580}
-				w={272}
-				h={44}
-				label="Plugin consumer"
-				sub="installs upstream read-only"
-				size={12}
-				subSize={9}
-				flow="plugin"
-			/>
-			<Badge cx={44} cy={580} text="4" r={8} />
-
-			<Flow x1={110} y1={224} x2={110} y2={296} kind="request" dur={1.6} flow="pull" />
-			<Flow x1={250} y1={296} x2={250} y2={224} kind="accent" dur={1.6} delay={-0.8} flow="push" />
 		</>
 	);
 }

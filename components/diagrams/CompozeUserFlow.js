@@ -17,7 +17,6 @@ export const meta = {
 		{ label: "Answer", kind: "response" },
 	],
 	viewBox: "0 0 1200 672",
-	narrowViewBox: "0 0 360 1480",
 };
 
 // Claim: the product has two users with different jobs. The admin's flow ends
@@ -86,61 +85,6 @@ export function Wide({ id }) {
 			<Flow x1={520} y1={488} x2={552} y2={488} kind="request" dur={1} delay={-0.6} />
 			<Flow x1={696} y1={488} x2={720} y2={488} kind="request" dur={1} delay={-0.9} />
 			<Flow x1={992} y1={488} x2={1024} y2={488} kind="response" dur={1} />
-		</>
-	);
-}
-
-export function Narrow({ id }) {
-	return (
-		<>
-			<Defs id={id} />
-
-			{/* ---------- admin lane ---------- */}
-			<Actor cx={52} cy={48} r={24} role="Admin" sub="per tenant" labelSide="right" />
-			<Path id={id} points={[[52, 72], [52, 132], [100, 132]]} />
-			<Action x={100} y={112} w={160} h={40} label="Connect Lark / Drive" />
-			<Line id={id} x1={180} y1={152} x2={180} y2={184} />
-			<Screen x={100} y={184} w={160} h={112} title="Knowledge base" lines={["select files", "source per file"]} />
-			<Line id={id} x1={180} y1={296} x2={180} y2={328} />
-			<Screen x={100} y={328} w={160} h={112} title="Ingest status" lines={["queued → ready", "failures counted"]} />
-			<Line id={id} x1={180} y1={440} x2={180} y2={472} />
-			<Decision cx={180} cy={508} r={36} label="Failed?" />
-			<Line id={id} x1={216} y1={508} x2={248} y2={508} />
-			<Action x={248} y={488} w={104} h={40} label="Retry step" />
-			<Path id={id} points={[[300, 488], [300, 384], [260, 384]]} dashed />
-			<Line id={id} x1={180} y1={544} x2={180} y2={576} />
-			<Label x={190} y={566} text="no" size={10} />
-			<Outcome x={100} y={576} w={160} h={48} label="Ready to search" />
-			<Label x={180} y={652} text="now searchable by users" anchor="middle" accent size={10} />
-
-			<LaneRule x1={16} x2={344} y={680} />
-
-			{/* ---------- user lane ---------- */}
-			<Actor cx={52} cy={744} r={24} role="User" sub="staff" labelSide="right" />
-			<Path id={id} points={[[52, 768], [52, 856], [100, 856]]} />
-			<Screen x={100} y={800} w={160} h={112} title="Pick an agent" lines={["4 domain agents", "own tools each"]} />
-			<Line id={id} x1={180} y1={912} x2={180} y2={944} />
-			<Screen x={100} y={944} w={160} h={112} title="Empty state" lines={["example prompts", "tool list shown"]} />
-			<Line id={id} x1={180} y1={1056} x2={180} y2={1088} />
-			<Action x={100} y={1088} w={160} h={40} label="Ask a question" />
-			<Line id={id} x1={180} y1={1128} x2={180} y2={1160} />
-			<Decision cx={180} cy={1196} r={36} label="≥ 0.35?" />
-			<Line id={id} x1={216} y1={1196} x2={248} y2={1196} />
-			<Label x={232} y={1188} text="no" anchor="middle" size={10} />
-			<Action x={248} y={1176} w={104} h={40} label="Refuses" />
-			<Line id={id} x1={180} y1={1232} x2={180} y2={1264} />
-			<Label x={190} y={1254} text="yes" size={10} />
-			<Screen x={100} y={1264} w={160} h={112} title="Cited answer" lines={["tool call shown", "sources + scores"]} />
-			<Line id={id} x1={180} y1={1376} x2={180} y2={1408} />
-			<Outcome x={100} y={1408} w={160} h={48} label="Opens citations" />
-
-			<Flow x1={180} y1={152} x2={180} y2={184} kind="change" dur={1} />
-			<Flow x1={180} y1={296} x2={180} y2={328} kind="change" dur={1} delay={-0.3} />
-			<Flow x1={180} y1={440} x2={180} y2={472} kind="change" dur={1} delay={-0.6} />
-			<Flow x1={180} y1={912} x2={180} y2={944} kind="request" dur={1} />
-			<Flow x1={180} y1={1056} x2={180} y2={1088} kind="request" dur={1} delay={-0.3} />
-			<Flow x1={180} y1={1128} x2={180} y2={1160} kind="request" dur={1} delay={-0.6} />
-			<Flow x1={180} y1={1376} x2={180} y2={1408} kind="response" dur={1} />
 		</>
 	);
 }

@@ -19,6 +19,8 @@ import { useRouter } from "next/router";
 import { useSyncExternalStore } from "react";
 import UipackSlides from "../components/UipackSlides";
 import Layout from "../components/layouts/Articles";
+import CaseStudyFooter from "../components/CaseStudyFooter";
+import ProjectLinks from "../components/ProjectLinks";
 // Load the animated gallery only after the selected category is known.
 const UipackWebGallery = dynamic(() => import("../components/UipackWebGallery"), {
 	loading: () => (
@@ -38,6 +40,10 @@ const H2 = (props) => (
 );
 const Code = (props) => <Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em" {...props} />;
 const subscribeToHydration = () => () => {};
+
+const links = [
+	{ name: "Source on GitHub", detail: "Not on npm yet; installs from GitHub", href: "https://github.com/ong6/uipack", external: true },
+];
 
 export default function Uipack() {
 	const accent = useColorModeValue("mint.700", "mint.300");
@@ -113,17 +119,9 @@ export default function Uipack() {
 						It started with the diagrams on this site. I&apos;m building it out in two directions:
 						web design for my projects, and presentations for the things I need to explain. Each slide starter includes speaker notes alongside the visual.
 					</P>
-					<Link
-						href="https://github.com/ong6/uipack"
-						isExternal
-						display="inline-flex"
-						alignItems="center"
-						minH="44px"
-						mt={3}
-						fontWeight="600">
-						Source on GitHub
-					</Link>
 				</Box>
+
+				<ProjectLinks links={links} mt={{ base: 8, md: 10 }} />
 
 				<Tabs
 					id="uipack-categories"
@@ -245,6 +243,8 @@ export default function Uipack() {
 						</Text>
 					</Box>
 				</Grid>
+
+				<CaseStudyFooter links={links} next={{ name: "Trading engine", href: "/trading-engine", detail: "A paper-trading engine that can kill an idea, never rescue it" }} />
 			</Container>
 		</Layout>
 	);

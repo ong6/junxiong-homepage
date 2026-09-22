@@ -10,13 +10,8 @@ export const meta = {
 	...aiToolchain.figure,
 	legend: layout.legend,
 	viewBox: layout.viewBox,
-	narrowViewBox: layout.narrowViewBox,
 };
 
 export function Wide({ id }) {
 	return pipelineParts(aiToolchain, id).wide;
-}
-
-export function Narrow({ id }) {
-	return pipelineParts(aiToolchain, id).narrow;
 }

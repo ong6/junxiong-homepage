@@ -5,6 +5,8 @@ import DiagramFigure from "../components/DiagramFigure";
 import * as SkillpackArchitecture from "../components/diagrams/SkillpackArchitecture";
 import { CodeBlock, CodeFigure } from "../components/CodeBlock";
 import Layout from "../components/layouts/Articles";
+import CaseStudyFooter from "../components/CaseStudyFooter";
+import ProjectLinks from "../components/ProjectLinks";
 
 // Case study in the same shape as /groundplane: one ~680px column of prose,
 // the sync figure, a terminal figure, and a single mono fact table.
@@ -47,6 +49,10 @@ const facts = [
 	["sync tests", "temporary repos and bare remotes · no network"],
 	["catalog build", "exits 1 when tree and catalog disagree"],
 	["status", "MIT · github.com/ong6/skillpack"],
+];
+
+const links = [
+	{ name: "Source on GitHub", detail: "MIT, Claude Code and Codex", href: "https://github.com/ong6/skillpack", external: true },
 ];
 
 export default function Skillpack() {
@@ -101,13 +107,11 @@ export default function Skillpack() {
 					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="1.6" fontWeight="600">
 						A skill is a markdown file that tells a coding agent when to act and how. I had the same
 						eight copied into several repos, and each copy drifted. Skillpack is the one folder they
-						live in now. Every repo pulls it as a git subtree, and a hook pushes edits back. Code on{" "}
-						<Link href="https://github.com/ong6/skillpack" isExternal>
-							GitHub
-						</Link>
-						.
+						live in now. Every repo pulls it as a git subtree, and a hook pushes edits back.
 					</Text>
 				</Box>
+
+				<ProjectLinks links={links} mt={{ base: 8, md: 10 }} />
 
 				<DiagramFigure
 					id="sparch"
@@ -226,7 +230,7 @@ export default function Skillpack() {
 				</P>
 
 				<AiToolFamily current="/skillpack" />
-				<Box h={{ base: 12, md: 20 }} />
+				<CaseStudyFooter links={links} next={{ name: "Jobforge", href: "/jobforge", detail: "Coding drills that grade the plan before the code" }} />
 			</Container>
 		</Layout>
 	);

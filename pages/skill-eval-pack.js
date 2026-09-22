@@ -1,6 +1,8 @@
 import { Box, Container, Heading, Link, Text, useColorModeValue } from "@chakra-ui/react";
 import NextLink from "next/link";
 import AiToolFamily from "../components/AiToolFamily";
+import CaseStudyFooter from "../components/CaseStudyFooter";
+import ProjectLinks from "../components/ProjectLinks";
 import DiagramFigure from "../components/DiagramFigure";
 import * as AiToolchainArchitecture from "../components/diagrams/AiToolchainArchitecture";
 import Layout from "../components/layouts/Articles";
@@ -23,6 +25,10 @@ const facts = [
 	["model calls", "0 · supplied by the host"],
 	["runtime", "Python standard library"],
 	["status", "MIT · github.com/ong6/skill-eval-pack"],
+];
+
+const links = [
+	{ name: "Source on GitHub", detail: "MIT, Claude Code and Codex", href: "https://github.com/ong6/skill-eval-pack", external: true },
 ];
 
 export default function SkillEvalPack() {
@@ -61,10 +67,11 @@ export default function SkillEvalPack() {
 					</Text>
 
 					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="1.6" fontWeight="600">
-						I wanted to know whether my agent instructions actually helped. This pack runs the same task with and without a skill, compares the results without telling the judges which is which, and checks the candidate on cases that were not used to revise it. Code on{" "}
-						<Link href="https://github.com/ong6/skill-eval-pack" isExternal>GitHub</Link>.
+						I wanted to know whether my agent instructions actually helped. This pack runs the same task with and without a skill, compares the results without telling the judges which is which, and checks the candidate on cases that were not used to revise it.
 					</Text>
 				</Box>
+
+				<ProjectLinks links={links} mt={{ base: 8, md: 10 }} />
 
 				<DiagramFigure
 					id="ai-toolchain"
@@ -98,7 +105,7 @@ export default function SkillEvalPack() {
 				</Box>
 
 				<AiToolFamily current="/skill-eval-pack" />
-				<Box h={{ base: 12, md: 20 }} />
+				<CaseStudyFooter links={links} next={{ name: "Groundplane", href: "/groundplane", detail: "An agent boundary you can inspect" }} />
 			</Container>
 		</Layout>
 	);

@@ -15,7 +15,6 @@ export const meta = {
 		{ label: "Row written", kind: "response" },
 	],
 	viewBox: "0 0 1120 664",
-	narrowViewBox: "0 0 360 912",
 };
 
 // Claim: see CLAIM. Accent follows the plan: the sentence you say before the
@@ -116,51 +115,6 @@ export function Wide({ id }) {
 			<Packet points={[[616, 492], [824, 492], [824, 240], [872, 240]]} kind="response" dur={2.6} flow="rep" />
 			<Packet points={[[872, 316], [840, 316], [840, 628], [616, 628]]} kind="change" dur={2.8} delay={-1.2} flow="debrief" />
 			<Packet points={[[616, 612], [824, 612], [824, 492], [824, 240], [872, 240]]} kind="response" dur={3} delay={-1.5} flow="debrief" />
-		</>
-	);
-}
-
-// Mobile reads top to bottom: hook, you, the drill, then the three files with
-// the debrief beside the interviews it reads.
-export function Narrow({ id }) {
-	return (
-		<>
-			<Defs id={id} />
-
-			<Node x={44} y={40} w={272} h={48} label="SessionStart hook" sub="reads rep-log.md only" size={12} subSize={9} flow="rep" />
-			<Badge cx={44} cy={40} text="1" r={8} />
-			<Line id={id} x1={180} y1={88} x2={180} y2={128} flow="rep" />
-			<Label x={190} y={112} text="banner" size={10} />
-
-			<Node x={44} y={128} w={272} h={48} label="You" sub="plan before code" size={12} subSize={9} flow="rep" />
-			<Badge cx={44} cy={128} text="2" accent r={8} />
-			<Line id={id} x1={180} y1={176} x2={180} y2={216} accent flow="rep" />
-			<Label x={190} y={200} text="plan" accent size={10} />
-
-			<Group x={20} y={216} w={320} h={384} title="/JOBFORGE:DRILL" titleSize={10} flow="rep" />
-			{STEPS.map(([label, sub], i) => (
-				<Node key={label} x={44} y={248 + i * 72} w={272} h={48} label={label} sub={sub} size={12} subSize={9} flow="rep" />
-			))}
-			<Badge cx={44} cy={248} text="3" r={8} />
-			<Badge cx={44} cy={392} text="4" accent r={8} />
-			<Badge cx={44} cy={464} text="5" accent r={8} />
-			<Node x={44} y={536} w={272} h={40} label="patterns/ · required_elements" size={11} flow="rep" />
-
-			<Line id={id} x1={180} y1={600} x2={180} y2={640} accent flow="rep" />
-			<Label x={190} y={624} text="row" accent size={10} />
-
-			<Group x={20} y={640} w={320} h={248} title="~/JOBFORGE · MARKDOWN" titleSize={10} flow={["rep", "debrief"]} />
-			<Node x={44} y={672} w={272} h={48} label="rep-log.md" sub="one row per day" size={12} subSize={9} flow="rep" />
-			<Node x={44} y={744} w={272} h={48} label="bank.md" sub="one row per graded rep" size={12} subSize={9} flow={["rep", "debrief"]} />
-			<Node x={44} y={816} w={120} h={48} label="interviews/" size={11} flow="debrief" />
-			<Line id={id} x1={164} y1={840} x2={196} y2={840} flow="debrief" />
-			<Node x={196} y={816} w={120} h={48} label="debrief" sub="failures → bank" size={11} subSize={9} flow="debrief" />
-			<Badge cx={196} cy={816} text="6" r={8} />
-			<Line id={id} x1={256} y1={816} x2={256} y2={792} flow="debrief" />
-
-			<Flow x1={180} y1={176} x2={180} y2={216} kind="request" dur={1.4} flow="rep" />
-			<Flow x1={180} y1={600} x2={180} y2={640} kind="response" dur={1.4} flow="rep" />
-			<Flow x1={164} y1={840} x2={196} y2={840} kind="change" dur={1.2} flow="debrief" />
 		</>
 	);
 }

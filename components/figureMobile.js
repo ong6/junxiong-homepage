@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
 // layout stays intact and text is only slightly smaller. The font floor drops
 // to MOBILE_MIN_FONT there so uipack doesn't enlarge labels past their boxes.
 // Used by DiagramFigure (case studies) and the /uipack gallery.
-export const MOBILE_QUERY = "(max-width: 720px)";
-export const MOBILE_SCALE = 0.85;
+const MOBILE_QUERY = "(max-width: 720px)";
+const MOBILE_SCALE = 0.85;
 export const MOBILE_MIN_FONT = 9.5;
 
 export const viewBoxWidth = (viewBox) => Number(String(viewBox).trim().split(/\s+/)[2]) || 1088;

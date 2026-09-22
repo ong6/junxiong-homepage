@@ -16,7 +16,6 @@ export const meta = {
 		{ label: "Verdict", kind: "response" },
 	],
 	viewBox: "0 0 1120 640",
-	narrowViewBox: "0 0 360 984",
 };
 
 // Claim: orders signalled at close t fill only at open t+1, through one guard,
@@ -204,76 +203,6 @@ export function Wide({ id }) {
 			<Packet points={toWalkForward} kind="request" dur={2} flow="prove" />
 			<Flow x1={760} y1={372} x2={824} y2={372} kind="request" dur={1.6} delay={-0.5} flow="prove" />
 			<Flow x1={952} y1={400} x2={952} y2={464} kind="response" dur={1.6} flow="prove" />
-		</>
-	);
-}
-
-// Mobile reads as one column in the order a day happens: sources, the store,
-// screen, books, orders, the fill, the ledger, then the two judges and the
-// reports.
-export function Narrow({ id }) {
-	const step = (label, sub, y, extra = {}) => (
-		<Node x={32} y={y} w={296} h={44} label={label} sub={sub} size={12} subSize={9} {...extra} />
-	);
-	return (
-		<>
-			<Defs id={id} />
-
-			{step("Yahoo · Nasdaq", "bars · splits · dividends", 56, { flow: "collect" })}
-			<Line id={id} x1={180} y1={100} x2={180} y2={132} flow="collect" />
-			{step("collect", "bounded batches", 132, { flow: "collect" })}
-			<Line id={id} x1={180} y1={176} x2={180} y2={208} flow="collect" />
-
-			<Group x={20} y={208} w={320} h={188} title="DUCKDB · ONE WRITER" titleSize={10} />
-			<Badge cx={20} cy={208} text="1" r={8} />
-			{step("prices", "cache · watermarked", 240)}
-			{step("universe · screen · fundamentals", "point-in-time", 292)}
-			{step("sim ledger", "orders · fills · cash", 344, { flow: "fill" })}
-
-			<Line id={id} x1={180} y1={396} x2={180} y2={428} flow="collect" />
-			<Label x={190} y={416} text="bars" size={10} />
-			{step("screen", "4,097 liquid names", 428, { flow: "collect" })}
-			<Badge cx={32} cy={428} text="2" r={8} />
-			<Line id={id} x1={180} y1={472} x2={180} y2={504} flow="decide" />
-			<Label x={190} y={492} text="ranked" size={10} />
-			{step("21 paper books", "frozen rules", 504, { flow: ["decide", "fill", "prove"] })}
-			<Badge cx={32} cy={504} text="3" r={8} />
-			<Line id={id} x1={180} y1={548} x2={180} y2={580} flow="fill" />
-			<Label x={190} y={568} text="signal at close t" size={10} />
-			{step("orders", "never same-bar", 580, { flow: "fill" })}
-			<Line id={id} x1={180} y1={624} x2={180} y2={656} accent flow="fill" />
-			<Label x={190} y={644} text="open t+1 only" accent size={10} />
-			<Node
-				x={32}
-				y={656}
-				w={296}
-				h={52}
-				label="fill"
-				sub="spread + 5 bp · ≤ 1% ADV"
-				size={12}
-				subSize={9}
-				flow="fill"
-			/>
-			<Badge cx={32} cy={656} text="4" accent r={8} />
-			<Line id={id} x1={180} y1={708} x2={180} y2={740} accent flow="fill" />
-			<Label x={190} y={728} text="equity path" accent size={10} />
-
-			{step("forward monitors", "kill rule frozen before signal 1", 740, { flow: "prove" })}
-			<Badge cx={32} cy={740} text="5" r={8} />
-			<Line id={id} x1={180} y1={784} x2={180} y2={816} flow="prove" />
-			<Label x={190} y={804} text="CONTINUE · KILL" size={10} />
-			{step("walk-forward · Sundays", "10 folds · train 24 mo · test 12 mo", 816, { flow: "prove" })}
-			<Line id={id} x1={180} y1={860} x2={180} y2={892} flow="prove" />
-			{step("reports · API · UI", "league.md · GET /meta", 892, { flow: "prove" })}
-			<Label x={180} y={964} text="no path promotes a book" anchor="middle" size={10} />
-
-			<Flow x1={180} y1={100} x2={180} y2={132} kind="change" dur={1.4} flow="collect" />
-			<Flow x1={180} y1={396} x2={180} y2={428} kind="change" dur={1.4} flow="collect" />
-			<Flow x1={180} y1={472} x2={180} y2={504} kind="request" dur={1.4} flow="decide" />
-			<Flow x1={180} y1={548} x2={180} y2={580} kind="accent" dur={1.4} flow="fill" />
-			<Flow x1={180} y1={624} x2={180} y2={656} kind="accent" dur={1.4} delay={-0.7} flow="fill" />
-			<Flow x1={180} y1={708} x2={180} y2={740} kind="accent" dur={1.4} delay={-0.3} flow="fill" />
-			<Flow x1={180} y1={784} x2={180} y2={816} kind="response" dur={1.4} flow="prove" />
 		</>
 	);
 }

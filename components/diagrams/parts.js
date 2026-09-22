@@ -4,7 +4,6 @@
 // the uipack parts directly.
 import {
 	Badge as UBadge,
-	Chip,
 	Connector,
 	Defs as UDefs,
 	Group as UGroup,
@@ -12,13 +11,10 @@ import {
 	Lane as ULane,
 	Node as UNode,
 	Packet,
-	Token,
-	anchor,
-	pointAlong,
 	route,
 } from "uipack";
 
-export { Chip, Connector, Packet, Token, anchor, pointAlong, route };
+export { Connector, Packet, route };
 
 // Text sizes are clamped by uipack's own floor (Figure `minFont`, 11px at the
 // rendered width), so nothing here needs to raise them.

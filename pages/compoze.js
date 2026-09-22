@@ -15,6 +15,8 @@ import * as CompozeIngestFlow from "../components/diagrams/CompozeIngestFlow";
 import * as CompozeQueryFlow from "../components/diagrams/CompozeQueryFlow";
 import * as CompozeUserFlow from "../components/diagrams/CompozeUserFlow";
 import Layout from "../components/layouts/Articles";
+import CaseStudyFooter from "../components/CaseStudyFooter";
+import ProjectLinks from "../components/ProjectLinks";
 
 // A written case study: one ~680px column of prose, screenshots as inline
 // figures, and a single mono fact table. Deliberately unlike the homepage
@@ -162,6 +164,11 @@ const facts = [
 	["typescript", "~76k lines"],
 ];
 
+const links = [
+	{ name: "UI Pack", detail: "The system figures on this page are drawn with it", href: "/uipack" },
+	{ name: "Notes", detail: "Longer working notes", href: "https://notes.junxiong.dev", external: true },
+];
+
 export default function Compoze() {
 	const accent = useColorModeValue("mint.700", "mint.300");
 
@@ -212,6 +219,8 @@ export default function Compoze() {
 						Compoze was an evenings-and-weekends company, run alongside my full-time job at TikTok. It built assistants that answer questions from a company&apos;s own documents, and it was sold to a client at the end of 2025.
 					</Text>
 				</Box>
+
+				<ProjectLinks links={links} mt={{ base: 8, md: 10 }} />
 
 				<P>
 					The idea was to help staff find answers in company documents without searching through them by hand. Compoze included the sources with each answer so people could open them and check.
@@ -413,7 +422,7 @@ export default function Compoze() {
 					</P>
 				</Details>
 
-				<Box h={{ base: 12, md: 20 }} />
+				<CaseStudyFooter links={links} next={{ name: "UI Pack", href: "/uipack", detail: "The design system behind these figures" }} />
 			</Container>
 		</Layout>
 	);

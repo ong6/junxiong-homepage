@@ -5,6 +5,8 @@ import DiagramFigure from "../components/DiagramFigure";
 import * as GroundplaneArchitecture from "../components/diagrams/GroundplaneArchitecture";
 import { CodeBlock, CodeFigure } from "../components/CodeBlock";
 import Layout from "../components/layouts/Articles";
+import CaseStudyFooter from "../components/CaseStudyFooter";
+import ProjectLinks from "../components/ProjectLinks";
 
 // A written case study in the same shape as /compoze: one ~680px column of
 // prose, the architecture figure, a code figure, and a single mono fact table.
@@ -103,6 +105,11 @@ const facts = [
 	["status", "v0.1.0 · MIT · install from GitHub"],
 ];
 
+const links = [
+	{ name: "Source on GitHub", detail: "Python library, MIT, install from GitHub", href: "https://github.com/ong6/groundplane", external: true },
+	{ name: "UI Pack", detail: "The figures on this page are drawn with it", href: "/uipack" },
+];
+
 export default function Groundplane() {
 	const accent = useColorModeValue("mint.700", "mint.300");
 
@@ -157,13 +164,11 @@ export default function Groundplane() {
 						fontWeight="600">
 						Groundplane checks declared fields in an agent&apos;s structured
 						output against facts recorded from tool calls. A failed check raises
-						an error with the supporting tool call attached. Code on{" "}
-						<Link href="https://github.com/ong6/groundplane" isExternal>
-							GitHub
-						</Link>
-						.
+						an error with the supporting tool call attached.
 					</Text>
 				</Box>
+
+				<ProjectLinks links={links} mt={{ base: 8, md: 10 }} />
 
 				<H2>Where it came from</H2>
 
@@ -311,8 +316,7 @@ export default function Groundplane() {
 				</Details>
 
 				<AiToolFamily current="/groundplane" />
-
-				<Box h={{ base: 12, md: 20 }} />
+				<CaseStudyFooter links={links} next={{ name: "Compoze", href: "/compoze", detail: "A one-person AI studio, sold to a client" }} />
 			</Container>
 		</Layout>
 	);

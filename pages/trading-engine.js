@@ -4,6 +4,8 @@ import { CodeBlock, CodeFigure } from "../components/CodeBlock";
 import DiagramFigure from "../components/DiagramFigure";
 import * as TradingEngineArchitecture from "../components/diagrams/TradingEngineArchitecture";
 import Layout from "../components/layouts/Articles";
+import CaseStudyFooter from "../components/CaseStudyFooter";
+import ProjectLinks from "../components/ProjectLinks";
 
 // Case study in the same shape as /skillpack: one ~680px column of prose, the
 // architecture figure, one terminal figure, and a single mono fact table.
@@ -49,6 +51,10 @@ const facts = [
 	["tests", "3,156 collected · warnings are failures"],
 	["python", "~81k lines · 201 commits since 2026-07-16"],
 	["status", "paper only · MIT · github.com/ong6/trading-engine"],
+];
+
+const links = [
+	{ name: "Source on GitHub", detail: "Paper only, MIT", href: "https://github.com/ong6/trading-engine", external: true },
 ];
 
 export default function TradingEngine() {
@@ -99,13 +105,11 @@ export default function TradingEngine() {
 					</Text>
 
 					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="1.6" fontWeight="600">
-						I built this to test trading ideas on real US market data without placing live trades. It runs nightly on one Linux box and tracks 21 paper portfolios, each with rules fixed before trading starts. At the two-month mark, none had passed its comparison against a control. Code on{" "}
-						<Link href="https://github.com/ong6/trading-engine" isExternal>
-							GitHub
-						</Link>
-						.
+						I built this to test trading ideas on real US market data without placing live trades. It runs nightly on one Linux box and tracks 21 paper portfolios, each with rules fixed before trading starts. At the two-month mark, none had passed its comparison against a control.
 					</Text>
 				</Box>
+
+				<ProjectLinks links={links} mt={{ base: 8, md: 10 }} />
 
 				<DiagramFigure
 					id="tearch"
@@ -246,7 +250,7 @@ export default function TradingEngine() {
 					to loopback and the repo ships no market data. I built it to test whether the ideas hold up under rules I set in advance. So far, none has passed, and the reports in the repo show why.
 				</P>
 
-				<Box h={{ base: 12, md: 20 }} />
+				<CaseStudyFooter links={links} next={{ name: "Skillpack", href: "/skillpack", detail: "One home for coding-agent skills, synced as a git subtree" }} />
 			</Container>
 		</Layout>
 	);

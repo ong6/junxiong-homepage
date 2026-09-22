@@ -15,7 +15,6 @@ export const meta = {
 		{ label: "Verdict", kind: "response" },
 	],
 	viewBox: "0 0 1120 656",
-	narrowViewBox: "0 0 360 968",
 };
 
 
@@ -184,85 +183,3 @@ export function Wide({ id }) {
 		</>
 	);
 }
-
-// Mobile reads as one column: tools and adapters, the registry, the boundary
-// with the model feeding it from the right, the checker, the two outcomes.
-export function Narrow({ id }) {
-	return (
-		<>
-			<Defs id={id} />
-
-			<Group x={20} y={24} w={320} h={208} title="TOOLS" titleSize={10} />
-			{TOOLS.map(([label], i) => (
-				<Node key={label} x={32 + i * 104} y={56} w={88} h={44} label={label} size={12} />
-			))}
-			<Group x={32} y={116} w={296} h={100} title="ADAPTERS" titleSize={9} />
-			<Node x={44} y={148} w={132} h={44} label="LangGraph node" sub="guarded_node()" size={12} subSize={9} />
-			<Node x={184} y={148} w={132} h={44} label="MCP tool result" sub="record_result()" size={12} subSize={9} />
-
-			<Line id={id} x1={180} y1={232} x2={180} y2={280} flow="record" />
-			<Label x={190} y={260} text="scores · rows · names" size={10} />
-
-			<Group x={20} y={280} w={320} h={156} title="FACTREGISTRY · WRITE-ONCE" titleSize={10} />
-			<Badge cx={20} cy={280} text="1" r={8} />
-			{FACTS.map(([label, sub], i) => (
-				<Node
-					key={label}
-					x={i % 2 ? 184 : 44}
-					y={312 + Math.floor(i / 2) * 56}
-					w={132}
-					h={44}
-					label={label}
-					sub={sub}
-					size={12}
-					subSize={9}
-				/>
-			))}
-
-			<Line id={id} x1={110} y1={436} x2={110} y2={544} flow="record" />
-			<Label x={120} y={492} text="facts" size={10} />
-
-			<Node x={184} y={468} w={132} h={44} label="Model" sub="structured output" size={12} subSize={9} flow="check" />
-			<Badge cx={184} cy={468} text="3" accent r={8} />
-			<Line id={id} x1={250} y1={512} x2={250} y2={544} accent flow="check" />
-			<Label x={260} y={532} text="submit()" accent size={10} />
-
-			<Node x={44} y={544} w={272} h={52} label="boundary(...)" sub="facts= · checks=" size={13} subSize={10} flow={["record", "check"]} />
-			<Badge cx={44} cy={544} text="2" accent r={8} />
-
-			<Line id={id} x1={180} y1={596} x2={180} y2={644} accent flow="check" />
-			<Label x={190} y={624} text="checks" accent size={10} />
-
-			<Group x={20} y={644} w={320} h={192} title="CHECKER · DETERMINISTIC" titleSize={10} />
-			<Badge cx={20} cy={644} text="4" accent r={8} />
-			{CHECKS.map((name, i) => (
-				<Node
-					key={name}
-					x={i % 2 ? 184 : 44}
-					y={676 + Math.floor(i / 2) * 48}
-					w={132}
-					h={40}
-					label={name}
-					size={10}
-				/>
-			))}
-
-			<Line id={id} x1={110} y1={836} x2={110} y2={884} flow="check" />
-			<Label x={120} y={864} text="ok" size={10} />
-			<Node x={44} y={884} w={132} h={52} label="pass" sub="output returned" size={12} subSize={9} flow="check" />
-
-			<Line id={id} x1={250} y1={836} x2={250} y2={884} accent flow="check" />
-			<Label x={260} y={864} text="fails" accent size={10} />
-			<Node x={184} y={884} w={132} h={52} label="raise" sub="UnsupportedClaim" size={12} subSize={9} flow="check" />
-			<Badge cx={184} cy={884} text="5" accent r={8} />
-
-			<Flow x1={180} y1={232} x2={180} y2={280} kind="change" dur={1.6} flow="record" />
-			<Flow x1={110} y1={436} x2={110} y2={544} kind="change" dur={1.8} flow="record" />
-			<Flow x1={250} y1={512} x2={250} y2={544} kind="request" dur={1.2} flow="check" />
-			<Flow x1={180} y1={596} x2={180} y2={644} kind="request" dur={1.4} flow="check" />
-			<Flow x1={110} y1={836} x2={110} y2={884} kind="response" dur={1.4} flow="check" />
-			<Flow x1={250} y1={836} x2={250} y2={884} kind="response" dur={1.4} delay={-0.7} flow="check" />
-		</>
-	);
-}
-

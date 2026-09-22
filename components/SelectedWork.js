@@ -23,7 +23,18 @@ const labelStyle = {
 function ProjectLink({ href, children }) {
 	return (
 		<LinkOverlay as={NextLink} href={href} prefetch={false} color="inherit" display="inline-flex" alignItems="center" minH="44px">
-			{children}<Box as="span" aria-hidden="true" ml={2} color="brand.solid">→</Box>
+			{children}
+			<Box
+				as="span"
+				aria-hidden="true"
+				ml={2}
+				color="brand.solid"
+				display="inline-block"
+				transition="transform 160ms ease"
+				_groupHover={{ transform: "translateX(4px)" }}
+				sx={{ "@media (prefers-reduced-motion: reduce)": { transition: "none", transform: "none !important" } }}>
+				→
+			</Box>
 		</LinkOverlay>
 	);
 }
@@ -32,6 +43,7 @@ function FeaturedCard({ span, children }) {
 	return (
 		<LinkBox
 			as="article"
+			role="group"
 			gridColumn={{ base: "1 / -1", lg: `span ${span}` }}
 			minW={0}
 			bg="surface.raised"
@@ -117,6 +129,9 @@ function GroundplaneCard() {
 						<Text mt={4} pt={3} borderTop="1px solid" borderColor="border.subtle" color="status.error" fontFamily="var(--font-mono)" fontSize="12px" fontWeight="700">
 							Blocked · UnsupportedClaim
 						</Text>
+						<Text mt={2} color="text.muted" fontSize="14px" lineHeight="1.5">
+							The model said north. The recorded facts say harbour. Rejected.
+						</Text>
 					</Box>
 				</DottedCanvas>
 			</Box>
@@ -161,7 +176,6 @@ const supportingProjects = [
 		href: "/uipack",
 		label: "Design system",
 		description: "The web figures, motion rules and slide starters I reuse across my projects.",
-		mark: "01 / WEB + SLIDES",
 	},
 	{
 		title: "Trading engine",
@@ -197,6 +211,7 @@ function SupportingCard({ project }) {
 	return (
 		<LinkBox
 			as="article"
+			role="group"
 			bg="surface.raised"
 			border="1px solid"
 			borderColor="border.subtle"
@@ -205,10 +220,9 @@ function SupportingCard({ project }) {
 			transition="border-color 160ms ease, transform 160ms ease"
 			_hover={{ borderColor: "border.strong", transform: "translateY(-2px)" }}
 			sx={{ "@media (prefers-reduced-motion: reduce)": { transition: "none", _hover: { transform: "none" } } }}>
-			<Flex justify="space-between" gap={4} color="text.muted" sx={labelStyle}>
-				<Text>{project.label}</Text>
-				<Text color="brand.solid">{project.mark}</Text>
-			</Flex>
+			<Text color="text.muted" sx={labelStyle}>
+				{project.label}
+			</Text>
 			<Heading as="h3" mt={5} fontSize={{ base: "23px", md: "26px" }} lineHeight="1.1">
 				<ProjectLink href={project.href}>{project.title}</ProjectLink>
 			</Heading>
@@ -277,7 +291,7 @@ export default function SelectedWork() {
 				scrollMarginTop="96px"
 				mt={{ base: 14, md: 22 }}>
 				<Text sx={labelStyle} color="brand.solid">
-					{"// PROJECT CABINET"}
+					{"// PROJECTS"}
 				</Text>
 				<Heading id="work-heading" as="h2" mt={2} fontSize={{ base: "32px", md: "44px" }}>
 					Selected work

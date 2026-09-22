@@ -1,4 +1,4 @@
-import { Badge, Defs, Flow, Group, Label, Lane, Line, Node } from "./parts";
+import { Defs, Flow, Group, Label, Line, Node } from "./parts";
 
 export const CLAIM =
 	"Documents are deduplicated by content hash, redacted, and moved through a checkpointed async pipeline into pgvector, with failures landing in a dead-letter queue the admin UI shows.";
@@ -14,7 +14,6 @@ export const meta = {
 		{ label: "Failure", kind: "neutral" },
 	],
 	viewBox: "0 0 720 1104",
-	narrowViewBox: "0 0 360 1032",
 };
 
 
@@ -148,143 +147,3 @@ export function Wide({ id }) {
 		</>
 	);
 }
-
-export function Narrow({ id }) {
-	const stages = STAGES.map((s, i) => ({ ...s, y: 288 + i * 80 }));
-	return (
-		<>
-			<Defs id={id} />
-
-			<Node
-				x={60}
-				y={24}
-				w={136}
-				h={64}
-				label="Lark / Feishu"
-				sub="OAuth · MCP"
-				size={13}
-				subSize={10}
-			/>
-			<Node
-				x={204}
-				y={24}
-				w={136}
-				h={64}
-				label="Google Drive"
-				sub="OAuth"
-				size={13}
-				subSize={10}
-			/>
-			<Line id={id} x1={128} y1={88} x2={128} y2={112} arrow={false} />
-			<Line id={id} x1={272} y1={88} x2={272} y2={112} arrow={false} />
-			<Line id={id} x1={128} y1={112} x2={272} y2={112} arrow={false} />
-			<Line id={id} x1={200} y1={112} x2={200} y2={144} />
-			<Label x={210} y={134} text="file selected" size={10} />
-
-			<Node
-				x={60}
-				y={144}
-				w={280}
-				h={64}
-				label="Ingest job"
-				sub="status: queued"
-				size={14}
-				subSize={11}
-			/>
-			<Line id={id} x1={200} y1={208} x2={200} y2={288} accent />
-			<Label x={210} y={240} text="async · QStash" accent size={11} />
-
-			<Group
-				x={60}
-				y={248}
-				w={280}
-				h={592}
-				title="ASYNC · QSTASH"
-				accent
-				titleSize={10}
-			/>
-
-			{stages.map((s) => (
-				<g key={s.label}>
-					<Node
-						x={84}
-						y={s.y}
-						w={232}
-						h={48}
-						label={s.label}
-						sub={s.sub}
-						size={13}
-						subSize={10}
-					/>
-					{s.arrow ? (
-						<>
-							<Line id={id} x1={200} y1={s.y + 48} x2={200} y2={s.y + 80} />
-							<Label x={210} y={s.y + 68} text={s.arrow} size={10} />
-						</>
-					) : null}
-					<Line
-						id={id}
-						x1={84}
-						y1={s.y + 24}
-						x2={36}
-						y2={s.y + 24}
-						arrow={false}
-						dashed
-					/>
-				</g>
-			))}
-
-			<Line id={id} x1={36} y1={312} x2={36} y2={928} arrow={false} dashed />
-			<Line id={id} x1={36} y1={928} x2={110} y2={928} arrow={false} dashed />
-			<Line id={id} x1={110} y1={928} x2={110} y2={952} dashed />
-			<Cross cx={36} cy={592} s={4} />
-
-			<Line id={id} x1={200} y1={816} x2={200} y2={864} />
-			<Label x={210} y={856} text="chunks + vectors" size={10} />
-			<Node
-				x={60}
-				y={864}
-				w={280}
-				h={56}
-				label="Postgres · pgvector"
-				sub="chunks + embeddings"
-				size={13}
-				subSize={10}
-			/>
-
-			<Line id={id} x1={272} y1={920} x2={272} y2={952} />
-			<Node
-				x={20}
-				y={952}
-				w={180}
-				h={56}
-				label="status: failed · DLQ"
-				sub="retry from step"
-				size={11}
-				subSize={9}
-			/>
-			<Node
-				x={208}
-				y={952}
-				w={128}
-				h={56}
-				label="status: ready"
-				sub="shown in UI"
-				size={11}
-				subSize={9}
-			/>
-
-			<Flow x1={200} y1={112} x2={200} y2={144} kind="change" dur={1} />
-			<Flow x1={200} y1={208} x2={200} y2={288} kind="change" dur={1.6} />
-			{stages
-				.filter((s) => s.arrow)
-				.map((s, i) => (
-					<Flow key={s.label} x1={200} y1={s.y + 48} x2={200} y2={s.y + 80} kind="change" dur={1.2} delay={-i * 0.2} />
-				))}
-			<Flow x1={200} y1={816} x2={200} y2={864} kind="change" dur={1.4} />
-			<Flow x1={272} y1={920} x2={272} y2={952} kind="change" dur={1} delay={-0.5} />
-			<Flow x1={36} y1={312} x2={36} y2={928} kind="neutral" dur={6} />
-		</>
-	);
-}
-

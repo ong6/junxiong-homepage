@@ -4,6 +4,8 @@ import { CodeBlock, CodeFigure } from "../components/CodeBlock";
 import DiagramFigure from "../components/DiagramFigure";
 import * as JobforgeArchitecture from "../components/diagrams/JobforgeArchitecture";
 import Layout from "../components/layouts/Articles";
+import CaseStudyFooter from "../components/CaseStudyFooter";
+import ProjectLinks from "../components/ProjectLinks";
 
 // Same shape as /groundplane: one ~680px column of prose, one architecture
 // figure of the drill loop, two code figures rendered as text, and a single
@@ -88,6 +90,10 @@ const facts = [
 	["status", "v0.1.0 · MIT · derived from swe-interview-coach"],
 ];
 
+const links = [
+	{ name: "Source on GitHub", detail: "Claude Code plugin, local first", href: "https://github.com/ong6/jobforge", external: true },
+];
+
 export default function Jobforge() {
 	const accent = useColorModeValue("mint.700", "mint.300");
 
@@ -145,13 +151,11 @@ export default function Jobforge() {
 						The coding-interview tools I tried focused on the submitted code. I wanted help with the part before that, when I said
 						&ldquo;I&apos;ll DP this&rdquo; and started typing. Jobforge is a
 						Claude Code plugin that asks for the plan first and grades that.
-						It also keeps my résumé, target roles, lessons and interview debriefs in local Markdown files. Code on{" "}
-						<Link href="https://github.com/ong6/jobforge" isExternal>
-							GitHub
-						</Link>
-						.
+						It also keeps my résumé, target roles, lessons and interview debriefs in local Markdown files.
 					</Text>
 				</Box>
+
+				<ProjectLinks links={links} mt={{ base: 8, md: 10 }} />
 
 				<DiagramFigure
 					id="jfarch"
@@ -300,7 +304,7 @@ export default function Jobforge() {
 					frontmatter and is meant to be changed.
 				</P>
 
-				<Box h={{ base: 12, md: 20 }} />
+				<CaseStudyFooter links={links} next={{ name: "Groundplane", href: "/groundplane", detail: "An agent boundary you can inspect" }} />
 			</Container>
 		</Layout>
 	);

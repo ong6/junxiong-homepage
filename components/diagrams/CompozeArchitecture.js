@@ -15,7 +15,6 @@ export const meta = {
 		{ label: "Ingest", kind: "change" },
 	],
 	viewBox: "0 0 1200 792",
-	narrowViewBox: "0 0 360 1232",
 };
 
 
@@ -244,95 +243,3 @@ export function Wide({ id }) {
 		</>
 	);
 }
-
-// Mobile reads as one column: sources, the async pipeline, the store, the app,
-// the providers — with the two request-path arrows between store and app.
-export function Narrow({ id }) {
-	const cell = (col, row, y0) => ({ x: col ? 184 : 44, y: y0 + row * 56 });
-	return (
-		<>
-			<Defs id={id} />
-
-			<Group x={20} y={24} w={320} h={156} title="SOURCES" titleSize={10} />
-			<Node {...cell(0, 0, 56)} w={132} h={44} label="Lark / Feishu" sub="OAuth · MCP" size={12} subSize={10} />
-			<Node {...cell(1, 0, 56)} w={132} h={44} label="Google Drive" sub="OAuth" size={12} subSize={10} />
-			<Node {...cell(0, 1, 56)} w={132} h={44} label="Direct upload" sub="browser" size={12} subSize={10} />
-
-			<Line id={id} x1={180} y1={180} x2={180} y2={228} flow="ingest" />
-			<Label x={190} y={208} text="async · QStash" size={10} />
-
-			<Group x={20} y={228} w={320} h={212} title="ASYNC · QSTASH WORKERS" titleSize={10} />
-			{STAGES.map(([label, letter, param], i) => {
-				const pos = cell(i % 2, Math.floor(i / 2), 260);
-				return (
-					<g key={label}>
-						<Node {...pos} w={132} h={44} label={label} sub={param} size={12} subSize={9} />
-						<Badge cx={pos.x} cy={pos.y} text={letter} r={8} />
-					</g>
-				);
-			})}
-
-			<Line id={id} x1={180} y1={440} x2={180} y2={488} flow="ingest" />
-			<Label x={190} y={468} text="chunks + vectors" size={10} />
-
-			<Group x={20} y={488} w={320} h={200} title="POSTGRES · PGVECTOR" titleSize={10} />
-			<Group
-				x={32}
-				y={520}
-				w={296}
-				h={144}
-				title="TENANT ID ON EVERY ROW · RLS"
-				titleSize={9}
-			/>
-			<Node {...cell(0, 0, 548)} w={132} h={44} label="tenants" sub="users · roles" size={12} subSize={9} />
-			<Node {...cell(1, 0, 548)} w={132} h={44} label="documents" sub="status" size={12} subSize={9} />
-			<Node {...cell(0, 1, 548)} w={132} h={44} label="chunks" sub="+ embeddings" size={12} subSize={9} flow={["request", "ingest"]} />
-			<Badge cx={44} cy={604} text="3" accent r={8} />
-			<Node {...cell(1, 1, 548)} w={132} h={44} label="messages" sub="+ citations" size={12} subSize={9} />
-
-			<Line id={id} x1={100} y1={736} x2={100} y2={688} accent flow="request" />
-			<Label x={92} y={716} text="floor 0.35" anchor="end" accent size={10} />
-			<Line id={id} x1={260} y1={688} x2={260} y2={736} accent flow="request" />
-			<Label x={270} y={716} text="chunks" accent size={10} />
-
-			<Group x={20} y={736} w={320} h={268} title="APP · MULTI-TENANT" titleSize={10} />
-			<Node {...cell(0, 0, 768)} w={132} h={44} label="Domain agents" size={12} flow="request" />
-			<Badge cx={44} cy={768} text="1" accent r={8} />
-			<Node {...cell(1, 0, 768)} w={132} h={44} label="Admin · RBAC" size={12} />
-			<Node {...cell(0, 1, 768)} w={132} h={44} label="RAG search" sub="spotlighting" size={12} subSize={9} flow="request" />
-			<Badge cx={44} cy={824} text="2" accent r={8} />
-			<Node {...cell(1, 1, 768)} w={132} h={44} label="Model gateway" size={12} flow="request" />
-			<Badge cx={184} cy={824} text="4" accent r={8} />
-			<Node {...cell(0, 2, 768)} w={132} h={44} label="Answer + cites" size={12} flow="request" />
-			<Badge cx={44} cy={880} text="5" accent r={8} />
-			<Node {...cell(1, 2, 768)} w={132} h={44} label="Job status" size={12} />
-			<Node
-				x={44}
-				y={936}
-				w={272}
-				h={44}
-				label="Eval + traces"
-				sub="golden set · CI gate · cost/tenant"
-				size={12}
-				subSize={9}
-			/>
-
-			<Line id={id} x1={180} y1={1004} x2={180} y2={1052} accent flow="request" />
-			<Label x={190} y={1032} text="llm call" accent size={10} />
-
-			<Group x={20} y={1052} w={320} h={156} title="MODEL PROVIDERS" titleSize={10} />
-			<Node {...cell(0, 0, 1084)} w={132} h={44} label="OpenAI" sub="embeddings" size={12} subSize={9} />
-			<Node {...cell(1, 0, 1084)} w={132} h={44} label="Anthropic" sub="llm" size={12} subSize={9} />
-			<Node {...cell(0, 1, 1084)} w={132} h={44} label="Google" sub="llm" size={12} subSize={9} />
-			<Node {...cell(1, 1, 1084)} w={132} h={44} label="LlamaParse" sub="extraction" size={12} subSize={9} />
-
-			<Flow x1={180} y1={180} x2={180} y2={228} kind="change" dur={1.4} flow="ingest" />
-			<Flow x1={180} y1={440} x2={180} y2={488} kind="change" dur={1.4} delay={-0.7} flow="ingest" />
-			<Flow x1={100} y1={736} x2={100} y2={688} kind="request" dur={1.4} flow="request" />
-			<Flow x1={260} y1={688} x2={260} y2={736} kind="response" dur={1.4} delay={-0.7} flow="request" />
-			<Flow x1={180} y1={1004} x2={180} y2={1052} kind="request" dur={1.4} flow="request" />
-			<Flow x1={180} y1={1004} x2={180} y2={1052} kind="response" dur={1.4} delay={-0.7} reverse flow="request" />
-		</>
-	);
-}
-
