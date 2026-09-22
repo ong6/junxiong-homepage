@@ -1,10 +1,34 @@
 {
   "shared": [
-    { "component": "components/HobbyScene.js", "packageExport": "uipack/objects", "gallery": "components/UipackObjects.js", "description": "Shared 3D objects for Hobbies and Contact, including geometry, playback and fallback" },
-    { "component": "components/UipackWebGallery.js", "packageExport": "uipack/presets", "gallery": "components/UipackWebGallery.js", "description": "Reusable technical figures and motion, including the AI toolchain pipeline" },
-    { "component": "components/UipackSlides.js", "packageExport": "uipack/presentations", "gallery": "components/UipackSlides.js", "description": "Slide starters with speaker guidance" }
+    {
+      "component": "components/HobbyScene.js",
+      "packageExport": "uipack/objects",
+      "gallery": "components/UipackObjects.js",
+      "description": "Shared 3D objects for Hobbies and Contact, including geometry, playback and fallback"
+    },
+    {
+      "component": "components/UipackWebGallery.js",
+      "packageExport": "uipack/presets",
+      "gallery": "components/UipackWebGallery.js",
+      "description": "Reusable technical figures and motion, including the AI toolchain pipeline"
+    },
+    {
+      "component": "components/UipackSlides.js",
+      "packageExport": "uipack/presentations",
+      "gallery": "components/UipackSlides.js",
+      "description": "Slide starters with speaker guidance"
+    },
+    {
+      "component": "components/UipackObjects.js",
+      "packageExport": "uipack/objects",
+      "gallery": "components/UipackObjects.js",
+      "description": "Shared ObjectGallery scene library, art-direction inspector and original Studio editions"
+    }
   ],
   "pageOnly": [
-    { "path": "components/diagrams", "reason": "Project-specific architecture data and compositions; shared figure primitives come from UI Pack. Port existing legacy drawings incrementally." }
+    {
+      "path": "components/diagrams",
+      "reason": "Project-specific architecture data and compositions; shared figure primitives come from UI Pack. Port existing legacy drawings incrementally."
+    }
   ]
 }

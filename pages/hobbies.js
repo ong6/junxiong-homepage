@@ -6,15 +6,15 @@ import Layout from "../components/layouts/Articles";
 import styles from "../styles/Hobbies.module.css";
 
 const chapters = [
-	{ id: "coding-ai", index: "01", label: "Coding & AI", kind: "ai" },
-	{ id: "tennis", index: "02", label: "Tennis", kind: "tennis" },
-	{ id: "trading", index: "03", label: "Trading", kind: "trading" },
-	{ id: "home-servers", index: "04", label: "Home servers", kind: "server" },
-	{ id: "travel", index: "05", label: "Travel", kind: "travel" },
-	{ id: "reading", index: "06", label: "Reading", kind: "reading" },
+	{ id: "travel", index: "01", label: "Travel", kind: "travel", variant: 1 },
+	{ id: "coding-ai", index: "02", label: "Coding & AI", kind: "ai", variant: 3 },
+	{ id: "tennis", index: "03", label: "Tennis", kind: "tennis", variant: 0 },
+	{ id: "reading", index: "04", label: "Reading", kind: "reading", variant: 2 },
+	{ id: "home-servers", index: "05", label: "Home servers", kind: "server", variant: 3 },
+	{ id: "trading", index: "06", label: "Trading", kind: "trading", variant: 0 },
 ];
 
-function Chapter({ id, index, label, kind, active, children }) {
+function Chapter({ id, index, label, kind, active, variant, children }) {
 	return (
 		<Box as="section" id={id} className={styles.chapter} data-chapter={kind}>
 			<Box className={styles.copy}>
@@ -28,7 +28,7 @@ function Chapter({ id, index, label, kind, active, children }) {
 				data-hobby-visual
 				data-chapter-id={id}>
 				<Box className={styles.visualSticky}>
-					<HobbyScene kind={kind} label={label} active={active} />
+					<HobbyScene kind={kind} label={label} active={active} variant={variant} />
 				</Box>
 			</Box>
 		</Box>
@@ -85,28 +85,29 @@ export default function Hobbies() {
 					</Box>
 				</Box>
 
+
 				<Chapter {...chapters[0]} active={active === chapters[0].id}>
-					This is my main hobby. I like trying models, building little tools, and seeing what I can get an agent to do. That is how I end up with <Link as={NextLink} href="/groundplane">Groundplane</Link>, a Python library that checks declared output fields against recorded tool results; <Link as={NextLink} href="/jobforge">Jobforge</Link>, a Claude Code plugin that grades the plan you say before you code; my notes and life admin kept as a markdown repo that an AI agent tends for me; and a <Link href="https://github.com/ong6/sg-property-analysis" target="_blank" rel="noopener noreferrer">Singapore property data-analysis project</Link>. Most of it starts with something I want to try or a problem I want to fix for myself.
-				</Chapter>
-
-				<Chapter {...chapters[1]} active={active === chapters[1].id}>
-					Tennis is my main sport. I play with two forehands, swapping my Wilson Blade between hands instead of hitting a backhand. Most sessions are long rallies with one other person. It gives me a break from software.
-				</Chapter>
-
-				<Chapter {...chapters[2]} active={active === chapters[2].id}>
-					I trade stocks against a written playbook. A setup needs entry, exit and invalidation rules before I touch it; the journal records each trade in R so one repeating mistake is visible at review time. The chart beside this is a simulation, not my account.
-				</Chapter>
-
-				<Chapter {...chapters[3]} active={active === chapters[3].id}>
-					I am speccing an always-on inference box that serves models to my own tools. So far, I&apos;m mostly comparing models, memory requirements and what the hardware would cost. I <Link href="https://notes.junxiong.dev" target="_blank" rel="noopener noreferrer">write up what I learn as I go</Link>.
-				</Chapter>
-
-				<Chapter {...chapters[4]} active={active === chapters[4].id}>
 					I spent six months in Munich on NUS Overseas Colleges. I like having enough time in a place to get familiar with it, so I tend to plan fewer stops and stay longer in each.
 				</Chapter>
 
-				<Chapter {...chapters[5]} active={active === chapters[5].id}>
+				<Chapter {...chapters[1]} active={active === chapters[1].id}>
+					This is my main hobby. I like trying models, building little tools, and seeing what I can get an agent to do. That is how I end up with <Link as={NextLink} href="/groundplane">Groundplane</Link>, a Python library that checks declared output fields against recorded tool results; <Link as={NextLink} href="/jobforge">Jobforge</Link>, a Claude Code plugin that grades the plan you say before you code; my notes and life admin kept as a markdown repo that an AI agent tends for me; and a <Link href="https://github.com/ong6/sg-property-analysis" target="_blank" rel="noopener noreferrer">Singapore property data-analysis project</Link>. Most of it starts with something I want to try or a problem I want to fix for myself.
+				</Chapter>
+
+				<Chapter {...chapters[2]} active={active === chapters[2].id}>
+					Tennis is my main sport. I play with two forehands, swapping my Wilson Blade between hands instead of hitting a backhand. Most sessions are long rallies with one other person. It gives me a break from software.
+				</Chapter>
+
+				<Chapter {...chapters[3]} active={active === chapters[3].id}>
 					Non-fiction, usually tied to whatever I am building or trading at the time. Fiction in between to reset.
+				</Chapter>
+
+				<Chapter {...chapters[4]} active={active === chapters[4].id}>
+					I am speccing an always-on inference box that serves models to my own tools. So far, I&apos;m mostly comparing models, memory requirements and what the hardware would cost. I <Link href="https://notes.junxiong.dev" target="_blank" rel="noopener noreferrer">write up what I learn as I go</Link>.
+				</Chapter>
+
+				<Chapter {...chapters[5]} active={active === chapters[5].id}>
+					I trade stocks against a written playbook. A setup needs entry, exit and invalidation rules before I touch it; the journal records each trade in R so one repeating mistake is visible at review time. The visual beside this is an illustrative study, not my account.
 				</Chapter>
 			</Box>
 		</Layout>

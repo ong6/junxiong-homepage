@@ -5,12 +5,6 @@ import Layout from "../components/layouts/Articles";
 
 const links = [
 	{
-		label: "Email",
-		detail: "The simplest way to start a conversation.",
-		href: "mailto:junxiongong2@gmail.com",
-		external: true,
-	},
-	{
 		label: "LinkedIn",
 		detail: "My work history and what I do now.",
 		href: "https://www.linkedin.com/in/junx6/",
@@ -78,22 +72,34 @@ export default function Contact() {
 					<Text mt={6} maxW="560px" fontSize={{ base: "19px", md: "22px" }} lineHeight="1.55" fontWeight="600">
 						Email is the easiest way to reach me.
 					</Text>
-					<Text mt={4} maxW="560px" fontSize="16px" lineHeight="1.75" color="text.muted">
-						You can also find my projects, writing and work history below.
-					</Text>
+					<Link
+						href="mailto:junxiongong2@gmail.com"
+						display="inline-flex"
+						alignItems="center"
+						gap={3}
+						mt={7}
+						px={6}
+						minH="48px"
+						bg="brand.solid"
+						color="page.bg"
+						borderRadius="6px"
+						fontWeight="700"
+						_hover={{ opacity: 0.88, textDecoration: "none" }}>
+						Email me <Box as="span" aria-hidden="true">↗</Box>
+					</Link>
 				</Box>
 
 				<Box h={{ base: "340px", md: "440px" }} minW={0}>
-					<HobbyScene kind="contact" label="Contact signals" active />
+					<HobbyScene kind="contact" label="Contact signals" variant={3} active />
 				</Box>
 			</Grid>
 
-			<Box as="section" aria-labelledby="contact-links" mt={{ base: 12, md: 16 }}>
+			<Box as="section" aria-labelledby="contact-links" mt={{ base: 10, md: 12 }}>
 				<Text color="brand.solid" fontFamily="var(--font-mono)" fontSize="12px" fontWeight="700" letterSpacing=".1em">
-					{"// WAYS TO REACH ME"}
+					{"// ELSEWHERE"}
 				</Text>
 				<Heading id="contact-links" as="h2" mt={2} fontSize={{ base: "28px", md: "36px" }}>
-					Email, work and writing.
+					Work and writing.
 				</Heading>
 				<SimpleGrid columns={{ base: 1, md: 2 }} mt={6} borderTop="1px solid" borderColor="border.subtle">
 					{links.map((item) => (

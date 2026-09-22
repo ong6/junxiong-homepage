@@ -1,13 +1,23 @@
 const { expect, test } = require("@playwright/test");
 const { collectErrors } = require("./helpers");
 
-const labels = ["Coding & AI", "Tennis", "Trading", "Home servers", "Travel", "Reading"];
+const labels = ["Travel", "Coding & AI", "Tennis", "Reading", "Home servers", "Trading"];
 
 async function settleLayout(page) {
 	await page.evaluate(() => document.fonts.ready);
 	await page.locator("article").evaluate((article) =>
 		Promise.all(article.getAnimations().map((animation) => animation.finished)),
 	);
+}
+
+async function expectOnlyVisibleArtwork(page) {
+  await expect(page.locator('#coding-ai canvas')).toHaveCount(0);
+  await expect.poll(async () => page.locator('[data-hobby-visual]:has(canvas)').evaluateAll(nodes =>
+    nodes.length <= 1 && nodes.every(node => {
+      const rect = node.getBoundingClientRect();
+      return rect.top < innerHeight * .9 && rect.bottom > innerHeight * .1;
+    }),
+  )).toBe(true);
 }
 
 for (const width of [390, 1440]) {
@@ -21,10 +31,7 @@ for (const width of [390, 1440]) {
 			await expect(page.locator("h1")).toHaveText("Things I keep returning to.");
 			await expect(page.locator("main h2")).toHaveText(labels);
 			await settleLayout(page);
-			await expect(page.locator("main canvas")).toHaveCount(width === 1440 ? 1 : 0);
-			if (width === 1440) {
-				await expect(page.locator('#coding-ai canvas[data-renderer="webgl"]')).toBeVisible();
-			}
+			await expectOnlyVisibleArtwork(page);
 			expect(await page.locator("[data-chapter]").count()).toBe(6);
 			expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
 			expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollSnapType)).toBe("none");
@@ -38,7 +45,7 @@ for (const width of [390, 1440]) {
 			await expect(page.locator("#tennis").getByRole("button", { name: "Another look" })).toHaveCount(0);
 			await expect(page.locator('#tennis [role="img"]')).toHaveAttribute("aria-label", "Tennis illustration");
 			await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
-			await expect(page.locator("main canvas")).toHaveCount(width === 1440 ? 1 : 0);
+			await expectOnlyVisibleArtwork(page);
 			expect(errors).toEqual([]);
 		});
 	}
@@ -70,20 +77,20 @@ test("hobby artwork starts when its visual enters the viewport", async ({ page }
 	await page.setViewportSize({ width: 390, height: 900 });
 	await page.goto("/hobbies");
 	await settleLayout(page);
-	await expect(page.locator("main canvas")).toHaveCount(0);
+	await expectOnlyVisibleArtwork(page);
 	await page.locator("#coding-ai [data-hobby-visual]").scrollIntoViewIfNeeded();
 	const canvas = page.locator('#coding-ai canvas[data-renderer="webgl"]');
 	await canvas.waitFor();
 	await expect.poll(() => canvas.getAttribute("data-frames")).not.toBe("0");
 });
 
-test("hobby motion advances through an authored sequence, settles, then replays on demand", async ({ page }) => {
-	await page.goto("/hobbies#coding-ai");
+test("studio gallery motion advances through an authored sequence, settles, then replays on demand", async ({ page }) => {
+	await page.goto("/uipack?category=web&object=ai&look=0#objects");
 	await settleLayout(page);
-	await page.locator("#coding-ai").evaluate((chapter) =>
+	await page.locator(".uipack-object").evaluate((chapter) =>
 		chapter.scrollIntoView({ behavior: "instant", block: "center" }),
 	);
-	const scene = page.locator('#coding-ai canvas[data-renderer="webgl"]');
+	const scene = page.locator('.uipack-object canvas[data-renderer="webgl"]');
 	await scene.waitFor();
 	await expect.poll(() => scene.getAttribute("data-phase")).toBe("prompt-to-tools");
 	const firstPose = Number(await scene.getAttribute("data-pose"));
@@ -93,7 +100,7 @@ test("hobby motion advances through an authored sequence, settles, then replays 
 	const completedAt = await scene.getAttribute("data-frames");
 	await page.waitForTimeout(500);
 	expect(await scene.getAttribute("data-frames")).toBe(completedAt);
-	const replay = page.locator("#coding-ai").getByRole("button", { name: "Replay motion" });
+	const replay = page.locator(".uipack-object").getByRole("button", { name: "Replay motion" });
 	await replay.click();
 	await expect.poll(() => scene.getAttribute("data-phase"), { timeout: 2000 }).toMatch(/prompt|prompt-to-tools/);
 	expect(await page.locator("main canvas").count()).toBe(1);
@@ -146,7 +153,7 @@ test("trading uses the shared journal and UI Pack exposes all library objects", 
  await collection.getByRole('button',{name:'Trading journal',exact:true}).click();
  await expect(collection.locator('canvas')).toHaveAttribute('data-renderer','webgl');
  await expect(collection.getByText("A continuously panning candlestick chart with consistent OHLC prices and volume. Simulation; no live data.", { exact: true })).toBeVisible();
- await expect(collection.getByRole('group',{name:'Choose an object'}).getByRole('button')).toHaveCount(7);
+ await expect(collection.getByRole('navigation',{name:'Choose an object'}).getByRole('button')).toHaveCount(7);
 });
 
 test("UI Pack changes the tennis edition without leaving the shared player", async ({ page }) => {
@@ -155,9 +162,9 @@ test("UI Pack changes the tennis edition without leaving the shared player", asy
  await collection.getByRole('button', { name: 'Tennis practice', exact: true }).click();
  const object = collection.locator('.uipack-object');
  await expect(object.locator('canvas')).toHaveAttribute('data-source', 'blender');
- const before = Number(await object.getAttribute('data-variant'));
- await collection.getByRole('group', { name: 'Choose a look' }).getByRole('button').nth((before + 1) % 3).click();
- await expect(object).toHaveAttribute('data-variant', String((before + 1) % 3));
+ const before = Number(await object.getAttribute('data-edition'));
+ await collection.getByRole('combobox', { name: /Studio edition/ }).selectOption(String((before + 1) % 3));
+ await expect(object).toHaveAttribute('data-edition', String((before + 1) % 3));
  await expect(object.locator('canvas')).toHaveAttribute('data-renderer', 'webgl');
 });
 
@@ -165,12 +172,43 @@ test("the object gallery preserves named looks in its review URL", async ({ page
   await page.goto("/uipack?category=web&object=travel&look=1#objects");
   const collection=page.getByRole("region",{name:"3D object collection"});
   await expect(collection.locator(".uipack-object")).toHaveAttribute("data-kind","travel");
-  await expect(collection.getByRole("button",{name:"Coastal atlas",exact:true})).toHaveAttribute("aria-pressed","true");
-  await collection.getByRole("button",{name:"Desert atlas",exact:true}).click();
+  await expect(collection.getByRole("button",{name:/Paper worlds/})).toHaveAttribute("aria-pressed","true");
+  await collection.getByRole("button",{name:/Kinetic sculptures/}).click();
   await expect(page).toHaveURL(/look=2/);
   await page.reload();
   await expect(collection.locator(".uipack-object")).toHaveAttribute("data-variant","2");
   await collection.getByRole("button",{name:"Open book",exact:true}).click();
   await expect(page).toHaveURL(/object=reading/);
-  await expect(collection.getByRole("button",{name:"Midnight cloth",exact:true})).toHaveAttribute("aria-pressed","true");
+  await expect(collection.getByRole("button",{name:/Kinetic sculptures/})).toHaveAttribute("aria-pressed","true");
+});
+
+for (const width of [390, 1440]) for (const theme of ['light', 'dark']) {
+  test(`fixed hobby artwork blends with the page at ${width} in ${theme}`, async ({page}, info) => {
+    await page.setViewportSize({width, height:900});
+    await page.addInitScript(mode => localStorage.setItem('chakra-ui-color-mode', mode), theme);
+    await page.goto('/hobbies?style=abstract');
+    await expect(page.getByRole('button',{name:'My picks',exact:true})).toHaveCount(0);
+    await expect(page.getByRole('group',{name:'3D art direction'})).toHaveCount(0);
+    for (const [kind,direction] of [['travel','paper-theatre'],['ai','cartoon'],['tennis','studio'],['reading','kinetic'],['server','cartoon'],['trading','studio']]) {
+      const chapter=page.locator(`[data-chapter="${kind}"]`);
+      const object=chapter.locator('.uipack-object');
+      await chapter.locator('[data-hobby-visual]').evaluate(node => node.scrollIntoView({block:'center',behavior:'instant'}));
+      await expect(object).toHaveAttribute('data-art-direction',direction);
+      await expect(object).toHaveCSS('background-color','rgba(0, 0, 0, 0)');
+      await expect(object).toHaveCSS('background-image','none');
+      await expect(object).toHaveCSS('border-top-color','rgba(0, 0, 0, 0)');
+      await expect(object.locator('canvas')).toHaveAttribute('data-renderer','webgl');
+      await expect(object.locator('canvas')).toHaveCSS('opacity','1');
+      await expect(page.locator('main canvas')).toHaveCount(1);
+      await page.screenshot({path:info.outputPath(`${kind}.png`)});
+    }
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBe(width);
+  });
+}
+
+test('contact keeps the chosen cartoon world even with an old preview URL',async({page})=>{
+  await page.goto('/contact?style=kinetic');
+  await expect(page.locator('.uipack-object canvas')).toHaveAttribute('data-renderer','webgl');
+  await expect(page.locator('.uipack-object')).toHaveAttribute('data-art-direction','cartoon');
+  await expect(page.getByRole('link',{name:'Email me',exact:true})).toHaveAttribute('href','mailto:junxiongong2@gmail.com');
 });

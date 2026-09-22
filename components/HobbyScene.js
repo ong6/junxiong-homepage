@@ -9,6 +9,7 @@ export default function HobbyScene({ controls = "playback", ...props }) {
 		<ObjectScene
 			{...props}
 			controls={controls}
+			surface="page"
 			theme={colorMode}
 			palette={hobbyScenePalettes[colorMode]}
 		/>

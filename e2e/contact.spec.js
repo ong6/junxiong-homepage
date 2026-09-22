@@ -3,7 +3,7 @@ const { collectErrors } = require("./helpers");
 
 for (const width of [390, 1440]) {
 	for (const theme of ["light", "dark"]) {
-		test(`contact page at ${width} in ${theme} exposes every contact path`, async ({ page }) => {
+		test(`contact page at ${width} in ${theme} exposes every contact path`, async ({ page }, info) => {
 			const errors = collectErrors(page);
 			await page.setViewportSize({ width, height: 900 });
 			await page.addInitScript((mode) => localStorage.setItem("chakra-ui-color-mode", mode), theme);
@@ -24,6 +24,12 @@ for (const width of [390, 1440]) {
 				.map((control) => ({ text: control.textContent.trim(), height: control.getBoundingClientRect().height }))
 				.filter(({ height }) => height < 31.9));
 			expect(short).toEqual([]);
+			await expect(page.locator('main canvas')).toHaveAttribute('data-renderer', 'webgl');
+			await expect(page.locator('main canvas')).toHaveCSS('opacity', '1');
+			await expect(page.locator('.uipack-object')).toHaveAttribute('data-art-direction', 'cartoon');
+			await expect(page.locator('.uipack-object')).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+			await expect(page.locator('.uipack-object')).toHaveCSS('background-image', 'none');
+			await page.screenshot({ path: info.outputPath('contact-locked.png'), fullPage: true });
 			expect(errors).toEqual([]);
 		});
 	}

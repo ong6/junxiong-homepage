@@ -113,7 +113,7 @@ const Main = ({ children, router }) => {
 	const structuredData = isHome ? profileSchema : webPageSchema(canonical);
 
 	return (
-		<Box pb={8} overflowX="hidden">
+		<Box pb={8} overflowX={router?.pathname === "/hobbies" ? "clip" : "hidden"}>
 			<Head>
 				<meta
 					name="google-site-verification"
