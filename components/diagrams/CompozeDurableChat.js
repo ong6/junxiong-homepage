@@ -4,7 +4,7 @@ export const CLAIM =
 	"Chat streams by default; when the reader leaves mid-answer, an abort listener hands the job to a QStash workflow whose steps are durable, so a retry resumes after the last completed step.";
 
 export const meta = {
-	number: "Figure 08",
+	number: "Figure 09",
 	eyebrow: "Chat",
 	title: "An answer that finishes after the reader leaves",
 	caption:

@@ -4,7 +4,7 @@ export const CLAIM =
 	"One multi-tenant Next.js app sits between the customer's document sources and three model providers, with Postgres and pgvector as the only store, QStash workers running ingest off the request path, and evaluation and tracing beside the request path.";
 
 export const meta = {
-	number: "Figure 02",
+	number: "Figure 03",
 	eyebrow: "The whole system",
 	title: "One request path, one store, ingest off to the side",
 	caption:

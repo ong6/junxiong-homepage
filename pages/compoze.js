@@ -13,6 +13,7 @@ import * as CompozeArchitecture from "../components/diagrams/CompozeArchitecture
 import * as CompozeDurableChat from "../components/diagrams/CompozeDurableChat";
 import * as CompozeIngestFlow from "../components/diagrams/CompozeIngestFlow";
 import * as CompozeQueryFlow from "../components/diagrams/CompozeQueryFlow";
+import * as CompozeUserFlow from "../components/diagrams/CompozeUserFlow";
 import Layout from "../components/layouts/Articles";
 
 // A written case study: one ~680px column of prose, screenshots as inline
@@ -223,6 +224,12 @@ export default function Compoze() {
 					caption="fig. 1 — the tool call is shown, the answer is structured, and the sources sit under it with their match scores."
 				/>
 
+				<DiagramFigure
+					id="cuf"
+					diagram={CompozeUserFlow}
+					caption="fig. 2 — two people use it. An admin fills the knowledge base and watches ingest; a user asks and checks the sources. The dashed hop is where one job ends and the other begins."
+				/>
+
 				<H2>Working alone</H2>
 
 				<P>
@@ -233,13 +240,13 @@ export default function Compoze() {
 					id="carch"
 					headingLevel={2}
 					diagram={CompozeArchitecture}
-					caption="fig. 2 — the whole system. A question walks ① agent → ② retrieval → ③ pgvector → ④ gateway → ⑤ cited answer inside one request. Ingest runs elsewhere: Ⓐ download, Ⓑ extract, Ⓒ chunk, Ⓓ embed, Ⓔ store. One database, every row under a tenant id and row-level security."
+					caption="fig. 3 — the whole system. A question walks ① agent → ② retrieval → ③ pgvector → ④ gateway → ⑤ cited answer inside one request. Ingest runs elsewhere: Ⓐ download, Ⓑ extract, Ⓒ chunk, Ⓓ embed, Ⓔ store. One database, every row under a tenant id and row-level security."
 				/>
 
 				<Figure
 					src="/images/compoze/compoze-01.webp"
 					alt="Compoze chat in its empty state, showing the selected agent, four example prompts and the list of tools it can use."
-					caption="fig. 3 — the empty state. Each agent arrives with its own example prompts and a visible list of what it can reach."
+					caption="fig. 4 — the empty state. Each agent arrives with its own example prompts and a visible list of what it can reach."
 				/>
 
 				<P>
@@ -276,7 +283,7 @@ export default function Compoze() {
 				<DiagramFigure
 					id="cqf"
 					diagram={CompozeQueryFlow}
-					caption="fig. 4 — one question, five knowledge bases at once. Only chunks over the 0.35 floor survive, and a cross-encoder orders them."
+					caption="fig. 5 — one question, five knowledge bases at once. Only chunks over the 0.35 floor survive, and a cross-encoder orders them."
 				/>
 
 				<P>
@@ -315,13 +322,13 @@ export default function Compoze() {
 				<DiagramFigure
 					id="cif"
 					diagram={CompozeIngestFlow}
-					caption="fig. 5 — a content hash drops files already seen, PII comes out before chunking, and the dashed region runs later on QStash. Each stage is a checkpoint, so a dead run can be retried from the step that broke."
+					caption="fig. 6 — a content hash drops files already seen, PII comes out before chunking, and the dashed region runs later on QStash. Each stage is a checkpoint, so a dead run can be retried from the step that broke."
 				/>
 
 				<Figure
 					src="/images/compoze/compoze-04.webp"
 					alt="The Compoze admin knowledge base page: a document table with type, size, source connector and ingest status, status filter counts above it, and a banner saying processing continues in the background."
-					caption="fig. 6 — the admin view of ingest. Every document shows where it came from and where it stopped; the counts across the top are how an admin finds the failures."
+					caption="fig. 7 — the admin view of ingest. Every document shows where it came from and where it stopped; the counts across the top are how an admin finds the failures."
 				/>
 
 				<P>
@@ -340,7 +347,7 @@ export default function Compoze() {
 				<Figure
 					src="/images/compoze/compoze-03.webp"
 					alt="The Compoze agent picker showing four domain agents, each with a short description."
-					caption="fig. 7 — four domain agents, each with its own prompt, tools and examples. Which ones a tenant sees is configuration."
+					caption="fig. 8 — four domain agents, each with its own prompt, tools and examples. Which ones a tenant sees is configuration."
 				/>
 
 				<H2>Safety</H2>
@@ -384,7 +391,7 @@ export default function Compoze() {
 				<DiagramFigure
 					id="cdc"
 					diagram={CompozeDurableChat}
-					caption="fig. 8 — chat streams by default. If the reader leaves before the answer completes, the job moves to durable QStash steps, and a retry resumes after the last one that finished."
+					caption="fig. 9 — chat streams by default. If the reader leaves before the answer completes, the job moves to durable QStash steps, and a retry resumes after the last one that finished."
 				/>
 
 				<Details title="Optimisations and operating details">

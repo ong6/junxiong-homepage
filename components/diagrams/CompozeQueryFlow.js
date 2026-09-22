@@ -4,7 +4,7 @@ export const CLAIM =
 	"A question fans out across five knowledge bases with hybrid search, the survivors are reranked by a cross-encoder, and every citation is checked against its chunk before the answer ships.";
 
 export const meta = {
-	number: "Figure 04",
+	number: "Figure 05",
 	eyebrow: "Query",
 	title: "One question, five knowledge bases, every citation checked",
 	caption:

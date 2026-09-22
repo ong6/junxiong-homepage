@@ -4,7 +4,7 @@ export const CLAIM =
 	"Documents are deduplicated by content hash, redacted, and moved through a checkpointed async pipeline into pgvector, with failures landing in a dead-letter queue the admin UI shows.";
 
 export const meta = {
-	number: "Figure 05",
+	number: "Figure 06",
 	eyebrow: "Ingest",
 	title: "Hash, redact, chunk, embed, store, or fail into a queue you can see",
 	caption:
