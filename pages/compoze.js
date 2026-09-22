@@ -10,6 +10,7 @@ import Image from "next/image";
 import NextLink from "next/link";
 import DiagramFigure from "../components/DiagramFigure";
 import * as CompozeArchitecture from "../components/diagrams/CompozeArchitecture";
+import * as CompozeDurableChat from "../components/diagrams/CompozeDurableChat";
 import * as CompozeIngestFlow from "../components/diagrams/CompozeIngestFlow";
 import * as CompozeQueryFlow from "../components/diagrams/CompozeQueryFlow";
 import Layout from "../components/layouts/Articles";
@@ -379,6 +380,12 @@ export default function Compoze() {
 						))}
 					</Box>
 				</Details>
+
+				<DiagramFigure
+					id="cdc"
+					diagram={CompozeDurableChat}
+					caption="fig. 8 — chat streams by default. If the reader leaves before the answer completes, the job moves to durable QStash steps, and a retry resumes after the last one that finished."
+				/>
 
 				<Details title="Optimisations and operating details">
 					<P>
