@@ -99,10 +99,7 @@ export default function TradingEngine() {
 					</Text>
 
 					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="1.6" fontWeight="600">
-						A research engine that runs itself on one Linux box. Real US daily bars into DuckDB, a
-						nightly screen, 21 paper portfolios with rules frozen before they trade, a fill model
-						that cannot see the future, and forward tests that can kill a strategy but never promote
-						one. Two months in, the honest result is that nothing beats its control yet. Code on{" "}
+						I built this to test trading ideas on real US market data without placing live trades. It runs nightly on one Linux box and tracks 21 paper portfolios, each with rules fixed before trading starts. At the two-month mark, none had passed its comparison against a control. Code on{" "}
 						<Link href="https://github.com/ong6/trading-engine" isExternal>
 							GitHub
 						</Link>
@@ -124,22 +121,19 @@ export default function TradingEngine() {
 					on older bars."
 				/>
 
-				<H2>The fill model is the project</H2>
+				<H2>When a simulated order can fill</H2>
 
 				<P>
-					Every backtest I had read that looked good was a look-ahead bug wearing a strategy. So
-					the one rule the engine enforces in exactly one place is that an order signalled from the
+					I wanted to avoid a backtest using a price it could not have traded. The engine enforces the timing rule in one place: an order signalled from the
 					close of day <Code>t</Code> fills at the open of day <Code>t+1</Code>, and{" "}
 					<Code>attempt_fill</Code> raises if you ask for anything else. It raises under{" "}
-					<Code>python -O</Code> too, because a guard that disappears under optimisation is not a
-					guard.
+					<Code>python -O</Code> too, so optimisation cannot remove the timing check.
 				</P>
 
 				<P>
 					The fill price is the open moved against you by a half-spread estimated from the
 					sixty-day median dollar volume, plus five basis points a side. An order over one percent
-					of that median volume is rejected outright rather than partially filled, because a
-					partial fill I invented is still invented. A missing bar leaves the order pending for
+					of that median volume is rejected outright rather than partially filled, rather than estimating how much would have filled. A missing bar leaves the order pending for
 					three sessions and then rejects it. A bar is never fabricated. Dividends are credited on
 					the ex-date from the same corporate-actions table the screen reads.
 				</P>
@@ -150,21 +144,19 @@ export default function TradingEngine() {
 					<CodeBlock title="same-bar fill" lines={FILL} />
 				</CodeFigure>
 
-				<H2>Pre-registered or it did not happen</H2>
+				<H2>Writing the test rules in advance</H2>
 
 				<P>
 					A strategy enters the league as a charter: the mechanism, the control it has to beat,
 					one primary statistic, a kill criterion, and the total number of trials. All of that is
-					written down before the first signal. The rule does not change after the outcome, and a
-					losing test is recorded, not rescued.
+					written down before the first signal. I keep the rule fixed after seeing the result and record failed tests alongside the others.
 				</P>
 
 				<P>
 					Ten charters so far. Seven are closed as rejected or inconclusive: a VIX term-structure
 					timer, turn-of-month, sell-in-May, a drawdown throttle, a vol target, a sector cap and a
 					quarterly ETF rebalance. Each failed the gate it declared up front. The three calendar
-					timers lost to a static exposure-matched control, which is the control most of the
-					literature forgets. Three are still accruing: a sector-momentum
+					timers lost to a static exposure-matched control, which keeps the comparison from simply rewarding a different amount of market exposure. Three are still accruing: a sector-momentum
 					book that needs two hundred shared sessions before its kill rule can fire, a 12-1
 					cross-sectional momentum book measured against an unscreened control, and a
 					forty-Monday test of SPY&apos;s open-to-close drift.
@@ -176,7 +168,7 @@ export default function TradingEngine() {
 					<CodeBlock title="a report that will not peek" lines={E1} />
 				</CodeFigure>
 
-				<H2>Survivorship is the number everyone hides</H2>
+				<H2>The missing delisted companies</H2>
 
 				<P>
 					The price store holds only names listed today. Measured against listed-company counts,
@@ -217,8 +209,7 @@ export default function TradingEngine() {
 					works yet, wait for evidence&rdquo;, the agents kept building anyway: forty-six
 					thousand lines of governance for a broker that does not exist. The repo now carries an
 					operating contract, a scope ledger with size ceilings the test suite enforces, and a
-					drift snapshot every session must publish. The plan is the appliance: collect, judge,
-					wait.
+					drift snapshot every session must publish. For now, I want it to keep collecting data and reporting against the existing rules while the experiments run.
 				</P>
 
 				<Box
@@ -248,13 +239,11 @@ export default function TradingEngine() {
 					))}
 				</Box>
 
-				<H2>What it is not</H2>
+				<H2>Paper trading only</H2>
 
 				<P>
 					It holds no credentials, connects to no broker and moves no money. The two services bind
-					to loopback and the repo ships no market data. I built it to find out whether I
-					could make a research loop whose numbers I would trust, and to be able to say, with the
-					evidence in the open, that nothing has passed yet.
+					to loopback and the repo ships no market data. I built it to test whether the ideas hold up under rules I set in advance. So far, none has passed, and the reports in the repo show why.
 				</P>
 
 				<Box h={{ base: 12, md: 20 }} />

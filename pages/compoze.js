@@ -208,16 +208,12 @@ export default function Compoze() {
 						lineHeight="1.6"
 						fontWeight="600">
 						I built Compoze on evenings and weekends while working full time at
-						TikTok. It sold document-grounded assistants to businesses. At the
-						end of 2025 it was sold to a client, terms private.
+						TikTok. I built assistants that answered questions using a company&apos;s own documents. Compoze was sold to a client at the end of 2025.
 					</Text>
 				</Box>
 
 				<P>
-					The pitch was narrow. A company has a few thousand documents nobody
-					reads and staff who ask the same handful of questions about them
-					every week. Compoze answered those questions with the documents
-					attached, so the answer could be checked, not believed.
+					The idea was to help staff find answers in company documents without searching through them by hand. Compoze included the sources with each answer so people could open them and check.
 				</P>
 
 				<Figure
@@ -229,13 +225,7 @@ export default function Compoze() {
 				<H2>Working alone</H2>
 
 				<P>
-					I did all six stages of selling and delivering it, discovery through
-					deployment and training. Knowledge engineering was the slow one.
-					Deciding what belongs in a knowledge base, and what must never go near
-					it, is not a technical question, and you cannot do it for the customer.
-					Running it beside a full-time job shaped the product more than any
-					opinion I had about architecture. Anything that needed me awake did not
-					get built.
+					I handled the work from the first customer conversation through deployment and training. Organising the knowledge base took the most time. I needed the customer to decide which documents belonged in it and which should stay out. Running Compoze alongside a full-time job also meant designing it to work without my constant attention.
 				</P>
 
 				<DiagramFigure
@@ -252,9 +242,7 @@ export default function Compoze() {
 				/>
 
 				<P>
-					An empty chat box gets you empty questions, so nothing ships blank:
-					example prompts, a visible tool list, past threads in the sidebar.
-					Cheapest fix I made to how much people used it.
+					I added example prompts and a visible tool list so someone opening the chat could see what to ask. Past conversations stayed in the sidebar.
 				</P>
 
 				<H2>One codebase, configured per customer</H2>
@@ -270,7 +258,7 @@ export default function Compoze() {
 					one gateway, picked per environment in configuration.
 				</P>
 
-				<H2>Retrieval is the part you get judged on</H2>
+				<H2>Finding the right passages</H2>
 
 				<P>
 					Documents are chunked at about a thousand characters. Each chunk gets a
@@ -292,9 +280,7 @@ export default function Compoze() {
 
 				<P>
 					Citations are stored with the message, checked for entailment against
-					the sentence they support, and rendered with their match scores. A
-					visible score gets people to open two or three citations and check.
-					Nobody trusts the answer before they have.
+					the sentence they support, and rendered with their match scores. The source links and scores let readers check how well a passage supports the answer.
 				</P>
 
 				<P>
@@ -307,14 +293,11 @@ export default function Compoze() {
 				<H2>How I knew it worked</H2>
 
 				<P>
-					A fixed set of question and answer pairs: logged questions, every
-					question a tester asked, and adversarial questions the corpus cannot
-					answer, where the right reply is a refusal. Retrieval and generation
+					I kept a fixed set of question and answer pairs from logs and testing, including questions the documents could not answer. For those, the expected reply was a refusal. Retrieval and generation
 					are scored apart: context precision for whether the
 					good chunks ranked high, faithfulness for whether each claim is
 					entailed by what came back. The set runs in CI. A prompt, chunker or
-					model change fails on a regression against main. Deltas, not absolute
-					thresholds.
+					model change fails on a regression against main. The comparison was against the previous version rather than a fixed score threshold.
 				</P>
 
 				<H2>Getting the documents in</H2>
@@ -345,8 +328,7 @@ export default function Compoze() {
 					are cached by chunk hash and model, so editing one paragraph re-embeds
 					one chunk. PII is redacted at ingest, which keeps the embeddings
 					clean. Anything that exhausts its retries lands in a dead-letter
-					queue with the payload and the error attached. A silent drop is
-					worse than a loud failure.
+					queue with the payload and the error attached. That gave me a record of what failed and what needed retrying.
 				</P>
 
 				<P>
@@ -418,7 +400,7 @@ export default function Compoze() {
 					<MonoTable rows={optimisations} />
 
 					<P>
-						With no reviewer, CI is the reviewer. Route contracts are typed,
+						Working alone made automated checks especially useful. Route contracts are typed,
 						every payload is validated at runtime with Zod, and contract tests
 						run on each push. That is what let me keep changing 53 routes and
 						23 tables alone. Each request is traced as one span tree with

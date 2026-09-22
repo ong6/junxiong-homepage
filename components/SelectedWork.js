@@ -92,7 +92,7 @@ function GroundplaneCard() {
 				eyebrow="Open source · 2026"
 				title="Groundplane"
 				href="/groundplane"
-				description="I wanted an agent boundary I could inspect. Groundplane checks declared fields against recorded tool results and rejects a winner, total or comparison when the facts disagree."
+				description="I built Groundplane to catch cases where an agent gives the wrong winner or total despite having the right data. It checks the answer against recorded tool results."
 			/>
 			<Box mt="auto" px={{ base: 5, md: 7 }} pb={{ base: 5, md: 7 }}>
 				<DottedCanvas>
@@ -131,7 +131,7 @@ function CompozeCard() {
 				eyebrow="Company · 2025"
 				title="Compoze"
 				href="/compoze"
-				description="A one-person AI studio I ran alongside TikTok. I sold and priced the work, built document-grounded assistants, and stayed until clients could use them without me."
+				description="I ran Compoze alongside TikTok, building assistants that answered questions from company documents. I handled sales, development and customer training."
 			/>
 			<Box mt="auto" px={{ base: 5, md: 7 }} pb={{ base: 5, md: 7 }}>
 				<DottedCanvas>
@@ -167,7 +167,7 @@ const supportingProjects = [
 		title: "Trading engine",
 		href: "/trading-engine",
 		label: "Research system",
-		description: "A nightly paper-trading engine where frozen rules can kill an idea, never rescue it.",
+		description: "I use this to test trading ideas overnight, with rules set before the results come in.",
 		mark: "02 / PAPER ONLY",
 	},
 	{
@@ -181,7 +181,7 @@ const supportingProjects = [
 		title: "Skill Eval Pack",
 		href: "/skill-eval-pack",
 		label: "Agent evaluation",
-		description: "A blind A/B gate for deciding whether a new agent skill has earned its place.",
+		description: "I compare an agent with and without a skill to check whether the extra instructions help.",
 		mark: "04 / KEEP OR RETIRE",
 	},
 	{

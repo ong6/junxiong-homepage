@@ -61,7 +61,7 @@ export default function SkillEvalPack() {
 					</Text>
 
 					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="1.6" fontWeight="600">
-						A useful-sounding skill is easy to write and hard to prove. I built this pack to compare the same agent on the same task with and without the skill, then keep it only when fresh heldout cases clear the gate. Code on{" "}
+						I wanted to know whether my agent instructions actually helped. This pack runs the same task with and without a skill, compares the results without telling the judges which is which, and checks the candidate on cases that were not used to revise it. Code on{" "}
 						<Link href="https://github.com/ong6/skill-eval-pack" isExternal>GitHub</Link>.
 					</Text>
 				</Box>
@@ -73,19 +73,19 @@ export default function SkillEvalPack() {
 					caption="fig. 1 — the three projects cover different failure points. Skillpack supplies the instruction. Skill Eval Pack asks whether it improved the work. Groundplane checks declared facts when the accepted instruction runs."
 				/>
 
-				<H2>The control is the same agent without the skill</H2>
+				<H2>Comparing with and without the skill</H2>
 				<P>
-					The baseline and treatment run in separate fresh contexts with the same model, tools, task and rubric. Development cases are for fixing the candidate. Fresh heldouts make the decision. Once a heldout result influences a revision, that case is retired.
+					Both versions run in fresh contexts with the same model, tools, task and scoring criteria. I use development cases to improve the skill, then separate held-out cases to decide whether to keep it. Once I use a held-out result to make an edit, that case can no longer count as a fresh test.
 				</P>
 
-				<H2>The judge does not get the answer key</H2>
+				<H2>Keeping the comparison blind</H2>
 				<P>
-					<Code>eval_gate.py prepare</Code> counterbalances anonymous A/B packets. Independent judges see complete transcripts and outcomes, while exact properties run through deterministic graders first. The decision unions critical failures instead of averaging them away. A treatment can score well overall and still fail for one core regression.
+					<Code>eval_gate.py prepare</Code> prepares anonymous A/B packets with the order balanced across comparisons. Independent judges see the full transcripts and results. Checks with exact answers run in code first. Any critical failure counts against the candidate, even if its average score is higher.
 				</P>
 
-				<H2>A failed revision does not replace the proven one</H2>
+				<H2>Keeping the previous version when an edit fails</H2>
 				<P>
-					New candidates get up to three serious attempts by default. An existing skill keeps its last proven version until a revision passes. The lifecycle helper checks the attempt history, retired heldouts and final action, while the payload helper confirms that Claude Code and Codex loaded the exact frozen files.
+					New candidates get up to three serious attempts by default. An existing skill keeps its last passing version until a revision passes. The lifecycle helper checks the attempt history, retired heldouts and final action, while the payload helper confirms that Claude Code and Codex loaded the exact frozen files.
 				</P>
 
 				<Box as="dl" mt={{ base: 12, md: 16 }} borderTop="1px solid" borderColor="border.subtle" fontFamily="var(--font-mono)" fontSize="12px">

@@ -18,7 +18,7 @@ const tools = [
 		name: "Groundplane",
 		href: "/groundplane",
 		stage: "03 · check",
-		detail: "The runtime boundary for declared facts.",
+		detail: "Checks agent output against recorded tool results.",
 	},
 ];
 
@@ -36,7 +36,7 @@ export default function AiToolFamily({ current }) {
 				{"// AI TOOLCHAIN"}
 			</Text>
 			<Heading id={headingId} as="h2" mt={2} fontSize={{ base: "22px", md: "24px" }}>
-				Instructions, evidence, runtime facts
+				How these tools fit together
 			</Heading>
 			<SimpleGrid columns={{ base: 1, md: 3 }} mt={5} gap={3}>
 				{tools.map((tool) => {

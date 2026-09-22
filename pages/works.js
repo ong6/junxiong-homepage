@@ -92,8 +92,7 @@ const Works = () => {
 					</Text>
 				</Flex>
 				<Text mt={3} maxW="620px" fontSize="15px" lineHeight="1.7" color="text.muted">
-					Everything I built during my NUS years. I keep the list as a record of what we made back
-					then. Current projects are on the{" "}
+					Projects from my NUS years, including coursework, hackathons and open-source contributions. Current projects are on the{" "}
 					<Link as={NextLink} href="/#work">
 						homepage
 					</Link>

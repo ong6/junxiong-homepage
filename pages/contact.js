@@ -12,7 +12,7 @@ const links = [
 	},
 	{
 		label: "LinkedIn",
-		detail: "Work history and professional context.",
+		detail: "My work history and what I do now.",
 		href: "https://www.linkedin.com/in/junx6/",
 		external: true,
 	},
@@ -79,7 +79,7 @@ export default function Contact() {
 						Email is the easiest way to reach me.
 					</Text>
 					<Text mt={4} maxW="560px" fontSize="16px" lineHeight="1.75" color="text.muted">
-						If context helps, my work and writing are linked below.
+						You can also find my projects, writing and work history below.
 					</Text>
 				</Box>
 

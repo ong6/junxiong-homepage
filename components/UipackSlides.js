@@ -13,8 +13,7 @@ export default function UipackSlides() {
 				Slide creation
 			</Heading>
 			<Text mt={4} maxW="680px" fontSize="17px" lineHeight="1.75" color="text.muted">
-				A deck needs a visual system and a way to speak through it. Each starter pairs the slide
-				with a short talk track, a delivery cue and the line into whatever comes next.
+				Each starter includes a slide, notes on what to say, a delivery cue and a suggested transition to the next slide.
 			</Text>
 			<Flex role="group" aria-label="Slide layout" wrap="wrap" gap={2} mt={6} mb={4}>
 				{slideLayouts.map(({ id, title }) => (

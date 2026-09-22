@@ -126,9 +126,7 @@ export default function Skillpack() {
 				<H2>Edit where you use it</H2>
 
 				<P>
-					The plugin route is fine for reading: install once and forget it. But a skill only
-					improves while it is in use, and the plugin copy is not the one in use. Every fix I made
-					landed in one repo and stayed there.
+					The plugin install is useful when I just want to use the skills. But I also want to edit them while working. Before the shared folder, a fix made in one repo stayed there and the other copies fell behind.
 				</P>
 
 				<P>
@@ -179,20 +177,17 @@ export default function Skillpack() {
 					with no network.
 				</P>
 
-				<H2>The catalog is a map</H2>
+				<H2>Keeping the catalog current</H2>
 
 				<P>
 					<Code>catalog.yaml</Code> puts each skill in exactly one category and lists, per category,
 					other people&apos;s skills I rate. A script regenerates the README tables from it plus
 					each skill&apos;s frontmatter, and exits 1 if a folder on disk is missing from the catalog
-					or the catalog names a folder that does not exist. The README cannot describe a tree that
-					is not there.
+					or the catalog names a folder that does not exist. This catches a missing or renamed skill when the catalog is built.
 				</P>
 
 				<P>
-					Three categories hold none of my skills yet and exist for the links. Deliberate: someone
-					looking for an interview drill should find jobforge, and the coach it derives from, in the
-					same place they found unslop.
+					Three categories currently contain only links to other projects. I want the catalog to be useful even where I have not written a skill myself.
 				</P>
 
 				<Box
@@ -227,8 +222,7 @@ export default function Skillpack() {
 					Only generic skills go in. Anything naming a private path, an account or a price stays in
 					the consumer repo beside the subtree. The store this grew out of keeps more of those than
 					it publishes. The eight here cover web and video research, system diagrams, 3D and Blender
-					authoring, printable PDFs, session handoffs and the feedback loop that patches whichever
-					skill or rule earned the complaint.
+					authoring, printable PDFs, session handoffs and the feedback loop that patches the relevant skill or rule after feedback.
 				</P>
 
 				<AiToolFamily current="/skillpack" />

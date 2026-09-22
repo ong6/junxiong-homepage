@@ -67,8 +67,7 @@ function Introduction() {
 						<Link as={NextLink} href="/compoze">
 							Compoze
 						</Link>{" "}
-						until a client bought it. The tools below started with something that annoyed me enough
-						to fix.
+						until a client bought it. The projects below are things I&apos;ve built for problems I wanted to work on myself.
 					</Text>
 				</Box>
 

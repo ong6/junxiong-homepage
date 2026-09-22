@@ -71,7 +71,7 @@ export default function Hobbies() {
 					<Box className={styles.introInner}>
 						<Text className={styles.eyebrow}>{"// OFF THE CLOCK"}</Text>
 						<Text as="h1" className={styles.title}>Things I keep returning to.</Text>
-						<Text className={styles.lede}>Six interests, from agent experiments to a quiet stack of books. Scroll normally; the objects are just here to keep you company.</Text>
+						<Text className={styles.lede}>I spend a lot of my free time coding and trying out AI tools. I also play tennis, trade, plan trips and read.</Text>
 						<Box as="nav" aria-label="Hobby chapters" className={styles.chapterNav}>
 							{chapters.map((chapter) => (
 								<Link
@@ -90,7 +90,7 @@ export default function Hobbies() {
 				</Chapter>
 
 				<Chapter {...chapters[1]} active={active === chapters[1].id}>
-					My main sport. Getting better means picking one flaw and drilling it until it is boring. I play with two forehands, swapping my Wilson Blade between hands instead of hitting a backhand. Most sessions are long rallies with one other person, and it is the only hour in a day where I am not thinking about software.
+					Tennis is my main sport. I play with two forehands, swapping my Wilson Blade between hands instead of hitting a backhand. Most sessions are long rallies with one other person. It gives me a break from software.
 				</Chapter>
 
 				<Chapter {...chapters[2]} active={active === chapters[2].id}>
@@ -98,11 +98,11 @@ export default function Hobbies() {
 				</Chapter>
 
 				<Chapter {...chapters[3]} active={active === chapters[3].id}>
-					I am speccing an always-on inference box that serves models to my own tools. So far the hobby is mostly purchase arithmetic: tokens per second is roughly memory bandwidth divided by model size, and that one line settles more hardware arguments than any benchmark thread. I <Link href="https://notes.junxiong.dev" target="_blank" rel="noopener noreferrer">write up what I learn as I go</Link>.
+					I am speccing an always-on inference box that serves models to my own tools. So far, I&apos;m mostly comparing models, memory requirements and what the hardware would cost. I <Link href="https://notes.junxiong.dev" target="_blank" rel="noopener noreferrer">write up what I learn as I go</Link>.
 				</Chapter>
 
 				<Chapter {...chapters[4]} active={active === chapters[4].id}>
-					Six months in Munich on NUS Overseas Colleges, which was long enough to have a regular grocery store. That is the part I want from a trip now, so I go slow: fewer places, more days in each.
+					I spent six months in Munich on NUS Overseas Colleges. I like having enough time in a place to get familiar with it, so I tend to plan fewer stops and stay longer in each.
 				</Chapter>
 
 				<Chapter {...chapters[5]} active={active === chapters[5].id}>

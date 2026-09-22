@@ -169,15 +169,11 @@ export default function Groundplane() {
 
 				<P>
 					I first built this shape inside a production AI platform at TikTok.
-					Summaries there rank things, and a model ranking a table of numbers is
-					right most of the time. Most of the time is not a guarantee. A senior
-					stakeholder would not sign off on output that could name the wrong
-					winner, and that pushback produced the design.
+					Some summaries had to rank a table of numbers. A senior stakeholder pointed out that naming the wrong winner was unacceptable, even if the model usually got it right. That led me to move the ranking into code.
 				</P>
 
 				<P>
-					The fix: compute the ranking in code and limit the model to phrasing
-					it. The model could describe the winner but no longer choose one.
+					Code computed the winner, and the model described the result.
 					Groundplane is that idea taken out of the platform, generalised past
 					argmax, and published under MIT.
 				</P>
@@ -230,16 +226,14 @@ export default function Groundplane() {
 					wraps a block of model output and names the facts it may use. The model
 					emits structured fields, never prose. Submitting a plain string is a
 					TypeError. Leaving the block without submitting also raises, because a
-					check that silently never ran is worse than no check.
+					caller needs to know when validation never happened.
 				</P>
 
 				<H2>Six checks, one question each</H2>
 
 				<P>
 					Each check asks how the recorded facts relate to each other, which
-					is what a per-field validator cannot see. Every value in a swapped
-					row is a real value, and a wrong argmax is spelled the same as the
-					right one.
+					is what a per-field validator cannot see. For example, two valid values can still be assigned to the wrong rows. A field-level type check would accept both.
 				</P>
 
 				<P>
@@ -260,20 +254,13 @@ export default function Groundplane() {
 				</P>
 
 				<P>
-					Numeric comparisons are exact by default. Every check takes a
-					tolerance, but it starts at zero, not the usual nine digits of
-					forgiveness. A checker built to catch a wrong number should not wave
-					one through.
+					Numeric comparisons are exact by default. Each check accepts a tolerance, starting at zero, so the caller has to choose how much difference is acceptable.
 				</P>
 
-				<H2>Failing loudly</H2>
+				<H2>Making errors useful</H2>
 
 				<P>
-					The error message is most of the product. It carries the field, what
-					the model said, what the facts support, the tool call with its
-					arguments, and where the model&apos;s pick ranked. Whoever reads it at
-					2am can tell whether the data or the submitted field was wrong
-					without opening a trace.
+					I wanted the error message to explain the mismatch on its own. It includes the field, the model&apos;s answer, the recorded result and the tool call that produced it. For a ranking, it also shows where the model&apos;s choice actually placed.
 				</P>
 
 				<P>

@@ -107,14 +107,11 @@ export default function Uipack() {
 					</Text>
 
 					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="1.6" fontWeight="600">
-						The pack for the UI I keep making: websites, animations and slides. I want my projects
-						and presentations to share a style, without deciding on type, colours and spacing every
-						time.
+						I keep the diagrams, animations and slide starters I reuse in UI Pack. It lets my projects share type, colours and spacing without setting them up again each time.
 					</Text>
 					<P color="text.muted">
 						It started with the diagrams on this site. I&apos;m building it out in two directions:
-						web design for my projects, and presentations for the things I need to explain. The
-						first slide starters now keep the visual and the talk track together.
+						web design for my projects, and presentations for the things I need to explain. Each slide starter includes speaker notes alongside the visual.
 					</P>
 					<Link
 						href="https://github.com/ong6/uipack"
