@@ -6,6 +6,7 @@ import "../styles/globals.css";
 import "../styles/print.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import Layout from "../components/layouts/Main";
+import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import theme from "../lib/theme";
@@ -33,6 +34,7 @@ function MyApp({ Component, pageProps, router }) {
 					<Component {...pageProps} key={router.route} />
 				</Layout>
 			</ChakraProvider>
+			<Analytics />
 			<SpeedInsights />
 		</div>
 	);

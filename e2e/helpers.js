@@ -16,7 +16,7 @@ async function packetCentre(page) {
 const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
 
 // Console lines the site already knows about on localhost.
-const KNOWN = [/speed-insights/i, /Speed Insights/, /upgrade-insecure-requests/, /_vercel/];
+const KNOWN = [/speed-insights/i, /vercel-analytics|_vercel\/insights/i, /Speed Insights/, /upgrade-insecure-requests/, /_vercel/];
 function collectErrors(page) {
 	const errors = [];
 	page.on("console", (m) => {
