@@ -8,8 +8,8 @@ engineering through a restrained terminal-inspired interface.
 
 - A single-surface homepage led by Groundplane and Compoze, with the rest of the site exposed through global navigation
 - Case studies for Groundplane (`/groundplane`, a Python boundary for agent output), Skillpack
-  (`/skillpack`, shared Claude Code and Codex skills), Skill Eval Pack (`/skill-eval-pack`, a blind
-  no-skill baseline gate) and Jobforge (`/jobforge`, a Claude Code interview-prep plugin)
+  (`/skillpack`, shared Claude Code and Codex skills), Skillsmith (`/skillsmith`, makes a skill
+  from a repo, then gates it against a blind no-skill baseline) and Jobforge (`/jobforge`, a Claude Code interview-prep plugin)
 - A public case study for Compoze, with client identity and financial terms kept private
 - A case study for the trading engine (`/trading-engine`, a paper-trading research engine with
   pre-registered strategies and a next-open fill model), with the nightly-loop diagram

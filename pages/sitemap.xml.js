@@ -15,7 +15,7 @@ const topRoutes = [
 	{ path: "/trading-engine", lastmod: "2026-09-18", changefreq: "yearly", priority: "0.8" },
 	{ path: "/jobforge", lastmod: "2026-09-03", changefreq: "yearly", priority: "0.8" },
 	{ path: "/skillpack", lastmod: "2026-09-21", changefreq: "yearly", priority: "0.8" },
-	{ path: "/skill-eval-pack", lastmod: "2026-09-21", changefreq: "yearly", priority: "0.8" },
+	{ path: "/skillsmith", lastmod: "2026-09-23", changefreq: "yearly", priority: "0.8" },
 	{ path: "/uipack", lastmod: "2026-09-20", changefreq: "monthly", priority: "0.6" },
 	{ path: "/works", lastmod: "2026-09-01", changefreq: "monthly", priority: "0.7" },
 	{ path: "/hobbies", lastmod: "2026-09-19", changefreq: "monthly", priority: "0.5" },

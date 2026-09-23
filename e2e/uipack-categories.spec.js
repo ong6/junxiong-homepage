@@ -12,7 +12,7 @@ for (const width of [390, 1440]) {
 			const web = page.getByRole("tab", { name: "Web design" });
 			const slides = page.getByRole("tab", { name: "Slide creation" });
 			await expect(web).toHaveAttribute("aria-selected", "true");
-			await expect(page.locator("figure.uipack")).toHaveCount(7);
+			await expect(page.locator("figure.uipack")).toHaveCount(6);
 			await web.focus();
 			await page.keyboard.press("ArrowRight");
 			await expect(slides).toBeFocused();
@@ -46,7 +46,7 @@ for (const width of [390, 1440]) {
 			await slides.focus();
 			await page.keyboard.press("ArrowLeft");
 			await expect(web).toHaveAttribute("aria-selected", "true");
-			await expect(page.locator("figure.uipack")).toHaveCount(7);
+			await expect(page.locator("figure.uipack")).toHaveCount(6);
 			expect(errors).toEqual([]);
 		});
 	}

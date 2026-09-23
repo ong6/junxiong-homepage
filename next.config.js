@@ -41,6 +41,7 @@ module.exports = {
 				destination: "https://junxiong.dev/:path*",
 				permanent: true,
 			},
+			{ source: "/skill-eval-pack", destination: "/skillsmith", permanent: true },
 		];
 	},
 	async headers() {

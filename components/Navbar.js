@@ -23,7 +23,7 @@ const navigationLinks = [
 		href: "/#work",
 		homeHref: "#work",
 		name: "Projects",
-		activePaths: ["/compoze", "/groundplane", "/jobforge", "/skillpack", "/skill-eval-pack", "/trading-engine", "/uipack"],
+		activePaths: ["/compoze", "/groundplane", "/jobforge", "/skillpack", "/skillsmith", "/trading-engine", "/uipack"],
 	},
 	{ href: "/hobbies", name: "Hobbies" },
 	{ href: "https://notes.junxiong.dev", name: "Notes", external: true },

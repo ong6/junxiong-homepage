@@ -2,7 +2,7 @@ const { expect, test } = require("@playwright/test");
 
 // uipack's geometry checks, run against every wide drawing on the site: no
 // arrowhead tip or path end inside a node, no packet path ending on a head.
-const PAGES = ["/groundplane", "/jobforge", "/skillpack", "/skill-eval-pack", "/compoze", "/uipack"];
+const PAGES = ["/groundplane", "/jobforge", "/skillpack", "/skillsmith", "/compoze", "/uipack"];
 
 for (const path of PAGES) {
 	test(`${path}: no arrowhead ends inside a node`, async ({ page }) => {

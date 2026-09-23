@@ -6,7 +6,6 @@ import {
 	beforeAfterParts,
 	pipelineParts,
 	serviceMapParts,
-	skillLifecycleParts,
 	syncLoopParts,
 } from "uipack/presets";
 import { MOBILE_MIN_FONT, SwipeHint, mobileScrollSx, useIsMobile, useOverflow, viewBoxWidth } from "./figureMobile";
@@ -16,7 +15,6 @@ import {
 	fieldpack,
 	groundplane,
 	aiToolchain,
-	skillforge,
 	skillpack,
 } from "../lib/uipackGallery";
 
@@ -91,28 +89,22 @@ const GALLERY = [
 		note: "fig. 3 — skillpack. The pull and push are two connectors; each carries one head and one packet direction.",
 	},
 	{
-		id: "sf",
-		spec: skillforge,
-		parts: skillLifecycleParts,
-		note: "fig. 4 — skillforge. The dashed edge is feedback. It runs against the loop on purpose.",
-	},
-	{
 		id: "fp",
 		spec: fieldpack,
 		parts: serviceMapParts,
-		note: "fig. 5 — fieldpack. A bus on each side of the platform. Stubs carry no heads, the junction dot marks the join.",
+		note: "fig. 4 — fieldpack. A bus on each side of the platform. Stubs carry no heads, the junction dot marks the join.",
 	},
 	{
 		id: "dp",
 		spec: deploy(E2E_CASES),
 		parts: pipelineParts,
-		note: "fig. 6 — this site. I run the browser suite before pushing. Vercel deploys main automatically; these checks are not an enforced deployment gate.",
+		note: "fig. 5 — this site. I run the browser suite before pushing. Vercel deploys main automatically; these checks are not an enforced deployment gate.",
 	},
 	{
 		id: "cr",
 		spec: connectorRule,
 		parts: beforeAfterParts,
-		note: "fig. 7 — the rule the earlier figures broke. The changed stages and their inbound edges are in accent.",
+		note: "fig. 6 — the rule the earlier figures broke. The changed stages and their inbound edges are in accent.",
 	},
 ];
 

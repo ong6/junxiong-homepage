@@ -192,10 +192,10 @@ const supportingProjects = [
 		mark: "03 / CLAUDE + CODEX",
 	},
 	{
-		title: "Skill Eval Pack",
-		href: "/skill-eval-pack",
-		label: "Agent evaluation",
-		description: "I compare an agent with and without a skill to check whether the extra instructions help.",
+		title: "Skillsmith",
+		href: "/skillsmith",
+		label: "Agent skills",
+		description: "I make a skill from the repo, then compare the agent with and without it to check whether the extra instructions help.",
 		mark: "04 / KEEP OR RETIRE",
 	},
 	{

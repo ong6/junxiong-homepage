@@ -9,10 +9,10 @@ const tools = [
 		detail: "The reusable instructions my agents load.",
 	},
 	{
-		name: "Skill Eval Pack",
-		href: "/skill-eval-pack",
-		stage: "02 · prove",
-		detail: "The blind test that decides whether a skill stays.",
+		name: "Skillsmith",
+		href: "/skillsmith",
+		stage: "02 · make + prove",
+		detail: "Drafts a skill from the repo, then a blind test decides whether it stays.",
 	},
 	{
 		name: "Groundplane",

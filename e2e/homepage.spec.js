@@ -21,7 +21,7 @@ for (const width of [390, 1440]) {
 				"UI Pack",
 				"Trading engine",
 				"Skillpack",
-				"Skill Eval Pack",
+				"Skillsmith",
 				"Jobforge",
 			]);
 			await expect(page.getByRole("heading", { name: "Selected work" })).toBeVisible();
@@ -48,7 +48,7 @@ for (const width of [390, 1440]) {
 				["UI Pack", "/uipack"],
 				["Trading engine", "/trading-engine"],
 				["Skillpack", "/skillpack"],
-				["Skill Eval Pack", "/skill-eval-pack"],
+				["Skillsmith", "/skillsmith"],
 				["Jobforge", "/jobforge"],
 			]) {
 				await expect(page.locator("#work").getByRole("link", { name, exact: true })).toHaveAttribute("href", href);

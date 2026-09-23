@@ -4,7 +4,7 @@ import AiToolFamily from "../components/AiToolFamily";
 import CaseStudyFooter from "../components/CaseStudyFooter";
 import ProjectLinks from "../components/ProjectLinks";
 import DiagramFigure from "../components/DiagramFigure";
-import * as AiToolchainArchitecture from "../components/diagrams/AiToolchainArchitecture";
+import * as SkillsmithArchitecture from "../components/diagrams/SkillsmithArchitecture";
 import Layout from "../components/layouts/Articles";
 
 const P = (props) => (
@@ -18,32 +18,33 @@ const H2 = (props) => (
 const Code = (props) => <Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em" {...props} />;
 
 const facts = [
-	["unit tests", "54"],
+	["steps", "5 · gate through keep or retire"],
+	["skill body", "under 500 lines · linted"],
+	["revisions", "3 serious attempts, then archive"],
 	["gate versions", "3 · older bundles still accepted"],
-	["decision scripts", "3 · evaluation, lifecycle, payload"],
 	["clients", "Claude Code + Codex"],
 	["model calls", "0 · supplied by the host"],
 	["runtime", "Python standard library"],
-	["status", "MIT · github.com/ong6/skill-eval-pack"],
+	["status", "MIT · github.com/ong6/skillsmith"],
 ];
 
 const links = [
-	{ name: "Source on GitHub", detail: "MIT, Claude Code and Codex", href: "https://github.com/ong6/skill-eval-pack", external: true },
+	{ name: "Source on GitHub", detail: "MIT, Claude Code and Codex", href: "https://github.com/ong6/skillsmith", external: true },
 ];
 
-export default function SkillEvalPack() {
+export default function Skillsmith() {
 	const accent = useColorModeValue("mint.700", "mint.300");
 
 	return (
 		<Layout
-			title="Skill Eval Pack"
+			title="Skillsmith"
 			schema={{
 				type: "SoftwareSourceCode",
-				codeRepository: "https://github.com/ong6/skill-eval-pack",
+				codeRepository: "https://github.com/ong6/skillsmith",
 				programmingLanguage: "Python",
 				license: "https://opensource.org/licenses/MIT",
 			}}
-			description="Skill Eval Pack compares a new or revised agent skill with a no-skill baseline and keeps it only when fresh heldout evidence clears a machine-checked gate.">
+			description="Skillsmith makes an agent skill from your repo, compares it with a no-skill baseline, and keeps it only when fresh heldout evidence clears a machine-checked gate.">
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
 					<Link
@@ -59,7 +60,7 @@ export default function SkillEvalPack() {
 					</Link>
 
 					<Heading as="h1" mt={{ base: 8, md: 10 }} fontSize={{ base: "40px", md: "52px" }} lineHeight="1" letterSpacing="-.045em">
-						Skill Eval Pack
+						Skillsmith
 					</Heading>
 
 					<Text mt={4} color={accent} fontFamily="var(--font-mono)" fontSize="11px" fontWeight="700" letterSpacing=".1em" textTransform="uppercase">
@@ -67,18 +68,26 @@ export default function SkillEvalPack() {
 					</Text>
 
 					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="1.6" fontWeight="600">
-						I wanted to know whether my agent instructions actually helped. This pack runs the same task with and without a skill, compares the results without telling the judges which is which, and checks the candidate on cases that were not used to revise it.
+						I wanted to know whether my agent instructions actually helped. Skillsmith drafts a skill from the repo I am working in, then runs the same task with and without it, compares the results without telling the judges which is which, and checks the candidate on cases that were not used to revise it.
 					</Text>
 				</Box>
 
 				<ProjectLinks links={links} mt={{ base: 8, md: 10 }} />
 
 				<DiagramFigure
-					id="ai-toolchain"
+					id="skillsmith-lifecycle"
 					headingLevel={2}
-					diagram={AiToolchainArchitecture}
-					caption="fig. 1 — the three projects cover different failure points. Skillpack supplies the instruction. Skill Eval Pack asks whether it improved the work. Groundplane checks declared facts when the accepted instruction runs."
+					diagram={SkillsmithArchitecture}
+					caption="fig. 1 — the five steps in order. Making the skill is the front half; proving it is the back half. Nothing is kept on the strength of the draft alone."
 				/>
+
+				<H2>Deciding whether it should be a skill</H2>
+				<P>
+					Before anything is written, skillsmith asks whether the job needs a skill at all, or belongs in an <Code>AGENTS.md</Code> rule, a hook, a memory or a one-off answer. If a skill is right, <Code>inventory.py</Code> lists the skills and conventions the repo already has, so the new one fills a gap instead of overlapping one.
+				</P>
+				<P>
+					The draft starts from its trigger description, keeps the body under 500 lines, and passes <Code>lint_skill.py</Code> before any run. It installs as one skill for both clients: <Code>.claude/skills/skillsmith</Code> for Claude Code, exposed to Codex at <Code>.agents/skills/skillsmith</Code>.
+				</P>
 
 				<H2>Comparing with and without the skill</H2>
 				<P>
@@ -92,7 +101,7 @@ export default function SkillEvalPack() {
 
 				<H2>Keeping the previous version when an edit fails</H2>
 				<P>
-					New candidates get up to three serious attempts by default. An existing skill keeps its last passing version until a revision passes. The lifecycle helper checks the attempt history, retired heldouts and final action, while the payload helper confirms that Claude Code and Codex loaded the exact frozen files.
+					New candidates get up to three serious attempts by default. An existing skill keeps its last passing version until a revision passes. A new skill without a clear heldout win whose uncertainty lower bound clears the gate is archived. <Code>lifecycle_gate.py</Code> checks the attempt history, retired heldouts and final action, while the payload helper confirms that Claude Code and Codex loaded the exact frozen files.
 				</P>
 
 				<Box as="dl" mt={{ base: 12, md: 16 }} borderTop="1px solid" borderColor="border.subtle" fontFamily="var(--font-mono)" fontSize="12px">
@@ -104,7 +113,7 @@ export default function SkillEvalPack() {
 					))}
 				</Box>
 
-				<AiToolFamily current="/skill-eval-pack" />
+				<AiToolFamily current="/skillsmith" />
 				<CaseStudyFooter links={links} next={{ name: "Groundplane", href: "/groundplane", detail: "An agent boundary you can inspect" }} />
 			</Container>
 		</Layout>
