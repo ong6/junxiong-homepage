@@ -44,16 +44,10 @@ const personSchema = {
 		"@type": "Organization",
 		name: "TikTok",
 	},
-	alumniOf: [
-		{
-			"@type": "CollegeOrUniversity",
-			name: "National University of Singapore",
-		},
-		{
-			"@type": "CollegeOrUniversity",
-			name: "Technical University of Munich",
-		},
-	],
+	alumniOf: {
+		"@type": "CollegeOrUniversity",
+		name: "National University of Singapore",
+	},
 	address: {
 		"@type": "PostalAddress",
 		addressLocality: "Singapore",

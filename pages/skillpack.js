@@ -67,9 +67,7 @@ export default function Skillpack() {
 				programmingLanguage: "Shell",
 				license: "https://opensource.org/licenses/MIT",
 			}}
-			description="Skillpack is the Claude Code and Codex skills I run in every repo, kept as a
-			git subtree that syncs both ways. A skill edited in one repo reaches the
-			rest.">
+			description="Skillpack is the Claude Code and Codex skills I run in every repo, kept as a git subtree that syncs both ways. A skill edited in one repo reaches the rest.">
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
 					<Link

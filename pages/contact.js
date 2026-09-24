@@ -17,7 +17,7 @@ const links = [
 		external: true,
 	},
 	{
-		label: "Résumé",
+		label: "Resume",
 		detail: "Roles, experience and the printable PDF.",
 		href: "/resume",
 	},

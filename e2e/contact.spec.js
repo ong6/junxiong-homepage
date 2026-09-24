@@ -14,7 +14,7 @@ for (const width of [390, 1440]) {
 				["Email", "mailto:junxiongong2@gmail.com"],
 				["LinkedIn", "https://www.linkedin.com/in/junx6/"],
 				["GitHub", "https://github.com/ong6"],
-				["Résumé", "/resume"],
+				["Resume", "/resume"],
 				["Notes", "https://notes.junxiong.dev"],
 			]) {
 				await expect(page.getByRole("link", { name: new RegExp(`^${name}`) }).first()).toHaveAttribute("href", href);

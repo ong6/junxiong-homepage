@@ -6,7 +6,7 @@ export const CLAIM =
 export const meta = {
 	number: "Figure 01",
 	eyebrow: "The sync loop",
-	title: "Edit where you use it, push back where it lives",
+	title: "Skills are edited in each repo and synced back to one source",
 	caption:
 		"SessionStart merges fetched changes; the first fetch is synchronous. Stop commits only the skills folder. Unrelated work defers merging and pushing, and an existing Git operation defers the whole sync. The plugin path reads upstream one way.",
 	legend: [

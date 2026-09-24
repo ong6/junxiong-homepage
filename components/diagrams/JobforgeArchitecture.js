@@ -6,7 +6,7 @@ export const CLAIM =
 export const meta = {
 	number: "Figure 01",
 	eyebrow: "The drill loop",
-	title: "One file read, one plan graded, one row written",
+	title: "Each drill reads one file, grades the plan and writes one row",
 	caption:
 		"The hook reads rep-log.md and nothing else. The drill picks what bank.md says is due, generates from the pattern's discriminator, grades the spoken plan against that pattern's required elements, and writes one row with verdict, missing element and due date. A debrief of a real interview writes failures into the same bank.",
 	legend: [

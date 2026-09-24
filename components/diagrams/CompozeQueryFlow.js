@@ -6,7 +6,7 @@ export const CLAIM =
 export const meta = {
 	number: "Figure 05",
 	eyebrow: "Query",
-	title: "One question, five knowledge bases, every citation checked",
+	title: "How a question searches five knowledge bases and checks its citations",
 	caption:
 		"A question fans out across five knowledge bases with hybrid search. Only chunks over the 0.35 floor survive, a cross-encoder orders them, and each citation is checked against its chunk before the answer ships.",
 	legend: [

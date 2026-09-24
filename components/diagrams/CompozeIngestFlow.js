@@ -6,7 +6,7 @@ export const CLAIM =
 export const meta = {
 	number: "Figure 06",
 	eyebrow: "Ingest",
-	title: "Hash, redact, chunk, embed, store, or fail into a queue you can see",
+	title: "How an uploaded document is processed, and where failures go",
 	caption:
 		"A content hash drops files already seen. PII comes out before chunking. The dashed region runs later on QStash, and every stage can drop out to a dead-letter queue the admin UI shows.",
 	legend: [

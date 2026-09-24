@@ -8,7 +8,7 @@ export const CLAIM =
 export const meta = {
 	number: "Figure 09",
 	eyebrow: "Chat",
-	title: "An answer that finishes after the reader leaves",
+	title: "The answer keeps generating if the reader closes the tab",
 	caption:
 		"Chat streams by default. If the client disconnects before the stream completes, an abort listener hands the job to a QStash workflow. Each phase is a durable step, so a retry resumes after the last one that finished.",
 	legend: [

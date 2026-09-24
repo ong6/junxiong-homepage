@@ -8,7 +8,7 @@ export const CLAIM =
 export const meta = {
 	number: "Figure 02",
 	eyebrow: "User flow",
-	title: "Two people, two jobs: fill the knowledge base, then question it",
+	title: "An admin fills the knowledge base, then a user asks questions",
 	caption:
 		"An admin connects Lark or Drive and watches each document until it is ready or fails. A user picks an agent, starts from example prompts, and gets a cited answer, or a refusal when nothing clears the 0.35 floor.",
 	legend: [

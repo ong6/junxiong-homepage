@@ -176,6 +176,7 @@ const supportingProjects = [
 		href: "/trading-engine",
 		label: "Research system",
 		description: "I use this to test trading ideas overnight, with rules set before the results come in.",
+		wide: true,
 	},
 	{
 		title: "Skillsmith",
@@ -213,6 +214,7 @@ function SupportingCard({ project }) {
 			borderColor="border.subtle"
 			borderRadius="4px"
 			p={{ base: 5, md: 6 }}
+			gridColumn={{ md: project.wide ? "span 2" : undefined }}
 			transition="border-color 160ms ease, transform 160ms ease"
 			_hover={{ borderColor: "border.strong", transform: "translateY(-2px)" }}
 			sx={{ "@media (prefers-reduced-motion: reduce)": { transition: "none", _hover: { transform: "none" } } }}>

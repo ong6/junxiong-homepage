@@ -7,14 +7,14 @@ const LLMS = `# Ong Jun Xiong
 
 > ${DEFAULT_DESCRIPTION}
 
-Software engineer at TikTok in Singapore, building AI infrastructure for e-commerce. Before that, Go services for TikTok's seller platform. Founded and ran Compoze alongside TikTok in 2025 until a client bought it. Studied at the National University of Singapore and the Technical University of Munich.
+Software engineer at TikTok in Singapore, building AI infrastructure for e-commerce. Before that, Go services for TikTok's seller platform. Founded and ran Compoze alongside TikTok in 2025 until a client bought it. Studied computer science at the National University of Singapore, including NUS Overseas Colleges in Munich.
 
 Contact: email via ${SITE_URL}/contact. GitHub: https://github.com/ong6. LinkedIn: https://www.linkedin.com/in/junx6/.
 
 ## Work history
 
-- [Résumé](${SITE_URL}/resume): roles, teams, dates and skills; mirrors LinkedIn
-- [Résumé PDF](${SITE_URL}/resume/Ong-Jun-Xiong-Resume.pdf): one-page print version
+- [Resume](${SITE_URL}/resume): roles, teams, dates and skills; mirrors LinkedIn
+- [Resume PDF](${SITE_URL}/resume/Ong-Jun-Xiong-Resume.pdf): one-page print version
 
 ## Projects
 

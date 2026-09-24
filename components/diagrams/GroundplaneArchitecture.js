@@ -6,7 +6,7 @@ export const CLAIM =
 export const meta = {
 	number: "Figure 02",
 	eyebrow: "The whole library",
-	title: "Facts recorded, declared fields checked",
+	title: "Record the tool facts, then check the fields the agent declares",
 	caption:
 		"Tools write typed facts into a registry. A boundary names the facts and checks that apply to structured fields. Its configured checks return the output or raise on the first failed claim check; prose is not checked.",
 	legend: [

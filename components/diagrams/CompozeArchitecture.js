@@ -6,7 +6,7 @@ export const CLAIM =
 export const meta = {
 	number: "Figure 03",
 	eyebrow: "The whole system",
-	title: "One request path, one store, ingest off to the side",
+	title: "How a question and a document move through the system",
 	caption:
 		"A question walks agent, retrieval, pgvector, gateway and cited answer inside one request. Ingest runs on QStash workers and lands in the same Postgres.",
 	legend: [
