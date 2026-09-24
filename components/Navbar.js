@@ -86,7 +86,6 @@ function LinkItem({ href, active, external, children }) {
 
 const Navbar = ({ path = "/", ...props }) => {
 	const onHome = path === "/" || path.startsWith("/#");
-	const navBg = useColorModeValue("rgba(243,239,231,.9)", "rgba(21,19,17,.9)");
 	const menuBg = useColorModeValue("warm.50", "graphite.800");
 	const menu = useDisclosure();
 	const menuRef = useRef(null);
@@ -141,7 +140,9 @@ const Navbar = ({ path = "/", ...props }) => {
 			left={0}
 			right={0}
 			w="100%"
-			bg={navBg}
+			// Keyed off data-theme so the SSR paint already matches a stored dark mode.
+			bg="rgba(243,239,231,.9)"
+			sx={{ "html[data-theme=dark] &": { bg: "rgba(21,19,17,.9)" } }}
 			h={NAV_HEIGHT}
 			borderBottom="1px solid"
 			borderColor="border.subtle"
