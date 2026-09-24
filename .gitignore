@@ -45,3 +45,6 @@ CLAUDE.md
 public/uipack-assets/
 
 .playwright-mcp/
+
+# Blender intermediates for the social cards; regenerate with scripts/og/scenes.py
+scripts/og/renders/

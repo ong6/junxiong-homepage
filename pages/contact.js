@@ -87,6 +87,9 @@ export default function Contact() {
 						_hover={{ opacity: 0.88, textDecoration: "none" }}>
 						Email me <Box as="span" aria-hidden="true">↗</Box>
 					</Link>
+					<Text mt={3} fontFamily="var(--font-mono)" fontSize="14px" color="text.muted" userSelect="all">
+						junxiongong2@gmail.com
+					</Text>
 				</Box>
 
 				<Box h={{ base: "340px", md: "440px" }} minW={0}>

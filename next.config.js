@@ -24,7 +24,6 @@ const CSP_REPORT_ONLY = [
 	"base-uri 'self'",
 	"form-action 'self'",
 	"frame-ancestors 'none'",
-	"upgrade-insecure-requests",
 ].join("; ");
 
 module.exports = {

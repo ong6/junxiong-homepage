@@ -224,7 +224,7 @@ export default function Uipack() {
 							))}
 						</Flex>
 						<Text mt={2} color="text.muted" fontSize="15px">
-							Paper, ink and mint. Light and dark.
+							Paper, ink and mint, in light and dark themes.
 						</Text>
 					</Box>
 					<Box>
@@ -244,7 +244,7 @@ export default function Uipack() {
 					</Box>
 				</Grid>
 
-				<CaseStudyFooter links={links} next={{ name: "Trading engine", href: "/trading-engine", detail: "A paper-trading engine that can kill an idea, never rescue it" }} />
+				<CaseStudyFooter links={links} next={{ name: "Trading engine", href: "/trading-engine", detail: "A paper-trading engine that tests ideas against rules set in advance" }} />
 			</Container>
 		</Layout>
 	);

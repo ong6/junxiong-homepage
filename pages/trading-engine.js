@@ -49,7 +49,7 @@ const facts = [
 	["store", "DuckDB · 50 tables · one writer"],
 	["api", "30 loopback routes, read models only"],
 	["tests", "3,156 collected · warnings are failures"],
-	["python", "~81k lines · 201 commits since 2026-07-16"],
+	["python", "~89k lines outside tests · started 2026-07-16"],
 	["status", "paper only · MIT · github.com/ong6/trading-engine"],
 ];
 
@@ -69,7 +69,7 @@ export default function TradingEngine() {
 				programmingLanguage: "Python",
 				license: "https://opensource.org/licenses/MIT",
 			}}
-			description="A paper-trading research engine I run nightly on real US market data: pre-registered strategies, a fill model that cannot see the future, and frozen forward tests that can kill a book but never promote one.">
+			description="A paper-trading research engine I run nightly on US market data, with strategies fixed in advance and a fill model that cannot see the future.">
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
 					<Link
@@ -137,8 +137,8 @@ export default function TradingEngine() {
 				<P>
 					The fill price is the open moved against you by a half-spread estimated from the
 					sixty-day median dollar volume, plus five basis points a side. An order over one percent
-					of that median volume is rejected outright rather than partially filled, rather than estimating how much would have filled. A missing bar leaves the order pending for
-					three sessions and then rejects it. A bar is never fabricated. Dividends are credited on
+					of that median volume is rejected outright instead of partially filled, so the engine never has to estimate how much would have filled. A missing bar leaves the order pending for
+					three sessions and then rejects it; the engine never fabricates a bar. Dividends are credited on
 					the ex-date from the same corporate-actions table the screen reads.
 				</P>
 
@@ -208,8 +208,8 @@ export default function TradingEngine() {
 				</P>
 
 				<P>
-					Coding agents built the engine from a written spec, and what it taught me most recently
-					was about agents. Once the research answer was &ldquo;nothing
+					Coding agents built the engine from a written spec.
+					Even after the research answer became &ldquo;nothing
 					works yet, wait for evidence&rdquo;, the agents kept building anyway: forty-six
 					thousand lines of governance for a broker that does not exist. The repo now carries an
 					operating contract, a scope ledger with size ceilings the test suite enforces, and a
@@ -246,7 +246,7 @@ export default function TradingEngine() {
 				<H2>Paper trading only</H2>
 
 				<P>
-					It holds no credentials, connects to no broker and moves no money. The two services bind
+					It holds no credentials and connects to no broker, so it cannot move money. The two services bind
 					to loopback and the repo ships no market data. I built it to test whether the ideas hold up under rules I set in advance. So far, none has passed, and the reports in the repo show why.
 				</P>
 

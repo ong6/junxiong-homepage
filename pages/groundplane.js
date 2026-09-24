@@ -122,7 +122,7 @@ export default function Groundplane() {
 				programmingLanguage: "Python",
 				license: "https://opensource.org/licenses/MIT",
 			}}
-			description="Groundplane is an open-source Python library that checks declared fields in agent output against recorded tool facts, with deterministic checks and errors that include provenance.">
+			description="Groundplane is an open-source Python library that checks the fields an agent declares against the tool results it recorded, and traces each error to its source.">
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
 					<Link
@@ -197,10 +197,10 @@ export default function Groundplane() {
 				<P>
 					It validates declared fields against declared facts. If the model
 					names the right winner and editorialises misleadingly around it,
-					that passes. I kept the scope that narrow on purpose. I compute
-					rankings in code and check the model&apos;s structured output against
-					them. A judge model would make this check probabilistic.
-					Groundplane&apos;s check needs to return the same result for the same facts.
+					that passes. I kept the scope that narrow on purpose. Rankings are computed in code
+					and the model&apos;s structured output is checked against them. A judge
+					model would make that check probabilistic, and I wanted the same facts
+					to give the same result every time.
 				</P>
 
 				<DiagramFigure
@@ -234,7 +234,7 @@ export default function Groundplane() {
 					caller needs to know when validation never happened.
 				</P>
 
-				<H2>Six checks, one question each</H2>
+				<H2>The six checks</H2>
 
 				<P>
 					Each check asks how the recorded facts relate to each other, which
@@ -316,7 +316,7 @@ export default function Groundplane() {
 				</Details>
 
 				<AiToolFamily current="/groundplane" />
-				<CaseStudyFooter links={links} next={{ name: "Compoze", href: "/compoze", detail: "A one-person AI studio, sold to a client" }} />
+				<CaseStudyFooter links={links} next={{ name: "Compoze", href: "/compoze", detail: "Document-grounded assistants, a company I ran alone and sold to a client" }} />
 			</Container>
 		</Layout>
 	);

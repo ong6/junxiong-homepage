@@ -127,7 +127,7 @@ export default function Skillpack() {
 					same repo read-only."
 				/>
 
-				<H2>Edit where you use it</H2>
+				<H2>Editing skills where I use them</H2>
 
 				<P>
 					The plugin install is useful when I just want to use the skills. But I also want to edit them while working. Before the shared folder, a fix made in one repo stayed there and the other copies fell behind.
@@ -140,7 +140,7 @@ export default function Skillpack() {
 					through symlinks.
 				</P>
 
-				<H2>Two hooks, one script</H2>
+				<H2>One script, run by two hooks</H2>
 
 				<P>
 					<Code>sync.sh --start</Code> runs at SessionStart. It merges what the last background

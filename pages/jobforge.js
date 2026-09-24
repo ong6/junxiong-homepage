@@ -106,9 +106,7 @@ export default function Jobforge() {
 				programmingLanguage: "Python",
 				license: "https://opensource.org/licenses/MIT",
 			}}
-			description="Jobforge is an open-source Claude Code plugin for coding-interview prep. It
-			grades the plan you say out loud, not the code you submit, and keeps
-			résumé, targets and interview debriefs in one local markdown corpus.">
+			description="Jobforge is an open-source Claude Code plugin for coding-interview prep. It grades the plan you say out loud, not only the code you submit.">
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
 					<Link
@@ -202,8 +200,8 @@ export default function Jobforge() {
 				<CodeFigure caption="fig. 2 — a graded plan and the row it writes. The verdict is on the stated
 				plan. A recovery after prompting does not change it, because an
 				interview measures what you produced unprompted. The due date is
-				computed at grading time and stored in the row. No scheduler, no queue
-				file, nothing to desynchronise.">
+				computed at grading time and stored in the row, so there is no scheduler
+				or queue file to fall out of sync.">
 					<CodeBlock title="/jobforge:drill · grading" lines={GRADE} />
 					<CodeBlock title="bank.md · one row per rep" lines={ROW} />
 				</CodeFigure>
@@ -216,7 +214,7 @@ export default function Jobforge() {
 					depends on it, never the same problem three days later.
 				</P>
 
-				<H2>One banner, one subject</H2>
+				<H2>The session-start reminder</H2>
 
 				<P>
 										The hook prints one line at session start when you have not drilled
@@ -243,11 +241,10 @@ export default function Jobforge() {
 
 				<P>
 					The same tiering runs inside the skills. The drill reads the rep
-										log, the bank and the pattern files. It never opens the résumé: a tool
-					picking a graph problem has no reason to, and you cannot audit what it
-					never opened. Nothing in the plugin sends anything anywhere, so there
-					is no telemetry setting. The README also notes that if your
-					employer manages the machine, put <Code>JOBFORGE_HOME</Code> on a personal volume.
+										log, the bank and the pattern files. It never opens the résumé, because
+					picking a graph problem doesn&apos;t need it. Nothing in the plugin sends anything anywhere, so there
+					is no telemetry setting. The README also suggests putting
+					<Code>JOBFORGE_HOME</Code> on a personal volume if your employer manages the machine.
 				</P>
 
 				<Box
@@ -279,9 +276,9 @@ export default function Jobforge() {
 				<H2>Where I kept the scope small</H2>
 
 				<P>
-										It does not capture submissions. A browser extension sits at the moment
-					you hit submit and can interrupt you. A CLI agent exists only when
-					invoked. Several extensions already do auto-capture with FSRS
+										It does not capture submissions. A browser extension can sit at the moment
+					you hit submit and interrupt you; a CLI agent only runs when you
+					invoke it. Several extensions already do auto-capture with FSRS
 					scheduling well, and I read them before deciding not to compete there.
 					I kept this plugin focused on the spoken plan, which is the part I wanted an agent to review.
 				</P>
@@ -304,7 +301,7 @@ export default function Jobforge() {
 					frontmatter and is meant to be changed.
 				</P>
 
-				<CaseStudyFooter links={links} next={{ name: "Groundplane", href: "/groundplane", detail: "An agent boundary you can inspect" }} />
+				<CaseStudyFooter links={links} next={{ name: "Groundplane", href: "/groundplane", detail: "Checks an agent's declared fields against recorded tool results" }} />
 			</Container>
 		</Layout>
 	);

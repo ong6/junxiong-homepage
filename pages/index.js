@@ -33,7 +33,7 @@ function Introduction() {
 	const portraitBorder = useColorModeValue("rgba(26,36,32,.18)", "rgba(230,235,232,.18)");
 
 	return (
-		<Box as="header" id="about" scrollMarginTop="96px" pt={{ base: 8, md: 20 }}>
+		<Box as="header" id="about" scrollMarginTop="96px" pt={{ base: 6, md: 20 }}>
 			<Eyebrow>{"// JUNXIONG.DEV / SINGAPORE"}</Eyebrow>
 
 			<Grid
@@ -58,16 +58,19 @@ function Introduction() {
 						Ong Jun Xiong
 					</Heading>
 					<Text mt={5} fontSize={{ base: "19px", md: "23px" }} lineHeight="1.45">
-						I&apos;m a software engineer at TikTok in Singapore, building AI infrastructure for
-						e-commerce.
+						I&apos;m a software engineer at TikTok in Singapore, building AI infrastructure for{" "}
+						<Box as="span" whiteSpace="nowrap">
+							e-commerce.
+						</Box>
 					</Text>
 					<Text mt={5} maxW="640px" fontSize="16px" lineHeight="1.75" color="text.muted">
-						Before AI infrastructure, I wrote Go services for TikTok&apos;s seller platform. Outside
-						work, I built and ran{" "}
+						At TikTok I built my team&apos;s shared AI platform from zero: an agent service, an MCP
+						server over the data warehouse, and a React SDK for AI chat. Before that I
+						wrote Go services for the seller platform. Outside work, I built and ran{" "}
 						<Link as={NextLink} href="/compoze">
 							Compoze
 						</Link>{" "}
-						until a client bought it. The projects below are things I&apos;ve built for problems I wanted to work on myself.
+						until a client bought it. Below is what I build on my own time.
 					</Text>
 				</Box>
 
@@ -111,7 +114,7 @@ function Introduction() {
 
 				<Grid
 					gridArea="links"
-					templateColumns={{ base: "repeat(2, minmax(0, 1fr))", md: "repeat(2, max-content)" }}
+					templateColumns={{ base: "minmax(0, 1fr)", md: "repeat(3, max-content)" }}
 					columnGap={{ base: 2, md: 6 }}
 					rowGap={1}>
 					<Link
@@ -127,6 +130,9 @@ function Introduction() {
 						rel="noopener noreferrer"
 						{...utilityLinkProps}>
 						LinkedIn ↗
+					</Link>
+					<Link as={NextLink} href="/resume" {...utilityLinkProps}>
+						Resume →
 					</Link>
 				</Grid>
 			</Grid>

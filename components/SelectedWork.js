@@ -130,7 +130,7 @@ function GroundplaneCard() {
 							Blocked · UnsupportedClaim
 						</Text>
 						<Text mt={2} color="text.muted" fontSize="14px" lineHeight="1.5">
-							The model said north. The recorded facts say harbour. Rejected.
+							The model named north, but the recorded facts rank harbour first, so the field is rejected.
 						</Text>
 					</Box>
 				</DottedCanvas>
@@ -172,38 +172,34 @@ function CompozeCard() {
 
 const supportingProjects = [
 	{
-		title: "UI Pack",
-		href: "/uipack",
-		label: "Design system",
-		description: "The web figures, motion rules and slide starters I reuse across my projects.",
-	},
-	{
 		title: "Trading engine",
 		href: "/trading-engine",
 		label: "Research system",
 		description: "I use this to test trading ideas overnight, with rules set before the results come in.",
-		mark: "02 / PAPER ONLY",
-	},
-	{
-		title: "Skillpack",
-		href: "/skillpack",
-		label: "Agent tooling",
-		description: "The eight reusable instructions I keep in one place for Claude Code and Codex.",
-		mark: "03 / CLAUDE + CODEX",
 	},
 	{
 		title: "Skillsmith",
 		href: "/skillsmith",
 		label: "Agent skills",
 		description: "I make a skill from the repo, then compare the agent with and without it to check whether the extra instructions help.",
-		mark: "04 / KEEP OR RETIRE",
+	},
+	{
+		title: "Skillpack",
+		href: "/skillpack",
+		label: "Agent tooling",
+		description: "The eight reusable instructions I keep in one place for Claude Code and Codex.",
+	},
+	{
+		title: "UI Pack",
+		href: "/uipack",
+		label: "Design system",
+		description: "The web figures, motion rules and slide starters I reuse across my projects.",
 	},
 	{
 		title: "Jobforge",
 		href: "/jobforge",
 		label: "Interview practice",
 		description: "Coding drills that grade the plan I say out loud before I touch the keyboard.",
-		mark: "05 / LOCAL FIRST",
 	},
 ];
 

@@ -176,7 +176,7 @@ export default function Compoze() {
 		<Layout
 			title="Compoze"
 			schema={{ type: "TechArticle" }}
-			description="Compoze sold document-grounded assistants to businesses. I built and ran it alone alongside a full-time job in 2025, and one of its clients bought the company at the end of that year.">
+			description="Compoze built document-grounded assistants for businesses. I ran it alone alongside a full-time job in 2025, until a client bought the company.">
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
 					<Link
@@ -235,7 +235,7 @@ export default function Compoze() {
 				<DiagramFigure
 					id="cuf"
 					diagram={CompozeUserFlow}
-					caption="fig. 2 — two people use it. An admin fills the knowledge base and watches ingest; a user asks and checks the sources. The dashed hop is where one job ends and the other begins."
+					caption="fig. 2 — two people use it. An admin fills the knowledge base and watches ingest; a user asks and checks the sources. The dashed hop marks the handoff from the admin&apos;s side to the user&apos;s."
 				/>
 
 				<H2>Working alone</H2>
@@ -248,7 +248,7 @@ export default function Compoze() {
 					id="carch"
 					headingLevel={2}
 					diagram={CompozeArchitecture}
-					caption="fig. 3 — the whole system. A question walks ① agent → ② retrieval → ③ pgvector → ④ gateway → ⑤ cited answer inside one request. Ingest runs elsewhere: Ⓐ download, Ⓑ extract, Ⓒ chunk, Ⓓ embed, Ⓔ store. One database, every row under a tenant id and row-level security."
+					caption="fig. 3 — the whole system. A question walks ① agent → ② retrieval → ③ pgvector → ④ gateway → ⑤ cited answer inside one request. Ingest runs elsewhere: Ⓐ download, Ⓑ extract, Ⓒ chunk, Ⓓ embed, Ⓔ store. Everything sits in one database, with every row under a tenant id and row-level security."
 				/>
 
 				<Figure
@@ -360,7 +360,7 @@ export default function Compoze() {
 					Retrieved text is untrusted input. An instruction planted in a synced
 					document can influence the model, so context arrives in a delimited
 					block the prompt declares as data. Tools are scoped per agent and
-					tenant connector. These controls limit the available tool surface.
+					tenant connector. These controls limit which tools the model can call.
 					They do not guarantee that the model will ignore a planted instruction.
 				</P>
 
@@ -418,7 +418,7 @@ export default function Compoze() {
 					<MonoTable rows={optimisations} />
 
 					<P>
-						With no one else reviewing the code, automated checks did that job. Route contracts are typed, every payload is validated at runtime with Zod, and contract tests run on each push. That&apos;s what made it safe to keep changing 53 routes and 23 tables. Each request is traced as one span tree with tokens, model and tenant on every span, so pricing is built on cost per tenant per answer. Time to first token was the latency that mattered most.
+						With no one else reviewing the code, automated checks did that job. Route contracts are typed, every payload is validated at runtime with Zod, and contract tests run on each push. Those checks let me keep changing 53 routes and 23 tables on my own. Each request is traced as one span tree with tokens, model and tenant on every span, so pricing is built on cost per tenant per answer. The latency I watched most closely was time to first token.
 					</P>
 				</Details>
 

@@ -25,14 +25,12 @@ const navigationLinks = [
 		name: "Projects",
 		activePaths: ["/compoze", "/groundplane", "/jobforge", "/skillpack", "/skillsmith", "/trading-engine", "/uipack"],
 	},
+	{ href: "/resume", name: "Resume" },
 	{ href: "/hobbies", name: "Hobbies" },
 	{ href: "https://notes.junxiong.dev", name: "Notes", external: true },
 ];
 
-const mobileOnlyLinks = [
-	{ href: "/works", name: "Archive" },
-	{ href: "/resume", name: "Resume" },
-];
+const mobileOnlyLinks = [{ href: "/works", name: "Archive" }];
 
 const pathname = (path) => (path || "/").split(/[?#]/)[0].replace(/\/+$/, "") || "/";
 

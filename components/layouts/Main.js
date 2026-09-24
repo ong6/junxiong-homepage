@@ -7,9 +7,16 @@ export const SITE_URL = "https://junxiong.dev";
 
 export const DEFAULT_TITLE = "Ong Jun Xiong | AI Infrastructure Engineer in Singapore";
 export const DEFAULT_DESCRIPTION =
-	"Ong Jun Xiong is an AI infrastructure engineer at TikTok in Singapore. Explore his agent systems, backend platforms, open-source tools, and personal software projects.";
+	"Ong Jun Xiong is an AI infrastructure engineer at TikTok in Singapore. See his agent systems, open-source tools and personal software projects.";
 
-export const OG_IMAGE = `${SITE_URL}/images/og-card.jpg`;
+export const OG_IMAGE = `${SITE_URL}/images/og/home.jpg`;
+
+// Routes with their own card from scripts/build-og-cards.mjs; the rest share the home card.
+const OG_CARDS = new Set(["/compoze", "/groundplane", "/jobforge", "/skillpack", "/skillsmith", "/trading-engine", "/uipack"]);
+export const ogImageFor = (canonical) => {
+	const path = canonical.slice(SITE_URL.length);
+	return OG_CARDS.has(path) ? `${SITE_URL}/images/og${path}.jpg` : OG_IMAGE;
+};
 
 // Evaluated once at module load. Pages are prerendered at build time, so this
 // stamps the build date rather than a stale hardcoded one.
@@ -139,7 +146,7 @@ const Main = ({ children, router }) => {
 				<meta key="og:title" property="og:title" content={DEFAULT_TITLE} />
 				<meta key="og:description" property="og:description" content={DEFAULT_DESCRIPTION} />
 				{!isNotFound && <meta property="og:url" content={canonical} />}
-				<meta property="og:image" content={OG_IMAGE} />
+				<meta key="og:image" property="og:image" content={OG_IMAGE} />
 				<meta property="og:image:width" content="1200" />
 				<meta property="og:image:height" content="630" />
 				<meta
@@ -149,12 +156,13 @@ const Main = ({ children, router }) => {
 				<meta name="twitter:card" content="summary_large_image" />
 				<meta name="twitter:title" content={DEFAULT_TITLE} />
 				<meta name="twitter:description" content={DEFAULT_DESCRIPTION} />
-				<meta name="twitter:image" content={OG_IMAGE} />
+				<meta key="twitter:image" name="twitter:image" content={OG_IMAGE} />
 				<meta
 					name="twitter:image:alt"
 					content="Ong Jun Xiong — AI infrastructure and backend engineer"
 				/>
 				{!isNotFound && <link rel="canonical" href={canonical} />}
+				<link rel="alternate" type="text/markdown" title="llms.txt" href="/llms.txt" />
 				<link rel="icon" href="/favicon.ico" />
 				<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 				<title>{DEFAULT_TITLE}</title>

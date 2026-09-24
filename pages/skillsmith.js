@@ -44,7 +44,7 @@ export default function Skillsmith() {
 				programmingLanguage: "Python",
 				license: "https://opensource.org/licenses/MIT",
 			}}
-			description="Skillsmith makes an agent skill from your repo, compares it with a no-skill baseline, and keeps it only when fresh heldout evidence clears a machine-checked gate.">
+			description="Skillsmith makes an agent skill from your repo, tests it against a no-skill baseline, and keeps it only when it wins on fresh heldout tasks.">
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
 					<Link
@@ -78,7 +78,7 @@ export default function Skillsmith() {
 					id="skillsmith-lifecycle"
 					headingLevel={2}
 					diagram={SkillsmithArchitecture}
-					caption="fig. 1 — the five steps in order. Making the skill is the front half; proving it is the back half. Nothing is kept on the strength of the draft alone."
+					caption="fig. 1 — the five steps in order. The early steps make the skill and the later ones test it against a no-skill baseline. A draft is kept only if it passes that test."
 				/>
 
 				<H2>Deciding whether it should be a skill</H2>
@@ -101,7 +101,7 @@ export default function Skillsmith() {
 
 				<H2>Keeping the previous version when an edit fails</H2>
 				<P>
-					New candidates get up to three serious attempts by default. An existing skill keeps its last passing version until a revision passes. A new skill without a clear heldout win whose uncertainty lower bound clears the gate is archived. <Code>lifecycle_gate.py</Code> checks the attempt history, retired heldouts and final action, while the payload helper confirms that Claude Code and Codex loaded the exact frozen files.
+					New candidates get up to three serious attempts by default. An existing skill keeps its last passing version until a revision passes. A new skill is archived unless it wins on heldout cases with an uncertainty lower bound that clears the gate. <Code>lifecycle_gate.py</Code> checks the attempt history, retired heldouts and final action, while the payload helper confirms that Claude Code and Codex loaded the exact frozen files.
 				</P>
 
 				<Box as="dl" mt={{ base: 12, md: 16 }} borderTop="1px solid" borderColor="border.subtle" fontFamily="var(--font-mono)" fontSize="12px">
@@ -114,7 +114,7 @@ export default function Skillsmith() {
 				</Box>
 
 				<AiToolFamily current="/skillsmith" />
-				<CaseStudyFooter links={links} next={{ name: "Groundplane", href: "/groundplane", detail: "An agent boundary you can inspect" }} />
+				<CaseStudyFooter links={links} next={{ name: "Groundplane", href: "/groundplane", detail: "Checks an agent's declared fields against recorded tool results" }} />
 			</Container>
 		</Layout>
 	);

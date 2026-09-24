@@ -1,3 +1,5 @@
+# Search engines and AI agents are welcome everywhere.
+# A plain-markdown summary for agents: https://junxiong.dev/llms.txt
 User-agent: *
 Allow: /
 

@@ -2,6 +2,7 @@ const { expect, test } = require("@playwright/test");
 
 const internalDestinations = [
 	["Projects", "/#work"],
+	["Resume", "/resume"],
 	["Hobbies", "/hobbies"],
 ];
 
@@ -22,9 +23,7 @@ test("desktop navigation exposes the primary destinations and current section", 
 		"href",
 		"/contact",
 	);
-	for (const name of ["Archive", "Resume"]) {
-		await expect(nav.getByRole("link", { name, exact: true })).toBeHidden();
-	}
+	await expect(nav.getByRole("link", { name: "Archive", exact: true })).toBeHidden();
 });
 
 test("header content shares the page grid at desktop widths", async ({ page }) => {

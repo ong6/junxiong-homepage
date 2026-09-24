@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { BUILD_DATE, OG_IMAGE, SITE_URL, canonicalFor } from "./Main";
+import { BUILD_DATE, SITE_URL, canonicalFor, ogImageFor } from "./Main";
 
 // Page-level metadata for every route except the homepage.
 //
@@ -20,7 +20,7 @@ import { BUILD_DATE, OG_IMAGE, SITE_URL, canonicalFor } from "./Main";
 const PERSON = { "@id": `${SITE_URL}/#person` };
 const WEBSITE = { "@id": `${SITE_URL}/#website` };
 
-const pageSchema = ({ canonical, name, description, schema }) => {
+const pageSchema = ({ canonical, name, description, schema, image }) => {
 	const base = {
 		"@context": "https://schema.org",
 		"@type": "WebPage",
@@ -32,14 +32,14 @@ const pageSchema = ({ canonical, name, description, schema }) => {
 		dateModified: BUILD_DATE,
 	};
 
-	if (!schema) return { ...base, about: PERSON, primaryImageOfPage: OG_IMAGE };
+	if (!schema) return { ...base, about: PERSON, primaryImageOfPage: image };
 
 	const { type, ...fields } = schema;
 	return {
 		...base,
 		"@type": type,
 		headline: name,
-		image: OG_IMAGE,
+		image,
 		author: PERSON,
 		publisher: PERSON,
 		mainEntityOfPage: canonical,
@@ -51,6 +51,7 @@ const Layout = ({ children, title, description, schema, noindex = false, animate
 	const router = useRouter();
 	const pageTitle = title ? `${title} — Ong Jun Xiong` : null;
 	const canonical = canonicalFor(router?.asPath);
+	const image = ogImageFor(canonical);
 
 	return (
 		<article className={animate ? "fade-up" : undefined} style={{ position: "relative" }}>
@@ -65,6 +66,8 @@ const Layout = ({ children, title, description, schema, noindex = false, animate
 					)}
 					{description && <meta name="twitter:description" content={description} />}
 					{schema && <meta key="og:type" property="og:type" content="article" />}
+					{pageTitle && <meta key="og:image" property="og:image" content={image} />}
+					{pageTitle && <meta key="twitter:image" name="twitter:image" content={image} />}
 					{noindex && <meta key="robots" name="robots" content="noindex, nofollow" />}
 					{pageTitle && !noindex && (
 						<script
@@ -72,7 +75,7 @@ const Layout = ({ children, title, description, schema, noindex = false, animate
 							type="application/ld+json"
 							dangerouslySetInnerHTML={{
 								__html: JSON.stringify(
-									pageSchema({ canonical, name: pageTitle, description, schema }),
+									pageSchema({ canonical, name: pageTitle, description, schema, image }),
 								),
 							}}
 						/>

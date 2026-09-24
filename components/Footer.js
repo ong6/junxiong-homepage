@@ -29,7 +29,7 @@ const Footer = () => (
 					fontSize={{ base: "11px", md: "12px" }}
 					letterSpacing=".08em"
 					color="text.muted">
-					ENGINEER · BUILDER · SINGAPORE
+					SOFTWARE ENGINEER · SINGAPORE
 				</Text>
 			</Box>
 			<Flex wrap="wrap" columnGap={5} rowGap={2}>
