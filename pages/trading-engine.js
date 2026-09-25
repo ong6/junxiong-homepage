@@ -39,12 +39,88 @@ const FILL = [
 	['    raise ValueError(f"look-ahead violation: fill_date {fill_date} !> signal_date {signal_date}")'],
 ];
 
+// Dates come from the repo's BUILDLOG, plans and archive READMEs.
+const VERSIONS = [
+	{
+		v: "v1",
+		when: "16–27 Jul 2026",
+		title: "Data and a first league",
+		body: "Yahoo daily bars for about 12,200 listed names (Stooq was blocked on day one), a nightly trend screen, and ten paper books filling at the next open.",
+	},
+	{
+		v: "v2",
+		when: "28 Jul – 3 Aug",
+		title: "More books and a backtest farm",
+		body: "Six research-based strategies took the league to 16 books, a farm replayed every book over past years, and the rules for splits and dividends were settled.",
+	},
+	{
+		v: "v3",
+		when: "4–17 Aug",
+		title: "AI adjusting the books",
+		body: "Five books let a model veto entries or tune parameters inside fixed bounds, each paired with an untouched twin, and a news analyst wrote a morning brief. I retired all of it on 18 August.",
+	},
+	{
+		v: "v4",
+		when: "18 Aug – 17 Sep",
+		title: "Evidence first",
+		body: "Ten-fold walk-forward tests, audits of the fill model and the data sources, and frozen forward monitors that can only continue or kill a strategy. An audit on 2 September found seven simulator bugs.",
+	},
+	{
+		v: "v5",
+		when: "18–24 Sep",
+		title: "An agent in the loop",
+		body: "The repo went public. A nightly AI agent trades its own paper book through a locked simulator tool, hourly shadow agents watch without placing orders, a ledger scores every agent decision, and Alpaca and SEC EDGAR sit behind credential gates.",
+	},
+	{
+		v: "v6",
+		when: "25 Sep",
+		title: "TradingView for research",
+		body: "TradingView quotes and bars now reach the intraday agents as research input. They never touch prices, fills or orders.",
+		current: true,
+	},
+];
+
+function Versions() {
+	return (
+		<Box as="ol" listStyleType="none" mt={6} borderTop="1px solid" borderColor="border.subtle">
+			{VERSIONS.map(({ v, when, title, body, current }) => (
+				<Box
+					as="li"
+					key={v}
+					display="grid"
+					gridTemplateColumns={{ base: "48px 1fr", md: "64px 1fr" }}
+					columnGap={4}
+					py={4}
+					borderBottom="1px solid"
+					borderColor="border.subtle">
+					<Text fontFamily="var(--font-mono)" fontSize="14px" fontWeight="700" color={current ? "brand.solid" : "text.muted"}>
+						{v}
+					</Text>
+					<Box>
+						<Text fontFamily="var(--font-mono)" fontSize="12px" letterSpacing=".06em" color="text.muted" textTransform="uppercase">
+							{when}
+							{current ? " · current" : ""}
+						</Text>
+						<Text mt={1} fontSize={{ base: "17px", md: "18px" }} fontWeight="700">
+							{title}
+						</Text>
+						<Text mt={1} fontSize={{ base: "16px", md: "17px" }} lineHeight="1.7" color="text.muted">
+							{body}
+						</Text>
+					</Box>
+				</Box>
+			))}
+		</Box>
+	);
+}
+
 const facts = [
 	["paper books", "21 rule-based (18 replayable) · 1 run by an AI agent"],
 	["strategy modules", "30 · one file each, pre-registered"],
 	["charters with a kill rule", "10 · 7 closed as rejected or inconclusive"],
 	["data sources", "Yahoo · Nasdaq · FRED · Cboe · FINRA · CFTC · AAII · NAAIM · SqueezeMetrics"],
-	["gated sources", "Alpaca IEX · SEC EDGAR · licensed history (credentials required)"],
+	["research-only source", "TradingView quotes and bars, for the intraday agents"],
+	["gated sources", "Alpaca IEX (dormant) · SEC EDGAR · licensed history"],
 	["liquid universe", "~4,100 US names, refreshed weekly"],
 	["fill model", "next open · spread tier + 5 bp · ≤ 1 % of 60-day volume"],
 	["walk-forward", "10 folds · train 24 mo · validate 12 mo"],
@@ -119,7 +195,7 @@ export default function TradingEngine() {
 					diagram={TradingEngineArchitecture}
 					caption="fig. 1 — one night. ① Yahoo, Nasdaq and a set of macro and sentiment publishers feed the collectors;
 					Alpaca, SEC EDGAR and licensed history are supported but stay off until credentials and
-					terms allow them, and TradingView and Stooq are blocked. ② One writer commits every batch
+					terms allow them, and Stooq is blocked. ② One writer commits every batch
 					to DuckDB and keeps each provider response as an exact receipt. ③ The screen ranks about
 					4,100 liquid names and each book turns the ranking into orders at the close. ④ Orders
 					fill at the next open and nowhere else, with a liquidity-tiered spread, five basis points
@@ -127,7 +203,7 @@ export default function TradingEngine() {
 					frozen before the first signal, and the Sunday walk-forward replays the rule books on
 					older bars. ⑥ The AI agent reviews the screen's standouts and trades its own paper book
 					through a locked simulator tool; the ledger scores each of its decisions against a
-					control. The intraday agents only observe."
+					control. The intraday agents read TradingView quotes and only observe."
 				/>
 
 				<H2>When a simulated order can fill</H2>
@@ -198,6 +274,14 @@ export default function TradingEngine() {
 					calendar-bound: the point-in-time tables are not deep enough for a fair
 					stock-selection test until 2029 unless I buy a dataset with the delisted names in it.
 				</P>
+
+				<H2>Versions</H2>
+
+				<P>
+					The engine has changed shape several times since July. Figure 1 shows v6.
+				</P>
+
+				<Versions />
 
 				<H2>Running unattended</H2>
 

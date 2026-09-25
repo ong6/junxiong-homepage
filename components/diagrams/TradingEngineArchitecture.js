@@ -1,7 +1,7 @@
 import { Badge, Connector, Defs, Flow, Group, Label, Lane, Line, Node, Packet, route } from "./parts";
 
 export const CLAIM =
-	"Nightly feeds from Yahoo, Nasdaq and a set of macro and sentiment publishers land in DuckDB under one writer, each response kept as an exact receipt; Alpaca, SEC EDGAR and licensed history are wired in behind credential gates, and TradingView and Stooq are blocked. A screen ranks about 4,100 liquid names, 21 pre-registered paper books turn it into orders at the close, and an AI agent runs one more book through a locked simulator tool. Every order fills at the next open through one guard. Forward monitors, a Sunday walk-forward and an agent ledger read the results and can kill a book, never promote one.";
+	"Nightly feeds from Yahoo, Nasdaq and a set of macro and sentiment publishers land in DuckDB under one writer, each response kept as an exact receipt; TradingView quotes feed the intraday agents for research only, Alpaca, SEC EDGAR and licensed history wait behind credential gates, and Stooq is blocked. A screen ranks about 4,100 liquid names, 21 pre-registered paper books turn it into orders at the close, and an AI agent runs one more book through a locked simulator tool. Every order fills at the next open through one guard. Forward monitors, a Sunday walk-forward and an agent ledger read the results and can kill a book, never promote one.";
 
 export const meta = {
 	number: "Figure 01",
@@ -67,7 +67,7 @@ export function Wide({ id }) {
 				/>
 			))}
 			<Badge cx={40} cy={96} text="1" />
-			<Label x={152} y={448} text="TradingView · Stooq: blocked" anchor="middle" size={10} />
+			<Label x={152} y={448} text="Stooq: blocked" anchor="middle" size={10} />
 			{sourcePaths.map((points, i) => (
 				<Connector key={SOURCES[i].label} points={points} defs={id} flow="collect" />
 			))}
@@ -112,7 +112,7 @@ export function Wide({ id }) {
 				w={280}
 				h={56}
 				label="intraday shadow agents"
-				sub="hourly · 4-hourly · no orders"
+				sub="TradingView quotes · no orders"
 				icon="robot"
 				size={12}
 				subSize={10}
