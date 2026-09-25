@@ -13,6 +13,12 @@ const topRoutes = [
 	{ path: "/compoze", lastmod: "2026-09-25", changefreq: "yearly", priority: "0.8" },
 	{ path: "/groundplane", lastmod: "2026-09-25", changefreq: "yearly", priority: "0.8" },
 	{ path: "/trading-engine", lastmod: "2026-09-25", changefreq: "yearly", priority: "0.8" },
+	...[1, 2, 3, 4, 5].map((n) => ({
+		path: `/trading-engine/v${n}`,
+		lastmod: "2026-09-25",
+		changefreq: "yearly",
+		priority: "0.4",
+	})),
 	{ path: "/jobforge", lastmod: "2026-09-25", changefreq: "yearly", priority: "0.8" },
 	{ path: "/skillpack", lastmod: "2026-09-25", changefreq: "yearly", priority: "0.8" },
 	{ path: "/skillsmith", lastmod: "2026-09-25", changefreq: "yearly", priority: "0.8" },

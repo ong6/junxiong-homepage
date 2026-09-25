@@ -20,7 +20,7 @@ Contact: email via ${SITE_URL}/contact. GitHub: https://github.com/ong6. LinkedI
 
 - [Groundplane](${SITE_URL}/groundplane): open-source Python library that checks declared fields in agent output against recorded tool facts, with deterministic checks and errors that include provenance. Code: https://github.com/ong6/groundplane
 - [Compoze](${SITE_URL}/compoze): document-grounded assistants for businesses, built and run solo in 2025; a client bought the company at the end of that year
-- [Trading engine](${SITE_URL}/trading-engine): paper-trading research engine run nightly on real US market data, with pre-registered strategies and a fill model that cannot see the future. Code: https://github.com/ong6/trading-engine
+- [Trading engine](${SITE_URL}/trading-engine): paper-trading research engine run nightly on real US market data, with pre-registered strategies and a fill model that cannot see the future. Code: https://github.com/ong6/trading-engine. Earlier versions, each with its own diagram: ${SITE_URL}/trading-engine/v1 to /v5
 - [Skillsmith](${SITE_URL}/skillsmith): makes an agent skill from a repo and keeps it only when it beats a no-skill baseline on heldout tasks. Code: https://github.com/ong6/skillsmith
 - [Skillpack](${SITE_URL}/skillpack): Claude Code and Codex skills shared across repos as a two-way git subtree. Code: https://github.com/ong6/skillpack
 - [Jobforge](${SITE_URL}/jobforge): Claude Code plugin for coding-interview prep that grades the plan said out loud. Code: https://github.com/ong6/jobforge

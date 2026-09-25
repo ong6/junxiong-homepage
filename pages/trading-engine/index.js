@@ -1,11 +1,13 @@
 import { Box, Container, Heading, Link, Text, useColorModeValue } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { CodeBlock, CodeFigure } from "../components/CodeBlock";
-import DiagramFigure from "../components/DiagramFigure";
-import * as TradingEngineArchitecture from "../components/diagrams/TradingEngineArchitecture";
-import Layout from "../components/layouts/Articles";
-import CaseStudyFooter from "../components/CaseStudyFooter";
-import ProjectLinks from "../components/ProjectLinks";
+import { CodeBlock, CodeFigure } from "../../components/CodeBlock";
+import DiagramFigure from "../../components/DiagramFigure";
+import * as TradingEngineArchitecture from "../../components/diagrams/TradingEngineArchitecture";
+import Layout from "../../components/layouts/Articles";
+import CaseStudyFooter from "../../components/CaseStudyFooter";
+import ProjectLinks from "../../components/ProjectLinks";
+import VersionSwitcher from "../../components/VersionSwitcher";
+import { VERSIONS } from "../../lib/tradingVersions";
 
 // Case study in the same shape as /skillpack: one ~680px column of prose, the
 // architecture figure, one terminal figure, and a single mono fact table.
@@ -39,51 +41,10 @@ const FILL = [
 	['    raise ValueError(f"look-ahead violation: fill_date {fill_date} !> signal_date {signal_date}")'],
 ];
 
-// Dates come from the repo's BUILDLOG, plans and archive READMEs.
-const VERSIONS = [
-	{
-		v: "v1",
-		when: "16–27 Jul 2026",
-		title: "Data and a first league",
-		body: "Yahoo daily bars for about 12,200 listed names (Stooq was blocked on day one), a nightly trend screen, and ten paper books filling at the next open.",
-	},
-	{
-		v: "v2",
-		when: "28 Jul – 3 Aug",
-		title: "More books and a backtest farm",
-		body: "Six research-based strategies took the league to 16 books, a farm replayed every book over past years, and the rules for splits and dividends were settled.",
-	},
-	{
-		v: "v3",
-		when: "4–17 Aug",
-		title: "AI adjusting the books",
-		body: "Five books let a model veto entries or tune parameters inside fixed bounds, each paired with an untouched twin, and a news analyst wrote a morning brief. I retired all of it on 18 August.",
-	},
-	{
-		v: "v4",
-		when: "18 Aug – 17 Sep",
-		title: "Evidence first",
-		body: "Ten-fold walk-forward tests, audits of the fill model and the data sources, and frozen forward monitors that can only continue or kill a strategy. An audit on 2 September found seven simulator bugs.",
-	},
-	{
-		v: "v5",
-		when: "18–24 Sep",
-		title: "An agent in the loop",
-		body: "The repo went public. A nightly AI agent trades its own paper book through a locked simulator tool, hourly shadow agents watch without placing orders, a ledger scores every agent decision, and Alpaca and SEC EDGAR sit behind credential gates.",
-	},
-	{
-		v: "v6",
-		when: "25 Sep",
-		title: "TradingView for research",
-		body: "TradingView quotes and bars now reach the intraday agents as research input. They never touch prices, fills or orders.",
-		current: true,
-	},
-];
-
 function Versions() {
 	return (
 		<Box as="ol" listStyleType="none" mt={6} borderTop="1px solid" borderColor="border.subtle">
-			{VERSIONS.map(({ v, when, title, body, current }) => (
+			{VERSIONS.map(({ v, href, when, title, body, current }) => (
 				<Box
 					as="li"
 					key={v}
@@ -102,7 +63,13 @@ function Versions() {
 							{current ? " · current" : ""}
 						</Text>
 						<Text mt={1} fontSize={{ base: "17px", md: "18px" }} fontWeight="700">
-							{title}
+							{current ? (
+								title
+							) : (
+								<Link as={NextLink} href={href} prefetch={false}>
+									{title} →
+								</Link>
+							)}
 						</Text>
 						<Text mt={1} fontSize={{ base: "16px", md: "17px" }} lineHeight="1.7" color="text.muted">
 							{body}
@@ -181,6 +148,8 @@ export default function TradingEngine() {
 						textTransform="uppercase">
 						2026 · open source · paper only
 					</Text>
+
+					<VersionSwitcher active="v6" mt={6} />
 
 					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="1.6" fontWeight="600">
 						I built this to test trading ideas on real US market data without placing live trades. It runs nightly on one Linux box and tracks 21 rule-based paper portfolios, each with rules fixed before trading starts, plus one run by an AI agent. At the two-month mark, none had passed its comparison against a control.
@@ -278,7 +247,8 @@ export default function TradingEngine() {
 				<H2>Versions</H2>
 
 				<P>
-					The engine has changed shape several times since July. Figure 1 shows v6.
+					The engine has changed shape several times since July. Figure 1 shows v6. Each earlier
+					version has its own page with the diagram as it stood then.
 				</P>
 
 				<Versions />
