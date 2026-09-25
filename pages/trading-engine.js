@@ -40,15 +40,17 @@ const FILL = [
 ];
 
 const facts = [
-	["paper books", "21 active · 18 replayable from their frozen config"],
+	["paper books", "21 rule-based (18 replayable) · 1 run by an AI agent"],
 	["strategy modules", "30 · one file each, pre-registered"],
 	["charters with a kill rule", "10 · 7 closed as rejected or inconclusive"],
-	["liquid universe", "4,097 US names, refreshed weekly"],
+	["data sources", "Yahoo · Nasdaq · FRED · Cboe · FINRA · CFTC · AAII · NAAIM · SqueezeMetrics"],
+	["gated sources", "Alpaca IEX · SEC EDGAR · licensed history (credentials required)"],
+	["liquid universe", "~4,100 US names, refreshed weekly"],
 	["fill model", "next open · spread tier + 5 bp · ≤ 1 % of 60-day volume"],
 	["walk-forward", "10 folds · train 24 mo · validate 12 mo"],
-	["store", "DuckDB · 50 tables · one writer"],
-	["api", "30 loopback routes, read models only"],
-	["tests", "3,156 collected · warnings are failures"],
+	["store", "DuckDB · one writer · exact response receipts"],
+	["api", "34 loopback routes · reads plus gated paper tickets"],
+	["tests", "3,280 collected · warnings are failures"],
 	["python", "~89k lines outside tests · started 2026-07-16"],
 	["status", "paper only · MIT · github.com/ong6/trading-engine"],
 ];
@@ -105,7 +107,7 @@ export default function TradingEngine() {
 					</Text>
 
 					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="1.6" fontWeight="600">
-						I built this to test trading ideas on real US market data without placing live trades. It runs nightly on one Linux box and tracks 21 paper portfolios, each with rules fixed before trading starts. At the two-month mark, none had passed its comparison against a control.
+						I built this to test trading ideas on real US market data without placing live trades. It runs nightly on one Linux box and tracks 21 rule-based paper portfolios, each with rules fixed before trading starts, plus one run by an AI agent. At the two-month mark, none had passed its comparison against a control.
 					</Text>
 				</Box>
 
@@ -115,14 +117,17 @@ export default function TradingEngine() {
 					id="tearch"
 					headingLevel={2}
 					diagram={TradingEngineArchitecture}
-					caption="fig. 1 — one night. ① Bars, splits and dividends land in DuckDB under a single
-					writer; universe, screen and fundamentals tables are append-only so nothing can be
-					rewritten after the fact. ② The screen ranks 4,097 liquid names. ③ Each book turns
-					the ranking into orders at the close. ④ Orders fill at the next open and nowhere
-					else, with a liquidity-tiered spread, five basis points, and a cap at one percent of
-					volume. ⑤ The monitors read the equity paths against a rule frozen before the first
-					signal, and the Sunday walk-forward replays every book through the same fill code
-					on older bars."
+					caption="fig. 1 — one night. ① Yahoo, Nasdaq and a set of macro and sentiment publishers feed the collectors;
+					Alpaca, SEC EDGAR and licensed history are supported but stay off until credentials and
+					terms allow them, and TradingView and Stooq are blocked. ② One writer commits every batch
+					to DuckDB and keeps each provider response as an exact receipt. ③ The screen ranks about
+					4,100 liquid names and each book turns the ranking into orders at the close. ④ Orders
+					fill at the next open and nowhere else, with a liquidity-tiered spread, five basis points
+					and a cap at one percent of volume. ⑤ The monitors read the equity paths against a rule
+					frozen before the first signal, and the Sunday walk-forward replays the rule books on
+					older bars. ⑥ The AI agent reviews the screen's standouts and trades its own paper book
+					through a locked simulator tool; the ledger scores each of its decisions against a
+					control. The intraday agents only observe."
 				/>
 
 				<H2>When a simulated order can fill</H2>

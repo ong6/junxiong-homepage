@@ -264,7 +264,9 @@ export default function Compoze() {
 				<H2>One codebase, configured per customer</H2>
 
 				<P>
-					Next.js 15 and React 19 on the front, Postgres with pgvector behind
+					Compoze ran on two stacks: a Python assistant on LlamaIndex and FastAPI with
+					managed indexing on LlamaCloud, and the platform described here. That platform
+					is Next.js 15 and React 19 on the front, Postgres with pgvector behind
 					Drizzle. Every core table carries a tenant id. Tenant checks in the
 					application and Postgres row-level security provide two layers of
 					isolation. One shared database keeps migrations and billing in one
