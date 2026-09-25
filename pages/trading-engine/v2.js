@@ -19,49 +19,50 @@ export default function TradingEngineV2() {
 		<TradingVersionPage
 			v="v2"
 			description="Version 2 of Ong Jun Xiong's paper-trading engine, late July 2026: split and dividend handling, a fatal reconcile gate, 16 books and a backtest farm."
-			lead="v2 grew the league from ten books to sixteen and fixed something v1 had missed: Yahoo rewrites old prices after a split, and the engine only re-fetched the last five days."
+			lead="v2 added six books, but the change that mattered was finding out the price history was wrong. Yahoo rewrites old prices after a split, the engine only re-fetched the last five days, and dividends were never stored."
 			diagram={V2}
 			caption="fig. 1 — v2. ① Yahoo now supplies splits and dividends alongside bars. ② Prices are stored as a restated cache with a watermark. ③ A reconcile stage checks the price scale and stops the night if it is broken. ④ Dividends are credited before fills. ⑤ A forward experiment logs Monday returns, and the backtest farm replays each book's own code over past years."
 			facts={facts}>
-			<H2>Splits and dividends</H2>
+			<H2>What splits and missing dividends did</H2>
 			<P>
-				A five-day refetch leaves a permanent break in the price series after a split, and held
-				books showed crashes that never happened. Dividends were missing altogether, so dual
-				momentum&apos;s cash hurdle, a Treasury-bill ETF, had quietly become &ldquo;beat zero&rdquo;.
-				On total return the bill ETF made +3.72% over twelve months against −0.09% on price alone,
-				and EFA overtook SPY, +18.19% to +17.47%.
+				A five-day refetch leaves a permanent break in the series after a split, so books holding
+				that stock showed crashes that never happened. Missing dividends were quieter. Dual
+				momentum&apos;s cash hurdle is a Treasury-bill ETF, and without dividends it had become
+				&ldquo;beat zero&rdquo;. On total return that ETF made +3.72% over twelve months against
+				−0.09% on price alone, and EFA moved ahead of SPY, +18.19% to +17.47%.
 			</P>
+
+			<H2>The rules I wrote down</H2>
 			<P>
-				The fixes became rules. Prices are a cache of Yahoo&apos;s adjusted view, restated at the
-				break found in the stored series. Fills are adjusted at the ex-date, because a fill before
-				it really was executed at pre-split prices. Portfolio state is a pure function of fills and
-				dividends, with dividends replayed first. Fetching actions only warns, but the reconcile is
-				fatal: the log puts it as &ldquo;trading on a broken scale is strictly worse than skipping a
-				night.&rdquo;
+				Prices are a cache of Yahoo&apos;s adjusted view, restated at the break found in the stored
+				series. Fills are adjusted at the ex-date, because a fill before it really did execute at
+				pre-split prices. Portfolio state is a pure function of fills and dividends, with dividends
+				replayed first. Fetching new actions only warns, but the reconcile stage is fatal. The log
+				puts the reason better than I can: &ldquo;trading on a broken scale is strictly worse than
+				skipping a night.&rdquo;
 			</P>
 
 			<H2>A ten-day stop that fired after one</H2>
 			<P>
-				<Code>trading_days_between</Code> counted price rows, not sessions. With thousands of rows
-				per day, the mean-reversion book&apos;s ten-day time stop fired after a single session. It
-				now counts distinct dates. It is the kind of bug that only shows up as a strategy looking
-				worse than it should, which is why I trust the replay farm more than the live table.
+				<Code>trading_days_between</Code> counted price rows instead of sessions. With thousands of
+				rows per day, the mean-reversion book&apos;s ten-day time stop fired after a single session.
+				On the league table that looked like a weak strategy, not a bug. It now counts distinct dates.
 			</P>
 
 			<H2>Replaying the books</H2>
 			<P>
 				The farm replays each book&apos;s live code over past windows on scratch copies of the
-				store, so the live database stays read-only. The screen is vectorised for speed; the
-				strategies are not, so the replay runs the same decisions the league runs. The first grid
-				of 78 jobs drained the same day with no failures, and its answer was plain: no
-				stock-picking book beat its own equal-weight benchmark on any window of three years or
-				more. The sample is biased toward survivors, with 1,237 eligible names in 2011 against
-				3,873 today, and that caveat never went away.
+				store, so the live database stays read-only. Only the screen is vectorised for speed; the
+				strategies run exactly as the league runs them. The first grid of 78 jobs drained the same
+				day without a failure, and its answer was blunt: no stock-picking book beat its own
+				equal-weight benchmark over any window of three years or more. The sample leans toward
+				survivors, with 1,237 eligible names in 2011 against 3,873 today, and that caveat never went
+				away.
 			</P>
-
 			<P>
-				By 3 August the nightly had run seven clean nights in a row. The next step was letting a
-				model adjust some of the books, which is v3.
+				That result set the bar for everything after it. A stock-picking book has to beat an
+				equal-weight basket of the same names, over years, before I treat it as more than noise.
+				v2 closed with seven clean nightlies in a row, from 24 July to 3 August.
 			</P>
 		</TradingVersionPage>
 	);

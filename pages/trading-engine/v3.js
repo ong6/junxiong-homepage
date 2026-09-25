@@ -1,4 +1,4 @@
-import TradingVersionPage, { H2, P } from "../../components/TradingVersionPage";
+import TradingVersionPage, { Code, H2, P } from "../../components/TradingVersionPage";
 import * as V3 from "../../components/diagrams/trading/V3";
 
 // Facts from archive/agentic-2026-08/README.md, the charters it indexes, and
@@ -20,45 +20,42 @@ export default function TradingEngineV3() {
 		<TradingVersionPage
 			v="v3"
 			description="Version 3 of Ong Jun Xiong's paper-trading engine, August 2026: a model beside five books, bounded by written charters and scored against frozen twins, then retired."
-			lead="v3 put a language model next to five of the books. The code still traded. The model could only veto entries or move parameters inside bounds written down in advance, and each AI book ran beside a twin that never changed."
+			lead="v3 was my first attempt at putting a language model in the trading loop, and the most useful thing it produced was a reason to take it out. The model sat beside five books, could only veto entries or move parameters inside bounds written down in advance, and each of those books ran next to a twin that never changed."
 			diagram={V3}
 			caption="fig. 1 — v3. ① RSS headline titles feed a morning news brief. ② Two gaters read it and may veto or shrink the day's entries; three tuners may move parameters on Sundays. ③ A validator reads its bounds from each book's frozen charter and rejects anything outside them; with no gate file the book trades its plain algorithm. ④ Each AI book is compared with its untouched twin, and only the spread at 26 weeks was going to count."
 			facts={facts}>
 			<H2>What the model was allowed to do</H2>
 			<P>
-				The gaters could veto or scale down an entry, never add one, and could touch at most half
-				of a day&apos;s candidates. The tuners could change at most two parameters a session, by
-				no more than a quarter each, and never outside half either side of the registered value.
-				The validator parsed those limits from the charter itself, rejected a tuner proposal as a
-				whole if any part failed, and the model sat outside the nightly path: the strategy read a
-				gate file if one existed and traded its own rules if not.
+				A gater could veto or shrink an entry but never add one, and it could touch at most half of
+				a day&apos;s candidates. A tuner could change at most two parameters in a session, by no more
+				than a quarter each, and never beyond half either side of the registered value. The
+				validator read those limits from each book&apos;s charter and threw out a tuner proposal
+				whole if any part of it failed. The model also sat outside the nightly path: the strategy
+				used a gate file if one existed and traded its own rules if it did not.
 			</P>
 
 			<H2>What actually happened</H2>
 			<P>
-				On 4 August the analyst wrote one brief from 133 headlines, and one gater produced one
-				file: eight candidates, all marked unclear, no vetoes. Three manual tuner sessions that
-				day declined to change anything. From 5 August every session failed, because the login
-				the scheduled calls relied on had expired. The failures were written as{" "}
-				<code>TODO:</code> lines in a log nobody read, so the layer was dead for thirteen days
-				before anyone noticed.
+				On 4 August the analyst wrote one brief from 133 headlines, and one gater produced one file:
+				eight candidates, all marked unclear, no vetoes. Three manual tuner sessions that day
+				declined to change anything. From 5 August every scheduled session failed because the login
+				they depended on had expired. The failures went into <Code>TODO:</Code> lines in a log
+				nobody read, and the layer stayed dead for thirteen days before anyone noticed.
 			</P>
 
 			<H2>Why I retired it</H2>
 			<P>
-				The log&apos;s own line is the one I agree with: &ldquo;The defect was not the failure, it
-				was the silence.&rdquo; The model had acted in one session out of about fifteen, so any
-				spread against the twins was noise, and reporting it as an AI result would have been
-				dishonest. The deeper lesson was about where a model belongs. Frequent, low-stakes calls
-				that a rule could decide are the worst use of one, and anything a grid can decide should
-				be decided by a grid. The five books and two new twins were retired, not deleted, and the
-				league went from 25 books to 18.
+				I agree with the log&apos;s own verdict: &ldquo;The defect was not the failure, it was the
+				silence.&rdquo; The model acted in one session out of about fifteen, so any spread against
+				the twins was noise, and calling it an AI result would have been dishonest. The more
+				lasting lesson was about where a model belongs. Frequent, low-stakes calls that a rule could
+				make are the worst use of one, and anything a grid can decide should be decided by a grid.
+				The five books and the two twins created for them were retired, not deleted, and the league
+				went from 25 books to 18.
 			</P>
-
 			<P>
-				The twin survived. Every agent result the engine reports today is scored against a paired
-				control, and that habit started here. v4 replaced the model with a parameter grid and a
-				stricter walk-forward.
+				v4 replaced the model with a parameter grid and a stricter walk-forward. The twin idea
+				stayed. Every agent result the engine reports today sits next to a paired control.
 			</P>
 		</TradingVersionPage>
 	);
