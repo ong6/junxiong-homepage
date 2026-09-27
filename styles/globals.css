@@ -251,3 +251,108 @@ a {
 	outline: 2px solid var(--chakra-colors-brand-solid);
 	outline-offset: 2px;
 }
+
+/* ── Link arrows ───────────────────────────────────────────────────────── */
+/* ↗ leaves the site: it flies out of the top-right corner and back in from
+   the bottom-left, clipped to its own box. → stays on the site and nudges. */
+[data-out-arrow],
+[data-in-arrow] {
+	display: inline-block;
+	overflow: clip;
+	padding: 0 0.08em;
+	line-height: 1;
+	vertical-align: -0.05em;
+}
+[data-in-arrow] { overflow: visible; }
+[data-out-arrow] > span,
+[data-in-arrow] > span {
+	display: inline-block;
+	transition: transform var(--dur-ui) var(--ease-out);
+}
+@keyframes arrow-fly {
+	0% { transform: none; animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45); }
+	42% { transform: translate(120%, -120%); }
+	42.01% { transform: translate(-120%, 120%); animation-timing-function: var(--ease-out); }
+	100% { transform: none; }
+}
+:is(a, [data-group]):focus-visible [data-out-arrow] > span { animation: arrow-fly 400ms both; }
+a:focus-visible [data-in-arrow] > span { transform: translateX(3px); }
+@media (hover: hover) and (pointer: fine) {
+	:is(a, [data-group]):hover [data-out-arrow] > span { animation: arrow-fly 400ms both; }
+	a:hover [data-in-arrow] > span { transform: translateX(3px); }
+}
+
+/* ── Card hover fill ───────────────────────────────────────────────────── */
+/* The card's category colour spreads from where the pointer entered
+   (lib/fillOrigin.js sets --x/--y). The fill sits at z-index -1 inside an
+   isolated card: over its background, under its content and link overlay.
+   Text changes colour on the same duration and curve as the fill. */
+[data-fill] {
+	position: relative;
+	isolation: isolate;
+	--fill-dur: 380ms;
+	--cascade-fill: var(--tone, var(--chakra-colors-brand-solid));
+	--cascade-on: var(--chakra-colors-page-bg);
+}
+/* One tone per project category (lib/tones.js). Light fills carry page-bg
+   text at 5.3:1 or better, dark fills page-bg (near-black) text at 9:1+. */
+:root {
+	--tone-agents: #234ea2;
+	--tone-company: #a3452b;
+	--tone-research: #2f6a4a;
+	--tone-design: #6a3f86;
+	--tone-practice: #8a5410;
+	--tone-site: #29231f;
+}
+[data-theme="dark"] {
+	--tone-agents: #9ab6ff;
+	--tone-company: #f2a184;
+	--tone-research: #8fd3a8;
+	--tone-design: #d2b0f0;
+	--tone-practice: #f0c274;
+	--tone-site: #f2ece3;
+}
+[data-tone="agents"] { --tone: var(--tone-agents); }
+[data-tone="company"] { --tone: var(--tone-company); }
+[data-tone="research"] { --tone: var(--tone-research); }
+[data-tone="design"] { --tone: var(--tone-design); }
+[data-tone="practice"] { --tone: var(--tone-practice); }
+[data-tone="site"] { --tone: var(--tone-site); }
+[data-fill]::after {
+	content: "";
+	position: absolute;
+	inset: -1px;
+	z-index: -1;
+	border-radius: inherit;
+	background: var(--cascade-fill);
+	pointer-events: none;
+	clip-path: circle(0% at var(--x, 50%) var(--y, 50%));
+	transition: clip-path var(--fill-dur) var(--ease-out);
+}
+/* Borderless rows ("Around the site") bleed the fill into their left
+   gutter so the text doesn't sit on its edge. */
+[data-fill="row"]::after { inset: 0 4px 0 -12px; }
+/* Preview panels keep reading as themselves; they would otherwise inherit
+   the card's on-fill text colour. */
+[data-fill] [data-panel] { color: var(--chakra-colors-page-text); }
+[data-fill] :not([data-panel], [data-panel] *) {
+	transition: color var(--fill-dur) var(--ease-out), transform var(--dur-ui) var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+	[data-fill]:hover::after { clip-path: circle(150% at var(--x, 50%) var(--y, 50%)); }
+	[data-fill]:hover { border-color: var(--cascade-fill) !important; }
+	[data-fill]:hover :not([data-panel], [data-panel] *) { color: var(--cascade-on) !important; }
+}
+[data-fill]:focus-within::after { clip-path: circle(150% at 50% 50%); }
+[data-fill]:focus-within :not([data-panel], [data-panel] *) { color: var(--cascade-on) !important; }
+
+@media (prefers-reduced-motion: reduce) {
+	[data-out-arrow] > span {
+		animation: none !important;
+	}
+}
+
+/* UI Pack's side gutters (components/SideBackdrop.js) take the site accent. */
+body {
+	--web-gutters-color: var(--chakra-colors-brand-solid);
+}

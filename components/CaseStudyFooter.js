@@ -1,6 +1,7 @@
 import { Box, Heading, LinkBox, LinkOverlay, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 import ProjectLinks from "./ProjectLinks";
+import { toneFor } from "../lib/tones";
 
 // The deliberate end of a case study: the links out once more, then one
 // door to the next project. Replaces the bare spacer before the footer.
@@ -18,6 +19,8 @@ export default function CaseStudyFooter({ links, next }) {
 					as="section"
 					aria-label="Next project"
 					data-reveal
+					data-fill
+					data-tone={toneFor(next.href)}
 					mt={{ base: 4, md: 5 }}
 					bg="surface.raised"
 					border="1px solid"

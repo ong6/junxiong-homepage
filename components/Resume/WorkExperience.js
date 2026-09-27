@@ -95,8 +95,8 @@ export default function WorkExperience() {
 			))}
 
 			<Text
-				mt={7}
-				mb={1}
+				mt={8}
+				mb={2}
 				fontFamily="var(--font-mono)"
 				fontSize="12px"
 				fontWeight="700"

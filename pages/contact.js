@@ -2,6 +2,7 @@ import { Box, Grid, Heading, Link, SimpleGrid, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 import HobbyScene from "../components/HobbyScene";
 import Layout from "../components/layouts/Articles";
+import OutArrow from "../components/OutArrow";
 
 const links = [
 	{
@@ -85,7 +86,7 @@ export default function Contact() {
 						borderRadius="6px"
 						fontWeight="700"
 						_hover={{ opacity: 0.88, textDecoration: "none" }}>
-						Email me <Box as="span" aria-hidden="true">↗</Box>
+						Email me <OutArrow />
 					</Link>
 					<Text mt={3} fontFamily="var(--font-mono)" fontSize="14px" color="text.muted" userSelect="all">
 						junxiongong2@gmail.com
@@ -122,7 +123,7 @@ export default function Contact() {
 							textDecoration="none"
 							_hover={{ color: "brand.solid", textDecoration: "none" }}>
 							<Text fontSize="19px" fontWeight="750">
-								{item.label} <Box as="span" aria-hidden="true">{item.external ? "↗" : "→"}</Box>
+								{item.label} {item.external ? <OutArrow /> : <Box as="span" aria-hidden="true">→</Box>}
 							</Text>
 							<Text mt={2} maxW="420px" color="text.muted" fontSize="15px" lineHeight="1.6">
 								{item.detail}

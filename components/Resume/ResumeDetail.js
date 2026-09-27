@@ -13,7 +13,7 @@ export default function ResumeDetail({ detail, compact = false }) {
 	return (
 		<Box
 			as="section"
-			py={compact ? 4 : 5}
+			py={compact ? 4 : 6}
 			borderTopWidth="1px"
 			borderColor={borderColor}>
 			<Flex
@@ -26,7 +26,7 @@ export default function ResumeDetail({ detail, compact = false }) {
 				</Text>
 				<Text
 					fontFamily="var(--font-mono)"
-					fontSize="11px"
+					fontSize="12px"
 					fontWeight="700"
 					letterSpacing="0.06em"
 					textTransform="uppercase"
@@ -36,7 +36,7 @@ export default function ResumeDetail({ detail, compact = false }) {
 			</Flex>
 
 			{detail.roles.map((role) => (
-				<Box key={`${detail.title}-${role.subtitle}`} mt={3}>
+				<Box key={`${detail.title}-${role.subtitle}`} mt={4}>
 					<Flex
 						direction={{ base: "column", smmd: "row" }}
 						justify="space-between"
@@ -47,14 +47,14 @@ export default function ResumeDetail({ detail, compact = false }) {
 						</Text>
 						<Text
 							fontFamily="var(--font-mono)"
-							fontSize="11px"
+							fontSize="12px"
 							whiteSpace="nowrap"
 							color="text.muted">
 							{role.date}
 						</Text>
 					</Flex>
 
-					<UnorderedList mt={2} ml={5} spacing={1.5}>
+					<UnorderedList mt={2} ml={6} spacing={2} maxW="760px">
 						{role.description.map((description) => (
 							<ListItem
 								key={description}

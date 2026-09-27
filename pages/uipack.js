@@ -31,6 +31,7 @@ const UipackWebGallery = dynamic(() => import("../components/UipackWebGallery"),
 });
 
 const UipackObjects = dynamic(() => import("../components/UipackObjects"));
+const UipackWebMotion = dynamic(() => import("../components/UipackWebMotion"));
 
 const P = (props) => (
 	<Text mt={5} fontSize={{ base: "17px", md: "18px" }} lineHeight="1.8" {...props} />
@@ -170,7 +171,7 @@ export default function Uipack() {
 									to typed figures, adapted to the type and colours I use here.
 								</P>
 							</Box>
-							{hydrated && router.isReady && category === 0 && <><UipackObjects /><UipackWebGallery /></>}
+							{hydrated && router.isReady && category === 0 && <><UipackObjects /><UipackWebMotion /><UipackWebGallery /></>}
 
 							<Box maxW="680px">
 								<H2>Assets</H2>

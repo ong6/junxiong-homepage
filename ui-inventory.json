@@ -23,6 +23,12 @@
       "packageExport": "uipack/objects",
       "gallery": "components/UipackObjects.js",
       "description": "Shared ObjectGallery scene library, art-direction inspector and original Studio editions"
+    },
+    {
+      "component": "components/SideBackdrop.js",
+      "packageExport": "uipack/web",
+      "gallery": "components/UipackWebMotion.js",
+      "description": "Drifting gutter grid on article pages and the paint-drizzle theme change (ThemeToggleButton)"
     }
   ],
   "pageOnly": [

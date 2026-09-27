@@ -33,7 +33,7 @@ export default function Skills() {
 					key={skill.label}
 					direction={{ base: "column", smmd: "row" }}
 					gap={{ base: 1, smmd: 4 }}
-					py={1.5}>
+					py={2}>
 					<Text w={{ smmd: "128px" }} flexShrink={0} fontSize="15px" fontWeight="800">
 						{skill.label}
 					</Text>

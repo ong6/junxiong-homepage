@@ -1,7 +1,9 @@
 import { Box, Container, Link } from "@chakra-ui/react";
+import { useEffect } from "react";
 import Head from "next/head";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
+import { trackFillOrigin } from "../../lib/fillOrigin";
 
 export const SITE_URL = "https://junxiong.dev";
 
@@ -108,6 +110,7 @@ const webPageSchema = (canonical) => ({
 });
 
 const Main = ({ children, router }) => {
+	useEffect(trackFillOrigin, []);
 	const canonical = canonicalFor(router?.asPath);
 	const isHome = canonical === `${SITE_URL}/`;
 	// The 404 page answers on any URL, so it gets no canonical and no index.

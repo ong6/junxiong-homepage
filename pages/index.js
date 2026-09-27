@@ -3,6 +3,7 @@ import NextImage from "next/image";
 import NextLink from "next/link";
 import Layout from "../components/layouts/Articles";
 import SelectedWork from "../components/SelectedWork";
+import OutArrow, { NextArrow } from "../components/OutArrow";
 
 const utilityLinkProps = {
 	display: "inline-flex",
@@ -49,7 +50,7 @@ function Introduction() {
 				columnGap={{ base: 6, md: 14, lg: 20 }}
 				rowGap={6}
 				alignItems="center"
-				mt={5}>
+				mt={4}>
 				<Box gridArea="copy" maxW="720px">
 					<Heading
 						as="h1"
@@ -59,13 +60,13 @@ function Introduction() {
 						letterSpacing="-.06em">
 						Ong Jun Xiong
 					</Heading>
-					<Text className="hero-rise" style={{ "--i": 2 }} mt={5} fontSize={{ base: "19px", md: "23px" }} lineHeight="1.45">
+					<Text className="hero-rise" style={{ "--i": 2 }} mt={6} fontSize={{ base: "19px", md: "23px" }} lineHeight="1.45">
 						I&apos;m a software engineer at TikTok in Singapore, building AI infrastructure for{" "}
 						<Box as="span" whiteSpace="nowrap">
 							e-commerce.
 						</Box>
 					</Text>
-					<Text className="hero-rise" style={{ "--i": 3 }} mt={5} maxW="640px" fontSize="16px" lineHeight="1.75" color="text.muted">
+					<Text className="hero-rise" style={{ "--i": 3 }} mt={4} maxW="640px" fontSize="16px" lineHeight="1.75" color="text.muted">
 						At TikTok I built my team&apos;s shared AI platform from zero: an agent service, an MCP
 						server over the data warehouse, and a React SDK for AI chat. Before that I
 						wrote Go services for the seller platform. Outside work, I built and ran{" "}
@@ -85,7 +86,7 @@ function Introduction() {
 						border="1px solid"
 						borderColor={portraitBorder}
 						bg="surface.raised"
-						p={{ base: 2, md: 3 }}
+						p={{ base: 2, md: 4 }}
 						className="portrait-frame">
 						<NextImage
 							src="/images/junxiong.webp"
@@ -103,7 +104,7 @@ function Introduction() {
 							}}
 						/>
 						<Flex
-							mt={{ base: 2, md: 3 }}
+							mt={{ base: 2, md: 4 }}
 							justify="space-between"
 							color="text.muted"
 							fontFamily="var(--font-mono)"
@@ -126,17 +127,17 @@ function Introduction() {
 						target="_blank"
 						rel="noopener noreferrer"
 						{...utilityLinkProps}>
-						GitHub ↗
+						GitHub <OutArrow ml="4px" />
 					</Link>
 					<Link
 						href="https://www.linkedin.com/in/junx6/"
 						target="_blank"
 						rel="noopener noreferrer"
 						{...utilityLinkProps}>
-						LinkedIn ↗
+						LinkedIn <OutArrow ml="4px" />
 					</Link>
 					<Link as={NextLink} href="/resume" {...utilityLinkProps}>
-						Resume →
+						Resume <NextArrow ml="4px" />
 					</Link>
 				</Grid>
 			</Grid>

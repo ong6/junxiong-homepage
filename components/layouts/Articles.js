@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { BUILD_DATE, SITE_URL, canonicalFor, ogImageFor } from "./Main";
+import SideBackdrop from "../SideBackdrop";
 
 // Page-level metadata for every route except the homepage.
 //
@@ -83,6 +84,8 @@ const Layout = ({ children, title, description, schema, noindex = false, animate
 				</Head>
 			)}
 			{schema && <div className="scroll-progress" aria-hidden="true" />}
+			{/* Home and Hobbies (animate={false}) carry their own motion. */}
+			{animate && <SideBackdrop />}
 			{children}
 		</article>
 	);

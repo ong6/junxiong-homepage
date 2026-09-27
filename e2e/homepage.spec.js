@@ -33,11 +33,12 @@ for (const width of [390, 1440]) {
 			expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(
 				false,
 			);
-			for (const label of ["GitHub ↗", "LinkedIn ↗", "Resume →"]) {
+			// The ↗ is aria-hidden (components/OutArrow.js), so it is not part of the name.
+			for (const label of ["GitHub", "LinkedIn", "Resume"]) {
 				const target = await page.getByRole("link", { name: label, exact: true }).first().boundingBox();
 				expect(target.height).toBeGreaterThanOrEqual(43.9);
 			}
-			await expect(page.locator("#about").getByRole("link", { name: "Resume →", exact: true })).toHaveAttribute("href", "/resume");
+			await expect(page.locator("#about").getByRole("link", { name: "Resume", exact: true })).toHaveAttribute("href", "/resume");
 			await expect(page.locator("main").getByRole("link", { name: "Email", exact: true })).toHaveCount(0);
 			await expect(page.getByText("Before that I wrote Go services for the seller platform", { exact: false })).toBeVisible();
 			await expect(

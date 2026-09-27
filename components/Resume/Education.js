@@ -25,7 +25,7 @@ export default function Education() {
 				</Box>
 				<Text
 					fontFamily="var(--font-mono)"
-					fontSize="11px"
+					fontSize="12px"
 					whiteSpace="nowrap"
 					opacity={0.68}>
 					2020 – 2023

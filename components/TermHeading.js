@@ -2,11 +2,11 @@ import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 
 const TermHeading = ({ children, kicker = "Selected signal", ...props }) => (
 	<Box {...props}>
-		<Flex align="center" gap={3} mb={2}>
+		<Flex align="center" gap={2} mb={2}>
 			<Box w="7px" h="7px" bg="mint.500" transform="rotate(45deg)" aria-hidden="true" />
 			<Text
 				fontFamily="var(--font-mono)"
-				fontSize={{ base: "11px", md: "12px" }}
+				fontSize="12px"
 				fontWeight="700"
 				letterSpacing=".11em"
 				textTransform="uppercase"

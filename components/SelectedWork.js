@@ -11,6 +11,8 @@ import {
 	useColorModeValue,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
+import OutArrow from "./OutArrow";
+import { toneFor } from "../lib/tones";
 
 // Lift on a real pointer only; touch fires a sticky hover on tap.
 const liftOnHover = (shadow) => ({
@@ -49,11 +51,11 @@ function ProjectLink({ href, children }) {
 	);
 }
 
-function FeaturedCard({ span, index = 0, children }) {
+function FeaturedCard({ span, index = 0, href, children }) {
 	return (
 		<LinkBox
 			as="article"
-			role="group"
+			data-group
 			gridColumn={{ base: "1 / -1", lg: `span ${span}` }}
 			minW={0}
 			bg="surface.raised"
@@ -66,6 +68,8 @@ function FeaturedCard({ span, index = 0, children }) {
 			display="flex"
 			flexDirection="column"
 			data-reveal="lead"
+			data-fill
+			data-tone={toneFor(href)}
 			style={{ "--i": index }}
 			transition="transform var(--dur-ui) var(--ease-out), box-shadow var(--dur-ui) var(--ease-out), border-color 160ms ease"
 			_hover={{ borderColor: "border.strong" }}
@@ -86,7 +90,7 @@ function DottedCanvas({ children }) {
 			bg="preview.canvas"
 			backgroundImage={`radial-gradient(${dot} 1px, transparent 1px)`}
 			backgroundSize="12px 12px"
-			p={{ base: 4, md: 5 }}>
+			p={{ base: 4, md: 6 }}>
 			{children}
 		</Box>
 	);
@@ -94,11 +98,11 @@ function DottedCanvas({ children }) {
 
 function CardCopy({ eyebrow, title, href, description }) {
 	return (
-		<Box p={{ base: 5, md: 7 }} pb={{ base: 4, md: 5 }}>
+		<Box p={{ base: 6, md: 8 }} pb={{ base: 4, md: 6 }}>
 			<Text sx={labelStyle} color="brand.solid">
 				{eyebrow}
 			</Text>
-			<Heading as="h3" mt={3} fontSize={{ base: "30px", md: "38px" }} lineHeight="1.05">
+			<Heading as="h3" mt={2} fontSize={{ base: "30px", md: "38px" }} lineHeight="1.05">
 				<ProjectLink href={href}>{title}</ProjectLink>
 			</Heading>
 			<Text mt={4} maxW="610px" color="text.muted" fontSize="16px" lineHeight="1.7">
@@ -110,14 +114,14 @@ function CardCopy({ eyebrow, title, href, description }) {
 
 function GroundplaneCard() {
 	return (
-		<FeaturedCard span={7}>
+		<FeaturedCard span={7} href="/groundplane">
 			<CardCopy
 				eyebrow="Open source · 2026"
 				title="Groundplane"
 				href="/groundplane"
 				description="I built Groundplane to catch cases where an agent gives the wrong winner or total despite having the right data. It checks the answer against recorded tool results."
 			/>
-			<Box mt="auto" px={{ base: 5, md: 7 }} pb={{ base: 5, md: 7 }}>
+			<Box mt="auto" px={{ base: 6, md: 8 }} pb={{ base: 6, md: 8 }}>
 				<DottedCanvas>
 					<Box
 						maxW="480px"
@@ -128,7 +132,7 @@ function GroundplaneCard() {
 						boxShadow="4px 4px 0 var(--chakra-colors-preview-shadow)"
 						data-panel
 						p={4}>
-						<Flex justify="space-between" gap={3} color="text.muted" sx={labelStyle}>
+						<Flex justify="space-between" gap={4} color="text.muted" sx={labelStyle}>
 							<Text>Declared field</Text>
 							<Text>Check 01</Text>
 						</Flex>
@@ -138,7 +142,7 @@ function GroundplaneCard() {
 							<Text as="dt" color="text.muted">Recorded winner</Text>
 							<Text as="dd" m={0} fontWeight="700">harbour</Text>
 						</Grid>
-						<Text data-stamp mt={4} pt={3} borderTop="1px solid" borderColor="border.subtle" color="status.error" fontFamily="var(--font-mono)" fontSize="12px" fontWeight="700">
+						<Text data-stamp mt={4} pt={4} borderTop="1px solid" borderColor="border.subtle" color="status.error" fontFamily="var(--font-mono)" fontSize="12px" fontWeight="700">
 							Blocked · UnsupportedClaim
 						</Text>
 						<Text mt={2} color="text.muted" fontSize="14px" lineHeight="1.5">
@@ -153,17 +157,17 @@ function GroundplaneCard() {
 
 function CompozeCard() {
 	return (
-		<FeaturedCard span={5} index={1}>
+		<FeaturedCard span={5} index={1} href="/compoze">
 			<CardCopy
 				eyebrow="Company · 2025"
 				title="Compoze"
 				href="/compoze"
 				description="I ran Compoze alongside TikTok, building assistants that answered questions from company documents. I handled sales, development and customer training."
 			/>
-			<Box mt="auto" px={{ base: 5, md: 7 }} pb={{ base: 5, md: 7 }}>
+			<Box mt="auto" px={{ base: 6, md: 8 }} pb={{ base: 6, md: 8 }}>
 				<DottedCanvas>
 					<Box data-panel bg="preview.panel" border="1px solid" borderColor="border.subtle" borderRadius="4px" overflow="hidden">
-						<Flex justify="space-between" gap={3} px={4} py={3} bg="accent.soft" color="accent.terracotta" sx={labelStyle}>
+						<Flex justify="space-between" gap={4} px={4} py={2} bg="accent.soft" color="accent.terracotta" sx={labelStyle}>
 							<Text>Policy search</Text>
 							<Text>3 sources</Text>
 						</Flex>
@@ -171,7 +175,7 @@ function CompozeCard() {
 							<Text fontSize="16px" fontWeight="700" lineHeight="1.45">
 								How much annual leave carries over?
 							</Text>
-						<Text mt={3} color="text.muted" fontSize="16px" lineHeight="1.6">
+						<Text mt={2} color="text.muted" fontSize="16px" lineHeight="1.6">
 								Up to 5 days, used by 31 March.
 							</Text>
 						</Box>
@@ -220,14 +224,16 @@ function SupportingCard({ project, index }) {
 	return (
 		<LinkBox
 			as="article"
-			role="group"
+			data-group
 			bg="surface.raised"
 			border="1px solid"
 			borderColor="border.subtle"
 			borderRadius="4px"
-			p={{ base: 5, md: 6 }}
+			p={{ base: 6, md: 8 }}
 			gridColumn={{ md: project.wide ? "span 2" : undefined }}
 			data-reveal
+			data-fill
+			data-tone={toneFor(project.href)}
 			style={{ "--i": index % 2 }}
 			transition="border-color 160ms ease, transform var(--dur-ui) var(--ease-out), box-shadow var(--dur-ui) var(--ease-out)"
 			_hover={{ borderColor: "border.strong" }}
@@ -236,10 +242,10 @@ function SupportingCard({ project, index }) {
 			<Text color="text.muted" sx={labelStyle}>
 				{project.label}
 			</Text>
-			<Heading as="h3" mt={5} fontSize={{ base: "23px", md: "26px" }} lineHeight="1.1">
+			<Heading as="h3" mt={4} fontSize={{ base: "23px", md: "26px" }} lineHeight="1.1">
 				<ProjectLink href={project.href}>{project.title}</ProjectLink>
 			</Heading>
-			<Text mt={3} color="text.muted" fontSize="16px" lineHeight="1.65">
+			<Text mt={2} maxW="640px" color="text.muted" fontSize="16px" lineHeight="1.65">
 				{project.description}
 			</Text>
 		</LinkBox>
@@ -255,7 +261,7 @@ const elsewhereLinks = [
 
 function Elsewhere() {
 	return (
-		<Box as="section" aria-labelledby="elsewhere-heading" mt={{ base: 14, md: 20 }}>
+		<Box as="section" aria-labelledby="elsewhere-heading" mt={{ base: 16, md: 24 }}>
 			<Text sx={labelStyle} color="brand.solid">
 				{"// ELSEWHERE"}
 			</Text>
@@ -273,6 +279,8 @@ function Elsewhere() {
 						rel={item.external ? "noopener noreferrer" : undefined}
 						data-reveal
 						data-group
+						data-fill="row"
+						data-tone="site"
 						style={{ "--i": index }}
 						display="block"
 						minH="92px"
@@ -283,16 +291,20 @@ function Elsewhere() {
 						color="page.text"
 						textDecoration="none"
 						_hover={{ color: "brand.solid", textDecoration: "none" }}>
-						<Flex align="center" justify="space-between" gap={3} fontWeight="750">
+						<Flex align="center" justify="space-between" gap={2} fontWeight="750">
 							<Text>{item.name}</Text>
-							<Text
-								as="span"
-								aria-hidden="true"
-								display="inline-block"
-								transition="transform var(--dur-ui) var(--ease-out)"
-								_groupHover={{ transform: item.external ? "translate(3px, -3px)" : "translateX(4px)" }}>
-								{item.external ? "↗" : "→"}
-							</Text>
+							{item.external ? (
+								<OutArrow />
+							) : (
+								<Text
+									as="span"
+									aria-hidden="true"
+									display="inline-block"
+									transition="transform var(--dur-ui) var(--ease-out)"
+									_groupHover={{ transform: "translateX(4px)" }}>
+									→
+								</Text>
+							)}
 						</Flex>
 						<Text mt={1} color="text.muted" fontSize="13px" lineHeight="1.5">
 							{item.detail}
@@ -312,19 +324,19 @@ export default function SelectedWork() {
 				id="work"
 				aria-labelledby="work-heading"
 				scrollMarginTop="96px"
-				mt={{ base: 14, md: 22 }}>
+				mt={{ base: 14, md: 24 }}>
 				<Text sx={labelStyle} color="brand.solid">
 					{"// PROJECTS"}
 				</Text>
 				<Heading id="work-heading" as="h2" mt={2} fontSize={{ base: "32px", md: "44px" }}>
 					Selected work
 				</Heading>
-				<Grid mt={{ base: 6, md: 8 }} templateColumns={{ base: "1fr", lg: "repeat(12, minmax(0, 1fr))" }} gap={{ base: 4, md: 5 }}>
+				<Grid mt={{ base: 6, md: 8 }} templateColumns={{ base: "1fr", lg: "repeat(12, minmax(0, 1fr))" }} gap={{ base: 4, md: 6 }}>
 					<GroundplaneCard />
 					<CompozeCard />
 				</Grid>
 
-				<Box mt={{ base: 8, md: 10 }}>
+				<Box mt={{ base: 8, md: 12 }}>
 					<Heading as="h2" fontSize={{ base: "22px", md: "25px" }}>
 						Also building
 					</Heading>

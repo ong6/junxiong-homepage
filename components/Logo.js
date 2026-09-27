@@ -8,16 +8,17 @@ const LogoBox = styled.span`
 	font-size: 22px;
 	display: inline-flex;
 	align-items: center;
-	height: 30px;
+	height: 32px;
 	line-height: 20px;
-	padding: 10px 0;
 
 	img {
-		transition: 200ms ease;
+		transition: transform 200ms var(--ease-out);
 	}
 
-	&:hover img {
-		transform: rotate(20deg);
+	@media (hover: hover) and (pointer: fine) {
+		&:hover img {
+			transform: rotate(20deg);
+		}
 	}
 `;
 
@@ -33,7 +34,7 @@ const Logo = () => {
 					fontWeight="bold">
 					Jun Xiong
 				</Text>
-				<Image src={codeImg} width={20} height={20} alt="" style={{ marginLeft: "10px" }} />
+				<Image src={codeImg} width={20} height={20} alt="" style={{ marginLeft: "8px" }} />
 			</LogoBox>
 		</Link>
 	);

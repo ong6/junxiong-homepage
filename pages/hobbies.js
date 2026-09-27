@@ -122,7 +122,20 @@ export default function Hobbies() {
 					I am speccing an always-on inference box that serves models to my own tools. So far, I&apos;m mostly comparing models, memory requirements and what the hardware would cost. I <Link href="https://notes.junxiong.dev" target="_blank" rel="noopener noreferrer">write up what I learn as I go</Link>.
 				</Chapter>
 
-				<Chapter {...chapters[5]} active={active === chapters[5].id}>
+				<Chapter
+					{...chapters[5]}
+					active={active === chapters[5].id}
+					after={
+						<ProjectLinks
+							heading="Built from this hobby"
+							compact
+							mt={6}
+							maxW="64ch"
+							links={[
+								{ name: "Trading engine", detail: "Tests trading ideas overnight, with rules set before the results come in", href: "/trading-engine" },
+							]}
+						/>
+					}>
 					I trade stocks against a written playbook. A setup needs entry, exit and invalidation rules before I touch it; the journal records each trade in R so one repeating mistake is visible at review time. The visual beside this is an illustrative study, not my account.
 				</Chapter>
 			</Box>

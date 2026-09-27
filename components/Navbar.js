@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import ThemeToggleButton from "./ThemeToggleButton";
+import OutArrow from "./OutArrow";
 
 // Keep the bar and the main offset in sync so the fixed header never covers content.
 const NAV_HEIGHT = { base: "64px", md: "72px" };
@@ -74,9 +75,7 @@ function LinkItem({ href, active, external, children }) {
 			{children}
 			{external && (
 				<>
-					<Box as="span" aria-hidden="true" ml="3px" fontSize="11px">
-						↗
-					</Box>
+					<OutArrow ml="3px" fontSize="11px" />
 					<VisuallyHidden> (opens in a new tab)</VisuallyHidden>
 				</>
 			)}
@@ -168,7 +167,7 @@ const Navbar = ({ path = "/", ...props }) => {
 							direction="row"
 							display={{ base: "none", md: "flex" }}
 							alignItems="center"
-							spacing={{ md: 1, lg: 3 }}
+							spacing={{ md: 1, lg: 4 }}
 							mr={{ md: 1, lg: 2 }}>
 							{navigationLinks.map((link) => {
 								const href = onHome && link.homeHref ? link.homeHref : link.href;
@@ -276,9 +275,7 @@ const Navbar = ({ path = "/", ...props }) => {
 										{link.name}
 										{link.external && (
 											<>
-												<Box as="span" aria-hidden="true" ml="4px" fontSize="12px">
-													↗
-												</Box>
+												<OutArrow ml="4px" fontSize="12px" />
 												<VisuallyHidden> (opens in a new tab)</VisuallyHidden>
 											</>
 										)}

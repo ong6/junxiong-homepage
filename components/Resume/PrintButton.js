@@ -8,7 +8,8 @@ const PrintButton = (props) => (
 		download
 		leftIcon={<FiDownload />}
 		colorScheme="mint"
-		size="sm"
+		minH="44px"
+		px={4}
 		{...props}>
 		Download PDF
 	</Button>

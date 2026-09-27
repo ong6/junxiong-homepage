@@ -1,5 +1,6 @@
 import { Box, Flex, Link, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
+import OutArrow from "./OutArrow";
 
 const links = [
 	{ label: "Contact", href: "/contact", internal: true },
@@ -18,7 +19,7 @@ const Footer = () => (
 			direction={{ base: "column", md: "row" }}
 			justify="space-between"
 			align={{ md: "center" }}
-			gap={5}>
+			gap={6}>
 			<Box>
 				<Text fontWeight="700" fontSize="14px">
 					Ong Jun Xiong
@@ -26,13 +27,13 @@ const Footer = () => (
 				<Text
 					mt={1}
 					fontFamily="var(--font-mono)"
-					fontSize={{ base: "11px", md: "12px" }}
+					fontSize="12px"
 					letterSpacing=".08em"
 					color="text.muted">
 					SOFTWARE ENGINEER · SINGAPORE
 				</Text>
 			</Box>
-			<Flex wrap="wrap" columnGap={5} rowGap={2}>
+			<Flex wrap="wrap" columnGap={6} rowGap={2}>
 				{links.map((link) => (
 					<Link
 						key={link.label}
@@ -51,15 +52,13 @@ const Footer = () => (
 						_hover={{ color: "page.text", textDecoration: "underline" }}>
 						{link.label}
 						{link.href.startsWith("http") && (
-							<Box as="span" aria-hidden="true" ml="3px" fontSize="11px">
-								↗
-							</Box>
+							<OutArrow ml="3px" fontSize="11px" />
 						)}
 					</Link>
 				))}
 			</Flex>
 		</Flex>
-		<Text mt={6} pb={2} fontSize="11px" color="text.muted">
+		<Text mt={6} pb={2} fontSize="12px" color="text.muted">
 			© {new Date().getFullYear()} Ong Jun Xiong
 		</Text>
 	</Box>

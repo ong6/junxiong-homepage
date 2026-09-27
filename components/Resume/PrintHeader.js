@@ -7,6 +7,7 @@ import {
 	useColorModeValue,
 } from "@chakra-ui/react";
 import PrintButton from "./PrintButton";
+import OutArrow from "../OutArrow";
 
 const contactLinks = [
 	{ label: "Email", href: "mailto:junxiongong2@gmail.com" },
@@ -24,11 +25,11 @@ export default function PrintHeader() {
 				direction={{ base: "column", md: "row" }}
 				justify="space-between"
 				align={{ base: "flex-start", md: "flex-end" }}
-				gap={5}>
+				gap={6}>
 				<Box maxW="590px">
 					<Text
 						fontFamily="var(--font-mono)"
-						fontSize="11px"
+						fontSize="12px"
 						fontWeight="700"
 						letterSpacing="0.1em"
 						textTransform="uppercase"
@@ -45,13 +46,13 @@ export default function PrintHeader() {
 				<PrintButton flexShrink={0} />
 			</Flex>
 
-			<Text fontSize="16px" lineHeight="1.75" opacity={0.92} maxW="680px" mt={5}>
+			<Text fontSize="16px" lineHeight="1.75" opacity={0.92} maxW="680px" mt={6}>
 				I build production agent runtimes, tool servers, and backend platforms.
 				At TikTok, my work spans the shared AI layer and the Go services beneath
 				global e-commerce operations.
 			</Text>
 
-			<Flex wrap="wrap" columnGap={5} rowGap={2} mt={4} fontSize="14px" fontWeight="700">
+			<Flex wrap="wrap" columnGap={6} rowGap={2} mt={4} fontSize="14px" fontWeight="700">
 				<Link href="https://junxiong.dev" display="inline-flex" alignItems="center" minH="32px" my={-1.5}>
 					junxiong.dev
 				</Link>
@@ -66,6 +67,7 @@ export default function PrintHeader() {
 						target={link.href.startsWith("http") ? "_blank" : undefined}
 						rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}>
 						{link.label}
+						{link.href.startsWith("http") && <OutArrow ml="4px" fontSize="12px" />}
 					</Link>
 				))}
 			</Flex>

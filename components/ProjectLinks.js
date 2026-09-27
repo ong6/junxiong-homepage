@@ -1,6 +1,7 @@
 import { Box, Flex, Link, Text, VisuallyHidden } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useId } from "react";
+import OutArrow from "./OutArrow";
 
 // Links out of a page (source, related project, notes) as one framed block
 // instead of a highlighted word inside a sentence. Same row grammar as the
@@ -36,9 +37,13 @@ function LinkRow({ name, detail, href, external, minH = "56px", py = 3 }) {
 				<Text as="span" data-name fontWeight="700" transition="color 160ms ease">
 					{name}
 				</Text>
-				<Box as="span" data-arrow aria-hidden="true" display="inline-block" transition="transform var(--dur-ui) var(--ease-out)">
-					{external ? "↗" : "→"}
-				</Box>
+				{external ? (
+					<OutArrow />
+				) : (
+					<Box as="span" data-arrow aria-hidden="true" display="inline-block" transition="transform var(--dur-ui) var(--ease-out)">
+						→
+					</Box>
+				)}
 			</Flex>
 			{external && <VisuallyHidden> (opens in a new tab)</VisuallyHidden>}
 			{detail && (
