@@ -10,6 +10,10 @@ for (const path of PAGES) {
 			await page.goto(path);
 			await page.locator(SEL).first().waitFor();
 			await page.locator("figure.uipack").first().scrollIntoViewIfNeeded();
+			// Scrolling past /uipack's 3D gallery mounts it (components/LazyMount.js);
+			// let that load settle so packets are sampled on a free main thread.
+			await page.waitForLoadState("networkidle");
+			await page.waitForTimeout(300);
 		});
 
 		test("a packet moves while playing", async ({ page }) => {

@@ -4,7 +4,7 @@ import "uipack/objects.css";
 import "uipack/presentations.css";
 import "../styles/globals.css";
 import "../styles/print.css";
-import { ChakraProvider } from "@chakra-ui/react";
+import SiteProvider from "../components/SiteProvider";
 import Layout from "../components/layouts/Main";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -29,11 +29,11 @@ const plexMono = IBM_Plex_Mono({
 function MyApp({ Component, pageProps, router }) {
 	return (
 		<div className={`${plexSans.variable} ${plexMono.variable}`}>
-			<ChakraProvider theme={theme}>
+			<SiteProvider theme={theme}>
 				<Layout router={router}>
 					<Component {...pageProps} key={router.route} />
 				</Layout>
-			</ChakraProvider>
+			</SiteProvider>
 			<Analytics />
 			<SpeedInsights />
 		</div>

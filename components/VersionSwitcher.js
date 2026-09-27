@@ -48,7 +48,7 @@ export default function VersionSwitcher({ active, ...props }) {
 							_hover={{ textDecoration: "none", borderColor: "brand.solid" }}>
 							{v}
 							{isCurrent ? (
-								<Text as="span" fontSize="10px" letterSpacing=".08em" opacity={0.8}>
+								<Text as="span" fontSize="12px" letterSpacing=".08em" opacity={0.8}>
 									NOW
 								</Text>
 							) : null}

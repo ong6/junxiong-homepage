@@ -234,6 +234,7 @@ export default function Compoze() {
 
 				<DiagramFigure
 					id="cuf"
+					headingLevel={2}
 					diagram={CompozeUserFlow}
 					caption="fig. 2 — two people use it. An admin fills the knowledge base and watches ingest; a user asks and checks the sources. The dashed hop marks the handoff from the admin&apos;s side to the user&apos;s."
 				/>

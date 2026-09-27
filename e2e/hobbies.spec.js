@@ -148,6 +148,8 @@ test("trading uses the shared journal and UI Pack exposes all library objects", 
  await page.goto("/hobbies#trading");
  await expect(page.locator('#trading canvas')).toHaveAttribute('data-renderer','webgl');
  await page.goto('/uipack');
+ // The 3D gallery mounts as the reader scrolls near it (components/LazyMount.js).
+ await page.locator('#objects').scrollIntoViewIfNeeded();
  const collection=page.getByRole('region',{name:'3D object collection'});
  await expect(collection.getByRole('button',{name:'Trading journal',exact:true})).toBeVisible();
  await collection.getByRole('button',{name:'Trading journal',exact:true}).click();
@@ -158,6 +160,7 @@ test("trading uses the shared journal and UI Pack exposes all library objects", 
 
 test("UI Pack changes the tennis edition without leaving the shared player", async ({ page }) => {
  await page.goto('/uipack');
+ await page.locator('#objects').scrollIntoViewIfNeeded();
  const collection = page.getByRole('region', { name: '3D object collection' });
  await collection.getByRole('button', { name: 'Tennis practice', exact: true }).click();
  const object = collection.locator('.uipack-object');

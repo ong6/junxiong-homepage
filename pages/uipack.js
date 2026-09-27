@@ -21,6 +21,7 @@ import UipackSlides from "../components/UipackSlides";
 import Layout from "../components/layouts/Articles";
 import CaseStudyFooter from "../components/CaseStudyFooter";
 import ProjectLinks from "../components/ProjectLinks";
+import LazyMount from "../components/LazyMount";
 // Load the animated gallery only after the selected category is known.
 const UipackWebGallery = dynamic(() => import("../components/UipackWebGallery"), {
 	loading: () => (
@@ -51,6 +52,9 @@ export default function Uipack() {
 	const router = useRouter();
 	const hydrated = useSyncExternalStore(subscribeToHydration, () => true, () => false);
 	const category = router.query.category === "slides" ? 1 : 0;
+	// A link that names an object (or the #objects anchor) mounts the 3D
+	// gallery at once; otherwise it mounts as the reader scrolls near it.
+	const objectsLinked = ["object", "look", "edition"].some((key) => router.query[key] !== undefined) || router.asPath.includes("#objects");
 	const changeCategory = (index) => {
 		router.push({ pathname: "/uipack", query: { category: index ? "slides" : "web" } }, undefined, {
 			shallow: true,
@@ -171,7 +175,7 @@ export default function Uipack() {
 									to typed figures, adapted to the type and colours I use here.
 								</P>
 							</Box>
-							{hydrated && router.isReady && category === 0 && <><UipackObjects /><UipackWebMotion /><UipackWebGallery /></>}
+							{hydrated && router.isReady && category === 0 && <><LazyMount id="objects" eager={objectsLinked} my={{ base: 10, md: 14 }} minH={{ base: "1077px", md: "1088px", xl: "730px" }}><UipackObjects /></LazyMount><UipackWebMotion /><UipackWebGallery /></>}
 
 							<Box maxW="680px">
 								<H2>Assets</H2>
