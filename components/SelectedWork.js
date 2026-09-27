@@ -12,6 +12,16 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 
+// Lift on a real pointer only; touch fires a sticky hover on tap.
+const liftOnHover = (shadow) => ({
+	"@media (hover: hover) and (pointer: fine)": {
+		"&:hover": { transform: "translateY(-3px)", boxShadow: shadow },
+		// `translate`, not `transform`: the panel's scroll-in animation owns transform.
+		"&:hover [data-panel]": { translate: "-2px -2px", boxShadow: "6px 6px 0 var(--chakra-colors-preview-shadow)" },
+	},
+	"@media (prefers-reduced-motion: reduce)": { "&:hover": { transform: "none" } },
+});
+
 const labelStyle = {
 	fontFamily: "var(--font-mono)",
 	fontSize: "12px",
@@ -30,7 +40,7 @@ function ProjectLink({ href, children }) {
 				ml={2}
 				color="brand.solid"
 				display="inline-block"
-				transition="transform 160ms ease"
+				transition="transform var(--dur-ui) var(--ease-out)"
 				_groupHover={{ transform: "translateX(4px)" }}
 				sx={{ "@media (prefers-reduced-motion: reduce)": { transition: "none", transform: "none !important" } }}>
 				→
@@ -39,7 +49,7 @@ function ProjectLink({ href, children }) {
 	);
 }
 
-function FeaturedCard({ span, children }) {
+function FeaturedCard({ span, index = 0, children }) {
 	return (
 		<LinkBox
 			as="article"
@@ -50,16 +60,17 @@ function FeaturedCard({ span, children }) {
 			border="1px solid"
 			borderColor="border.subtle"
 			borderRadius="6px"
-			overflow="hidden"
+			// clip, not hidden: hidden makes the card a scroll container, which
+			// would pin the preview's scroll-driven animation to the card.
+			overflow="clip"
 			display="flex"
 			flexDirection="column"
-			transition="transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease"
-			_hover={{
-				transform: "translateY(-2px)",
-				borderColor: "border.strong",
-				boxShadow: "0 18px 42px -34px rgba(39,32,27,.65)",
-			}}
-			sx={{ "@media (prefers-reduced-motion: reduce)": { transition: "none", _hover: { transform: "none" } } }}>
+			data-reveal="lead"
+			style={{ "--i": index }}
+			transition="transform var(--dur-ui) var(--ease-out), box-shadow var(--dur-ui) var(--ease-out), border-color 160ms ease"
+			_hover={{ borderColor: "border.strong" }}
+			_active={{ transform: "scale(0.99)" }}
+			sx={liftOnHover("0 18px 42px -34px rgba(39,32,27,.65)")}>
 			{children}
 		</LinkBox>
 	);
@@ -115,6 +126,7 @@ function GroundplaneCard() {
 						borderColor="border.subtle"
 						borderRadius="4px"
 						boxShadow="4px 4px 0 var(--chakra-colors-preview-shadow)"
+						data-panel
 						p={4}>
 						<Flex justify="space-between" gap={3} color="text.muted" sx={labelStyle}>
 							<Text>Declared field</Text>
@@ -126,7 +138,7 @@ function GroundplaneCard() {
 							<Text as="dt" color="text.muted">Recorded winner</Text>
 							<Text as="dd" m={0} fontWeight="700">harbour</Text>
 						</Grid>
-						<Text mt={4} pt={3} borderTop="1px solid" borderColor="border.subtle" color="status.error" fontFamily="var(--font-mono)" fontSize="12px" fontWeight="700">
+						<Text data-stamp mt={4} pt={3} borderTop="1px solid" borderColor="border.subtle" color="status.error" fontFamily="var(--font-mono)" fontSize="12px" fontWeight="700">
 							Blocked · UnsupportedClaim
 						</Text>
 						<Text mt={2} color="text.muted" fontSize="14px" lineHeight="1.5">
@@ -141,7 +153,7 @@ function GroundplaneCard() {
 
 function CompozeCard() {
 	return (
-		<FeaturedCard span={5}>
+		<FeaturedCard span={5} index={1}>
 			<CardCopy
 				eyebrow="Company · 2025"
 				title="Compoze"
@@ -150,7 +162,7 @@ function CompozeCard() {
 			/>
 			<Box mt="auto" px={{ base: 5, md: 7 }} pb={{ base: 5, md: 7 }}>
 				<DottedCanvas>
-					<Box bg="preview.panel" border="1px solid" borderColor="border.subtle" borderRadius="4px" overflow="hidden">
+					<Box data-panel bg="preview.panel" border="1px solid" borderColor="border.subtle" borderRadius="4px" overflow="hidden">
 						<Flex justify="space-between" gap={3} px={4} py={3} bg="accent.soft" color="accent.terracotta" sx={labelStyle}>
 							<Text>Policy search</Text>
 							<Text>3 sources</Text>
@@ -204,7 +216,7 @@ const supportingProjects = [
 	},
 ];
 
-function SupportingCard({ project }) {
+function SupportingCard({ project, index }) {
 	return (
 		<LinkBox
 			as="article"
@@ -215,9 +227,12 @@ function SupportingCard({ project }) {
 			borderRadius="4px"
 			p={{ base: 5, md: 6 }}
 			gridColumn={{ md: project.wide ? "span 2" : undefined }}
-			transition="border-color 160ms ease, transform 160ms ease"
-			_hover={{ borderColor: "border.strong", transform: "translateY(-2px)" }}
-			sx={{ "@media (prefers-reduced-motion: reduce)": { transition: "none", _hover: { transform: "none" } } }}>
+			data-reveal
+			style={{ "--i": index % 2 }}
+			transition="border-color 160ms ease, transform var(--dur-ui) var(--ease-out), box-shadow var(--dur-ui) var(--ease-out)"
+			_hover={{ borderColor: "border.strong" }}
+			_active={{ transform: "scale(0.99)" }}
+			sx={liftOnHover("0 16px 36px -30px rgba(39,32,27,.55)")}>
 			<Text color="text.muted" sx={labelStyle}>
 				{project.label}
 			</Text>
@@ -248,7 +263,7 @@ function Elsewhere() {
 				Around the site
 			</Heading>
 			<SimpleGrid columns={{ base: 1, smmd: 2, lg: 4 }} mt={6} borderTop="1px solid" borderColor="border.subtle">
-				{elsewhereLinks.map((item) => (
+				{elsewhereLinks.map((item, index) => (
 					<Link
 						key={item.name}
 						as={item.external ? undefined : NextLink}
@@ -256,6 +271,9 @@ function Elsewhere() {
 						prefetch={item.external ? undefined : false}
 						target={item.external ? "_blank" : undefined}
 						rel={item.external ? "noopener noreferrer" : undefined}
+						data-reveal
+						data-group
+						style={{ "--i": index }}
 						display="block"
 						minH="92px"
 						py={4}
@@ -267,7 +285,14 @@ function Elsewhere() {
 						_hover={{ color: "brand.solid", textDecoration: "none" }}>
 						<Flex align="center" justify="space-between" gap={3} fontWeight="750">
 							<Text>{item.name}</Text>
-							<Text aria-hidden="true">{item.external ? "↗" : "→"}</Text>
+							<Text
+								as="span"
+								aria-hidden="true"
+								display="inline-block"
+								transition="transform var(--dur-ui) var(--ease-out)"
+								_groupHover={{ transform: item.external ? "translate(3px, -3px)" : "translateX(4px)" }}>
+								{item.external ? "↗" : "→"}
+							</Text>
 						</Flex>
 						<Text mt={1} color="text.muted" fontSize="13px" lineHeight="1.5">
 							{item.detail}
@@ -304,8 +329,8 @@ export default function SelectedWork() {
 						Also building
 					</Heading>
 					<SimpleGrid columns={{ base: 1, md: 2 }} mt={4} gap={4}>
-						{supportingProjects.map((project) => (
-							<SupportingCard key={project.title} project={project} />
+						{supportingProjects.map((project, index) => (
+							<SupportingCard key={project.title} project={project} index={index} />
 						))}
 					</SimpleGrid>
 				</Box>

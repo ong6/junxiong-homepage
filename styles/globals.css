@@ -46,15 +46,156 @@ a {
 	}
 }
 
+/* Motion. Curves and budgets follow Emil Kowalski's animate skill
+   (resources/web-animation-skills.md in the store): strong ease-out for
+   entrances, ease-in-out for things moving on screen, UI under 300ms,
+   transform and opacity only. */
+:root {
+	--ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+	--ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+	--dur-press: 160ms;
+	--dur-ui: 220ms;
+	--dur-enter: 560ms;
+}
+
 @keyframes fade-up {
-	from { opacity: 0; transform: translateY(12px); }
+	from { opacity: 0; transform: translateY(10px); }
 	to { opacity: 1; transform: none; }
 }
 .fade-up {
-	animation: fade-up 0.35s ease-out both;
+	animation: fade-up var(--dur-enter) var(--ease-out) both;
 }
+
+/* Homepage intro: a short staggered rise. The name only moves (no fade) so
+   it counts for LCP on the first frame. */
+@keyframes settle {
+	from { transform: translateY(14px); }
+	to { transform: none; }
+}
+.hero-rise {
+	animation: fade-up var(--dur-enter) var(--ease-out) both;
+	animation-delay: calc(var(--i, 0) * 70ms);
+}
+.hero-settle {
+	animation: settle 700ms var(--ease-out) both;
+}
+
+/* Portrait: the print lands straight, then tilts to rest. On a real pointer
+   it straightens and lifts when you reach for it. */
+@keyframes portrait-rest {
+	from { transform: rotate(0deg) translateY(6px); }
+	to { transform: rotate(1.5deg); }
+}
+@media (min-width: 48em) {
+	.portrait-frame {
+		transform: rotate(1.5deg);
+		animation: portrait-rest 900ms var(--ease-out) 240ms both;
+		transition: transform var(--dur-ui) var(--ease-out), box-shadow var(--dur-ui) var(--ease-out);
+	}
+}
+@media (min-width: 48em) and (hover: hover) and (pointer: fine) {
+	.portrait-frame:hover {
+		animation: none;
+		transform: rotate(0deg) translateY(-3px);
+		box-shadow: 0 22px 44px -30px rgba(39, 32, 27, 0.6);
+	}
+}
+
+/* Cards and panels rise into place as they enter the viewport. Scroll-driven,
+   so it needs no script, cannot hide content from a crawler, and anything
+   already on screen at load is simply finished. Unsupported browsers get the
+   static page. */
+@keyframes reveal {
+	from { opacity: 0; transform: translateY(24px) scale(0.985); }
+	to { opacity: 1; transform: none; }
+}
+[data-panel] {
+	transition: translate var(--dur-ui) var(--ease-out), box-shadow var(--dur-ui) var(--ease-out);
+}
+@keyframes panel-press {
+	from { transform: translate(6px, 6px); box-shadow: 0 0 0 var(--chakra-colors-preview-shadow); }
+	to { transform: none; }
+}
+@keyframes stamp {
+	0%, 40% { opacity: 0; transform: scale(1.12); }
+	100% { opacity: 1; transform: none; }
+}
+@keyframes progress {
+	from { transform: scaleX(0); }
+	to { transform: scaleX(1); }
+}
+.scroll-progress { display: none; }
+@supports (animation-timeline: view()) {
+	[data-reveal]:not([data-reveal="lead"]) {
+		animation: reveal var(--ease-out) both;
+		animation-timeline: view();
+		animation-range: entry calc(var(--i, 0) * 6%) entry calc(70% + var(--i, 0) * 6%);
+	}
+	/* The lead projects sit at the fold on phones, where the first title must
+	   read on first paint; they only rise on wide layouts. */
+	@media (min-width: 62em) {
+		[data-reveal="lead"] {
+			animation: reveal var(--ease-out) both;
+			animation-timeline: view();
+			animation-range: entry calc(var(--i, 0) * 6%) entry calc(70% + var(--i, 0) * 6%);
+		}
+	}
+	[data-panel] {
+		animation: panel-press var(--ease-out) both;
+		animation-timeline: view();
+		animation-range: entry 20% cover 35%;
+	}
+	[data-stamp] {
+		animation: stamp var(--ease-out) both;
+		animation-timeline: view();
+		animation-range: entry 30% cover 45%;
+	}
+	.scroll-progress {
+		display: block;
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 2px;
+		z-index: 30;
+		background: var(--chakra-colors-brand-solid);
+		transform-origin: left;
+		animation: progress linear both;
+		animation-timeline: scroll(root);
+	}
+}
+
+/* Mobile menu drops in from the bar. Translate, not scale, so its 44px
+   targets are full size from the first frame. */
+#navbar-menu {
+	transition: opacity 180ms var(--ease-out), transform 180ms var(--ease-out);
+}
+@starting-style {
+	#navbar-menu { opacity: 0; transform: translateY(-6px); }
+}
+
+/* Theme icon turns in when the mode flips. */
+@keyframes icon-turn {
+	from { opacity: 0; transform: rotate(-90deg) scale(0.8); }
+	to { opacity: 1; transform: none; }
+}
+.theme-icon {
+	animation: icon-turn 300ms var(--ease-out) both;
+}
+
+/* Reduced motion keeps opacity, drops movement. */
 @media (prefers-reduced-motion: reduce) {
-	.fade-up { animation: none; }
+	.fade-up,
+	.hero-rise,
+	.hero-settle,
+	.portrait-frame,
+	.theme-icon,
+	[data-reveal],
+	[data-panel],
+	[data-stamp] {
+		animation: none !important;
+	}
+	.scroll-progress { display: none; }
 }
 
 /* uipack figures take the site's tokens. Chakra flips the semantic colours

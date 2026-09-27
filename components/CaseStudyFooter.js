@@ -17,6 +17,7 @@ export default function CaseStudyFooter({ links, next }) {
 				<LinkBox
 					as="section"
 					aria-label="Next project"
+					data-reveal
 					mt={{ base: 4, md: 5 }}
 					bg="surface.raised"
 					border="1px solid"
@@ -24,9 +25,11 @@ export default function CaseStudyFooter({ links, next }) {
 					borderRadius="6px"
 					px={5}
 					py={5}
-					transition="transform 160ms ease, border-color 160ms ease"
-					_hover={{ borderColor: "border.strong", transform: "translateY(-2px)", "& [data-arrow]": { transform: "translateX(4px)" } }}
+					transition="transform var(--dur-ui) var(--ease-out), border-color 160ms ease"
+					_hover={{ borderColor: "border.strong", "& [data-arrow]": { transform: "translateX(4px)" } }}
+					_active={{ transform: "scale(0.99)" }}
 					sx={{
+						"@media (hover: hover) and (pointer: fine)": { "&:hover": { transform: "translateY(-3px)" } },
 						"@media (prefers-reduced-motion: reduce)": {
 							transition: "none",
 							"& [data-arrow]": { transition: "none" },
@@ -60,7 +63,7 @@ export default function CaseStudyFooter({ links, next }) {
 								ml={2}
 								color="brand.solid"
 								display="inline-block"
-								transition="transform 160ms ease">
+								transition="transform var(--dur-ui) var(--ease-out)">
 								→
 							</Box>
 						</LinkOverlay>

@@ -115,7 +115,9 @@ const Main = ({ children, router }) => {
 	const structuredData = isHome ? profileSchema : webPageSchema(canonical);
 
 	return (
-		<Box pb={8} overflowX={router?.pathname === "/hobbies" ? "clip" : "hidden"}>
+		// clip, not hidden: hidden turns this box into a scroll container, which
+		// breaks position: sticky and pins every scroll-driven animation to it.
+		<Box pb={8} overflowX="clip">
 			<Head>
 				<meta
 					name="google-site-verification"

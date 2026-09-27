@@ -11,7 +11,10 @@ const ThemeToggleButton = () => {
 			variant="ghost"
 			minW="44px"
 			h="44px"
-			icon={useColorModeValue(<MoonIcon />, <SunIcon />)}
+			icon={useColorModeValue(
+				<MoonIcon key="moon" className="theme-icon" />,
+				<SunIcon key="sun" className="theme-icon" />,
+			)}
 			onClick={toggleColorMode}
 		/>
 	);

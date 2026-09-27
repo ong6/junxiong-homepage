@@ -343,6 +343,7 @@ export default function DiagramFigure({ id, diagram, caption, headingLevel }) {
 		<Box
 			as="figure"
 			ref={boxRef}
+			data-reveal
 			my={{ base: 10, md: 14 }}
 			mx={0}
 			w="min(100vw - 32px, 1088px)"

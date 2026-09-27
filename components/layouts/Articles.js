@@ -82,6 +82,7 @@ const Layout = ({ children, title, description, schema, noindex = false, animate
 					)}
 				</Head>
 			)}
+			{schema && <div className="scroll-progress" aria-hidden="true" />}
 			{children}
 		</article>
 	);

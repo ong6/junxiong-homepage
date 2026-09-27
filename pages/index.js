@@ -16,9 +16,10 @@ const utilityLinkProps = {
 	textUnderlineOffset: "4px",
 };
 
-function Eyebrow({ children }) {
+function Eyebrow({ children, ...props }) {
 	return (
 		<Text
+			{...props}
 			fontFamily="var(--font-mono)"
 			fontSize="12px"
 			fontWeight="700"
@@ -34,7 +35,7 @@ function Introduction() {
 
 	return (
 		<Box as="header" id="about" scrollMarginTop="96px" pt={{ base: 6, md: 20 }}>
-			<Eyebrow>{"// JUNXIONG.DEV / SINGAPORE"}</Eyebrow>
+			<Eyebrow className="hero-rise">{"// JUNXIONG.DEV / SINGAPORE"}</Eyebrow>
 
 			<Grid
 				gridTemplateColumns={{
@@ -52,18 +53,19 @@ function Introduction() {
 				<Box gridArea="copy" maxW="720px">
 					<Heading
 						as="h1"
+						className="hero-settle"
 						fontSize={{ base: "46px", smmd: "58px", lg: "74px" }}
 						lineHeight=".98"
 						letterSpacing="-.06em">
 						Ong Jun Xiong
 					</Heading>
-					<Text mt={5} fontSize={{ base: "19px", md: "23px" }} lineHeight="1.45">
+					<Text className="hero-rise" style={{ "--i": 2 }} mt={5} fontSize={{ base: "19px", md: "23px" }} lineHeight="1.45">
 						I&apos;m a software engineer at TikTok in Singapore, building AI infrastructure for{" "}
 						<Box as="span" whiteSpace="nowrap">
 							e-commerce.
 						</Box>
 					</Text>
-					<Text mt={5} maxW="640px" fontSize="16px" lineHeight="1.75" color="text.muted">
+					<Text className="hero-rise" style={{ "--i": 3 }} mt={5} maxW="640px" fontSize="16px" lineHeight="1.75" color="text.muted">
 						At TikTok I built my team&apos;s shared AI platform from zero: an agent service, an MCP
 						server over the data warehouse, and a React SDK for AI chat. Before that I
 						wrote Go services for the seller platform. Outside work, I built and ran{" "}
@@ -84,7 +86,7 @@ function Introduction() {
 						borderColor={portraitBorder}
 						bg="surface.raised"
 						p={{ base: 2, md: 3 }}
-						transform={{ md: "rotate(1.5deg)" }}>
+						className="portrait-frame">
 						<NextImage
 							src="/images/junxiong.webp"
 							alt="Ong Jun Xiong, AI infrastructure engineer in Singapore"
@@ -114,6 +116,8 @@ function Introduction() {
 
 				<Grid
 					gridArea="links"
+					className="hero-rise"
+					style={{ "--i": 4 }}
 					templateColumns={{ base: "minmax(0, 1fr)", md: "repeat(3, max-content)" }}
 					columnGap={{ base: 2, md: 6 }}
 					rowGap={1}>

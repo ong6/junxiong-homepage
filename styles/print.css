@@ -7,8 +7,15 @@
 		display: none !important;
 	}
 
-	.fade-up {
+	.fade-up,
+	[data-reveal],
+	[data-panel],
+	[data-stamp] {
 		animation: none !important;
+	}
+
+	.scroll-progress {
+		display: none !important;
 	}
 
 	html,

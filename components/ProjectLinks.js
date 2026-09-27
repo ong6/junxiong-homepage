@@ -36,7 +36,7 @@ function LinkRow({ name, detail, href, external, minH = "56px", py = 3 }) {
 				<Text as="span" data-name fontWeight="700" transition="color 160ms ease">
 					{name}
 				</Text>
-				<Box as="span" data-arrow aria-hidden="true" display="inline-block" transition="transform 160ms ease">
+				<Box as="span" data-arrow aria-hidden="true" display="inline-block" transition="transform var(--dur-ui) var(--ease-out)">
 					{external ? "↗" : "→"}
 				</Box>
 			</Flex>
@@ -57,6 +57,7 @@ export default function ProjectLinks({ heading = "Links out", links, compact = f
 	return (
 		<Box
 			as="aside"
+			data-reveal
 			aria-labelledby={id}
 			bg="surface.raised"
 			border="1px solid"
