@@ -1,7 +1,7 @@
 import { Badge, Connector, Defs, Flow, Group, Label, Lane, Line, Node } from "../parts";
 
 export const CLAIM =
-	"v4, late August to mid-September 2026: no model in the loop. Yahoo stays the only price source and Nasdaq verifies it, macro feeds build regime signals, 21 books trade through fill model v4, and a 10-fold walk-forward, a no-model sweep farm and three frozen forward monitors decide what survives. Nothing on the evidence side can promote a book.";
+	"v4, late August to mid-September 2026: no model in the loop. Yahoo stays the only price source and Nasdaq verifies it, macro feeds build regime signals, 21 books trade through fill model v4, and a 10-fold walk-forward, a no-model sweep farm and three frozen forward monitors decide what survives. Nothing on the evidence side can move a book to real money.";
 
 export const meta = {
 	number: "Figure 01 · v4",

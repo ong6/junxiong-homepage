@@ -22,7 +22,7 @@ export default function TradingEngineV4() {
 			description="Version 4 of Ong Jun Xiong's paper-trading engine, August–September 2026: no model in the loop, a 10-fold walk-forward, a simulator audit and frozen forward monitors."
 			lead="With no model in the loop, v4 spent a month testing whether any of the strategies were real. Almost none were, and most of the month went into showing that carefully enough to believe it."
 			diagram={V4}
-			caption="fig. 1 — v4. ① Yahoo remains the only price source; Nasdaq's quote API checks it on a schedule instead of standing in for it. ② Macro feeds become regime signals in the same store. ③ The league trades 21 frozen books through fill model v4. ④ Forward monitors, a Sunday walk-forward and a no-model sweep farm judge the results, and none of them can promote a book."
+			caption="fig. 1 — v4. ① Yahoo remains the only price source; Nasdaq's quote API checks it on a schedule instead of standing in for it. ② Macro feeds become regime signals in the same store. ③ The league trades 21 frozen books through fill model v4. ④ Forward monitors, a Sunday walk-forward and a no-model sweep farm judge the results, and none of them can move a book to real money."
 			facts={facts}>
 			<H2>Grids instead of a model</H2>
 			<P>
@@ -47,7 +47,7 @@ export default function TradingEngineV4() {
 				228 tests after that audit and over 2,200 two weeks later.
 			</P>
 
-			<H2>Monitors that cannot promote</H2>
+			<H2>Monitors that can only stop a book</H2>
 			<P>
 				Fill model v4 added named execution profiles, so any result can be rerun at double cost or
 				under a participation limit. Doubling costs at $39,000 barely moved SPY but took 1.85

@@ -1,14 +1,14 @@
 import { Badge, Connector, Defs, Flow, Group, Label, Lane, Line, Node, Packet } from "./parts";
 
 export const CLAIM =
-	"v7, 29 September 2026: market data, headlines and macro feeds land in DuckDB under one writer, each fact with the time it became available. Each night a fixed rule and a model both score every candidate, and the P8 agent keeps its own book. Code, not the model, turns scores into sized orders; a pre-open check may only cancel, and every order fills at the next open or a limit-on-open. Every decision is kept in one ledger, labelled later, and a paired test against the rule decides at registered looks. The challenger lab, event triggers and IBKR stay off.";
+	"v7, 29 September 2026: market data, headlines and macro feeds land in DuckDB under one writer, each fact with the time it became available. Each night a fixed rule and a model both score every candidate, and the nightly agent keeps its own book. Code, not the model, turns scores into sized orders; a pre-open check may only cancel, and every order fills at the next open or a limit-on-open. Every decision is kept in one ledger, labelled later, and a paired test against the rule decides on fixed check dates. The challenger lab and event triggers are switched off, and there is no broker yet: it is still all paper.";
 
 export const meta = {
 	number: "Figure 01",
 	eyebrow: "The nightly loop · v7",
 	title: "The model scores, code trades, the ledger decides",
 	caption:
-		"Sources on the left, one writer, three decision paths, then sizing and fills, then the evidence on the right. Dashed boxes have no order authority. Nothing on this canvas promotes a policy by itself.",
+		"Sources on the left, one writer, three decision paths, then sizing and fills, then the evidence on the right. Dashed boxes place no orders. Nothing here moves a strategy to real money on its own.",
 	legend: [
 		{ label: "Data", kind: "change" },
 		{ label: "Scores and orders", kind: "request" },
@@ -39,7 +39,7 @@ const STORE = [
 const DECIDE = [
 	{ y: 128, h: 56, label: "rule baseline", sub: "fixed ranking" },
 	{ y: 208, h: 64, label: "model scores", sub: "every candidate", icon: "agent", badge: "3" },
-	{ y: 296, h: 56, label: "nightly agent", sub: "P8 · locked tool", icon: "agent" },
+	{ y: 296, h: 56, label: "nightly agent", sub: "one locked trade tool", icon: "agent" },
 	{ y: 376, h: 56, label: "event triggers", sub: "news · movers · shadow", icon: "robot", dashed: true },
 	{ y: 456, h: 56, label: "challenger lab", sub: "built · switched off", icon: "robot", dashed: true },
 ];
@@ -97,8 +97,8 @@ export function Wide({ id }) {
 			<Label x={552} y={552} text="fills · dividends" anchor="middle" accent size={11} />
 
 			<Line id={id} x1={848} y1={448} x2={848} y2={584} dashed flow="fill" />
-			<Label x={836} y={528} text="Stage 2" anchor="end" size={10} />
-			<Node x={720} y={584} w={168} h={56} label="IBKR paper" sub="owner gate" icon="lock" size={13} subSize={10} dashed />
+			<Label x={836} y={528} text="later" anchor="end" size={10} />
+			<Node x={720} y={584} w={168} h={56} label="IBKR broker" sub="not open yet" icon="lock" size={13} subSize={10} dashed />
 
 			{/* ---------- evidence ---------- */}
 			<Connector points={toLedger} defs={id} flow="prove" />
@@ -108,13 +108,13 @@ export function Wide({ id }) {
 			<Line id={id} x1={1000} y1={192} x2={1000} y2={232} flow="prove" />
 			<Node x={920} y={232} w={160} h={64} label="paired test" sub="model vs rule" size={13} subSize={10} flow="prove" />
 			<Line id={id} x1={1000} y1={296} x2={1000} y2={336} flow="prove" />
-			<Node x={920} y={336} w={160} h={64} label="registered looks" sub="60 · 90 · 120" size={13} subSize={10} flow="prove" />
+			<Node x={920} y={336} w={160} h={64} label="fixed check dates" sub="60 · 90 · 120 days" size={13} subSize={10} flow="prove" />
 			<Label x={1000} y={416} text="PASS · KILL" anchor="middle" size={10} />
 
 			<Connector points={fillToBooks} defs={id} flow="fill" />
 			<Node x={920} y={440} w={160} h={56} label="3 comparator books" sub="model · rule · veto" size={12} subSize={10} flow={["fill", "prove"]} />
-			<Node x={920} y={528} w={160} h={56} label="trial census" sub="every variant" size={12} subSize={10} flow="prove" />
-			<Label x={1000} y={616} text="only I can promote" anchor="middle" size={11} />
+			<Node x={920} y={528} w={160} h={56} label="every test logged" sub="wins and losses" size={12} subSize={10} flow="prove" />
+			<Label x={1000} y={616} text="I decide go-live" anchor="middle" size={11} />
 
 			{/* ---------- lanes + packets ---------- */}
 			<Lane x={40} w={184} y={40} title="Sources" />

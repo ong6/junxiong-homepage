@@ -9,10 +9,10 @@ const facts = [
 	["charters with a kill rule", "10 · 7 closed as rejected or inconclusive"],
 	["data sources", "Yahoo · Nasdaq · FRED · Cboe · FINRA · CFTC · AAII · NAAIM · SqueezeMetrics"],
 	["research-only source", "TradingView quotes and bars, for the intraday agents"],
-	["gated sources", "Alpaca IEX (dormant) · SEC EDGAR · licensed history"],
+	["not connected yet", "Alpaca IEX (dormant) · SEC EDGAR · licensed history"],
 	["liquid universe", "~4,100 US names, refreshed weekly"],
 	["walk-forward", "10 folds · train 24 mo · validate 12 mo"],
-	["api", "34 loopback routes · reads plus gated paper tickets"],
+	["api", "34 loopback routes · reads plus paper orders"],
 	["tests", "3,280 collected · warnings are failures"],
 	["python", "~89k lines outside tests · started 2026-07-16"],
 ];

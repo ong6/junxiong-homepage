@@ -88,15 +88,15 @@ const facts = [
 	["paired test", "model vs rule on the same names · looks at 60, 90, 120 sessions"],
 	["entries", "volatility sizing · limit-on-open · pre-open check may only cancel"],
 	["built, switched off", "challenger lab · filing reader · text labs · optimizer"],
-	["trial census", "103 public registrations · counted as 139 trials"],
+	["tests logged", "103 written down in advance · counted as 139 trials"],
 	["strategy modules", "30 · one file each, pre-registered"],
 	["data sources", "Yahoo · Nasdaq · FRED · Cboe · FINRA · CFTC · AAII · NAAIM · SqueezeMetrics"],
 	["research-only sources", "TradingView quotes and bars · RSS headlines"],
-	["gated sources", "SEC 8-K (awaiting access) · Alpaca IEX (dormant) · licensed history"],
+	["not connected yet", "SEC 8-K (awaiting access) · Alpaca IEX · licensed history"],
 	["fill model", "next open · spread tier + 5 bp · ≤ 1 % of 60-day volume"],
 	["walk-forward", "10 folds · train 24 mo · validate 12 mo"],
 	["store", "DuckDB · one writer · exact response receipts"],
-	["api", "34 loopback routes · reads plus gated paper tickets"],
+	["api", "34 loopback routes · reads plus paper orders"],
 	["tests", "4,078 collected"],
 	["python", "~118k lines outside tests · started 2026-07-16"],
 	["status", "paper only · MIT · github.com/ong6/trading-engine"],
@@ -173,8 +173,8 @@ export default function TradingEngine() {
 					and the challenger lab place no orders. ④ Code sizes each position and checks risk; before
 					the open the model may cancel an order but never add one. ⑤ Orders fill at the next open or
 					a limit-on-open, and nowhere else. ⑥ Every decision lands in one ledger, is labelled later,
-					and a paired test against the rule decides at 60, 90 and 120 sessions. IBKR paper is a later
-					stage behind my approval."
+					and a paired test against the rule decides at 60, 90 and 120 sessions. It is all still paper,
+					so the IBKR broker link is not open yet."
 				/>
 
 				<H2>Scoring every candidate</H2>
@@ -208,8 +208,8 @@ export default function TradingEngine() {
 				<P>
 					Next to it sits a challenger lab: other model policies on the same inputs, a reader for
 					filings and earnings releases, factor-neutral statistics, sequential tests and a
-					score-to-weight optimizer. All of it is built and none of it is on. It waits for P15&apos;s
-					first cycle to come back clean, and a challenger only takes over a book after a sequential
+					score-to-weight optimizer. All of it is built and none of it is on. It waits until the new
+					scoring has run a clean first cycle, and a challenger only takes over a book after a sequential
 					test passes and I approve it.
 				</P>
 
@@ -247,7 +247,7 @@ export default function TradingEngine() {
 				<P>
 					Ten charters so far. Seven are closed as rejected or inconclusive: a VIX term-structure
 					timer, turn-of-month, sell-in-May, a drawdown throttle, a vol target, a sector cap and a
-					quarterly ETF rebalance. Each failed the gate it declared up front. The three calendar
+					quarterly ETF rebalance. Each failed the pass mark it set up front. The three calendar
 					timers lost to a static exposure-matched control, which keeps the comparison from simply rewarding a different amount of market exposure. Three are still accruing: a sector-momentum
 					book that needs two hundred shared sessions before its kill rule can fire, a 12-1
 					cross-sectional momentum book measured against an unscreened control, and a
@@ -256,8 +256,8 @@ export default function TradingEngine() {
 
 				<P>
 					Since 28 September new strategy research runs in a private repo against this engine,
-					under the same pre-registration rules, and its results stay there. The public census
-					holds 103 registrations, counted conservatively as 139 trials when a result is corrected
+					under the same pre-registration rules, and its results stay there. The public log
+					holds 103 tests written down in advance, counted conservatively as 139 trials when a result is corrected
 					for how many ideas were tried.
 				</P>
 
@@ -284,8 +284,8 @@ export default function TradingEngine() {
 					so the bias sits on both sides of the difference. On that comparison, no screen-driven
 					book beat equal weight on any window of three years or more, and the two books that led
 					the live table in September had drawn down eighteen percent inside two months. That
-					result is in the repo. The engine remains paper-only, and the next research gates are
-					calendar-bound: the point-in-time tables are not deep enough for a fair
+					result is in the repo. The engine remains paper-only, and the next research steps are
+					bound by the calendar: the point-in-time tables are not deep enough for a fair
 					stock-selection test until 2029 unless I buy a dataset with the delisted names in it.
 				</P>
 

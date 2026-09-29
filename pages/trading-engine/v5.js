@@ -10,8 +10,8 @@ const facts = [
 	["agent buy rules", "risk-on · template pass · confidence ≥ 0.65 · no earnings within 5 days · ≤ 3 positions · 10 % size"],
 	["observers", "hourly and four-hour agents · no order authority"],
 	["ledger labels", "1, 5, 10 and 20 days after each decision"],
-	["verdict gate", "60 sessions, 90 days and 20 trades before any P8 verdict"],
-	["gated sources", "SEC EDGAR (probe refused) · Alpaca IEX (no credentials)"],
+	["first verdict", "60 sessions, 90 days and 20 trades before the nightly agent is judged"],
+	["not connected yet", "SEC EDGAR (probe refused) · Alpaca IEX (no credentials)"],
 	["blocked", "TradingView, under its terms at the time · Stooq"],
 ];
 
@@ -52,7 +52,7 @@ export default function TradingEngineV5() {
 				at one, five, ten and twenty days, next to a paired control. A replay of 2022 showed why that
 				matters: the model picked XOM on all four dates and compounded +19.78%. That says more about
 				what a model already knows about 2022 than about its judgement, so the replay is labelled
-				contaminated and cannot promote anything.
+				contaminated and cannot move anything to real money.
 			</P>
 			<P>
 				The direction written on 24 September is an engine that runs on its own and makes money, with

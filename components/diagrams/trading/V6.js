@@ -1,14 +1,14 @@
 import { Badge, Connector, Defs, Flow, Group, Label, Lane, Line, Node, Packet, route } from "../parts";
 
 export const CLAIM =
-	"Nightly feeds from Yahoo, Nasdaq and a set of macro and sentiment publishers land in DuckDB under one writer, each response kept as an exact receipt; TradingView quotes feed the intraday agents for research only, Alpaca, SEC EDGAR and licensed history wait behind credential gates, and Stooq is blocked. A screen ranks about 4,100 liquid names, 21 pre-registered paper books turn it into orders at the close, and an AI agent runs one more book through a locked simulator tool. Every order fills at the next open through one guard. Forward monitors, a Sunday walk-forward and an agent ledger read the results and can kill a book, never promote one.";
+	"Nightly feeds from Yahoo, Nasdaq and a set of macro and sentiment publishers land in DuckDB under one writer, each response kept as an exact receipt; TradingView quotes feed the intraday agents for research only, Alpaca, SEC EDGAR and licensed history are not connected yet, and Stooq is blocked. A screen ranks about 4,100 liquid names, 21 pre-registered paper books turn it into orders at the close, and an AI agent runs one more book through a locked simulator tool. Every order fills at the next open through one guard. Forward monitors, a Sunday walk-forward and an agent ledger read the results and can stop a book, never move one to real money.";
 
 export const meta = {
 	number: "Figure 01 · v6",
 	eyebrow: "25 September 2026",
 	title: "Where the data comes from, and what each night does with it",
 	caption:
-		"Sources on the left, one writer in the middle, decisions and fills, then the evidence on the right. The dashed boxes have no order authority. Nothing on this canvas can promote a strategy.",
+		"Sources on the left, one writer in the middle, decisions and fills, then the evidence on the right. The dashed boxes have no order authority. Nothing here moves a strategy to real money on its own.",
 	legend: [
 		{ label: "Data", kind: "change" },
 		{ label: "Ranked names", kind: "request" },
@@ -248,7 +248,7 @@ export function Wide({ id }) {
 				subSize={10}
 				flow="prove"
 			/>
-			<Label x={976} y={624} text="no path promotes a book" anchor="middle" size={11} />
+			<Label x={976} y={624} text="I decide go-live" anchor="middle" size={11} />
 
 			{/* ---------- lanes + packets ---------- */}
 			<Lane x={40} w={224} y={40} title="Sources" />
