@@ -6,7 +6,7 @@ import { CURRENT, VERSIONS } from "../lib/tradingVersions";
 // its own route, so a past diagram can be linked and indexed. On narrow screens
 // the row scrolls sideways instead of wrapping.
 //
-//   active – "v1" … "v6"
+//   active – "v1" … "v7"
 
 export default function VersionSwitcher({ active, ...props }) {
 	const current = VERSIONS.find((version) => version.v === active);

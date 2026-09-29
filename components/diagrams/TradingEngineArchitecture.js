@@ -1,49 +1,53 @@
-import { Badge, Connector, Defs, Flow, Group, Label, Lane, Line, Node, Packet, route } from "./parts";
+import { Badge, Connector, Defs, Flow, Group, Label, Lane, Line, Node, Packet } from "./parts";
 
 export const CLAIM =
-	"Nightly feeds from Yahoo, Nasdaq and a set of macro and sentiment publishers land in DuckDB under one writer, each response kept as an exact receipt; TradingView quotes feed the intraday agents for research only, Alpaca, SEC EDGAR and licensed history wait behind credential gates, and Stooq is blocked. A screen ranks about 4,100 liquid names, 21 pre-registered paper books turn it into orders at the close, and an AI agent runs one more book through a locked simulator tool. Every order fills at the next open through one guard. Forward monitors, a Sunday walk-forward and an agent ledger read the results and can kill a book, never promote one.";
+	"v7, 29 September 2026: market data, headlines and macro feeds land in DuckDB under one writer, each fact with the time it became available. Each night a fixed rule and a model both score every candidate, and the P8 agent keeps its own book. Code, not the model, turns scores into sized orders; a pre-open check may only cancel, and every order fills at the next open or a limit-on-open. Every decision is kept in one ledger, labelled later, and a paired test against the rule decides at registered looks. The challenger lab, event triggers and IBKR stay off.";
 
 export const meta = {
 	number: "Figure 01",
-	eyebrow: "The nightly loop",
-	title: "Where the data comes from, and what each night does with it",
+	eyebrow: "The nightly loop · v7",
+	title: "The model scores, code trades, the ledger decides",
 	caption:
-		"Sources on the left, one writer in the middle, decisions and fills, then the evidence on the right. The dashed boxes have no order authority. Nothing on this canvas can promote a strategy.",
+		"Sources on the left, one writer, three decision paths, then sizing and fills, then the evidence on the right. Dashed boxes have no order authority. Nothing on this canvas promotes a policy by itself.",
 	legend: [
 		{ label: "Data", kind: "change" },
-		{ label: "Ranked names", kind: "request" },
-		{ label: "Next-open fill", kind: "accent" },
-		{ label: "Verdict", kind: "response" },
+		{ label: "Scores and orders", kind: "request" },
+		{ label: "Fill", kind: "accent" },
+		{ label: "Evidence", kind: "response" },
 	],
 	viewBox: "0 0 1120 672",
 };
 
-// Claim: many sources, one writer; orders signalled at close t fill only at
-// open t+1 through one guard; the agent trades one book through the same
-// path; the evidence column can kill but never promote. Accent follows
-// orders → fill → ledger. 8px grid throughout.
+// Claim: the model only scores; code owns sizing, fills and halts; every
+// decision is paired with a rule and judged at fixed looks. Accent follows
+// the order from pre-open check to fill to the sim ledger. 8px grid.
 
 const SOURCES = [
-	{ y: 96, label: "Yahoo", sub: "bars · actions · intraday", icon: "cloud", to: 176 },
-	{ y: 176, label: "Nasdaq", sub: "universe · price check", icon: "cloud", to: 208 },
-	{ y: 256, label: "Macro feeds", sub: "FRED · Cboe · FINRA · CFTC", icon: "chart", to: 240 },
-	{ y: 352, label: "Credential-gated", sub: "Alpaca · EDGAR · PIT data", icon: "lock", to: 264, gated: true },
+	{ y: 128, label: "Yahoo · Nasdaq", sub: "daily + intraday", icon: "cloud" },
+	{ y: 208, label: "TradingView", sub: "research only", icon: "cloud" },
+	{ y: 288, label: "RSS headlines", sub: "11 feeds", icon: "cloud" },
+	{ y: 368, label: "SEC 8-K", sub: "waits on access", icon: "lock", gated: true },
+	{ y: 448, label: "Macro feeds", sub: "FRED · Cboe", icon: "chart" },
 ];
 
 const STORE = [
-	{ y: 344, h: 56, label: "prices", sub: "cache · verified" },
-	{ y: 424, h: 56, label: "facts", sub: "bitemporal receipts" },
-	{ y: 504, h: 64, label: "sim ledger", sub: "fills · cash", flow: "fill" },
+	{ y: 160, label: "prices", sub: "verified" },
+	{ y: 240, label: "facts", sub: "as-of time" },
+	{ y: 320, label: "headlines", sub: "bitemporal" },
+];
+
+const DECIDE = [
+	{ y: 128, h: 56, label: "rule baseline", sub: "fixed ranking" },
+	{ y: 208, h: 64, label: "model scores", sub: "every candidate", icon: "agent", badge: "3" },
+	{ y: 296, h: 56, label: "nightly agent", sub: "P8 · locked tool", icon: "agent" },
+	{ y: 376, h: 56, label: "event triggers", sub: "news · movers · shadow", icon: "robot", dashed: true },
+	{ y: 456, h: 56, label: "challenger lab", sub: "built · switched off", icon: "robot", dashed: true },
 ];
 
 export function Wide({ id }) {
-	const sourcePaths = SOURCES.map(({ y, to, gated }) => {
-		const from = [264, y + 32];
-		if (from[1] === to) return [from, [304, to]];
-		return route(from, [304, to], gated ? 292 : 284);
-	});
-	const toAgent = [[616, 344], [616, 264], [704, 264]];
-	const toWalkForward = route([832, 392], [872, 468], 852);
+	const toLedger = [[640, 128], [640, 104], [1000, 104], [1000, 128]];
+	const fillToStore = [[760, 448], [760, 560], [340, 560], [340, 496]];
+	const fillToBooks = [[888, 416], [904, 416], [904, 468], [920, 468]];
 
 	return (
 		<>
@@ -51,222 +55,84 @@ export function Wide({ id }) {
 
 			{/* ---------- sources ---------- */}
 			{SOURCES.map(({ y, label, sub, icon, gated }) => (
-				<Node
-					key={label}
-					x={40}
-					y={y}
-					w={224}
-					h={64}
-					label={label}
-					sub={sub}
-					icon={icon}
-					size={13}
-					subSize={10}
-					dashed={gated}
-					flow="collect"
-				/>
+				<Node key={label} x={40} y={y} w={184} h={56} label={label} sub={sub} icon={icon} size={13} subSize={10} dashed={gated} flow="collect" />
 			))}
-			<Badge cx={40} cy={96} text="1" />
-			<Label x={152} y={448} text="Stooq: blocked" anchor="middle" size={10} />
-			{sourcePaths.map((points, i) => (
-				<Connector key={SOURCES[i].label} points={points} defs={id} flow="collect" />
+			<Badge cx={40} cy={128} text="1" />
+			{SOURCES.map(({ y, label, gated }) => (
+				<Line key={label} id={id} x1={224} y1={y + 28} x2={256} y2={y + 28} dashed={gated} flow="collect" />
 			))}
 
 			{/* ---------- store ---------- */}
-			<Node
-				x={304}
-				y={160}
-				w={208}
-				h={112}
-				label="collect"
-				sub="job queue · batched"
-				icon="queue"
-				size={13}
-				subSize={10}
-				flow="collect"
-			/>
-			<Line id={id} x1={408} y1={272} x2={408} y2={312} flow="collect" />
-			<Label x={420} y={296} text="commit" size={11} />
-			<Group x={304} y={312} w={208} h={288} title="DUCKDB · ONE WRITER" flow={["collect", "fill"]} />
-			<Badge cx={304} cy={312} text="2" />
-			{STORE.map(({ y, h, label, sub, flow }) => (
-				<Node
-					key={label}
-					x={320}
-					y={y}
-					w={176}
-					h={h}
-					label={label}
-					sub={sub}
-					icon="db"
-					size={12}
-					subSize={10}
-					flow={flow || "collect"}
-				/>
+			<Group x={256} y={128} w={168} h={384} title="ONE WRITER" flow={["collect", "fill"]} />
+			<Badge cx={256} cy={128} text="2" />
+			{STORE.map(({ y, label, sub }) => (
+				<Node key={label} x={268} y={y} w={144} h={56} label={label} sub={sub} icon="db" size={12} subSize={10} flow="collect" />
 			))}
+			<Node x={268} y={432} w={144} h={64} label="sim ledger" sub="fills · cash" icon="db" size={12} subSize={10} flow="fill" />
 
 			{/* ---------- decide ---------- */}
-			<Node
-				x={552}
-				y={96}
-				w={280}
-				h={56}
-				label="intraday shadow agents"
-				sub="TradingView quotes · no orders"
-				icon="robot"
-				size={12}
-				subSize={10}
-				dashed
-				flow="decide"
-			/>
+			<Line id={id} x1={412} y1={268} x2={440} y2={268} arrow={false} flow="collect" />
+			<Line id={id} x1={440} y1={156} x2={440} y2={484} arrow={false} flow="collect" />
+			{DECIDE.map(({ y, h, label, sub, icon, dashed, badge }) => (
+				<g key={label}>
+					<Line id={id} x1={440} y1={y + h / 2} x2={456} y2={y + h / 2} dashed={dashed} flow="collect" />
+					<Node x={456} y={y} w={232} h={h} label={label} sub={sub} icon={icon} size={13} subSize={10} dashed={dashed} flow={dashed ? "collect" : ["collect", "decide"]} />
+					{badge ? <Badge cx={456} cy={y} text={badge} /> : null}
+				</g>
+			))}
 
-			<Line id={id} x1={512} y1={372} x2={552} y2={372} flow="collect" />
-			<Node
-				x={552}
-				y={344}
-				w={128}
-				h={56}
-				label="screen"
-				sub="~4,100 names"
-				size={13}
-				subSize={10}
-				flow={["collect", "decide"]}
-			/>
-			<Badge cx={552} cy={344} text="3" />
+			{/* ---------- size, check, fill ---------- */}
+			<Line id={id} x1={688} y1={156} x2={704} y2={156} arrow={false} flow="decide" />
+			<Line id={id} x1={688} y1={324} x2={704} y2={324} arrow={false} flow="decide" />
+			<Line id={id} x1={704} y1={156} x2={704} y2={324} arrow={false} flow="decide" />
+			<Line id={id} x1={688} y1={240} x2={720} y2={240} flow="decide" />
+			<Node x={720} y={208} w={168} h={64} label="sizing + risk" sub="code only" icon="lock" size={13} subSize={10} flow={["decide", "fill"]} />
+			<Badge cx={720} cy={208} text="4" />
+			<Line id={id} x1={804} y1={272} x2={804} y2={304} flow="fill" />
+			<Node x={720} y={304} w={168} h={56} label="pre-open check" sub="may only cancel" icon="agent" size={13} subSize={10} flow="fill" />
+			<Line id={id} x1={804} y1={360} x2={804} y2={384} accent flow="fill" />
+			<Node x={720} y={384} w={168} h={64} label="fill" sub="next open or limit" size={13} subSize={10} flow="fill" />
+			<Badge cx={720} cy={384} text="5" accent />
+			<Connector points={fillToStore} defs={id} kind="accent" flow="fill" />
+			<Label x={552} y={552} text="fills · dividends" anchor="middle" accent size={11} />
 
-			<Connector points={toAgent} defs={id} flow="decide" />
-			<Label x={628} y={256} text="standouts" size={10} />
-			<Node
-				x={704}
-				y={232}
-				w={128}
-				h={64}
-				label="AI agent"
-				sub="locked tool"
-				icon="agent"
-				size={13}
-				subSize={10}
-				flow={["decide", "prove"]}
-			/>
-			<Badge cx={704} cy={232} text="6" />
-			<Line id={id} x1={768} y1={296} x2={768} y2={344} flow="decide" />
-			<Label x={780} y={324} text="one book" size={10} />
+			<Line id={id} x1={848} y1={448} x2={848} y2={584} dashed flow="fill" />
+			<Label x={836} y={528} text="Stage 2" anchor="end" size={10} />
+			<Node x={720} y={584} w={168} h={56} label="IBKR paper" sub="owner gate" icon="lock" size={13} subSize={10} dashed />
 
-			<Line id={id} x1={680} y1={372} x2={704} y2={372} flow="decide" />
-			<Node
-				x={704}
-				y={344}
-				w={128}
-				h={56}
-				label="paper books"
-				sub="21 rules + agent"
-				size={12}
-				subSize={10}
-				flow={["decide", "fill", "prove"]}
-			/>
+			{/* ---------- evidence ---------- */}
+			<Connector points={toLedger} defs={id} flow="prove" />
+			<Label x={820} y={96} text="every decision, kept" anchor="middle" size={10} />
+			<Node x={920} y={128} w={160} h={64} label="ledger" sub="labels at 1–20 days" size={13} subSize={10} flow="prove" />
+			<Badge cx={920} cy={128} text="6" />
+			<Line id={id} x1={1000} y1={192} x2={1000} y2={232} flow="prove" />
+			<Node x={920} y={232} w={160} h={64} label="paired test" sub="model vs rule" size={13} subSize={10} flow="prove" />
+			<Line id={id} x1={1000} y1={296} x2={1000} y2={336} flow="prove" />
+			<Node x={920} y={336} w={160} h={64} label="registered looks" sub="60 · 90 · 120" size={13} subSize={10} flow="prove" />
+			<Label x={1000} y={416} text="PASS · KILL" anchor="middle" size={10} />
 
-			<Line id={id} x1={768} y1={400} x2={768} y2={424} flow="fill" />
-			<Node
-				x={704}
-				y={424}
-				w={128}
-				h={56}
-				label="orders"
-				sub="signal at close"
-				size={13}
-				subSize={10}
-				flow="fill"
-			/>
-			<Line id={id} x1={768} y1={480} x2={768} y2={504} accent flow="fill" />
-			<Node
-				x={704}
-				y={504}
-				w={128}
-				h={64}
-				label="fill"
-				sub="next open only"
-				size={13}
-				subSize={10}
-				flow="fill"
-			/>
-			<Badge cx={704} cy={504} text="4" accent />
-			<Line id={id} x1={704} y1={536} x2={496} y2={536} accent flow="fill" />
-			<Label x={600} y={528} text="fills · dividends" anchor="middle" accent size={11} />
-
-			{/* ---------- prove ---------- */}
-			<Line id={id} x1={832} y1={264} x2={872} y2={264} flow="prove" />
-			<Node
-				x={872}
-				y={232}
-				w={208}
-				h={64}
-				label="agent ledger"
-				sub="each call vs its control"
-				size={13}
-				subSize={10}
-				flow="prove"
-			/>
-
-			<Line id={id} x1={832} y1={372} x2={872} y2={372} flow="prove" />
-			<Node
-				x={872}
-				y={344}
-				w={208}
-				h={56}
-				label="forward monitors"
-				sub="kill rule fixed up front"
-				size={13}
-				subSize={10}
-				flow="prove"
-			/>
-			<Badge cx={872} cy={344} text="5" />
-
-			<Connector points={toWalkForward} defs={id} flow="prove" />
-			<Label x={884} y={432} text="same rules, old bars" size={10} />
-			<Node
-				x={872}
-				y={440}
-				w={208}
-				h={56}
-				label="walk-forward"
-				sub="Sundays · 10 folds"
-				size={13}
-				subSize={10}
-				flow="prove"
-			/>
-
-			<Line id={id} x1={976} y1={496} x2={976} y2={536} flow="prove" />
-			<Label x={988} y={520} text="CONTINUE · KILL" size={10} />
-			<Node
-				x={872}
-				y={536}
-				w={208}
-				h={56}
-				label="reports · API · UI"
-				sub="league.md · GET /meta"
-				size={13}
-				subSize={10}
-				flow="prove"
-			/>
-			<Label x={976} y={624} text="no path promotes a book" anchor="middle" size={11} />
+			<Connector points={fillToBooks} defs={id} flow="fill" />
+			<Node x={920} y={440} w={160} h={56} label="3 comparator books" sub="model · rule · veto" size={12} subSize={10} flow={["fill", "prove"]} />
+			<Node x={920} y={528} w={160} h={56} label="trial census" sub="every variant" size={12} subSize={10} flow="prove" />
+			<Label x={1000} y={616} text="only I can promote" anchor="middle" size={11} />
 
 			{/* ---------- lanes + packets ---------- */}
-			<Lane x={40} w={224} y={40} title="Sources" />
-			<Lane x={304} w={208} y={40} title="Store" />
-			<Lane x={552} w={280} y={40} title="Decide" />
-			<Lane x={872} w={208} y={40} title="Prove" />
-			{sourcePaths.slice(0, 3).map((points, i) => (
-				<Packet key={i} points={points} kind="change" dur={1.8} delay={-0.6 * i} flow="collect" />
+			<Lane x={40} w={184} y={40} title="Sources" />
+			<Lane x={256} w={168} y={40} title="DuckDB" />
+			<Lane x={456} w={232} y={40} title="Decide" />
+			<Lane x={720} w={168} y={40} title="Size · fill" />
+			<Lane x={920} w={160} y={40} title="Evidence" />
+			{SOURCES.filter((s) => !s.gated).map(({ y }, i) => (
+				<Flow key={y} x1={224} y1={y + 28} x2={256} y2={y + 28} kind="change" dur={1.2} delay={-0.4 * i} flow="collect" />
 			))}
-			<Flow x1={408} y1={272} x2={408} y2={312} kind="change" dur={1.4} flow="collect" />
-			<Flow x1={512} y1={372} x2={552} y2={372} kind="change" dur={1.4} delay={-0.5} flow="collect" />
-			<Packet points={toAgent} kind="request" dur={1.8} flow="decide" />
-			<Flow x1={768} y1={400} x2={768} y2={424} kind="accent" dur={1.2} flow="fill" />
-			<Flow x1={768} y1={480} x2={768} y2={504} kind="accent" dur={1.2} delay={-0.6} flow="fill" />
-			<Flow x1={704} y1={536} x2={496} y2={536} kind="accent" dur={2.2} delay={-0.4} flow="fill" />
-			<Flow x1={832} y1={372} x2={872} y2={372} kind="request" dur={1.4} flow="prove" />
-			<Packet points={toWalkForward} kind="request" dur={1.8} delay={-0.9} flow="prove" />
-			<Flow x1={976} y1={496} x2={976} y2={536} kind="response" dur={1.4} flow="prove" />
+			<Flow x1={440} y1={240} x2={456} y2={240} kind="change" dur={1} flow="collect" />
+			<Flow x1={688} y1={240} x2={720} y2={240} kind="request" dur={1} flow="decide" />
+			<Flow x1={804} y1={272} x2={804} y2={304} kind="request" dur={1.2} flow="fill" />
+			<Flow x1={804} y1={360} x2={804} y2={384} kind="accent" dur={1} delay={-0.5} flow="fill" />
+			<Packet points={fillToStore} kind="accent" dur={2.4} flow="fill" />
+			<Packet points={toLedger} kind="response" dur={2.2} flow="prove" />
+			<Flow x1={1000} y1={192} x2={1000} y2={232} kind="response" dur={1.2} flow="prove" />
+			<Flow x1={1000} y1={296} x2={1000} y2={336} kind="response" dur={1.2} delay={-0.6} flow="prove" />
 		</>
 	);
 }

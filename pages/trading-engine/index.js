@@ -82,19 +82,23 @@ function Versions() {
 }
 
 const facts = [
-	["paper books", "21 rule-based (18 replayable) · 1 run by an AI agent"],
+	["paper books", "25 active in the simulator"],
+	["AI decision paths", "nightly agent since 21 Sep · candidate scoring since 29 Sep"],
+	["comparator books", "model-ranked · rule-ranked control · rule + model veto"],
+	["paired test", "model vs rule on the same names · looks at 60, 90, 120 sessions"],
+	["entries", "volatility sizing · limit-on-open · pre-open check may only cancel"],
+	["built, switched off", "challenger lab · filing reader · text labs · optimizer"],
+	["trial census", "103 public registrations · counted as 139 trials"],
 	["strategy modules", "30 · one file each, pre-registered"],
-	["charters with a kill rule", "10 · 7 closed as rejected or inconclusive"],
 	["data sources", "Yahoo · Nasdaq · FRED · Cboe · FINRA · CFTC · AAII · NAAIM · SqueezeMetrics"],
-	["research-only source", "TradingView quotes and bars, for the intraday agents"],
-	["gated sources", "Alpaca IEX (dormant) · SEC EDGAR · licensed history"],
-	["liquid universe", "~4,100 US names, refreshed weekly"],
+	["research-only sources", "TradingView quotes and bars · RSS headlines"],
+	["gated sources", "SEC 8-K (awaiting access) · Alpaca IEX (dormant) · licensed history"],
 	["fill model", "next open · spread tier + 5 bp · ≤ 1 % of 60-day volume"],
 	["walk-forward", "10 folds · train 24 mo · validate 12 mo"],
 	["store", "DuckDB · one writer · exact response receipts"],
 	["api", "34 loopback routes · reads plus gated paper tickets"],
-	["tests", "3,280 collected · warnings are failures"],
-	["python", "~89k lines outside tests · started 2026-07-16"],
+	["tests", "4,078 collected"],
+	["python", "~118k lines outside tests · started 2026-07-16"],
 	["status", "paper only · MIT · github.com/ong6/trading-engine"],
 ];
 
@@ -149,10 +153,10 @@ export default function TradingEngine() {
 						2026 · open source · paper only
 					</Text>
 
-					<VersionSwitcher active="v6" mt={6} />
+					<VersionSwitcher active="v7" mt={6} />
 
 					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="1.6" fontWeight="600">
-						I built this to test trading ideas on real US market data without placing live trades. It runs nightly on one Linux box and tracks 21 rule-based paper portfolios, each with rules fixed before trading starts, plus one run by an AI agent. At the two-month mark, none had passed its comparison against a control.
+						I built this to test trading ideas on real US market data without placing live trades. It runs nightly on one Linux box and keeps 25 paper portfolios, each with rules fixed before trading starts. Since 29 September a model scores every nightly candidate next to a fixed rule, and a paired test decides at set dates whether the model adds anything. So far no policy has beaten its control on live data.
 					</Text>
 				</Box>
 
@@ -162,18 +166,52 @@ export default function TradingEngine() {
 					id="tearch"
 					headingLevel={2}
 					diagram={TradingEngineArchitecture}
-					caption="fig. 1 — one night. ① Yahoo, Nasdaq and a set of macro and sentiment publishers feed the collectors;
-					Alpaca, SEC EDGAR and licensed history are supported but stay off until credentials and
-					terms allow them, and Stooq is blocked. ② One writer commits every batch
-					to DuckDB and keeps each provider response as an exact receipt. ③ The screen ranks about
-					4,100 liquid names and each book turns the ranking into orders at the close. ④ Orders
-					fill at the next open and nowhere else, with a liquidity-tiered spread, five basis points
-					and a cap at one percent of volume. ⑤ The monitors read the equity paths against a rule
-					frozen before the first signal, and the Sunday walk-forward replays the rule books on
-					older bars. ⑥ The AI agent reviews the screen's standouts and trades its own paper book
-					through a locked simulator tool; the ledger scores each of its decisions against a
-					control. The intraday agents read TradingView quotes and only observe."
+					caption="fig. 1 — one night in v7. ① Yahoo, Nasdaq, TradingView, RSS headlines and a set of macro
+					publishers feed the collectors; SEC 8-K capture waits on access. ② One writer commits every
+					batch to DuckDB, and each fact carries the time it became available. ③ A fixed rule and a
+					model both score every candidate, and the nightly agent keeps its own book; event triggers
+					and the challenger lab place no orders. ④ Code sizes each position and checks risk; before
+					the open the model may cancel an order but never add one. ⑤ Orders fill at the next open or
+					a limit-on-open, and nowhere else. ⑥ Every decision lands in one ledger, is labelled later,
+					and a paired test against the rule decides at 60, 90 and 120 sessions. IBKR paper is a later
+					stage behind my approval."
 				/>
+
+				<H2>Scoring every candidate</H2>
+
+				<P>
+					Until v7 the AI made one pick a night from five standouts, and it abstained on 92% of
+					them. At that pace, twenty trades would arrive around February 2027, and twenty trades can
+					only detect an edge of about five percent per trade. That is too little evidence to judge
+					anything.
+				</P>
+
+				<P>
+					So the unit of evidence changed from a trade to a scored candidate. Each night the model
+					and a fixed rule both score every candidate in a wider universe, and each score is later
+					labelled with what the stock did. A paired test compares the two on the same names and
+					dates, and I only read it at 60, 90 and 120 scored sessions. Three simulator books trade on
+					the scores with identical mechanics: one ranked by the model, one by the rule, and one by
+					the rule with a model veto.
+				</P>
+
+				<P>
+					The model still sizes nothing. Code sizes each position from recent volatility, fixes the
+					stop at entry and places a limit-on-open order. Before the open the model can look again
+					and cancel an order, never add or resize one, and every cancelled order keeps the fill it
+					would have had, so the cancel decision is scored too. Headlines and intraday movers can now
+					trigger a decision within minutes, but those triggers run in shadow and place no orders.
+				</P>
+
+				<H2>Built, but switched off</H2>
+
+				<P>
+					Next to it sits a challenger lab: other model policies on the same inputs, a reader for
+					filings and earnings releases, factor-neutral statistics, sequential tests and a
+					score-to-weight optimizer. All of it is built and none of it is on. It waits for P15&apos;s
+					first cycle to come back clean, and a challenger only takes over a book after a sequential
+					test passes and I approve it.
+				</P>
 
 				<H2>When a simulated order can fill</H2>
 
@@ -186,7 +224,7 @@ export default function TradingEngine() {
 
 				<P>
 					The fill price is the open moved against you by a half-spread estimated from the
-					sixty-day median dollar volume, plus five basis points a side. An order over one percent
+					sixty-day median dollar volume, plus five basis points a side. The v7 books enter with a limit-on-open instead, which skips the trade when the stock opens too far above the signal close. An order over one percent
 					of that median volume is rejected outright instead of partially filled, so the engine never has to estimate how much would have filled. A missing bar leaves the order pending for
 					three sessions and then rejects it; the engine never fabricates a bar. Dividends are credited on
 					the ex-date from the same corporate-actions table the screen reads.
@@ -214,6 +252,13 @@ export default function TradingEngine() {
 					book that needs two hundred shared sessions before its kill rule can fire, a 12-1
 					cross-sectional momentum book measured against an unscreened control, and a
 					forty-Monday test of SPY&apos;s open-to-close drift.
+				</P>
+
+				<P>
+					Since 28 September new strategy research runs in a private repo against this engine,
+					under the same pre-registration rules, and its results stay there. The public census
+					holds 103 registrations, counted conservatively as 139 trials when a result is corrected
+					for how many ideas were tried.
 				</P>
 
 				<CodeFigure
@@ -247,33 +292,11 @@ export default function TradingEngine() {
 				<H2>Versions</H2>
 
 				<P>
-					The engine has changed shape several times since July. Figure 1 shows v6. Each earlier
+					The engine has changed shape several times since July. Figure 1 shows v7. Each earlier
 					version has its own page with the diagram as it stood then.
 				</P>
 
 				<Versions />
-
-				<H2>Running unattended</H2>
-
-				<P>
-					Cron fires the nightly at 22:30 UTC: universe, collect, screen, corporate actions,
-					league step, the three forward monitors, sync, then the heavier jobs through a queue
-					with per-job timeouts and a resource cap. DuckDB has one writer; the collector releases
-					it between batches so the API and the UI are never locked out for a multi-hour pull.
-					Saturdays a verifier re-checks the full universe against a second source and reports
-					disagreements instead of quietly patching them. Sundays the walk-forward replays every
-					book through the live <Code>league.py</Code> day-step with the config frozen in its
-					database row, so the report can never describe a rule the league is not trading.
-				</P>
-
-				<P>
-					Coding agents built the engine from a written spec.
-					Even after the research answer became &ldquo;nothing
-					works yet, wait for evidence&rdquo;, the agents kept building anyway: forty-six
-					thousand lines of governance for a broker that does not exist. The repo now carries an
-					operating contract, a scope ledger with size ceilings the test suite enforces, and a
-					drift snapshot every session must publish. For now, I want it to keep collecting data and reporting against the existing rules while the experiments run.
-				</P>
 
 				<Box
 					as="dl"
