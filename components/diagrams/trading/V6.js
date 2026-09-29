@@ -1,7 +1,7 @@
 import { Badge, Connector, Defs, Flow, Group, Label, Lane, Line, Node, Packet, route } from "../parts";
 
 export const CLAIM =
-	"Nightly feeds from Yahoo, Nasdaq and a set of macro and sentiment publishers land in DuckDB under one writer, each response kept as an exact receipt; TradingView quotes feed the intraday agents for research only, Alpaca, SEC EDGAR and licensed history are not connected yet, and Stooq is blocked. A screen ranks about 4,100 liquid names, 21 pre-registered paper books turn it into orders at the close, and an AI agent runs one more book through a locked simulator tool. Every order fills at the next open through one guard. Forward monitors, a Sunday walk-forward and an agent ledger read the results and can stop a book, never move one to real money.";
+	"Nightly feeds from Yahoo, Nasdaq and a set of macro and sentiment publishers land in DuckDB under one writer, each raw response kept; TradingView quotes feed the intraday agents for research only, Alpaca, SEC EDGAR and licensed history are not connected yet, and Stooq is blocked. A screen ranks about 4,100 liquid names, 21 paper portfolios with fixed rules turn it into orders at the close, and an AI agent runs one more portfolio through a locked simulator tool. Every order fills at the next open through one guard. Forward monitors, a Sunday walk-forward and an agent ledger read the results and can stop a portfolio, never move one to real money.";
 
 export const meta = {
 	number: "Figure 01 · v6",
@@ -26,14 +26,14 @@ export const meta = {
 const SOURCES = [
 	{ y: 96, label: "Yahoo", sub: "bars · actions · intraday", icon: "cloud", to: 176 },
 	{ y: 176, label: "Nasdaq", sub: "universe · price check", icon: "cloud", to: 208 },
-	{ y: 256, label: "Macro feeds", sub: "FRED · Cboe · FINRA · CFTC", icon: "chart", to: 240 },
-	{ y: 352, label: "Credential-gated", sub: "Alpaca · EDGAR · PIT data", icon: "lock", to: 264, gated: true },
+	{ y: 256, label: "Macro feeds", sub: "FRED · Cboe · FINRA", icon: "chart", to: 240 },
+	{ y: 352, label: "Not connected", sub: "Alpaca · SEC EDGAR", icon: "lock", to: 264, gated: true },
 ];
 
 const STORE = [
 	{ y: 344, h: 56, label: "prices", sub: "cache · verified" },
-	{ y: 424, h: 56, label: "facts", sub: "bitemporal receipts" },
-	{ y: 504, h: 64, label: "sim ledger", sub: "fills · cash", flow: "fill" },
+	{ y: 424, h: 56, label: "facts", sub: "raw, time-stamped" },
+	{ y: 504, h: 64, label: "paper ledger", sub: "fills · cash", flow: "fill" },
 ];
 
 export function Wide({ id }) {
@@ -111,7 +111,7 @@ export function Wide({ id }) {
 				y={96}
 				w={280}
 				h={56}
-				label="intraday shadow agents"
+				label="intraday agents"
 				sub="TradingView quotes · no orders"
 				icon="robot"
 				size={12}
@@ -150,7 +150,7 @@ export function Wide({ id }) {
 			/>
 			<Badge cx={704} cy={232} text="6" />
 			<Line id={id} x1={768} y1={296} x2={768} y2={344} flow="decide" />
-			<Label x={780} y={324} text="one book" size={10} />
+			<Label x={780} y={324} text="one portfolio" size={10} />
 
 			<Line id={id} x1={680} y1={372} x2={704} y2={372} flow="decide" />
 			<Node
@@ -158,7 +158,7 @@ export function Wide({ id }) {
 				y={344}
 				w={128}
 				h={56}
-				label="paper books"
+				label="paper portfolios"
 				sub="21 rules + agent"
 				size={12}
 				subSize={10}
@@ -236,14 +236,14 @@ export function Wide({ id }) {
 			/>
 
 			<Line id={id} x1={976} y1={496} x2={976} y2={536} flow="prove" />
-			<Label x={988} y={520} text="CONTINUE · KILL" size={10} />
+			<Label x={988} y={520} text="KEEP · DROP" size={10} />
 			<Node
 				x={872}
 				y={536}
 				w={208}
 				h={56}
 				label="reports · API · UI"
-				sub="league.md · GET /meta"
+				sub="standings · status API"
 				size={13}
 				subSize={10}
 				flow="prove"

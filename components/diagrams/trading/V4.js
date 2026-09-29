@@ -1,7 +1,7 @@
 import { Badge, Connector, Defs, Flow, Group, Label, Lane, Line, Node } from "../parts";
 
 export const CLAIM =
-	"v4, late August to mid-September 2026: no model in the loop. Yahoo stays the only price source and Nasdaq verifies it, macro feeds build regime signals, 21 books trade through fill model v4, and a 10-fold walk-forward, a no-model sweep farm and three frozen forward monitors decide what survives. Nothing on the evidence side can move a book to real money.";
+	"v4, late August to mid-September 2026: no model in the loop. Yahoo stays the only price source and Nasdaq verifies it, macro feeds build regime signals, 21 portfolios trade through the revised fill model, and a 10-fold walk-forward, a no-model sweep farm and three frozen forward monitors decide what survives. Nothing on the evidence side can move a portfolio to real money.";
 
 export const meta = {
 	number: "Figure 01 · v4",
@@ -18,7 +18,7 @@ export const meta = {
 };
 
 const SOURCES = [
-	[112, "Yahoo", "EOD, only source", false],
+	[112, "Yahoo", "daily, only source", false],
 	[208, "Macro feeds", "breadth · credit · VIX", false],
 	[288, "Nasdaq list", "universe", false],
 	[368, "Nasdaq API", "verifies prices", true],
@@ -28,7 +28,7 @@ const STORE = [
 	[112, "prices", "restated cache", "collect"],
 	[208, "signals", "macro regime", "collect"],
 	[288, "universe", "daily snapshot", "collect"],
-	[368, "sim ledger", "fills · cash", "fill"],
+	[368, "paper ledger", "fills · cash", "fill"],
 ];
 
 export function Wide({ id }) {
@@ -54,25 +54,25 @@ export function Wide({ id }) {
 			))}
 
 			<Line id={id} x1={480} y1={140} x2={536} y2={140} flow="collect" />
-			<Node x={536} y={112} w={224} h={56} label="screen" sub="Minervini + RS rank" size={13} subSize={10} flow={["collect", "decide"]} />
+			<Node x={536} y={112} w={224} h={56} label="screen" sub="trend screen + rank" size={13} subSize={10} flow={["collect", "decide"]} />
 			<Line id={id} x1={648} y1={168} x2={648} y2={208} flow="decide" />
 			<Line id={id} x1={480} y1={236} x2={536} y2={236} flow="collect" />
-			<Node x={536} y={208} w={224} h={56} label="paper league" sub="21 frozen books" size={13} subSize={10} flow={["decide", "fill", "prove"]} />
+			<Node x={536} y={208} w={224} h={56} label="paper portfolios" sub="21 frozen portfolios" size={13} subSize={10} flow={["decide", "fill", "prove"]} />
 			<Badge cx={536} cy={208} text="3" />
 			<Line id={id} x1={648} y1={264} x2={648} y2={304} accent flow="fill" />
-			<Node x={536} y={304} w={224} h={64} label="fill model v4" sub="next open · 3 profiles" size={13} subSize={10} flow="fill" />
+			<Node x={536} y={304} w={224} h={64} label="fill model" sub="next open · 3 cost profiles" size={13} subSize={10} flow="fill" />
 			<Connector points={toLedger} defs={id} flow="fill" kind="accent" />
 			<Node x={536} y={400} w={224} h={56} label="agent layer" sub="retired 18 Aug" size={12} subSize={10} dashed />
 
 			<Connector points={toMonitors} defs={id} flow="prove" />
-			<Node x={840} y={112} w={240} h={56} label="forward monitors" sub="sector · XS · E1, frozen" size={13} subSize={10} flow="prove" />
+			<Node x={840} y={112} w={240} h={56} label="forward monitors" sub="sector · 12-1 · Mondays" size={13} subSize={10} flow="prove" />
 			<Badge cx={840} cy={112} text="4" />
 			<Line id={id} x1={760} y1={244} x2={840} y2={244} flow="prove" />
 			<Node x={840} y={208} w={240} h={56} label="walk-forward" sub="Sundays · 10 folds" size={13} subSize={10} flow="prove" />
 			<Node x={840} y={304} w={240} h={56} label="sweep farm" sub="grids, no model calls" icon="queue" size={13} subSize={10} flow="prove" />
 			<Label x={852} y={296} text="reads a copy of the store" size={10} />
 			<Line id={id} x1={960} y1={360} x2={960} y2={400} flow="prove" />
-			<Label x={972} y={384} text="CONTINUE · KILL" size={10} />
+			<Label x={972} y={384} text="KEEP · DROP" size={10} />
 			<Node x={840} y={400} w={240} h={56} label="reports · API · UI" sub="read-only" size={13} subSize={10} flow="prove" />
 
 			<Lane x={40} w={208} y={32} title="Sources" />

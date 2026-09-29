@@ -1,13 +1,13 @@
 import { Badge, Connector, Defs, Flow, Group, Label, Lane, Line, Node } from "../parts";
 
 export const CLAIM =
-	"v2, late July 2026: Yahoo now supplies splits and dividends as well as bars, a fatal reconcile stage checks the price scale before the league trades, 16 books plus a discretionary book fill at the next open, a forward experiment logs Mondays, and a backtest farm replays the books' own code over past years.";
+	"v2, late July 2026: Yahoo now supplies splits and dividends as well as bars, a fatal reconcile stage checks the price scale before the portfolios trade, 16 portfolios plus a discretionary portfolio fill at the next open, a forward experiment logs Mondays, and a backtest farm replays the portfolios' own code over past years.";
 
 export const meta = {
 	number: "Figure 01 · v2",
 	eyebrow: "28 July – 3 August 2026",
 	title: "Corporate actions and a backtest farm",
-	caption: "The league only trades once the split and dividend reconcile passes.",
+	caption: "The portfolios only trade once the split and dividend reconcile passes.",
 	legend: [
 		{ label: "Data", kind: "change" },
 		{ label: "Orders", kind: "request" },
@@ -27,7 +27,7 @@ const STORE = [
 	[112, "prices", "restated cache", "collect"],
 	[208, "corporate actions", "watermarked", "collect"],
 	[304, "universe", "daily snapshot", "collect"],
-	[400, "sim ledger", "fills · dividends", "fill"],
+	[400, "paper ledger", "fills · dividends", "fill"],
 ];
 
 export function Wide({ id }) {
@@ -52,22 +52,22 @@ export function Wide({ id }) {
 			))}
 
 			<Line id={id} x1={480} y1={140} x2={536} y2={140} flow="collect" />
-			<Node x={536} y={112} w={224} h={56} label="screen" sub="Minervini + RS rank" size={13} subSize={10} flow={["collect", "decide"]} />
+			<Node x={536} y={112} w={224} h={56} label="screen" sub="trend screen + rank" size={13} subSize={10} flow={["collect", "decide"]} />
 			<Line id={id} x1={648} y1={168} x2={648} y2={208} flow="decide" />
 			<Line id={id} x1={480} y1={236} x2={536} y2={236} flow="collect" />
 			<Node x={536} y={208} w={224} h={56} label="reconcile" sub="fatal if scale breaks" size={13} subSize={10} flow={["collect", "decide"]} />
 			<Badge cx={536} cy={208} text="3" />
 			<Line id={id} x1={648} y1={264} x2={648} y2={304} flow="decide" />
 			<Label x={660} y={288} text="scale sound" size={10} />
-			<Node x={536} y={304} w={224} h={56} label="paper league" sub="16 books + discretionary" size={13} subSize={10} flow={["decide", "fill", "prove"]} />
+			<Node x={536} y={304} w={224} h={56} label="paper portfolios" sub="16 + 1 manual" size={13} subSize={10} flow={["decide", "fill", "prove"]} />
 			<Line id={id} x1={648} y1={360} x2={648} y2={400} accent flow="fill" />
-			<Label x={660} y={384} text="open t+1" accent size={10} />
+			<Label x={660} y={384} text="next open" accent size={10} />
 			<Node x={536} y={400} w={224} h={64} label="fill" sub="dividends first" size={13} subSize={10} flow="fill" />
 			<Badge cx={536} cy={400} text="4" accent />
 			<Line id={id} x1={536} y1={432} x2={480} y2={432} accent flow="fill" />
 
 			<Line id={id} x1={760} y1={332} x2={840} y2={332} flow="prove" />
-			<Node x={840} y={304} w={240} h={56} label="E1 experiment" sub="40 Mondays, frozen" size={13} subSize={10} flow="prove" />
+			<Node x={840} y={304} w={240} h={56} label="Monday experiment" sub="40 Mondays, frozen" size={13} subSize={10} flow="prove" />
 			<Badge cx={840} cy={304} text="5" />
 			<Connector points={toFarm} defs={id} flow="prove" />
 			<Node x={840} y={400} w={240} h={56} label="backtest farm" sub="same code, old bars" icon="queue" size={13} subSize={10} flow="prove" />

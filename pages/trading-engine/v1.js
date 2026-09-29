@@ -9,7 +9,7 @@ const facts = [
 	["universe", "Nasdaq Trader symbol list · 12,209 kept · 4,118 liquid"],
 	["blocked", "Stooq (anti-bot page) · Nasdaq FTP (timed out)"],
 	["history", "19.8M rows, back to 1962"],
-	["books", "10 pre-registered + 1 discretionary · $39,000 each"],
+	["portfolios", "10 with fixed rules + 1 manual · $39,000 each"],
 	["fill model", "next open · 5–25 bp spread tier + 5 bp · ≤ 1 % of volume"],
 	["schedule", "cron 22:30 UTC, weekdays"],
 ];
@@ -18,10 +18,10 @@ export default function TradingEngineV1() {
 	return (
 		<TradingVersionPage
 			v="v1"
-			description="Version 1 of Ong Jun Xiong's paper-trading engine, July 2026: Yahoo daily bars, a Minervini screen, ten paper books and a next-open fill rule."
-			lead="Most of what went wrong in the first version had nothing to do with trading. It was one cron job on one Linux box: pull the market, screen it, and let ten paper books trade whatever passed, filling at the next morning’s open."
+			description="Version 1 of Ong Jun Xiong's paper-trading engine, July 2026: Yahoo daily bars, a Minervini screen, ten paper portfolios and a next-open fill rule."
+			lead="Most of what went wrong in the first version had nothing to do with trading. It was one cron job on one Linux box: pull the market, screen it, and let ten paper portfolios trade whatever passed, filling at the next morning’s open."
 			diagram={V1}
-			caption="fig. 1 — v1. ① Nasdaq's symbol list and Yahoo's daily bars are the only inputs; Stooq never worked from this host. ② One writer owns DuckDB. ③ The screen runs the Minervini trend template with a relative-strength rank. ④ Orders fill at the next open, and a small UI can add risk-gated discretionary tickets that fill the same way."
+			caption="fig. 1 — v1. ① Nasdaq's symbol list and Yahoo's daily bars are the only inputs; Stooq never worked from this host. ② One writer owns DuckDB. ③ The screen runs the Minervini trend template with a relative-strength rank. ④ Orders fill at the next open, and a small UI can add risk-checked manual orders that fill the same way."
 			facts={facts}>
 			<H2>Yahoo became the only price source</H2>
 			<P>
@@ -36,20 +36,20 @@ export default function TradingEngineV1() {
 
 			<H2>How an order fills</H2>
 			<P>
-				An order signalled at a close fills at the next session&apos;s open. Slippage is the larger
+				An order signalled at a close fills at the next trading day&apos;s open. Slippage is the larger
 				of half the spread tier and 5 basis points, plus another 5, and the tier comes from 60-day
 				median dollar volume. An order bigger than one percent of that volume is rejected instead of
 				partly filled, and an order whose bar never arrives is rejected after three days. Ten
-				pre-registered books started on 17 July with $39,000 each. A local UI could add a
-				discretionary book, fed by risk-gated tickets that filled the same way.
+				paper portfolios with fixed rules started on 17 July with $39,000 each. A local UI could add a
+				discretionary portfolio, fed by risk-checked manual orders that filled the same way.
 			</P>
 
 			<H2>Four nights of rollbacks</H2>
 			<P>
-				That discretionary book broke the engine. From 20 to 23 July every nightly failed at the
-				league stage with <Code>KeyError: &apos;discretionary&apos;</Code>, because the UI had created
-				the book at runtime and the strategy registry had never heard of it. Each day-step runs in one
-				transaction, so every night rolled back cleanly and the league sat frozen at 17 July with 42
+				That discretionary portfolio broke the engine. From 20 to 23 July every nightly run failed at the
+				portfolio step with <Code>KeyError: &apos;discretionary&apos;</Code>, because the UI had created
+				the portfolio at runtime and the strategy registry had never heard of it. Each day-step runs in one
+				transaction, so every night rolled back cleanly and the paper portfolios sat frozen at 17 July with 42
 				orders pending. The fix was small, and the four days were replayed.
 			</P>
 			<P>

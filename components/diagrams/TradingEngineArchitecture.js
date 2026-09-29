@@ -1,7 +1,7 @@
 import { Badge, Connector, Defs, Flow, Group, Label, Lane, Line, Node, Packet } from "./parts";
 
 export const CLAIM =
-	"v7, 29 September 2026: market data, headlines and macro feeds land in DuckDB under one writer, each fact with the time it became available. Each night a fixed rule and a model both score every candidate, and the nightly agent keeps its own book. Code, not the model, turns scores into sized orders; a pre-open check may only cancel, and every order fills at the next open or a limit-on-open. Every decision is kept in one ledger, labelled later, and a paired test against the rule decides on fixed check dates. The challenger lab and event triggers are switched off, and there is no broker yet: it is still all paper.";
+	"v7, 29 September 2026: market data, headlines and macro feeds land in DuckDB under one writer, each fact with the time it became available. Each night a fixed rule and a model both score every candidate, and the nightly agent keeps its own portfolio. Code, not the model, turns scores into sized orders; a pre-open check may only cancel, and every order fills at the next open or through a limit order at the open. Every decision is kept in one ledger, labelled later, and a paired test against the rule decides on fixed check dates. The challenger lab and event triggers are switched off, and there is no broker yet: it is still all paper.";
 
 export const meta = {
 	number: "Figure 01",
@@ -33,14 +33,14 @@ const SOURCES = [
 const STORE = [
 	{ y: 160, label: "prices", sub: "verified" },
 	{ y: 240, label: "facts", sub: "as-of time" },
-	{ y: 320, label: "headlines", sub: "bitemporal" },
+	{ y: 320, label: "headlines", sub: "time-stamped" },
 ];
 
 const DECIDE = [
 	{ y: 128, h: 56, label: "rule baseline", sub: "fixed ranking" },
 	{ y: 208, h: 64, label: "model scores", sub: "every candidate", icon: "agent", badge: "3" },
 	{ y: 296, h: 56, label: "nightly agent", sub: "one locked trade tool", icon: "agent" },
-	{ y: 376, h: 56, label: "event triggers", sub: "news · movers · shadow", icon: "robot", dashed: true },
+	{ y: 376, h: 56, label: "event triggers", sub: "news · movers · watch only", icon: "robot", dashed: true },
 	{ y: 456, h: 56, label: "challenger lab", sub: "built · switched off", icon: "robot", dashed: true },
 ];
 
@@ -68,7 +68,7 @@ export function Wide({ id }) {
 			{STORE.map(({ y, label, sub }) => (
 				<Node key={label} x={268} y={y} w={144} h={56} label={label} sub={sub} icon="db" size={12} subSize={10} flow="collect" />
 			))}
-			<Node x={268} y={432} w={144} h={64} label="sim ledger" sub="fills · cash" icon="db" size={12} subSize={10} flow="fill" />
+			<Node x={268} y={432} w={144} h={64} label="paper ledger" sub="fills · cash" icon="db" size={12} subSize={10} flow="fill" />
 
 			{/* ---------- decide ---------- */}
 			<Line id={id} x1={412} y1={268} x2={440} y2={268} arrow={false} flow="collect" />
@@ -109,10 +109,10 @@ export function Wide({ id }) {
 			<Node x={920} y={232} w={160} h={64} label="paired test" sub="model vs rule" size={13} subSize={10} flow="prove" />
 			<Line id={id} x1={1000} y1={296} x2={1000} y2={336} flow="prove" />
 			<Node x={920} y={336} w={160} h={64} label="fixed check dates" sub="60 · 90 · 120 days" size={13} subSize={10} flow="prove" />
-			<Label x={1000} y={416} text="PASS · KILL" anchor="middle" size={10} />
+			<Label x={1000} y={416} text="KEEP · DROP" anchor="middle" size={10} />
 
 			<Connector points={fillToBooks} defs={id} flow="fill" />
-			<Node x={920} y={440} w={160} h={56} label="3 comparator books" sub="model · rule · veto" size={12} subSize={10} flow={["fill", "prove"]} />
+			<Node x={920} y={440} w={160} h={56} label="3 test portfolios" sub="model · rule · veto" size={12} subSize={10} flow={["fill", "prove"]} />
 			<Node x={920} y={528} w={160} h={56} label="every test logged" sub="wins and losses" size={12} subSize={10} flow="prove" />
 			<Label x={1000} y={616} text="I decide go-live" anchor="middle" size={11} />
 

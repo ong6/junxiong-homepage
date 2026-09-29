@@ -1,13 +1,13 @@
 import { Badge, Connector, Defs, Flow, Group, Label, Lane, Line, Node } from "../parts";
 
 export const CLAIM =
-	"v3, August 2026: a news analyst summarises RSS headlines each morning, two gaters can veto or shrink entries and three tuners can move parameters, but every proposal passes a validator that reads its bounds from a frozen charter, and each AI book is scored against an untouched twin. With no gate file the book trades its plain algorithm.";
+	"v3, August 2026: a news analyst summarises RSS headlines each morning, two veto agents can block or shrink entries and three tuning agents can move parameters, but every proposal passes a validator that reads its bounds from a frozen test plan, and each AI portfolio is scored against an untouched twin. With no veto file the portfolio trades its plain rules.";
 
 export const meta = {
 	number: "Figure 01 · v3",
 	eyebrow: "4–17 August 2026",
-	title: "A model beside five books, inside written bounds",
-	caption: "The model could only veto, shrink or retune inside a charter. Retired on 18 August.",
+	title: "A model beside five portfolios, inside written bounds",
+	caption: "The model could only veto, shrink or retune inside a written test plan. Retired on 18 August.",
 	legend: [
 		{ label: "Data", kind: "change" },
 		{ label: "Proposal", kind: "request" },
@@ -35,32 +35,32 @@ export function Wide({ id }) {
 			<Line id={id} x1={248} y1={428} x2={304} y2={428} flow="collect" />
 
 			{/* store */}
-			<Node x={304} y={208} w={176} h={56} label="charters" sub="frozen bounds" icon="lock" size={12} subSize={10} flow="decide" />
+			<Node x={304} y={208} w={176} h={56} label="test plans" sub="frozen bounds" icon="lock" size={12} subSize={10} flow="decide" />
 			<Group x={288} y={288} w={208} h={272} title="DUCKDB · ONE WRITER" flow={["collect", "fill"]} />
-			<Node x={304} y={320} w={176} h={56} label="prices" sub="Yahoo EOD" icon="db" size={12} subSize={10} flow="collect" />
+			<Node x={304} y={320} w={176} h={56} label="prices" sub="Yahoo daily" icon="db" size={12} subSize={10} flow="collect" />
 			<Node x={304} y={400} w={176} h={56} label="universe" sub="daily snapshot" icon="db" size={12} subSize={10} flow="collect" />
-			<Node x={304} y={480} w={176} h={56} label="sim ledger" sub="AI books + twins" icon="db" size={12} subSize={10} flow="fill" />
+			<Node x={304} y={480} w={176} h={56} label="paper ledger" sub="AI and twins" icon="db" size={12} subSize={10} flow="fill" />
 
 			{/* decide */}
 			<Node x={536} y={112} w={128} h={56} label="news analyst" sub="11:00 brief" size={12} subSize={10} flow="decide" />
 			<Badge cx={536} cy={112} text="2" />
 			<Line id={id} x1={600} y1={168} x2={600} y2={208} flow="decide" />
-			<Node x={536} y={208} w={128} h={56} label="gaters ×2" sub="21:40 · veto" size={12} subSize={10} flow="decide" />
-			<Node x={688} y={208} w={128} h={56} label="tuners ×3" sub="Sun · params" size={12} subSize={10} flow="decide" />
+			<Node x={536} y={208} w={128} h={56} label="veto agents ×2" sub="21:40 · veto" size={12} subSize={10} flow="decide" />
+			<Node x={688} y={208} w={128} h={56} label="tuning agents ×3" sub="Sun · params" size={12} subSize={10} flow="decide" />
 			<Line id={id} x1={600} y1={264} x2={600} y2={304} flow="decide" />
 			<Line id={id} x1={752} y1={264} x2={752} y2={304} flow="decide" />
 			<Connector points={charterToValidator} defs={id} flow="decide" />
-			<Node x={536} y={304} w={280} h={56} label="validator" sub="bounds read from the charter" size={13} subSize={10} flow="decide" />
+			<Node x={536} y={304} w={280} h={56} label="validator" sub="bounds from the test plan" size={13} subSize={10} flow="decide" />
 			<Badge cx={536} cy={304} text="3" />
 			<Line id={id} x1={676} y1={360} x2={676} y2={400} dashed flow="decide" />
-			<Label x={688} y={384} text="no file = pure algo" size={10} />
+			<Label x={688} y={384} text="no file = plain rules" size={10} />
 			<Connector points={pricesToLeague} defs={id} flow="collect" />
-			<Node x={536} y={400} w={280} h={64} label="paper league" sub="22:30 · 25 books" size={13} subSize={10} flow={["decide", "fill", "prove"]} />
+			<Node x={536} y={400} w={280} h={64} label="paper portfolios" sub="22:30 · 25 in total" size={13} subSize={10} flow={["decide", "fill", "prove"]} />
 			<Connector points={leagueToLedger} defs={id} flow="fill" kind="accent" />
 
 			{/* prove */}
 			<Line id={id} x1={816} y1={432} x2={856} y2={432} flow="prove" />
-			<Node x={856} y={400} w={224} h={64} label="AI book vs twin" sub="same algo, frozen" size={13} subSize={10} flow="prove" />
+			<Node x={856} y={400} w={224} h={64} label="AI portfolio vs twin" sub="same rules, frozen" size={13} subSize={10} flow="prove" />
 			<Badge cx={856} cy={400} text="4" />
 			<Line id={id} x1={968} y1={464} x2={968} y2={496} flow="prove" />
 			<Node x={856} y={496} w={224} h={56} label="scoreboard" sub="26-week spread" size={13} subSize={10} flow="prove" />
