@@ -319,7 +319,7 @@ export default function SelectedWork() {
 				id="work"
 				aria-labelledby="work-heading"
 				scrollMarginTop="96px"
-				mt={{ base: 14, md: 24 }}>
+				mt={{ base: 8, md: 24 }}>
 				<Text sx={labelStyle} color="brand.solid">
 					{"// PROJECTS"}
 				</Text>
