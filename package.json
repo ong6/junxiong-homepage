@@ -48,7 +48,7 @@
 		"react-dom": "^18.3.1",
 		"react-icons": "^5.5.0",
 		"three": "^0.186.0",
-		"uipack": "github:ong6/uipack#ca2f46975f90ea8871e52fc66a2557ecbddf2ca6"
+		"uipack": "github:ong6/uipack#e6b6ed7d356b8973e788a8ff5d845173a5ac9104"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.61.1",

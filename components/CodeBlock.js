@@ -78,7 +78,7 @@ export const CodeFigure = ({ caption, children }) => (
 			as="figcaption"
 			mt={3}
 			fontFamily="var(--font-mono)"
-			fontSize="11px"
+			fontSize="12px"
 			lineHeight="1.6"
 			color="text.muted">
 			{caption}

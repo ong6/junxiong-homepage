@@ -24,43 +24,43 @@ export function Wide({ id }) {
 			<Defs id={id} />
 
 			{/* sources */}
-			<Node x={40} y={192} w={208} h={56} label="Yahoo 5-min + news" sub="raw responses kept" icon="cloud" size={13} subSize={10} flow="collect" />
-			<Node x={40} y={288} w={208} h={56} label="SEC · Alpaca" sub="not connected" icon="lock" size={13} subSize={10} dashed />
-			<Node x={40} y={384} w={208} h={56} label="Yahoo + Nasdaq" sub="daily · cross-checked" icon="cloud" size={13} subSize={10} flow="collect" />
+			<Node x={40} y={192} w={208} h={56} label="Yahoo 5-min + news" sub="raw responses kept" hint="Five-minute bars and headlines for the agents, each response stored exactly as received." icon="cloud" size={13} subSize={10} flow="collect" />
+			<Node x={40} y={288} w={208} h={56} label="SEC · Alpaca" sub="not connected" hint="Adapters exist but stay off: the SEC probe was refused and Alpaca has no credentials." icon="lock" size={13} subSize={10} dashed />
+			<Node x={40} y={384} w={208} h={56} label="Yahoo + Nasdaq" sub="daily · cross-checked" hint="Yahoo's daily bars price every fill. Nasdaq checks them instead of standing in." icon="cloud" size={13} subSize={10} flow="collect" />
 			<Badge cx={40} cy={192} text="1" />
 			<Line id={id} x1={248} y1={220} x2={304} y2={220} flow="collect" />
 			<Line id={id} x1={248} y1={412} x2={304} y2={412} flow="collect" />
 
 			{/* store */}
 			<Group x={288} y={160} w={208} h={384} title="DUCKDB · ONE WRITER" flow={["collect", "fill"]} />
-			<Node x={304} y={192} w={176} h={56} label="facts" sub="as-of cutoffs" icon="db" size={12} subSize={10} flow="collect" />
-			<Node x={304} y={384} w={176} h={56} label="prices" sub="restated cache" icon="db" size={12} subSize={10} flow="collect" />
-			<Node x={304} y={472} w={176} h={56} label="paper ledger" sub="fills · cash" icon="db" size={12} subSize={10} flow="fill" />
+			<Node x={304} y={192} w={176} h={56} label="facts" sub="as-of cutoffs" hint="Each fact keeps the time it became known, so a decision sees only what was public then." icon="db" size={12} subSize={10} flow="collect" />
+			<Node x={304} y={384} w={176} h={56} label="prices" sub="restated cache" hint="Split-restated daily prices. Every portfolio, the agent's included, fills from them." icon="db" size={12} subSize={10} flow="collect" />
+			<Node x={304} y={472} w={176} h={56} label="paper ledger" sub="fills · cash" hint="Includes the agent's isolated portfolio: US$10,000 of paper money, kept apart." icon="db" size={12} subSize={10} flow="fill" />
 
 			{/* decide */}
-			<Node x={536} y={96} w={280} h={56} label="hourly + 4-hour agents" sub="observe only" icon="robot" size={12} subSize={10} dashed flow="prove" />
+			<Node x={536} y={96} w={280} h={56} label="hourly + 4-hour agents" sub="observe only" hint="Their calls are logged and scored like the nightly agent's, but they have no order path." icon="robot" size={12} subSize={10} dashed flow="prove" />
 			<Line id={id} x1={480} y1={220} x2={536} y2={220} flow="collect" />
-			<Node x={536} y={192} w={280} h={56} label="daily agent" sub="02:00 UTC · five standouts" icon="agent" size={13} subSize={10} flow={["decide", "prove"]} />
+			<Node x={536} y={192} w={280} h={56} label="daily agent" sub="02:00 UTC · five standouts" hint="Code picks five standouts. The model marks each ignore, watch, hold or swing." icon="agent" size={13} subSize={10} flow={["decide", "prove"]} />
 			<Badge cx={536} cy={192} text="2" />
 			<Line id={id} x1={676} y1={248} x2={676} y2={288} flow="decide" />
 			<Label x={688} y={272} text="swing only" size={10} />
-			<Node x={536} y={288} w={280} h={56} label="locked tool" sub="one trade, sized by code" icon="lock" size={13} subSize={10} flow="decide" />
+			<Node x={536} y={288} w={280} h={56} label="locked tool" sub="one trade, sized by code" hint="Code passes a swing only in a risk-on market with confidence of 0.65 or more, at 10% size." icon="lock" size={13} subSize={10} flow="decide" />
 			<Badge cx={536} cy={288} text="3" />
 			<Line id={id} x1={676} y1={344} x2={676} y2={384} flow="decide" />
 			<Line id={id} x1={480} y1={412} x2={536} y2={412} flow="collect" />
-			<Node x={536} y={384} w={280} h={56} label="paper portfolios" sub="21 rule-based + 1 agent" size={13} subSize={10} flow={["decide", "fill", "prove"]} />
+			<Node x={536} y={384} w={280} h={56} label="paper portfolios" sub="21 rule-based + 1 agent" hint="The 21 rule portfolios ran unchanged beside the agent's isolated portfolio." size={13} subSize={10} flow={["decide", "fill", "prove"]} />
 			<Line id={id} x1={600} y1={440} x2={600} y2={472} accent flow="fill" />
-			<Node x={536} y={472} w={280} h={56} label="fill" sub="next open only" size={13} subSize={10} flow="fill" />
+			<Node x={536} y={472} w={280} h={56} label="fill" sub="next open only" hint="The agent's trades fill at the next open, exactly like every other portfolio's." size={13} subSize={10} flow="fill" />
 			<Line id={id} x1={536} y1={500} x2={480} y2={500} accent flow="fill" />
 
 			{/* prove */}
 			<Connector points={shadowsToLedger} defs={id} flow="prove" />
 			<Line id={id} x1={816} y1={228} x2={856} y2={228} flow="prove" />
-			<Node x={856} y={192} w={224} h={64} label="agent ledger" sub="1 · 5 · 10 · 20-day labels" size={13} subSize={10} flow="prove" />
+			<Node x={856} y={192} w={224} h={64} label="agent ledger" sub="1 · 5 · 10 · 20-day labels" hint="Stores each decision's cutoff, model and prompt, then scores it against a paired control." size={13} subSize={10} flow="prove" />
 			<Badge cx={856} cy={192} text="4" />
 			<Line id={id} x1={816} y1={412} x2={856} y2={412} flow="prove" />
-			<Node x={856} y={384} w={224} h={56} label="forward monitors" sub="sector · 12-1 · Mondays" size={13} subSize={10} flow="prove" />
-			<Node x={856} y={472} w={224} h={56} label="written rulebook" sub="size limits" size={13} subSize={10} flow="prove" />
+			<Node x={856} y={384} w={224} h={56} label="forward monitors" sub="sector · 12-1 · Mondays" hint="The three monitors from v4 kept running on rules frozen before their first signal." size={13} subSize={10} flow="prove" />
+			<Node x={856} y={472} w={224} h={56} label="written rulebook" sub="size limits" hint="Maintenance only, a bar new work must clear, and code-size limits the tests enforce." size={13} subSize={10} flow="prove" />
 
 			<Lane x={40} w={208} y={40} title="Sources" />
 			<Lane x={288} w={208} y={40} title="Store" />

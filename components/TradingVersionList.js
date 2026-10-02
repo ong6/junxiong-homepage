@@ -32,8 +32,8 @@ export default function TradingVersionList({ active }) {
 							{v === active ? (
 								title
 							) : (
-								<Link as={NextLink} href={href} prefetch={false}>
-									{title} →
+								<Link as={NextLink} href={href} prefetch={false} display="block" py={1}>
+									{title}&nbsp;→
 								</Link>
 							)}
 						</Text>

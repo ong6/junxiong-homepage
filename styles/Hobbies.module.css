@@ -23,7 +23,7 @@
 	color: var(--chakra-colors-brand-solid);
 }
 .title {
-	margin: 16px 0 20px;
+	margin: 16px 0 24px;
 	max-width: 11ch;
 	font-size: clamp(52px, 7.4vw, 104px);
 	font-weight: 720;
@@ -36,12 +36,12 @@
 	line-height: 1.65;
 	color: var(--chakra-colors-text-muted);
 }
-.chapterNav { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+.chapterNav { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 32px; }
 .chapterNav a {
 	display: inline-flex;
 	align-items: center;
 	min-height: 44px;
-	padding: 0 14px;
+	padding: 0 16px;
 	border: 1px solid var(--chakra-colors-border-subtle);
 	border-radius: 999px;
 	font-family: var(--font-mono);
@@ -59,7 +59,9 @@
 	display: grid;
 	grid-template-columns: minmax(0, .84fr) minmax(480px, 1.16fr);
 	column-gap: clamp(48px, 6vw, 96px);
-	align-items: center;
+	/* Top-aligned: every "0X / 06" label sits the same 64px below its rule,
+	   whatever the length of the prose beside the object. */
+	align-items: start;
 	min-height: min(780px, 82dvh);
 	padding: 64px var(--page-edge);
 	scroll-margin-top: 88px;
@@ -67,7 +69,7 @@
 }
 .copy { min-width: 0; max-width: 480px; }
 .heading {
-	margin: 12px 0 22px;
+	margin: 16px 0 24px;
 	font-size: clamp(42px, 4.6vw, 64px);
 	line-height: .98;
 	letter-spacing: -.05em;
@@ -101,12 +103,12 @@
 
 @media (max-width: 479px) {
 	.intro { padding-top: 56px; padding-bottom: 40px; }
-	.title { margin-top: 12px; font-size: clamp(44px, 14vw, 58px); line-height: .94; }
+	.title { font-size: clamp(44px, 14vw, 58px); line-height: .94; }
 	.lede { font-size: 16px; }
 	.chapterNav { margin-top: 24px; }
-	.chapterNav a { padding: 0 12px; font-size: 11px; }
+	.chapterNav a { padding: 0 12px; font-size: 12px; }
 	.chapter { row-gap: 24px; padding-top: 48px; padding-bottom: 48px; scroll-margin-top: 64px; }
-	.heading { margin: 10px 0 18px; font-size: clamp(38px, 11vw, 46px); }
+	.heading { margin: 8px 0 16px; font-size: clamp(38px, 11vw, 46px); }
 	.prose { font-size: 16px; line-height: 1.68; }
 	.visual { height: min(76vw, 320px); min-height: 260px; }
 }

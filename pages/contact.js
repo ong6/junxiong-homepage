@@ -1,8 +1,8 @@
-import { Box, Grid, Heading, Link, SimpleGrid, Text } from "@chakra-ui/react";
+import { Box, Flex, Grid, Heading, Link, SimpleGrid, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 import HobbyScene from "../components/HobbyScene";
 import Layout from "../components/layouts/Articles";
-import OutArrow from "../components/OutArrow";
+import OutArrow, { NextArrow } from "../components/OutArrow";
 
 const links = [
 	{
@@ -64,7 +64,7 @@ export default function Contact() {
 					</Text>
 					<Heading
 						as="h1"
-						mt={3}
+						mt={4}
 						fontSize={{ base: "44px", md: "64px" }}
 						lineHeight="1"
 						letterSpacing="-.05em">
@@ -78,17 +78,18 @@ export default function Contact() {
 						display="inline-flex"
 						alignItems="center"
 						gap={3}
-						mt={7}
+						mt={8}
 						px={6}
 						minH="48px"
 						bg="brand.solid"
 						color="page.bg"
 						borderRadius="6px"
 						fontWeight="700"
+						textDecoration="none"
 						_hover={{ opacity: 0.88, textDecoration: "none" }}>
 						Email me <OutArrow />
 					</Link>
-					<Text mt={3} fontFamily="var(--font-mono)" fontSize="14px" color="text.muted" userSelect="all">
+					<Text mt={4} fontFamily="var(--font-mono)" fontSize="14px" color="text.muted" userSelect="all">
 						junxiongong2@gmail.com
 					</Text>
 				</Box>
@@ -105,7 +106,9 @@ export default function Contact() {
 				<Heading id="contact-links" as="h2" mt={2} fontSize={{ base: "28px", md: "36px" }}>
 					Work and writing.
 				</Heading>
-				<SimpleGrid columns={{ base: 1, md: 2 }} mt={6} borderTop="1px solid" borderColor="border.subtle">
+				{/* Same row grammar as the Links out block: name, arrow pinned to the
+				    row's right edge, detail below. Columns sit 24px apart. */}
+				<SimpleGrid columns={{ base: 1, md: 2 }} columnGap={6} mt={6} borderTop="1px solid" borderColor="border.subtle">
 					{links.map((item) => (
 						<Link
 							key={item.label}
@@ -115,16 +118,16 @@ export default function Contact() {
 							rel={item.external && item.href.startsWith("http") ? "noopener noreferrer" : undefined}
 							display="block"
 							minH="112px"
-							py={5}
-							pr={{ base: 0, md: 6 }}
+							py={6}
 							borderBottom="1px solid"
 							borderColor="border.subtle"
 							color="page.text"
 							textDecoration="none"
 							_hover={{ color: "brand.solid", textDecoration: "none" }}>
-							<Text fontSize="19px" fontWeight="750">
-								{item.label} {item.external ? <OutArrow /> : <Box as="span" aria-hidden="true">→</Box>}
-							</Text>
+							<Flex align="center" justify="space-between" gap={3} fontSize="19px" fontWeight="750">
+								<Text as="span">{item.label}</Text>
+								{item.external ? <OutArrow /> : <NextArrow />}
+							</Flex>
 							<Text mt={2} maxW="420px" color="text.muted" fontSize="15px" lineHeight="1.6">
 								{item.detail}
 							</Text>

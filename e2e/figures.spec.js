@@ -115,9 +115,12 @@ test("/trading-engine: selecting a box shows its note beside it, and site figure
 	await expect(note).toHaveCount(0);
 });
 
-test("/trading-engine/v7 links every other version, including the current one", async ({ page }) => {
+test("version pages link onward: v7 reaches v8, and the v8 list links every past version", async ({ page }) => {
 	await page.goto("/trading-engine/v7");
+	await expect(page.getByRole("heading", { level: 1 })).toHaveText("Scoring every candidate");
+	await expect(page.getByRole("link", { name: /see v8, the current engine/ })).toHaveAttribute("href", "/trading-engine");
+	await page.goto("/trading-engine");
 	const list = page.locator("ol").filter({ hasText: "One shared backtest core" });
-	await expect(list.getByRole("link", { name: /One shared backtest core/ })).toHaveAttribute("href", "/trading-engine");
-	await expect(list.getByRole("link", { name: /Scoring every candidate/ })).toHaveCount(0);
+	await expect(list.getByRole("link", { name: /Scoring every candidate/ })).toHaveAttribute("href", "/trading-engine/v7");
+	await expect(list.getByRole("link", { name: /One shared backtest core/ })).toHaveCount(0);
 });

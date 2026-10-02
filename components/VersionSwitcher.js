@@ -1,5 +1,6 @@
 import { Box, Flex, Link, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { useEffect, useRef } from "react";
 import { CURRENT, VERSIONS } from "../lib/tradingVersions";
 
 // Page-level version tabs for the trading-engine case study. Each version is
@@ -11,10 +12,20 @@ import { CURRENT, VERSIONS } from "../lib/tradingVersions";
 export default function VersionSwitcher({ active, ...props }) {
 	const current = VERSIONS.find((version) => version.v === active);
 	const isPast = !current?.current;
+	const row = useRef(null);
+
+	// On a phone the row scrolls; bring the version on screen into view.
+	useEffect(() => {
+		const nav = row.current;
+		const tab = nav && nav.querySelector('[aria-current="page"]');
+		if (!tab || nav.scrollWidth <= nav.clientWidth) return;
+		nav.scrollLeft = tab.offsetLeft - nav.offsetLeft - (nav.clientWidth - tab.offsetWidth) / 2;
+	}, [active]);
 
 	return (
 		<Box {...props}>
 			<Flex
+				ref={row}
 				as="nav"
 				aria-label="Engine versions"
 				gap={2}
@@ -62,7 +73,15 @@ export default function VersionSwitcher({ active, ...props }) {
 					{isPast ? (
 						<>
 							{" · "}
-							<Link as={NextLink} href={CURRENT.href} color="brand.solid" fontWeight="700">
+							<Link
+								as={NextLink}
+								href={CURRENT.href}
+								display="inline-flex"
+								alignItems="center"
+								minH="32px"
+								whiteSpace="nowrap"
+								color="brand.solid"
+								fontWeight="700">
 								see {CURRENT.v}, the current engine →
 							</Link>
 						</>

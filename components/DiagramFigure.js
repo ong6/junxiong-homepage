@@ -1,7 +1,7 @@
 import { Box, Portal, Text, useColorModeValue } from "@chakra-ui/react";
 import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
 import { Figure } from "uipack";
-import { MOBILE_MIN_FONT, SwipeHint, mobileScrollSx, useIsMobile, useOverflow, viewBoxWidth } from "./figureMobile";
+import { MOBILE_MIN_FONT, MOBILE_QUERY, MOBILE_SCALE, SwipeHint, mobileScrollSx, useIsMobile, useOverflow, viewBoxWidth } from "./figureMobile";
 // One figure wrapper for every diagram. Inline, the drawing sits in a uipack
 // Figure (eyebrow, title, caption, legend, Pause and Replay, dotted canvas).
 // Its own Open canvas is switched off: Expand below is the one way to enlarge.
@@ -14,6 +14,8 @@ import { MOBILE_MIN_FONT, SwipeHint, mobileScrollSx, useIsMobile, useOverflow, v
 const MIN = 0.5;
 const MAX = 6;
 const PAD = 48;
+// Height kept clear for the zoom toolbar at the top of the stage.
+const TOOLBAR = 72;
 
 const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
 
@@ -61,19 +63,33 @@ function Overlay({ Wide, id, viewBox, alt, caption, onClose }) {
 	const pointers = useRef(new Map());
 	const gesture = useRef(null);
 
-	const scrim = useColorModeValue("#F1EEE6", "#0E1512");
+	const scrim = useColorModeValue("#F3EFE7", "#151311");
+	const captionRef = useRef(null);
 
-	// Read the drawing's native size from its viewBox, then fit it to the stage.
-	const fit = useCallback(() => {
-		const svg = svgBoxRef.current && svgBoxRef.current.querySelector("svg");
-		if (!stage || !svg) return;
-		const vb = svg.viewBox.baseVal;
-		setSize({ w: vb.width, h: vb.height });
-		const sw = stage.clientWidth;
-		const sh = stage.clientHeight;
-		const s = Math.min((sw - PAD) / vb.width, (sh - PAD) / vb.height, MAX);
-		setView({ s, x: (sw - vb.width * s) / 2, y: (sh - vb.height * s) / 2, fit: s });
-	}, [stage]);
+	// Read the drawing's native size from its viewBox, then fit it between the
+	// toolbar and the caption panel. On a phone, fitting a wide drawing shrinks
+	// its labels past reading, so it opens at the inline figure's scale instead,
+	// top-left, ready to pan; "fit" still shows the whole drawing.
+	const fit = useCallback(
+		(whole = false) => {
+			const svg = svgBoxRef.current && svgBoxRef.current.querySelector("svg");
+			if (!stage || !svg) return;
+			const vb = svg.viewBox.baseVal;
+			setSize({ w: vb.width, h: vb.height });
+			const sw = stage.clientWidth;
+			const sh = stage.clientHeight;
+			const top = TOOLBAR;
+			const bottom = (captionRef.current ? captionRef.current.offsetHeight : 0) + PAD / 2;
+			const room = sh - top - bottom;
+			const s = Math.min((sw - PAD) / vb.width, (room - PAD) / vb.height, MAX);
+			if (!whole && window.matchMedia(MOBILE_QUERY).matches && s < MOBILE_SCALE) {
+				setView({ s: MOBILE_SCALE, x: PAD / 2, y: top + PAD / 2, fit: s });
+				return;
+			}
+			setView({ s, x: (sw - vb.width * s) / 2, y: top + (room - vb.height * s) / 2, fit: s });
+		},
+		[stage],
+	);
 
 	// Zoom so the stage point (cx, cy) stays under the cursor.
 	const zoomAt = useCallback((factor, cx, cy) => {
@@ -96,10 +112,11 @@ function Overlay({ Wide, id, viewBox, alt, caption, onClose }) {
 		document.body.style.overflow = "hidden";
 		const trigger = document.activeElement;
 		if (closeRef.current) closeRef.current.focus();
-		window.addEventListener("resize", fit);
+		const onResize = () => fit();
+		window.addEventListener("resize", onResize);
 		return () => {
 			document.body.style.overflow = prevOverflow;
-			window.removeEventListener("resize", fit);
+			window.removeEventListener("resize", onResize);
 			if (trigger && typeof trigger.focus === "function") trigger.focus();
 		};
 	}, [stage, fit]);
@@ -274,7 +291,7 @@ function Overlay({ Wide, id, viewBox, alt, caption, onClose }) {
 					<Text
 						as="span"
 						fontFamily="var(--font-mono)"
-						fontSize="11px"
+						fontSize="12px"
 						color="text.muted"
 						mr={1}
 						aria-live="polite">
@@ -286,7 +303,7 @@ function Overlay({ Wide, id, viewBox, alt, caption, onClose }) {
 					<Ctl label="Zoom in" onClick={() => zoomCentre(1.25)}>
 						+
 					</Ctl>
-					<Ctl label="Reset zoom" onClick={fit} fontSize="13px">
+					<Ctl label="Reset zoom" onClick={() => fit(true)} fontSize="13px">
 						fit
 					</Ctl>
 					<Ctl ref={closeRef} label="Close diagram" onClick={onClose}>
@@ -295,6 +312,7 @@ function Overlay({ Wide, id, viewBox, alt, caption, onClose }) {
 				</Box>
 
 				<Box
+					ref={captionRef}
 					position="absolute"
 					left={{ base: 3, md: 5 }}
 					right={{ base: 3, md: 5 }}
@@ -308,7 +326,7 @@ function Overlay({ Wide, id, viewBox, alt, caption, onClose }) {
 					pointerEvents="none">
 					<Text
 						fontFamily="var(--font-mono)"
-						fontSize="11px"
+						fontSize="12px"
 						lineHeight="1.6"
 						color="text.muted"
 						noOfLines={{ base: 2, md: 4 }}>
@@ -325,6 +343,11 @@ function Overlay({ Wide, id, viewBox, alt, caption, onClose }) {
 // fragment of uipack parts taking `{ id }`. `id` prefixes marker ids so the
 // inline drawing and the overlay copy never collide. A module may still export
 // `Narrow`; it is no longer rendered (phones scroll the wide drawing instead).
+// A narrow drawing stays near its designed size instead of stretching to the
+// full 1088px (a 720-unit drawing would otherwise render at 1.4x). Never
+// narrower than the prose column; 66px covers the canvas padding and border.
+const natural = (viewBox) => Math.min(1088, Math.max(680, viewBoxWidth(viewBox) + 66));
+
 const shortCaption = (c) => {
 	const m = /^fig\.\s*\d+/i.exec(c || "");
 	return m ? m[0] : "";
@@ -347,7 +370,7 @@ export default function DiagramFigure({ id, diagram, caption, headingLevel }) {
 			data-reveal
 			my={{ base: 10, md: 14 }}
 			mx={0}
-			w="min(100vw - 32px, 1088px)"
+			w={`min(100vw - 32px, ${natural(meta.viewBox)}px)`}
 			maxW="none"
 			sx={mobileScrollSx(viewBoxWidth(meta.viewBox))}>
 			<Figure
@@ -372,7 +395,7 @@ export default function DiagramFigure({ id, diagram, caption, headingLevel }) {
 					flex="1"
 					pt={2}
 					fontFamily="var(--font-mono)"
-					fontSize="11px"
+					fontSize="12px"
 					lineHeight="1.6"
 					color="text.muted">
 					{caption}
@@ -392,7 +415,7 @@ export default function DiagramFigure({ id, diagram, caption, headingLevel }) {
 					bg="surface.raised"
 					color="text.muted"
 					fontFamily="var(--font-mono)"
-					fontSize="11px"
+					fontSize="12px"
 					fontWeight="700"
 					letterSpacing=".08em"
 					textTransform="uppercase"

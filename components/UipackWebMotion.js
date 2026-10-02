@@ -9,7 +9,7 @@ export default function UipackWebMotion() {
 	const { colorMode, toggleColorMode } = useColorMode();
 	return (
 		<Box as="section" id="page-motion" scrollMarginTop="100px" aria-labelledby="page-motion-heading" my={{ base: 10, md: 14 }}>
-			<Heading id="page-motion-heading" as="h2" fontSize={{ base: "28px", md: "36px" }}>
+			<Heading id="page-motion-heading" as="h2" fontSize={{ base: "22px", md: "24px" }}>
 				Page motion
 			</Heading>
 			<Text mt={3} maxW="680px" color="text.muted">

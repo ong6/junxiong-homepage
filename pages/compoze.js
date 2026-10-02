@@ -9,6 +9,7 @@ import {
 import Image from "next/image";
 import NextLink from "next/link";
 import DiagramFigure from "../components/DiagramFigure";
+import Details from "../components/Details";
 import FactList from "../components/FactList";
 import * as CompozeArchitecture from "../components/diagrams/CompozeArchitecture";
 import * as CompozeDurableChat from "../components/diagrams/CompozeDurableChat";
@@ -42,35 +43,6 @@ const H2 = (props) => (
 	/>
 );
 
-const Details = ({ title, children }) => (
-	<Box
-		as="details"
-		mt={{ base: 8, md: 10 }}
-		borderTop="1px solid"
-		borderBottom="1px solid"
-		borderColor="border.subtle"
-		sx={{
-			"@media print": {
-				"&::details-content": { contentVisibility: "visible", height: "auto" },
-				"& > .case-study-details-body": { display: "block" },
-			},
-		}}>
-		<Box
-			as="summary"
-			minH="44px"
-			py={3}
-			px={1}
-			fontSize="17px"
-			fontWeight="700"
-			cursor="pointer"
-			_focusVisible={{ outline: "2px solid", outlineColor: "brand.solid", outlineOffset: "2px" }}>
-			{title}
-		</Box>
-		<Box className="case-study-details-body" pb={5}>
-			{children}
-		</Box>
-	</Box>
-);
 
 // The product shots are light-UI captures. In dark mode they are pulled down
 // a step so they sit in the page rather than glow off it.
@@ -94,7 +66,7 @@ const Figure = ({ src, alt, caption }) => (
 			as="figcaption"
 			mt={3}
 			fontFamily="var(--font-mono)"
-			fontSize="11px"
+			fontSize="12px"
 			lineHeight="1.6"
 			color="text.muted">
 			{caption}
@@ -178,7 +150,7 @@ export default function Compoze() {
 						mt={4}
 						color={accent}
 						fontFamily="var(--font-mono)"
-						fontSize="11px"
+						fontSize="12px"
 						fontWeight="700"
 						letterSpacing=".1em"
 						textTransform="uppercase">

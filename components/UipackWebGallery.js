@@ -22,7 +22,7 @@ import {
 // every case-study figure. Built from the preset's parts rather than its
 // ready-made figure so phones scroll the wide drawing instead of getting the
 // preset's stacked narrow one.
-function GalleryFigure({ id, spec, parts, note }) {
+function GalleryFigure({ id, spec, parts, n, note }) {
 	const ref = useRef(null);
 	const mobile = useIsMobile();
 	const overflow = useOverflow(ref, mobile);
@@ -39,7 +39,7 @@ function GalleryFigure({ id, spec, parts, note }) {
 			sx={mobileScrollSx(viewBoxWidth(p.viewBox))}>
 			<Figure
 				id={id}
-				number={meta.number}
+				number={`Figure ${String(n).padStart(2, "0")}`}
 				eyebrow={meta.eyebrow}
 				title={meta.title}
 				caption={meta.caption}
@@ -56,10 +56,10 @@ function GalleryFigure({ id, spec, parts, note }) {
 					as="figcaption"
 					mt={3}
 					fontFamily="var(--font-mono)"
-					fontSize="11px"
+					fontSize="12px"
 					lineHeight="1.6"
 					color="text.muted">
-					{note}
+					fig. {n} — {note}
 				</Text>
 			) : null}
 		</Box>
@@ -74,42 +74,44 @@ const GALLERY = [
 		id: "ai",
 		spec: aiToolchain,
 		parts: pipelineParts,
-		note: "fig. 1 — the AI toolchain. Each project owns one decision: what the agent reads, whether the instruction helps, and whether the output agrees with recorded facts.",
+		note: "the AI toolchain. Each project owns one decision: what the agent reads, whether the instruction helps, and whether the output agrees with recorded facts.",
 	},
 	{
 		id: "gp",
 		spec: groundplane,
 		parts: agentLoopParts,
-		note: "fig. 2 — groundplane. Hover the agent or a tool: the flow it belongs to lights up, the rest dims.",
+		note: "groundplane. Hover the agent or a tool: the flow it belongs to lights up, the rest dims.",
 	},
 	{
 		id: "sp",
 		spec: skills,
 		parts: syncLoopParts,
-		note: "fig. 3 — skills. The pull and push are two connectors; each carries one head and one packet direction.",
+		note: "skills. The pull and push are two connectors; each carries one head and one packet direction.",
 	},
 	{
 		id: "fp",
 		spec: fieldEngineering,
 		parts: serviceMapParts,
-		note: "fig. 4 — field-engineering skills. A bus on each side of the platform. Stubs carry no heads, the junction dot marks the join.",
+		note: "field-engineering skills. A bus on each side of the platform. Stubs carry no heads, the junction dot marks the join.",
 	},
 	{
 		id: "dp",
 		spec: deploy(E2E_CASES),
 		parts: pipelineParts,
-		note: "fig. 5 — this site. I run the browser suite before pushing. Vercel deploys main automatically; these checks are not an enforced deployment gate.",
+		note: "this site. I run the browser suite before pushing. Vercel deploys main automatically; these checks are not an enforced deployment gate.",
 	},
 	{
 		id: "cr",
 		spec: connectorRule,
 		parts: beforeAfterParts,
-		note: "fig. 6 — the rule the earlier figures broke. The changed stages and their inbound edges are in accent.",
+		note: "the rule the earlier figures broke. The changed stages and their inbound edges are in accent.",
 	},
 ];
 
+// The gallery numbers its own figures, so the title and the caption under it
+// always agree, whatever number a spec carries on its home page.
 export default function UipackWebGallery() {
-	return GALLERY.map(({ id, spec, parts, note }) => (
-		<GalleryFigure key={id} id={id} spec={spec} parts={parts} note={note} />
+	return GALLERY.map(({ id, spec, parts, note }, i) => (
+		<GalleryFigure key={id} id={id} spec={spec} parts={parts} n={i + 1} note={note} />
 	));
 }

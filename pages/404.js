@@ -8,7 +8,7 @@ const NotFound = () => (
 			<Box pt={{ base: 10, md: 16 }}>
 				<Text
 					fontFamily="var(--font-mono)"
-					fontSize="11px"
+					fontSize="12px"
 					fontWeight="700"
 					letterSpacing=".1em"
 					textTransform="uppercase"

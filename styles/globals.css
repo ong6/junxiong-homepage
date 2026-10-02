@@ -1,7 +1,3 @@
-:root {
-	--focus-ring: rgba(49, 93, 182, 0.42);
-}
-
 html,
 body {
 	padding: 0;
@@ -200,8 +196,11 @@ a {
 
 /* uipack figures take the site's tokens. Chakra flips the semantic colours
    with its colour mode and sets data-theme on <html>, so the figure follows
-   the site toggle, not only the OS. */
-.uipack {
+   the site toggle, not only the OS. The object frame and the canvas dialog
+   sit outside a figure, so they take the same tokens. */
+.uipack,
+.uipack-object-frame,
+.uipack-canvas-dialog {
 	--uipack-fg: var(--chakra-colors-page-text);
 	--uipack-muted: var(--chakra-colors-text-muted);
 	--uipack-bg: var(--chakra-colors-page-bg);
@@ -215,7 +214,12 @@ a {
 	--uipack-token-response: #2fa778;
 	--uipack-token-change: #8a55d6;
 }
-[data-theme="dark"] .uipack {
+/* :root raises the dark blocks to (0,3,0) so they also beat uipack's
+   prefers-color-scheme: dark defaults (:root:not([data-theme="light"]) …),
+   which otherwise repaint figures mint-on-green for OS-dark visitors. */
+:root[data-theme="dark"] .uipack,
+:root[data-theme="dark"] .uipack-object-frame,
+:root[data-theme="dark"] .uipack-canvas-dialog {
 	--uipack-fg: var(--chakra-colors-page-text);
 	--uipack-muted: var(--chakra-colors-text-muted);
 	--uipack-bg: var(--chakra-colors-page-bg);
@@ -238,14 +242,49 @@ a {
 	--uipack-accent: var(--chakra-colors-brand-solid);
 	--uipack-mono: var(--font-mono);
 	--uipack-sans: var(--font-sans);
+	--uipack-surface-raised: var(--chakra-colors-surface-quiet);
+	/* The category list sticks below the 72px fixed header, like the docs
+	   sidebar. Below 720px uipack makes the list static. */
+	--uipack-browser-sticky-top: 96px;
 }
-[data-theme="dark"] .uipack-browser {
+:root[data-theme="dark"] .uipack-browser {
 	--uipack-fg: var(--chakra-colors-page-text);
 	--uipack-muted: var(--chakra-colors-text-muted);
 	--uipack-bg: var(--chakra-colors-page-bg);
 	--uipack-surface: var(--chakra-colors-surface-raised);
+	--uipack-surface-raised: var(--chakra-colors-surface-quiet);
 	--uipack-border: var(--chakra-colors-border-subtle);
 	--uipack-accent: var(--chakra-colors-brand-solid);
+}
+/* The object player, the 3D object gallery, the slide starter and its speaker
+   guide carry their own variables on the element, with a [data-theme]
+   variant; name both so the site's tokens win in either mode. The semantic
+   tokens flip with the colour mode, so one block covers light and dark.
+   Not reachable from here: the slide artwork's colours (renderSlideSvg bakes
+   uipack's palette into the SVG) and the canvas dialog (hard-coded colours). */
+.uipack-object,
+:root .uipack-object[data-theme] {
+	--object-ink: var(--chakra-colors-page-text);
+	--object-rule: var(--chakra-colors-border-subtle);
+	--object-accent: var(--chakra-colors-brand-solid);
+}
+.uipack-animation-workspace,
+:root .uipack-animation-workspace[data-theme] {
+	--gallery-ink: var(--chakra-colors-page-text);
+	--gallery-muted: var(--chakra-colors-text-muted);
+	--gallery-rule: var(--chakra-colors-border-subtle);
+	--gallery-surface: var(--chakra-colors-surface-raised);
+	--gallery-accent: var(--chakra-colors-brand-solid);
+}
+.uipack-slide-starter,
+.uipack-speaker-guide,
+:root .uipack-slide-starter[data-theme],
+:root .uipack-speaker-guide[data-theme] {
+	--presentation-surface: var(--chakra-colors-surface-raised);
+	--presentation-ink: var(--chakra-colors-page-text);
+	--presentation-muted: var(--chakra-colors-text-muted);
+	--presentation-rule: var(--chakra-colors-border-subtle);
+	--presentation-accent: var(--chakra-colors-brand-solid);
 }
 .uipack__ctl:focus-visible {
 	outline: 2px solid var(--chakra-colors-brand-solid);
@@ -329,9 +368,10 @@ a:focus-visible [data-in-arrow] > span { transform: translateX(3px); }
 	clip-path: circle(0% at var(--x, 50%) var(--y, 50%));
 	transition: clip-path var(--fill-dur) var(--ease-out);
 }
-/* Borderless rows ("Around the site") bleed the fill into their left
-   gutter so the text doesn't sit on its edge. */
-[data-fill="row"]::after { inset: 0 4px 0 -12px; }
+/* Borderless rows ("Around the site") bleed the fill 12px into the gutters on
+   both sides, so neither the name nor the flush-right arrow sits on its edge.
+   Columns are 24px apart, so neighbouring fills never overlap. */
+[data-fill="row"]::after { inset: 0 -12px; }
 /* Preview panels keep reading as themselves; they would otherwise inherit
    the card's on-fill text colour. */
 [data-fill] [data-panel] { color: var(--chakra-colors-page-text); }

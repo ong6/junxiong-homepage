@@ -64,7 +64,7 @@ export default function Skillsmith() {
 						Skillsmith
 					</Heading>
 
-					<Text mt={4} color={accent} fontFamily="var(--font-mono)" fontSize="11px" fontWeight="700" letterSpacing=".1em" textTransform="uppercase">
+					<Text mt={4} color={accent} fontFamily="var(--font-mono)" fontSize="12px" fontWeight="700" letterSpacing=".1em" textTransform="uppercase">
 						2026 · open source · claude code + codex
 					</Text>
 

@@ -18,17 +18,17 @@ export const meta = {
 };
 
 const SOURCES = [
-	[112, "Yahoo", "daily, only source", false],
-	[208, "Macro feeds", "breadth · credit · VIX", false],
-	[288, "Nasdaq list", "universe", false],
-	[368, "Nasdaq API", "verifies prices", true],
+	[112, "Yahoo", "daily, only source", false, "Every price still comes from here. An outage only delays the resumable collector."],
+	[208, "Macro feeds", "breadth · credit · VIX", false, "Stored with the date each value was fetched, so a replay never sees one early."],
+	[288, "Nasdaq list", "universe", false, "Refreshed each night. It lists only symbols trading today, not delisted ones."],
+	[368, "Nasdaq API", "verifies prices", true, "Re-checks Yahoo's prices and flags gaps over 10 basis points. It never fills in for Yahoo."],
 ];
 
 const STORE = [
-	[112, "prices", "restated cache", "collect"],
-	[208, "signals", "macro regime", "collect"],
-	[288, "universe", "daily snapshot", "collect"],
-	[368, "paper ledger", "fills · cash", "fill"],
+	[112, "prices", "restated cache", "collect", "An audit found three real crashes restated as splits, and a re-audit reverted 18 more."],
+	[208, "signals", "macro regime", "collect", "One weekly portfolio reads them to set its SPY stake between 0% and 100%."],
+	[288, "universe", "daily snapshot", "collect", "Only today's names are in it, so old test windows miss every company that failed."],
+	[368, "paper ledger", "fills · cash", "fill", "An audit found no dividend had ever been credited. A backfill added 26, worth $230.42."],
 ];
 
 export function Wide({ id }) {
@@ -38,8 +38,8 @@ export function Wide({ id }) {
 		<>
 			<Defs id={id} />
 
-			{SOURCES.map(([y, label, sub, dashed]) => (
-				<Node key={label} x={40} y={y} w={208} h={56} label={label} sub={sub} icon={dashed ? "tool" : "cloud"} size={13} subSize={10} dashed={dashed} flow="collect" />
+			{SOURCES.map(([y, label, sub, dashed, hint]) => (
+				<Node key={label} x={40} y={y} w={208} h={56} label={label} sub={sub} hint={hint} icon={dashed ? "tool" : "cloud"} size={13} subSize={10} dashed={dashed} flow="collect" />
 			))}
 			<Badge cx={40} cy={112} text="1" />
 			<Label x={144} y={456} text="Stooq: blocked" anchor="middle" size={10} />
@@ -49,31 +49,31 @@ export function Wide({ id }) {
 
 			<Group x={288} y={80} w={208} h={368} title="DUCKDB · ONE WRITER" flow={["collect", "fill"]} />
 			<Badge cx={288} cy={80} text="2" />
-			{STORE.map(([y, label, sub, flow]) => (
-				<Node key={label} x={304} y={y} w={176} h={56} label={label} sub={sub} icon="db" size={12} subSize={10} flow={flow} />
+			{STORE.map(([y, label, sub, flow, hint]) => (
+				<Node key={label} x={304} y={y} w={176} h={56} label={label} sub={sub} hint={hint} icon="db" size={12} subSize={10} flow={flow} />
 			))}
 
 			<Line id={id} x1={480} y1={140} x2={536} y2={140} flow="collect" />
-			<Node x={536} y={112} w={224} h={56} label="screen" sub="trend screen + rank" size={13} subSize={10} flow={["collect", "decide"]} />
+			<Node x={536} y={112} w={224} h={56} label="screen" sub="trend screen + rank" hint="On 19 August, 37 of its top 50 names by relative strength were healthcare stocks." size={13} subSize={10} flow={["collect", "decide"]} />
 			<Line id={id} x1={648} y1={168} x2={648} y2={208} flow="decide" />
 			<Line id={id} x1={480} y1={236} x2={536} y2={236} flow="collect" />
-			<Node x={536} y={208} w={224} h={56} label="paper portfolios" sub="21 frozen portfolios" size={13} subSize={10} flow={["decide", "fill", "prove"]} />
+			<Node x={536} y={208} w={224} h={56} label="paper portfolios" sub="21 frozen portfolios" hint="No portfolio had reached a t-statistic of 2, so none was tuned on live results." size={13} subSize={10} flow={["decide", "fill", "prove"]} />
 			<Badge cx={536} cy={208} text="3" />
 			<Line id={id} x1={648} y1={264} x2={648} y2={304} accent flow="fill" />
-			<Node x={536} y={304} w={224} h={64} label="fill model" sub="next open · 3 cost profiles" size={13} subSize={10} flow="fill" />
+			<Node x={536} y={304} w={224} h={64} label="fill model" sub="next open · 3 cost profiles" hint="Any result can be rerun at double cost. That took 1.85 points a year off the stock basket." size={13} subSize={10} flow="fill" />
 			<Connector points={toLedger} defs={id} flow="fill" kind="accent" />
-			<Node x={536} y={400} w={224} h={56} label="agent layer" sub="retired 18 Aug" size={12} subSize={10} dashed />
+			<Node x={536} y={400} w={224} h={56} label="agent layer" sub="retired 18 Aug" hint="The five AI portfolios and the two twins made for them were retired, not deleted." size={12} subSize={10} dashed />
 
 			<Connector points={toMonitors} defs={id} flow="prove" />
-			<Node x={840} y={112} w={240} h={56} label="forward monitors" sub="sector · 12-1 · Mondays" size={13} subSize={10} flow="prove" />
+			<Node x={840} y={112} w={240} h={56} label="forward monitors" sub="sector · 12-1 · Mondays" hint="Frozen before their first signal, they only report whether a portfolio should continue." size={13} subSize={10} flow="prove" />
 			<Badge cx={840} cy={112} text="4" />
 			<Line id={id} x1={760} y1={244} x2={840} y2={244} flow="prove" />
-			<Node x={840} y={208} w={240} h={56} label="walk-forward" sub="Sundays · 10 folds" size={13} subSize={10} flow="prove" />
-			<Node x={840} y={304} w={240} h={56} label="sweep farm" sub="grids, no model calls" icon="queue" size={13} subSize={10} flow="prove" />
+			<Node x={840} y={208} w={240} h={56} label="walk-forward" sub="Sundays · 10 folds" hint="Up from six folds to ten, because a single window could flip a verdict." size={13} subSize={10} flow="prove" />
+			<Node x={840} y={304} w={240} h={56} label="sweep farm" sub="grids, no model calls" hint="Of 30 swept candidates, 26 were indistinguishable from their benchmark and none beat it." icon="queue" size={13} subSize={10} flow="prove" />
 			<Label x={852} y={296} text="reads a copy of the store" size={10} />
 			<Line id={id} x1={960} y1={360} x2={960} y2={400} flow="prove" />
 			<Label x={972} y={384} text="KEEP · DROP" size={10} />
-			<Node x={840} y={400} w={240} h={56} label="reports · API · UI" sub="read-only" size={13} subSize={10} flow="prove" />
+			<Node x={840} y={400} w={240} h={56} label="reports · API · UI" sub="read-only" hint="Shows each verdict. Nothing on the evidence side can move a portfolio to real money." size={13} subSize={10} flow="prove" />
 
 			<Lane x={40} w={208} y={32} title="Sources" />
 			<Lane x={288} w={208} y={32} title="Store" />

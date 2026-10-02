@@ -237,7 +237,7 @@ function SupportingCard({ project, index }) {
 			<Text color="text.muted" sx={labelStyle}>
 				{project.label}
 			</Text>
-			<Heading as="h3" mt={4} fontSize={{ base: "23px", md: "26px" }} lineHeight="1.1">
+			<Heading as="h3" mt={2} fontSize={{ base: "23px", md: "26px" }} lineHeight="1.1">
 				<ProjectLink href={project.href}>{project.title}</ProjectLink>
 			</Heading>
 			<Text mt={2} maxW="640px" color="text.muted" fontSize="16px" lineHeight="1.65">
@@ -263,7 +263,9 @@ function Elsewhere() {
 			<Heading id="elsewhere-heading" as="h2" mt={2} fontSize={{ base: "25px", md: "30px" }}>
 				Around the site
 			</Heading>
-			<SimpleGrid columns={{ base: 1, smmd: 2, lg: 4 }} mt={6} borderTop="1px solid" borderColor="border.subtle">
+			{/* Links out grammar: the arrow ends each row flush with its rule;
+			    columns sit 24px apart instead of padding the rows. */}
+			<SimpleGrid columns={{ base: 1, smmd: 2, lg: 4 }} columnGap={6} mt={6} borderTop="1px solid" borderColor="border.subtle">
 				{elsewhereLinks.map((item, index) => (
 					<Link
 						key={item.name}
@@ -280,7 +282,6 @@ function Elsewhere() {
 						display="block"
 						minH="92px"
 						py={4}
-						pr={4}
 						borderBottom="1px solid"
 						borderColor="border.subtle"
 						color="page.text"

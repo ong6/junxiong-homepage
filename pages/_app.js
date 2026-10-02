@@ -10,6 +10,7 @@ import Layout from "../components/layouts/Main";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
+import { useEffect } from "react";
 import theme from "../lib/theme";
 
 const plexSans = IBM_Plex_Sans({
@@ -28,6 +29,12 @@ const plexMono = IBM_Plex_Mono({
 });
 
 function MyApp({ Component, pageProps, router }) {
+	// Portals (the expanded diagram, menus) mount on <body>, outside the wrapper
+	// below, so the font variables also go on <html>.
+	useEffect(() => {
+		document.documentElement.classList.add(plexSans.variable, plexMono.variable);
+	}, []);
+
 	return (
 		<div className={`${plexSans.variable} ${plexMono.variable}`}>
 			<SiteProvider theme={theme}>

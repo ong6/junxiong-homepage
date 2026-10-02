@@ -83,7 +83,7 @@ export default function TradingEngine() {
 						mt={4}
 						color={accent}
 						fontFamily="var(--font-mono)"
-						fontSize="11px"
+						fontSize="12px"
 						fontWeight="700"
 						letterSpacing=".1em"
 						textTransform="uppercase">

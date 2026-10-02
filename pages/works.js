@@ -32,20 +32,29 @@ const Row = ({ entry, rule }) => (
 		_hover={{ bg: "surface.raised" }}
 		transitionProperty="background-color"
 		transitionDuration="140ms">
+		{/* A 16:9 frame (64×36, 80×45) to match the screenshots, which fill it;
+		    logos with their own background stay contained. Framed, and dimmed
+		    in dark mode like the other product screenshots. */}
 		<Box
 			position="relative"
 			flexShrink={0}
-			w={{ base: "56px", md: "72px" }}
-			h={{ base: "36px", md: "46px" }}
+			w={{ base: "64px", md: "80px" }}
+			aspectRatio="16 / 9"
 			rounded="md"
 			overflow="hidden"
-			bg={entry.thumbnail.background || "surface.quiet"}>
+			border="1px solid"
+			borderColor="border.subtle"
+			bg={entry.thumbnail.background || "surface.quiet"}
+			_dark={{ filter: "brightness(.86) contrast(1.04)" }}>
 			<Image
 				src={entry.thumbnail.src}
 				alt=""
 				fill
-				sizes="72px"
-				style={{ objectFit: "contain", padding: entry.thumbnail.padding || "0" }}
+				sizes="80px"
+				style={{
+					objectFit: entry.thumbnail.background ? "contain" : "cover",
+					padding: entry.thumbnail.padding || "0",
+				}}
 			/>
 		</Box>
 		<Box minW={0}>
@@ -60,7 +69,7 @@ const Row = ({ entry, rule }) => (
 				{entry.note && (
 					<Text
 						fontFamily="var(--font-mono)"
-						fontSize="11px"
+						fontSize="12px"
 						color="text.muted"
 						whiteSpace="nowrap">
 						{entry.note}
@@ -87,7 +96,7 @@ const Works = () => {
 					<Heading as="h1" fontSize={{ base: "26px", md: "30px" }}>
 						Archive, 2020&ndash;2023
 					</Heading>
-					<Text fontFamily="var(--font-mono)" fontSize="11px" color="text.muted">
+					<Text fontFamily="var(--font-mono)" fontSize="12px" color="text.muted">
 						{workSlugs.length} entries
 					</Text>
 				</Flex>

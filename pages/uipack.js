@@ -91,7 +91,7 @@ export default function Uipack() {
 						mt={{ base: 8, md: 10 }}
 						color={accent}
 						fontFamily="var(--font-mono)"
-						fontSize="11px"
+						fontSize="12px"
 						fontWeight="700"
 						letterSpacing=".1em"
 						textTransform="uppercase">
@@ -111,7 +111,7 @@ export default function Uipack() {
 						mt={4}
 						color={accent}
 						fontFamily="var(--font-mono)"
-						fontSize="11px"
+						fontSize="12px"
 						fontWeight="700"
 						letterSpacing=".1em"
 						textTransform="uppercase">
@@ -231,7 +231,7 @@ export default function Uipack() {
 							))}
 						</Flex>
 						<Text mt={2} color="text.muted" fontSize="15px">
-							Paper, ink and mint, in light and dark themes.
+							Paper, ink and cobalt, in light and dark themes.
 						</Text>
 					</Box>
 					<Box>

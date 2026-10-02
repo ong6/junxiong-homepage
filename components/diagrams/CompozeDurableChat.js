@@ -32,9 +32,9 @@ export function Wide({ id }) {
 		<>
 			<Defs id={id} />
 
-			<Participant x={B - 100} y={32} w={200} h={56} label="Browser" icon="browser" />
-			<Participant x={C - 100} y={32} w={200} h={56} label="Chat route" icon="service" />
-			<Participant x={Q - 100} y={32} w={200} h={56} label="QStash workflow" icon="queue" accent />
+			<Participant x={B - 100} y={32} w={200} h={56} label="Browser" icon="browser" hint="Shows the streamed answer; closing it mid-answer no longer stops the job." />
+			<Participant x={C - 100} y={32} w={200} h={56} label="Chat route" icon="service" hint="Streams tokens by default and hands the job off if the client disconnects." />
+			<Participant x={Q - 100} y={32} w={200} h={56} label="QStash workflow" icon="queue" hint="Runs each phase as a durable step, so a retry resumes after the last finished one." accent />
 			<Lifeline x={B} y1={88} y2={632} />
 			<Lifeline x={C} y1={88} y2={632} />
 			<Lifeline x={Q} y1={88} y2={632} />
@@ -58,10 +58,10 @@ export function Wide({ id }) {
 			/>
 
 			<SelfLoop id={id} x={Q} y={512} h={40} side="left" w={56} n={5} />
-			<text x={888} y={528} textAnchor="end" fontFamily="var(--uipack-mono)" fontSize={12} fill="currentColor">
+			<text x={888} y={526} textAnchor="end" fontFamily="var(--uipack-mono)" fontSize={13} fill="currentColor">
 				retry resumes after
 			</text>
-			<text x={888} y={546} textAnchor="end" fontFamily="var(--uipack-mono)" fontSize={12} fill="currentColor">
+			<text x={888} y={546} textAnchor="end" fontFamily="var(--uipack-mono)" fontSize={13} fill="currentColor">
 				the last completed step
 			</text>
 

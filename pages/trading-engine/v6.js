@@ -7,7 +7,7 @@ const facts = [
 	["paper portfolios", "21 rule-based (18 replayable) · 1 run by an AI agent"],
 	["strategy modules", "30 · one file each, rules fixed in advance"],
 	["test plans with a kill rule", "10 · 7 closed as rejected or inconclusive"],
-	["data sources", "Yahoo · Nasdaq · FRED · Cboe · FINRA · CFTC · AAII · NAAIM · SqueezeMetrics"],
+	["data sources", "Yahoo · Nasdaq · FRED · Cboe · FINRA · CFTC · AAII · SqueezeMetrics"],
 	["research-only source", "TradingView quotes and bars, for the intraday agents"],
 	["not connected yet", "Alpaca IEX (dormant) · SEC EDGAR · licensed history"],
 	["liquid universe", "~4,100 US names, refreshed weekly"],

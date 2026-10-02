@@ -30,7 +30,7 @@ export function Wide({ id }) {
 		<>
 			<Defs id={id} />
 
-			<Node x={232} y={32} w={256} h={56} label="User question" flow="ask" />
+			<Node x={232} y={32} w={256} h={56} label="User question" hint="A staff member asks in the chat of the agent they picked." flow="ask" />
 			<Line id={id} x1={360} y1={88} x2={360} y2={128} flow="ask" />
 			<Label x={372} y={112} text="asks" />
 
@@ -40,6 +40,7 @@ export function Wide({ id }) {
 				w={256}
 				h={72}
 				label="Domain agent"
+				hint="Uses its own prompt and tools, and calls the search tool to find passages."
 				sub="1 of 4 · tenant-gated"
 			/>
 			<Line id={id} x1={360} y1={200} x2={360} y2={240} flow="ask" />
@@ -51,6 +52,7 @@ export function Wide({ id }) {
 				w={256}
 				h={72}
 				label="Contextual RAG search"
+				hint="Embeds the question and runs keyword and vector search, merged by rank fusion."
 				sub="OpenAI embed · 1536-dim"
 			/>
 
@@ -69,7 +71,7 @@ export function Wide({ id }) {
 				h={136}
 				title="UP TO 5 KNOWLEDGE BASES · PARALLEL" flow="retrieval" />
 			{KB_X_WIDE.map((x, i) => (
-				<Node key={x} x={x} y={408} w={104} h={56} label={`kb ${i + 1}`} size={13} flow="retrieval" />
+				<Node key={x} x={x} y={408} w={104} h={56} label={`kb ${i + 1}`} size={13} hint="Searched in its own hybrid lane, in parallel with up to four others." flow="retrieval" />
 			))}
 
 			{/* merge */}
@@ -94,6 +96,7 @@ export function Wide({ id }) {
 				w={256}
 				h={72}
 				label="Cross-encoder rerank"
+				hint="Reads the question and each chunk together to set the final order."
 				sub="final order"
 			/>
 			<Line id={id} x1={360} y1={608} x2={360} y2={648} flow="retrieval" />
@@ -105,6 +108,7 @@ export function Wide({ id }) {
 				w={256}
 				h={72}
 				label="Summarise references"
+				hint="Turns kept chunks into prompt context, in a delimited block the prompt treats as data."
 				sub="kept chunks only"
 			/>
 			<Line id={id} x1={360} y1={720} x2={360} y2={760} flow="retrieval" />
@@ -116,6 +120,7 @@ export function Wide({ id }) {
 				w={256}
 				h={72}
 				label="Model gateway"
+				hint="Writes the answer from the context only; the fixed prompt prefix is cached per tenant."
 				sub="9 models · prompt cache"
 			/>
 
@@ -130,6 +135,7 @@ export function Wide({ id }) {
 				w={192}
 				h={64}
 				label="Citation entailment check"
+				hint="Checks that each cited chunk actually supports the sentence it is attached to."
 				sub="claim ⊨ chunk"
 				size={12}
 				subSize={11} flow="answer" />
@@ -140,6 +146,7 @@ export function Wide({ id }) {
 				w={256}
 				h={72}
 				label="Answer with citations"
+				hint="Sources sit under the answer with scores, so readers can open them and judge support."
 				sub="match score per chunk"
 			/>
 

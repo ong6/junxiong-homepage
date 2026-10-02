@@ -25,13 +25,13 @@ export const meta = {
 // rail is a dashed currentColor exit with a ✕ on it.
 
 const STAGES = [
-	{ label: "Content hash", sub: "skip if seen", arrow: "new file" },
-	{ label: "Download", arrow: "raw file" },
-	{ label: "Extract", sub: "LlamaParse", arrow: "plain text" },
-	{ label: "Redact PII", sub: "before chunking", arrow: "clean text" },
-	{ label: "Chunk", arrow: "~1000 chars" },
-	{ label: "Batch embed", sub: "cache by hash", arrow: "OpenAI · 1536-dim" },
-	{ label: "Store" },
+	{ label: "Content hash", sub: "skip if seen", arrow: "new file", hint: "Jobs are keyed by the file's hash, so re-uploading the same file does nothing." },
+	{ label: "Download", arrow: "raw file", hint: "Fetches the raw file; a run that dies after this looks uploaded but answers nothing." },
+	{ label: "Extract", sub: "LlamaParse", arrow: "plain text", hint: "Turns the raw file into plain text that can be redacted and chunked." },
+	{ label: "Redact PII", sub: "before chunking", arrow: "clean text", hint: "Removes personal data first, so it never reaches the embeddings." },
+	{ label: "Chunk", arrow: "~1000 chars", hint: "Gives each chunk a one-sentence header that places it in its document." },
+	{ label: "Batch embed", sub: "cache by hash", arrow: "OpenAI · 1536-dim", hint: "Cached by chunk hash and model, so editing one paragraph re-embeds only that chunk." },
+	{ label: "Store", hint: "Writes the chunks and vectors to Postgres, then marks the job complete." },
 ];
 
 const Cross = ({ cx, cy, s = 5 }) => (
@@ -53,16 +53,17 @@ export function Wide({ id }) {
 				w={312}
 				h={72}
 				label="Lark / Feishu"
+				hint="The admin selects files here; only the customer can say which documents belong."
 				sub="OAuth · MCP: docs, wiki, sheets"
 				subSize={11} flow="document" />
-			<Node x={368} y={32} w={312} h={72} label="Google Drive" sub="OAuth" flow="document" />
+			<Node x={368} y={32} w={312} h={72} label="Google Drive" sub="OAuth" hint="The admin selects files here; only the customer can say which documents belong." flow="document" />
 			<Line id={id} x1={196} y1={104} x2={196} y2={136} arrow={false} flow="document" />
 			<Line id={id} x1={524} y1={104} x2={524} y2={136} arrow={false} flow="document" />
 			<Line id={id} x1={196} y1={136} x2={524} y2={136} arrow={false} flow="document" />
 			<Line id={id} x1={360} y1={136} x2={360} y2={176} flow="document" />
 			<Label x={372} y={162} text="file selected" />
 
-			<Node x={232} y={176} w={256} h={72} label="Ingest job" sub="status: queued" flow="document" />
+			<Node x={232} y={176} w={256} h={72} label="Ingest job" sub="status: queued" hint="Queued for QStash, so the slow work runs later, off the request path." flow="document" />
 			<Line id={id} x1={360} y1={248} x2={360} y2={336} accent flow="document" />
 			<Label x={372} y={278} text="async · Upstash QStash" accent />
 
@@ -76,7 +77,7 @@ export function Wide({ id }) {
 
 			{stages.map((s) => (
 				<g key={s.label}>
-					<Node x={184} y={s.y} w={352} h={56} label={s.label} sub={s.sub} flow="document" />
+					<Node x={184} y={s.y} w={352} h={56} label={s.label} sub={s.sub} hint={s.hint} flow="document" />
 					{s.arrow ? (
 						<>
 							<Line id={id} x1={360} y1={s.y + 56} x2={360} y2={s.y + 88} flow="document" />
@@ -97,13 +98,13 @@ export function Wide({ id }) {
 
 			<Line id={id} x1={136} y1={364} x2={136} y2={1000} dashed flow="failure" />
 			<Label x={124} y={648} text="on failure" anchor="end" size={11} />
-			<Cross cx={136} cy={672} />
+			<Cross cx={136} cy={640} />
 
 			<Line id={id} x1={360} y1={920} x2={360} y2={1000} flow="document" />
 			<Label x={348} y={978} text="chunks + embeddings" anchor="end" size={11} />
 			<Line id={id} x1={360} y1={972} x2={592} y2={972} arrow={false} flow="document" />
 			<Line id={id} x1={592} y1={972} x2={592} y2={1000} flow="document" />
-			<Label x={476} y={966} text="job complete" anchor="middle" size={11} />
+			<Label x={476} y={962} text="job complete" anchor="middle" size={11} />
 
 			<Node
 				x={40}
@@ -111,6 +112,7 @@ export function Wide({ id }) {
 				w={216}
 				h={72}
 				label="status: failed · DLQ"
+				hint="Jobs out of retries land here with payload and error attached, and rerun from that step."
 				sub="retry from step"
 				size={13}
 				subSize={11} flow="failure" />
@@ -120,6 +122,7 @@ export function Wide({ id }) {
 				w={176}
 				h={72}
 				label="Postgres · pgvector"
+				hint="The only store; questions search the same tables that ingest writes to."
 				sub="chunks + vectors"
 				size={13}
 				subSize={11} flow="document" />
@@ -129,6 +132,7 @@ export function Wide({ id }) {
 				w={176}
 				h={72}
 				label="status: ready"
+				hint="The admin can see the document is searchable, and users can get answers from it."
 				sub="shown in the UI"
 				size={13}
 				subSize={11} flow="document" />

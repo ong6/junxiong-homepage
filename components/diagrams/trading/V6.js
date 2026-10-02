@@ -24,16 +24,16 @@ export const meta = {
 // orders → fill → ledger. 8px grid throughout.
 
 const SOURCES = [
-	{ y: 96, label: "Yahoo", sub: "bars · actions · intraday", icon: "cloud", to: 176 },
-	{ y: 176, label: "Nasdaq", sub: "universe · price check", icon: "cloud", to: 208 },
-	{ y: 256, label: "Macro feeds", sub: "FRED · Cboe · FINRA", icon: "chart", to: 240 },
-	{ y: 352, label: "Not connected", sub: "Alpaca · SEC EDGAR", icon: "lock", to: 264, gated: true },
+	{ y: 96, label: "Yahoo", sub: "bars · actions · intraday", icon: "cloud", to: 176, hint: "Every fill is priced from its bars, and no other source quietly takes its place." },
+	{ y: 176, label: "Nasdaq", sub: "universe · price check", icon: "cloud", to: 208, hint: "Defines the universe and is the second source in the Saturday price check." },
+	{ y: 256, label: "Macro feeds", sub: "FRED · Cboe · FINRA", icon: "chart", to: 240, hint: "Also CFTC, AAII and SqueezeMetrics: macro and sentiment data, each raw response kept." },
+	{ y: 352, label: "Not connected", sub: "Alpaca · SEC EDGAR", icon: "lock", to: 264, gated: true, hint: "Alpaca is dormant, and SEC EDGAR and licensed history are not wired in yet." },
 ];
 
 const STORE = [
-	{ y: 344, h: 56, label: "prices", sub: "cache · verified" },
-	{ y: 424, h: 56, label: "facts", sub: "raw, time-stamped" },
-	{ y: 504, h: 64, label: "paper ledger", sub: "fills · cash", flow: "fill" },
+	{ y: 344, h: 56, label: "prices", sub: "cache · verified", hint: "Restated from Yahoo. Each Saturday a second source re-checks the whole universe." },
+	{ y: 424, h: 56, label: "facts", sub: "raw, time-stamped", hint: "Each provider's raw response, kept as received with the time it arrived." },
+	{ y: 504, h: 64, label: "paper ledger", sub: "fills · cash", flow: "fill", hint: "Every fill and dividend for the 21 rule portfolios and the agent's portfolio." },
 ];
 
 export function Wide({ id }) {
@@ -50,7 +50,7 @@ export function Wide({ id }) {
 			<Defs id={id} />
 
 			{/* ---------- sources ---------- */}
-			{SOURCES.map(({ y, label, sub, icon, gated }) => (
+			{SOURCES.map(({ y, label, sub, icon, gated, hint }) => (
 				<Node
 					key={label}
 					x={40}
@@ -59,6 +59,7 @@ export function Wide({ id }) {
 					h={64}
 					label={label}
 					sub={sub}
+					hint={hint}
 					icon={icon}
 					size={13}
 					subSize={10}
@@ -80,6 +81,7 @@ export function Wide({ id }) {
 				h={112}
 				label="collect"
 				sub="job queue · batched"
+				hint="Releases the writer between batches so a multi-hour pull never locks out the API or UI."
 				icon="queue"
 				size={13}
 				subSize={10}
@@ -89,7 +91,7 @@ export function Wide({ id }) {
 			<Label x={420} y={296} text="commit" size={11} />
 			<Group x={304} y={312} w={208} h={288} title="DUCKDB · ONE WRITER" flow={["collect", "fill"]} />
 			<Badge cx={304} cy={312} text="2" />
-			{STORE.map(({ y, h, label, sub, flow }) => (
+			{STORE.map(({ y, h, label, sub, flow, hint }) => (
 				<Node
 					key={label}
 					x={320}
@@ -98,6 +100,7 @@ export function Wide({ id }) {
 					h={h}
 					label={label}
 					sub={sub}
+					hint={hint}
 					icon="db"
 					size={12}
 					subSize={10}
@@ -113,6 +116,7 @@ export function Wide({ id }) {
 				h={56}
 				label="intraday agents"
 				sub="TradingView quotes · no orders"
+				hint="New in v6: they read TradingView as research and never touch prices or fills."
 				icon="robot"
 				size={12}
 				subSize={10}
@@ -128,6 +132,7 @@ export function Wide({ id }) {
 				h={56}
 				label="screen"
 				sub="~4,100 names"
+				hint="The liquid list is refreshed weekly, and each portfolio turns the ranking into orders."
 				size={13}
 				subSize={10}
 				flow={["collect", "decide"]}
@@ -143,6 +148,7 @@ export function Wide({ id }) {
 				h={64}
 				label="AI agent"
 				sub="locked tool"
+				hint="Takes the screen's standouts. Code, not the model, decides whether its trade passes."
 				icon="agent"
 				size={13}
 				subSize={10}
@@ -160,6 +166,7 @@ export function Wide({ id }) {
 				h={56}
 				label="paper portfolios"
 				sub="21 rules + agent"
+				hint="21 with rules fixed in advance, 18 of them replayable, plus the agent's portfolio."
 				size={12}
 				subSize={10}
 				flow={["decide", "fill", "prove"]}
@@ -173,6 +180,7 @@ export function Wide({ id }) {
 				h={56}
 				label="orders"
 				sub="signal at close"
+				hint="Written from the close of day t. None can fill on that same bar."
 				size={13}
 				subSize={10}
 				flow="fill"
@@ -185,6 +193,7 @@ export function Wide({ id }) {
 				h={64}
 				label="fill"
 				sub="next open only"
+				hint="The only place an order can fill: the next day's open, through one guard."
 				size={13}
 				subSize={10}
 				flow="fill"
@@ -202,6 +211,7 @@ export function Wide({ id }) {
 				h={64}
 				label="agent ledger"
 				sub="each call vs its control"
+				hint="Labels each agent call later and compares it with a paired control."
 				size={13}
 				subSize={10}
 				flow="prove"
@@ -215,6 +225,7 @@ export function Wide({ id }) {
 				h={56}
 				label="forward monitors"
 				sub="kill rule fixed up front"
+				hint="Each reads its equity path against a rule frozen before the first signal, and can only stop."
 				size={13}
 				subSize={10}
 				flow="prove"
@@ -230,6 +241,7 @@ export function Wide({ id }) {
 				h={56}
 				label="walk-forward"
 				sub="Sundays · 10 folds"
+				hint="Replays each portfolio's live daily step on older bars with the config it trades now."
 				size={13}
 				subSize={10}
 				flow="prove"
@@ -244,6 +256,7 @@ export function Wide({ id }) {
 				h={56}
 				label="reports · API · UI"
 				sub="standings · status API"
+				hint="Standings and status over 34 API routes that listen only on the machine itself."
 				size={13}
 				subSize={10}
 				flow="prove"

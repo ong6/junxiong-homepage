@@ -29,6 +29,7 @@ function LinkRow({ name, detail, href, external, minH = "56px", py = 3 }) {
 			py={py}
 			borderBottom="1px solid"
 			borderColor="border.subtle"
+			_last={{ borderBottom: "none" }}
 			color="page.text"
 			textDecoration="none"
 			_hover={{ textDecoration: "none", "& [data-name]": { color: "brand.solid" }, "& [data-arrow]": { transform: "translateX(4px)" } }}
@@ -68,8 +69,9 @@ export default function ProjectLinks({ heading = "Links out", links, compact = f
 			border="1px solid"
 			borderColor="border.subtle"
 			borderRadius="6px"
-			px={5}
-			py={4}
+			px={{ base: 6, md: 8 }}
+			pt={6}
+			pb={3}
 			{...props}>
 			<Text
 				id={id}

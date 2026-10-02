@@ -19,7 +19,7 @@ export default function Assets() {
 						← Components
 					</Link>
 
-					<Text mt={{ base: 8, md: 10 }} color={accent} fontFamily="var(--font-mono)" fontSize="11px" fontWeight="700" letterSpacing=".1em" textTransform="uppercase">
+					<Text mt={{ base: 8, md: 10 }} color={accent} fontFamily="var(--font-mono)" fontSize="12px" fontWeight="700" letterSpacing=".1em" textTransform="uppercase">
 						{"// assets"}
 					</Text>
 

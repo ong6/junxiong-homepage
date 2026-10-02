@@ -29,7 +29,7 @@ const Logo = () => {
 		<Link href="/" aria-label="Ong Jun Xiong — home">
 			<LogoBox>
 				<Text
-					color={useColorModeValue("gray.800", "whiteAlpha.900")}
+					color="page.text"
 					fontFamily="var(--font-sans)"
 					fontWeight="bold">
 					Jun Xiong

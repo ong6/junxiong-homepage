@@ -7,6 +7,7 @@ import { CodeBlock, CodeFigure } from "../components/CodeBlock";
 import Layout from "../components/layouts/Articles";
 import CaseStudyFooter from "../components/CaseStudyFooter";
 import ProjectLinks from "../components/ProjectLinks";
+import Details from "../components/Details";
 import FactList from "../components/FactList";
 
 // A written case study in the same shape as /compoze: one ~680px column of
@@ -30,35 +31,6 @@ const H2 = (props) => (
 	/>
 );
 
-const Details = ({ title, children }) => (
-	<Box
-		as="details"
-		mt={{ base: 8, md: 10 }}
-		borderTop="1px solid"
-		borderBottom="1px solid"
-		borderColor="border.subtle"
-		sx={{
-			"@media print": {
-				"&::details-content": { contentVisibility: "visible", height: "auto" },
-				"& > .case-study-details-body": { display: "block" },
-			},
-		}}>
-		<Box
-			as="summary"
-			minH="44px"
-			py={3}
-			px={1}
-			fontSize="17px"
-			fontWeight="700"
-			cursor="pointer"
-			_focusVisible={{ outline: "2px solid", outlineColor: "brand.solid", outlineOffset: "2px" }}>
-			{title}
-		</Box>
-		<Box className="case-study-details-body" pb={5}>
-			{children}
-		</Box>
-	</Box>
-);
 
 // Straight from the README. The "before" is what most agents do today; the
 // "after" is the same question with the argmax computed in code.
@@ -151,7 +123,7 @@ export default function Groundplane() {
 						mt={4}
 						color={accent}
 						fontFamily="var(--font-mono)"
-						fontSize="11px"
+						fontSize="12px"
 						fontWeight="700"
 						letterSpacing=".1em"
 						textTransform="uppercase">

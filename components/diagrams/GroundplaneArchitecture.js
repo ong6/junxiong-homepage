@@ -28,26 +28,26 @@ export const meta = {
 // (tools, adapters, registry) stays in currentColor. 8px grid throughout.
 
 const CHECKS = [
-	"superlative",
-	"ranking_prefix",
-	"aggregate_reconciles",
-	"entities_recorded",
-	"row_integrity",
-	"comparison",
+	["superlative", "The named winner must be the computed top scorer, and any quoted score must match."],
+	["ranking_prefix", "A top-k list must follow the computed order and must not cut through tied scores."],
+	["aggregate_reconciles", "Recomputes a stated sum, mean or count from the rows and refuses a truncated table."],
+	["entities_recorded", "Every name the model uses must come from a recorded set, so none can be invented."],
+	["row_integrity", "Finds the named row first, then catches a value copied from a neighbouring row."],
+	["comparison", "Recomputes a stated gap between two entities and names the convention a wrong one fits."],
 ];
 
 // Tool → the registry row it feeds, and what travels on the arrow.
 const TOOLS = [
-	["metrics", "scores"],
-	["SQL", "rows"],
-	["API", "names"],
+	["metrics", "scores", "Its scores are recorded as a ranking, so code picks the winner, not the model."],
+	["SQL", "rows", "Its rows are recorded as a table, so totals and row values can be checked later."],
+	["API", "names", "Its names are recorded as a closed set, so the model cannot invent one."],
 ];
 
 const FACTS = [
-	["Ranking", "record_ranking()"],
-	["Table", "record_table()"],
-	["Domain", "record_domain()"],
-	["Fact", "value + provenance"],
+	["Ranking", "record_ranking()", "An ordering computed in code, with the winning key and the tool call behind it."],
+	["Table", "record_table()", "Rows keyed by one column; a truncated result is marked so aggregates refuse it."],
+	["Domain", "record_domain()", "A closed set of names the code produced, for checking the names the model uses."],
+	["Fact", "value + provenance", "A typed value with the tool call and arguments behind it; it can never be overwritten."],
 ];
 
 export function Wide({ id }) {
@@ -57,18 +57,18 @@ export function Wide({ id }) {
 
 			{/* ---------- tools ---------- */}
 			<Group x={40} y={64} w={136} h={288} title="TOOLS" />
-			{TOOLS.map(([label, carries], i) => (
+			{TOOLS.map(([label, carries, hint], i) => (
 				<g key={label}>
-					<Node x={64} y={112 + i * 80} w={88} h={56} label={label} size={13} flow="record" />
+					<Node x={64} y={112 + i * 80} w={88} h={56} label={label} size={13} hint={hint} flow="record" />
 					<Line id={id} x1={176} y1={140 + i * 80} x2={248} y2={140 + i * 80} flow="record" />
 					<Label x={212} y={132 + i * 80} text={carries} anchor="middle" size={11} />
 				</g>
 			))}
 
 			{/* ---------- registry ---------- */}
-			<Group x={248} y={64} w={208} h={368} title="FACTREGISTRY · WRITE-ONCE" flow="record" />
-			<Badge cx={248} cy={64} text="1" />
-			{FACTS.map(([label, sub], i) => (
+			<Group x={240} y={64} w={232} h={368} title="FACTREGISTRY · WRITE-ONCE" flow="record" />
+			<Badge cx={240} cy={64} text="1" />
+			{FACTS.map(([label, sub, hint], i) => (
 				<Node
 					key={label}
 					x={272}
@@ -77,6 +77,7 @@ export function Wide({ id }) {
 					h={56}
 					label={label}
 					sub={sub}
+					hint={hint}
 					size={13}
 					subSize={11} flow="record" />
 			))}
@@ -89,6 +90,7 @@ export function Wide({ id }) {
 				w={176}
 				h={56}
 				label="LangGraph node"
+				hint="Checks a graph node's output; a failure can route back to the model as a correction."
 				sub="guarded_node()"
 				size={13}
 				subSize={11} flow="record" />
@@ -98,6 +100,7 @@ export function Wide({ id }) {
 				w={176}
 				h={56}
 				label="MCP tool result"
+				hint="Records an MCP tool result as a fact, preferring structured data over the text blocks."
 				sub="record_result()"
 				size={13}
 				subSize={11} flow="record" />
@@ -111,6 +114,7 @@ export function Wide({ id }) {
 				w={144}
 				h={64}
 				label="Model"
+				hint="Fills structured fields such as the winner; a plain string is rejected."
 				sub="structured output"
 				size={14}
 				subSize={11} flow="check" />
@@ -124,6 +128,7 @@ export function Wide({ id }) {
 				w={144}
 				h={64}
 				label="boundary(...)"
+				hint="Names which facts and checks apply, and raises if the block exits without a check."
 				sub="facts= · checks="
 				size={14}
 				subSize={11} flow={["record", "check"]} />
@@ -135,10 +140,10 @@ export function Wide({ id }) {
 			<Label x={684} y={240} text="checks" anchor="middle" accent size={11} />
 
 			{/* ---------- checker ---------- */}
-			<Group x={712} y={64} w={200} h={488} title="CHECKER · DETERMINISTIC" flow="check" />
+			<Group x={712} y={64} w={208} h={488} title="CHECKER · DETERMINISTIC" flow="check" />
 			<Badge cx={712} cy={64} text="4" accent />
-			{CHECKS.map((name, i) => (
-				<Node key={name} x={736} y={112 + i * 72} w={152} h={56} label={name} size={12} flow="check" />
+			{CHECKS.map(([name, hint], i) => (
+				<Node key={name} x={736} y={112 + i * 72} w={152} h={56} label={name} size={12} hint={hint} flow="check" />
 			))}
 
 			{/* ---------- outcomes ---------- */}
@@ -150,6 +155,7 @@ export function Wide({ id }) {
 				w={128}
 				h={64}
 				label="pass"
+				hint="Every check held, so the same output object goes back to the caller."
 				sub="output returned"
 				size={14}
 				subSize={11} flow="check" />
@@ -162,6 +168,7 @@ export function Wide({ id }) {
 				w={128}
 				h={64}
 				label="raise"
+				hint="The error names the field, the model's answer, the recorded value and its tool call."
 				sub="UnsupportedClaim"
 				size={14}
 				subSize={10} flow="check" />

@@ -26,44 +26,44 @@ export function Wide({ id }) {
 			<Defs id={id} />
 
 			{/* sources */}
-			<Node x={40} y={112} w={208} h={56} label="RSS headlines" sub="11 feeds, titles" icon="doc" size={13} subSize={10} flow="decide" />
-			<Node x={40} y={320} w={208} h={56} label="Yahoo" sub="daily bars" icon="cloud" size={13} subSize={10} flow="collect" />
-			<Node x={40} y={400} w={208} h={56} label="Nasdaq Trader" sub="symbol list" icon="cloud" size={13} subSize={10} flow="collect" />
+			<Node x={40} y={112} w={208} h={56} label="RSS headlines" sub="11 feeds, titles" hint="Titles only, about holdings, the watchlist and the wider market, for the morning brief." icon="doc" size={13} subSize={10} flow="decide" />
+			<Node x={40} y={320} w={208} h={56} label="Yahoo" sub="daily bars" hint="Still the daily price source for every portfolio, AI and twin alike." icon="cloud" size={13} subSize={10} flow="collect" />
+			<Node x={40} y={400} w={208} h={56} label="Nasdaq Trader" sub="symbol list" hint="Its symbol list still set which names any portfolio could trade." icon="cloud" size={13} subSize={10} flow="collect" />
 			<Badge cx={40} cy={112} text="1" />
 			<Line id={id} x1={248} y1={140} x2={536} y2={140} flow="decide" />
 			<Line id={id} x1={248} y1={348} x2={304} y2={348} flow="collect" />
 			<Line id={id} x1={248} y1={428} x2={304} y2={428} flow="collect" />
 
 			{/* store */}
-			<Node x={304} y={208} w={176} h={56} label="test plans" sub="frozen bounds" icon="lock" size={12} subSize={10} flow="decide" />
+			<Node x={304} y={208} w={176} h={56} label="test plans" sub="frozen bounds" hint="Written before launch, each set one portfolio's limits and how it would be judged." icon="lock" size={12} subSize={10} flow="decide" />
 			<Group x={288} y={288} w={208} h={272} title="DUCKDB · ONE WRITER" flow={["collect", "fill"]} />
-			<Node x={304} y={320} w={176} h={56} label="prices" sub="Yahoo daily" icon="db" size={12} subSize={10} flow="collect" />
-			<Node x={304} y={400} w={176} h={56} label="universe" sub="daily snapshot" icon="db" size={12} subSize={10} flow="collect" />
-			<Node x={304} y={480} w={176} h={56} label="paper ledger" sub="AI and twins" icon="db" size={12} subSize={10} flow="fill" />
+			<Node x={304} y={320} w={176} h={56} label="prices" sub="Yahoo daily" hint="Shared by each AI portfolio and its twin, so only the model's changes could differ." icon="db" size={12} subSize={10} flow="collect" />
+			<Node x={304} y={400} w={176} h={56} label="universe" sub="daily snapshot" hint="The daily list of tradable names, the same for AI portfolios and plain ones." icon="db" size={12} subSize={10} flow="collect" />
+			<Node x={304} y={480} w={176} h={56} label="paper ledger" sub="AI and twins" hint="Fills for each AI portfolio and its twin, kept side by side for the comparison." icon="db" size={12} subSize={10} flow="fill" />
 
 			{/* decide */}
-			<Node x={536} y={112} w={128} h={56} label="news analyst" sub="11:00 brief" size={12} subSize={10} flow="decide" />
+			<Node x={536} y={112} w={128} h={56} label="news analyst" sub="11:00 brief" hint="One model call with no tools. It wrote a single brief, on 4 August, from 133 headlines." size={12} subSize={10} flow="decide" />
 			<Badge cx={536} cy={112} text="2" />
 			<Line id={id} x1={600} y1={168} x2={600} y2={208} flow="decide" />
-			<Node x={536} y={208} w={128} h={56} label="veto agents ×2" sub="21:40 · veto" size={12} subSize={10} flow="decide" />
-			<Node x={688} y={208} w={128} h={56} label="tuning agents ×3" sub="Sun · params" size={12} subSize={10} flow="decide" />
+			<Node x={536} y={208} w={128} h={56} label="veto agents ×2" sub="21:40 · veto" hint="Could block or shrink an entry, never add one, and touch at most half the candidates." size={12} subSize={10} flow="decide" />
+			<Node x={688} y={208} w={128} h={56} label="tuning agents ×3" sub="Sun · params" hint="Up to two parameters a run, 25% a move, never beyond half of the original value." size={12} subSize={10} flow="decide" />
 			<Line id={id} x1={600} y1={264} x2={600} y2={304} flow="decide" />
 			<Line id={id} x1={752} y1={264} x2={752} y2={304} flow="decide" />
 			<Connector points={charterToValidator} defs={id} flow="decide" />
-			<Node x={536} y={304} w={280} h={56} label="validator" sub="bounds from the test plan" size={13} subSize={10} flow="decide" />
+			<Node x={536} y={304} w={280} h={56} label="validator" sub="bounds from the test plan" hint="Rejects a tuning proposal whole if any part falls outside the test plan's limits." size={13} subSize={10} flow="decide" />
 			<Badge cx={536} cy={304} text="3" />
 			<Line id={id} x1={676} y1={360} x2={676} y2={400} dashed flow="decide" />
 			<Label x={688} y={384} text="no file = plain rules" size={10} />
 			<Connector points={pricesToLeague} defs={id} flow="collect" />
-			<Node x={536} y={400} w={280} h={64} label="paper portfolios" sub="22:30 · 25 in total" size={13} subSize={10} flow={["decide", "fill", "prove"]} />
+			<Node x={536} y={400} w={280} h={64} label="paper portfolios" sub="22:30 · 25 in total" hint="With no veto file each traded its own rules, so the outage put no guesses into trades." size={13} subSize={10} flow={["decide", "fill", "prove"]} />
 			<Connector points={leagueToLedger} defs={id} flow="fill" kind="accent" />
 
 			{/* prove */}
 			<Line id={id} x1={816} y1={432} x2={856} y2={432} flow="prove" />
-			<Node x={856} y={400} w={224} h={64} label="AI portfolio vs twin" sub="same rules, frozen" size={13} subSize={10} flow="prove" />
+			<Node x={856} y={400} w={224} h={64} label="AI portfolio vs twin" sub="same rules, frozen" hint="Each of the five AI portfolios ran beside a copy the model could never touch." size={13} subSize={10} flow="prove" />
 			<Badge cx={856} cy={400} text="4" />
 			<Line id={id} x1={968} y1={464} x2={968} y2={496} flow="prove" />
-			<Node x={856} y={496} w={224} h={56} label="scoreboard" sub="26-week spread" size={13} subSize={10} flow="prove" />
+			<Node x={856} y={496} w={224} h={56} label="scoreboard" sub="26-week spread" hint="Only AI minus twin, after costs, at 26 weeks would count. It never got that far." size={13} subSize={10} flow="prove" />
 			<Label x={968} y={588} text="RETIRED 18 AUG" anchor="middle" size={11} />
 
 			<Lane x={40} w={208} y={40} title="Sources" />

@@ -43,8 +43,9 @@ const Footer = () => (
 						rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
 						display="inline-flex"
 						alignItems="center"
+						// 32px targets on a 32px row pitch (24px box + 8px row gap): wrapped rows touch, never overlap.
 						minH="32px"
-						my={-1.5}
+						my={-1}
 						fontSize="12px"
 						fontWeight="650"
 						color="text.muted"

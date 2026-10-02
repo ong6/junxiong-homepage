@@ -38,7 +38,8 @@ const pathname = (path) => (path || "/").split(/[?#]/)[0].replace(/\/+$/, "") ||
 const isActive = (link, path) => {
 	if (link.external) return false;
 	const current = pathname(path);
-	return link.activePaths ? link.activePaths.includes(current) : current === link.href;
+	// A project's sub-pages (past versions, docs) belong to Projects too.
+	return link.activePaths ? link.activePaths.some((p) => current === p || current.startsWith(`${p}/`)) : current === link.href;
 };
 
 function LinkItem({ href, active, external, children }) {

@@ -120,7 +120,9 @@ const Main = ({ children, router }) => {
 	return (
 		// clip, not hidden: hidden turns this box into a scroll container, which
 		// breaks position: sticky and pins every scroll-driven animation to it.
-		<Box pb={8} overflowX="clip">
+		// A full-height column whose main grows, so a short page (404) still
+		// puts the footer at the bottom of the window.
+		<Box pb={8} overflowX="clip" display="flex" flexDirection="column" minH="100dvh">
 			<Head>
 				<meta
 					name="google-site-verification"
@@ -197,7 +199,7 @@ const Main = ({ children, router }) => {
 				<Navbar path={router.asPath} />
 			</Box>
 
-			<Container as="main" id="main-content" maxW="1120px" pt={{ base: "64px", md: "72px" }}>
+			<Container as="main" id="main-content" maxW="1120px" flex="1 0 auto" pt={{ base: "64px", md: "72px" }}>
 				{children}
 			</Container>
 

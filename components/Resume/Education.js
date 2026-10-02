@@ -11,7 +11,7 @@ export default function Education() {
 				direction={{ base: "column", smmd: "row" }}
 				justify="space-between"
 				gap={2}
-				pt={4}
+				pt={6}
 				borderTopWidth="1px"
 				borderColor={borderColor}>
 				<Box>

@@ -29,7 +29,7 @@ export default function AiToolFamily({ current }) {
 			<Text
 				color="brand.solid"
 				fontFamily="var(--font-mono)"
-				fontSize="11px"
+				fontSize="12px"
 				fontWeight="700"
 				letterSpacing=".1em"
 				textTransform="uppercase">
@@ -51,7 +51,7 @@ export default function AiToolFamily({ current }) {
 							borderColor={active ? "brand.solid" : "border.subtle"}
 							borderRadius="4px"
 							bg={active ? "accent.soft" : "surface.raised"}>
-							<Text color="text.muted" fontFamily="var(--font-mono)" fontSize="11px" textTransform="uppercase">
+							<Text color="text.muted" fontFamily="var(--font-mono)" fontSize="12px" textTransform="uppercase">
 								{tool.stage}
 							</Text>
 							<Heading as="h3" mt={3} fontSize="18px" lineHeight="1.2">

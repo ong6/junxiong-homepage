@@ -1,7 +1,9 @@
 import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 
+// The 16px under the heading clears its descenders off the section's first
+// rule; every résumé section opens with that rule.
 const TermHeading = ({ children, kicker = "Selected signal", ...props }) => (
-	<Box {...props}>
+	<Box mb={4} {...props}>
 		<Flex align="center" gap={2} mb={2}>
 			<Box w="7px" h="7px" bg="mint.500" transform="rotate(45deg)" aria-hidden="true" />
 			<Text
