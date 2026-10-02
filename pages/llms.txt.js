@@ -1,4 +1,9 @@
 import { DEFAULT_DESCRIPTION, SITE_URL } from "../components/layouts/Main";
+import { getTradingDocs } from "../lib/tradingDocs";
+
+const tradingDocs = getTradingDocs()
+	.map(({ href, title, summary }) => `- [${title}](${SITE_URL}${href}): ${summary}`)
+	.join("\n");
 
 // llms.txt (https://llmstxt.org): a plain-markdown map of the site for agents
 // that read it on someone's behalf. Every line restates copy already on the
@@ -25,6 +30,10 @@ Contact: email via ${SITE_URL}/contact. GitHub: https://github.com/ong6. LinkedI
 - [Skillpack](${SITE_URL}/skillpack): Claude Code and Codex skills shared across repos as a two-way git subtree. Code: https://github.com/ong6/skillpack
 - [Jobforge](${SITE_URL}/jobforge): Claude Code plugin for coding-interview prep that grades the plan said out loud. Code: https://github.com/ong6/jobforge
 - [UI Pack](${SITE_URL}/uipack): shared web figures, motion and slide starters used across these projects. Code: https://github.com/ong6/uipack
+
+## Trading engine product docs
+
+${tradingDocs}
 
 ## Writing
 

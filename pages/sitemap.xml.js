@@ -1,4 +1,5 @@
 import { workSlugs } from "../lib/works";
+import { getTradingDocRoutes } from "../lib/tradingDocs";
 
 const SITE = "https://junxiong.dev";
 
@@ -13,6 +14,12 @@ const topRoutes = [
 	{ path: "/compoze", lastmod: "2026-09-25", changefreq: "yearly", priority: "0.8" },
 	{ path: "/groundplane", lastmod: "2026-09-25", changefreq: "yearly", priority: "0.8" },
 	{ path: "/trading-engine", lastmod: "2026-09-29", changefreq: "yearly", priority: "0.8" },
+	...getTradingDocRoutes().map((path) => ({
+		path,
+		lastmod: "2026-10-02",
+		changefreq: "monthly",
+		priority: path === "/trading-engine/docs" ? "0.7" : "0.6",
+	})),
 	...[1, 2, 3, 4, 5, 6].map((n) => ({
 		path: `/trading-engine/v${n}`,
 		lastmod: "2026-09-25",

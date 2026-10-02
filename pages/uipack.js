@@ -22,6 +22,7 @@ import Layout from "../components/layouts/Articles";
 import CaseStudyFooter from "../components/CaseStudyFooter";
 import ProjectLinks from "../components/ProjectLinks";
 import LazyMount from "../components/LazyMount";
+import UipackDocs from "../components/UipackDocs";
 // Load the animated gallery only after the selected category is known.
 const UipackWebGallery = dynamic(() => import("../components/UipackWebGallery"), {
 	loading: () => (
@@ -175,6 +176,7 @@ export default function Uipack() {
 									to typed figures, adapted to the type and colours I use here.
 								</P>
 							</Box>
+							<UipackDocs />
 							{hydrated && router.isReady && category === 0 && <><LazyMount id="objects" eager={objectsLinked} my={{ base: 10, md: 14 }} minH={{ base: "1077px", md: "1088px", xl: "730px" }}><UipackObjects /></LazyMount><UipackWebMotion /><UipackWebGallery /></>}
 
 							<Box maxW="680px">

@@ -29,6 +29,12 @@
       "packageExport": "uipack/web",
       "gallery": "components/UipackWebMotion.js",
       "description": "Drifting gutter grid on article pages and the paint-drizzle theme change (ThemeToggleButton)"
+    },
+    {
+      "component": "components/TradingDocsPage.js",
+      "packageExport": "uipack/docs",
+      "gallery": "components/UipackDocs.js",
+      "description": "Product documentation shell, Markdown renderer, responsive navigation, contents, anchors, and adjacent-page links"
     }
   ],
   "pageOnly": [

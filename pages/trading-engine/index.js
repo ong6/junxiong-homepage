@@ -103,6 +103,7 @@ const facts = [
 ];
 
 const links = [
+	{ name: "Product docs", detail: "How it works, research and operations", href: "/trading-engine/docs" },
 	{ name: "Source on GitHub", detail: "Paper only, MIT", href: "https://github.com/ong6/trading-engine", external: true },
 ];
 

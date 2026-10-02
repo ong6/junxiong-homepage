@@ -31,6 +31,7 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "eslint .",
+		"sync:trading-docs": "node scripts/sync-trading-docs.mjs",
 		"test:e2e": "playwright test",
 		"check:ui-ownership": "node scripts/check-ui-ownership.mjs"
 	},
@@ -47,7 +48,7 @@
 		"react-dom": "^18.3.1",
 		"react-icons": "^5.5.0",
 		"three": "^0.186.0",
-		"uipack": "github:ong6/uipack#e39ae011a7eba91ec08a006a5510dbd15fb25093"
+		"uipack": "github:ong6/uipack#8137f098e7412962e18aabc88d4a77b69dc700b8"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.61.1",

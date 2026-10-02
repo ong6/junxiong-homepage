@@ -4,7 +4,7 @@ const { defineConfig, devices } = require("@playwright/test");
 // builds, starts a production server on 3011 and runs against it.
 module.exports = defineConfig({
 	testDir: "e2e",
-	testIgnore: process.env.SHOTS ? [] : ["**/screenshots.spec.js"],
+	testIgnore: process.env.SHOTS ? [] : ["**/screenshots.spec.js", "**/docs-screenshots.spec.js"],
 	timeout: 30_000,
 	fullyParallel: false,
 	retries: process.env.CI ? 1 : 0,

@@ -1,0 +1,109 @@
+{
+  "sections": [
+    "Start here",
+    "How it works",
+    "Research",
+    "Operations"
+  ],
+  "pages": [
+    {
+      "file": "index.md",
+      "slug": "index",
+      "href": "/trading-engine/docs",
+      "title": "The trading engine",
+      "summary": "A paper-only system that collects market data, runs research, and tests whether AI decisions add value without risking real money.",
+      "order": 1,
+      "section": "Start here"
+    },
+    {
+      "file": "daily-cycle.md",
+      "slug": "daily-cycle",
+      "href": "/trading-engine/docs/daily-cycle",
+      "title": "The daily cycle",
+      "summary": "A New York-time guide to the market checks, paper-book updates, AI scoring, and weekend maintenance that run automatically.",
+      "order": 2,
+      "section": "How it works"
+    },
+    {
+      "file": "data.md",
+      "slug": "data",
+      "href": "/trading-engine/docs/data",
+      "title": "Data and time",
+      "summary": "The engine keeps source receipts and availability times so a decision can use only facts that truly existed at that moment.",
+      "order": 3,
+      "section": "How it works"
+    },
+    {
+      "file": "paper-books.md",
+      "slug": "paper-books",
+      "href": "/trading-engine/docs/paper-books",
+      "title": "Paper books and the league",
+      "summary": "Paper books behave like portfolios with delayed fills and costs, while the league shows how each one compares with SPY.",
+      "order": 4,
+      "section": "How it works"
+    },
+    {
+      "file": "ai-agents.md",
+      "slug": "ai-agents",
+      "href": "/trading-engine/docs/ai-agents",
+      "title": "AI agents",
+      "summary": "Models score and explain bounded choices, while deterministic code keeps control of data, risk, execution, and evaluation.",
+      "order": 5,
+      "section": "How it works"
+    },
+    {
+      "file": "research-process.md",
+      "slug": "research-process",
+      "href": "/trading-engine/docs/research-process",
+      "title": "How research earns a verdict",
+      "summary": "Ideas are frozen before testing, charged for every trial, checked on sealed data, and usually stopped rather than tuned.",
+      "order": 6,
+      "section": "Research"
+    },
+    {
+      "file": "backtest-engine.md",
+      "slug": "backtest-engine",
+      "href": "/trading-engine/docs/backtest-engine",
+      "title": "The shared backtest core",
+      "summary": "One deterministic evaluator gives event and portfolio studies the same point-in-time data, fills, costs, benchmarks, and statistical checks.",
+      "order": 7,
+      "section": "Research"
+    },
+    {
+      "file": "evidence-and-reliability.md",
+      "slug": "evidence-and-reliability",
+      "href": "/trading-engine/docs/evidence-and-reliability",
+      "title": "Evidence and reliability",
+      "summary": "Frozen identities, validators, snapshots, backups, and stage timing make a result reproducible and a failure diagnosable.",
+      "order": 8,
+      "section": "Operations"
+    },
+    {
+      "file": "operations.md",
+      "slug": "operations",
+      "href": "/trading-engine/docs/operations",
+      "title": "Operations",
+      "summary": "Locks, schedule checks, read-only fallbacks, verified backups, and on-demand investigation keep unattended paper research recoverable.",
+      "order": 9,
+      "section": "Operations"
+    },
+    {
+      "file": "roadmap.md",
+      "slug": "roadmap",
+      "href": "/trading-engine/docs/roadmap",
+      "title": "Roadmap",
+      "summary": "Near-term work connects private research to live paper observation and speeds honest evaluation; broker paper remains later, separate work.",
+      "order": 10,
+      "section": "Start here"
+    },
+    {
+      "file": "glossary.md",
+      "slug": "glossary",
+      "href": "/trading-engine/docs/glossary",
+      "title": "Glossary",
+      "summary": "Plain names for the engine’s plan codes, workstreams, research safeguards, and paper-trading terms.",
+      "order": 11,
+      "section": "Start here"
+    }
+  ]
+}
