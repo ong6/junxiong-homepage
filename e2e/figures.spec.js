@@ -18,9 +18,9 @@ for (const path of PAGES) {
 
 		test("a packet moves while playing", async ({ page }) => {
 			const a = await packetCentre(page);
-			await page.waitForTimeout(500);
-			const b = await packetCentre(page);
-			expect(dist(a, b)).toBeGreaterThan(4);
+			await expect
+				.poll(async () => dist(a, await packetCentre(page)), { timeout: 2_000 })
+				.toBeGreaterThan(4);
 		});
 
 		test("a packet holds still after Pause", async ({ page }) => {

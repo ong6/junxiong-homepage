@@ -26,11 +26,15 @@ test('all original editions remain usable after switching', async ({ page }) => 
   test.setTimeout(120000);
   await page.goto('/uipack?category=web&object=ai&look=0');
   const gallery = page.getByRole('region', { name: '3D object collection' });
-  for (const title of ['Agent session','Tennis practice','Trading journal','Inference study','Local map','Open book','Contact inbox']) {
+  for (const [title, kind] of [['Agent session','ai'],['Tennis practice','tennis'],['Trading journal','trading'],['Inference study','server'],['Local map','travel'],['Open book','reading'],['Contact inbox','contact']]) {
     await gallery.getByRole('button', { name: title, exact: true }).click();
+    const object = gallery.locator('.uipack-object');
+    await expect(object).toHaveAttribute('data-kind', kind);
     for (const value of ['0', '1', '2']) {
       await gallery.getByRole('combobox', { name: /edition/ }).selectOption(value);
+      await expect(object).toHaveAttribute(kind === 'contact' ? 'data-variant' : 'data-edition', value);
       await expect(gallery.locator('canvas')).toHaveAttribute('data-renderer', 'webgl');
+      await expect(gallery.locator('canvas')).toHaveAttribute('data-ready', 'true');
       await expect(gallery.locator('canvas')).toHaveCSS('opacity', '1');
       await expect(gallery.locator('canvas')).toHaveCount(1);
     }

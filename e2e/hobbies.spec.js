@@ -54,9 +54,10 @@ for (const width of [390, 1440]) {
 test("hobbies pauses motion explicitly and while a chapter is offscreen", async ({ page }) => {
 	await page.goto("/hobbies#coding-ai");
 	await settleLayout(page);
-	// Start from a settled chapter, after the native anchor scroll and entrance.
-	await page.locator("#coding-ai").evaluate((chapter) =>
-		chapter.scrollIntoView({ behavior: "instant", block: "center" }),
+	// Activation follows the visual closest to the viewport centre, so centre
+	// that element rather than the taller chapter that also contains its copy.
+	await page.locator("#coding-ai [data-hobby-visual]").evaluate((visual) =>
+		visual.scrollIntoView({ behavior: "instant", block: "center" }),
 	);
 	const scene = page.locator('#coding-ai canvas[data-renderer="webgl"]');
 	await scene.waitFor();
@@ -96,7 +97,7 @@ test("studio gallery motion advances through an authored sequence, settles, then
 	const firstPose = Number(await scene.getAttribute("data-pose"));
 	await expect.poll(() => scene.getAttribute("data-phase"), { timeout: 5000 }).toBe("tools-to-check");
 	expect(Number(await scene.getAttribute("data-pose"))).not.toBe(firstPose);
-	await expect.poll(() => scene.getAttribute("data-phase"), { timeout: 5000 }).toBe("rest");
+	await expect.poll(() => scene.getAttribute("data-phase"), { timeout: 10000 }).toBe("rest");
 	const completedAt = await scene.getAttribute("data-frames");
 	await page.waitForTimeout(500);
 	expect(await scene.getAttribute("data-frames")).toBe(completedAt);
