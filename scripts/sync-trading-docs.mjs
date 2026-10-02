@@ -200,6 +200,13 @@ function rewriteRelativeLinks(file, body, knownFiles) {
 	);
 }
 
+// The site names things in plain words (owner, 2026-09-29 and 2026-10-02). Internal plan codes
+// such as "(P15)" stay in the engine repo for traceability; only the glossary keeps them here.
+function stripPlanCodes(file, body) {
+	if (file === "glossary.md") return body;
+	return body.replace(/ \(P\d{1,2}(?: W\d+[a-z]?)?\)/g, "");
+}
+
 function writeOutput(pages) {
 	const staging = path.join(path.dirname(destination), `.trading-docs-sync-${process.pid}`);
 	rmSync(staging, { recursive: true, force: true });
@@ -248,7 +255,7 @@ function main() {
 			summary: parsed.data.summary,
 			order: parsed.data.order,
 			section: parsed.data.section,
-			source: `${original.slice(0, parsed.frontmatterEnd)}${rewriteRelativeLinks(file, parsed.body, knownFiles)}`.replace(/\n*$/, "\n"),
+			source: `${original.slice(0, parsed.frontmatterEnd)}${stripPlanCodes(file, rewriteRelativeLinks(file, parsed.body, knownFiles))}`.replace(/\n*$/, "\n"),
 		};
 	});
 	const orders = pages.map((page) => page.order);

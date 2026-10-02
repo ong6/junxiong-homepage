@@ -17,7 +17,7 @@ not trusted to own market data, quantities, accounting, fills, or authority.
 
 ## The daily opportunity agent
 
-The daily opportunity agent (P8) runs after nightly data settles. A deterministic screen supplies a
+The daily opportunity agent runs after nightly data settles. A deterministic screen supplies a
 small set of unusual but liquid names and broader market context. The agent classifies each as
 ignore, watch, hold, or swing and can explain a thesis, horizon, and invalidation.
 
@@ -28,7 +28,7 @@ next-open execution.
 
 ## Three matched stock-picking books
 
-The profitability evidence loop (P15) asks a broader question: can the model rank candidates better
+The profitability evidence loop asks a broader question: can the model rank candidates better
 than a fixed rule?
 
 Every candidate receives a model probability and expected excess-return score plus a deterministic
@@ -45,7 +45,7 @@ increase size, move a limit, or fill an order. Intraday news and mover agents ar
 
 ## Challengers
 
-The challenger lab, text edge, and evaluation science plan (P16) has built several ways to challenge
+The challenger lab, text edge, and evaluation science plan has built several ways to challenge
 the current policy on identical inputs. They include an issuer-blinded view, memory of the policy’s
 own matured mistakes, model comparisons, an ensemble, and input ablations. A filing reader and
 historical replay labs are also built.

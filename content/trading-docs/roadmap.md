@@ -45,7 +45,7 @@ semantics.
 
 ## Later, explicitly not now
 
-The personal-host IBKR paper execution and reconciliation plan (P17) is future work. It would run on
+The personal-host IBKR paper execution and reconciliation plan is future work. It would run on
 separate personal hardware against a broker paper account, beside a frozen simulator twin. It would
 measure attribution, reconciliation, slippage, partial fills, and unexplained orders for one to
 three months.

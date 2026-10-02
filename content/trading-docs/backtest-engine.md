@@ -12,7 +12,7 @@ and receives a simulated outcome. The dangerous part is not writing a trading ru
 sure the replay did not peek, change assumptions between variants, or reward itself with an
 unrealistic benchmark.
 
-The shared backtest core (P18) puts those responsibilities in one public evaluator. A study supplies
+The shared backtest core puts those responsibilities in one public evaluator. A study supplies
 the question. The core supplies the measurement rules.
 
 ## The strategy specification

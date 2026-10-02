@@ -42,15 +42,15 @@ candidates. Costs are charged to the strategy. Attempts are counted. Results mus
 was not used during development. A policy that fails its registered test is stopped rather than
 tuned after the fact.
 
-The live profitability evidence loop (P15) scores a wider candidate set and runs three matched
+The live profitability evidence loop scores a wider candidate set and runs three matched
 paper books: AI-ranked, rule-ranked, and a rule book with an AI veto. Its registration revision 9
 is live. The revision binds infrastructure improvements without changing scoring, books, gates,
 labels, registered values, or earlier evidence.
 
-The challenger lab, text edge, and evaluation science plan (P16) has built stronger evaluation,
+The challenger lab, text edge, and evaluation science plan has built stronger evaluation,
 shadow challengers, filing and replay paths, portfolio construction, and execution measurement.
 Those parts remain inert until their own registration, rehearsal, and activation gates pass. The
-shared backtest core (P18) is complete and available for public, reusable studies.
+shared backtest core is complete and available for public, reusable studies.
 
 No policy has yet beaten its frozen control prospectively. That is the honest current status. The
 system has working infrastructure and accumulating paper evidence; it does not have a proven edge.
