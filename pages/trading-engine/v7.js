@@ -2,12 +2,13 @@ import { Box, Container, Heading, Link, Text, useColorModeValue } from "@chakra-
 import NextLink from "next/link";
 import { CodeBlock, CodeFigure } from "../../components/CodeBlock";
 import DiagramFigure from "../../components/DiagramFigure";
+import FactList from "../../components/FactList";
 import * as TradingEngineArchitecture from "../../components/diagrams/trading/V7";
 import Layout from "../../components/layouts/Articles";
 import CaseStudyFooter from "../../components/CaseStudyFooter";
 import ProjectLinks from "../../components/ProjectLinks";
+import TradingVersionList from "../../components/TradingVersionList";
 import VersionSwitcher from "../../components/VersionSwitcher";
-import { VERSIONS } from "../../lib/tradingVersions";
 
 // Case study in the same shape as /skills: one ~680px column of prose, the
 // architecture figure, one terminal figure, and a single mono fact table.
@@ -40,46 +41,6 @@ const FILL = [
 	["if fill_date <= signal_date:"],
 	['    raise ValueError(f"look-ahead violation: fill_date {fill_date} !> signal_date {signal_date}")'],
 ];
-
-function Versions() {
-	return (
-		<Box as="ol" listStyleType="none" mt={6} borderTop="1px solid" borderColor="border.subtle">
-			{VERSIONS.map(({ v, href, when, title, body, current }) => (
-				<Box
-					as="li"
-					key={v}
-					display="grid"
-					gridTemplateColumns={{ base: "48px 1fr", md: "64px 1fr" }}
-					columnGap={4}
-					py={4}
-					borderBottom="1px solid"
-					borderColor="border.subtle">
-					<Text fontFamily="var(--font-mono)" fontSize="14px" fontWeight="700" color={current ? "brand.solid" : "text.muted"}>
-						{v}
-					</Text>
-					<Box>
-						<Text fontFamily="var(--font-mono)" fontSize="12px" letterSpacing=".06em" color="text.muted" textTransform="uppercase">
-							{when}
-							{current ? " · current" : ""}
-						</Text>
-						<Text mt={1} fontSize={{ base: "17px", md: "18px" }} fontWeight="700">
-							{current ? (
-								title
-							) : (
-								<Link as={NextLink} href={href} prefetch={false}>
-									{title} →
-								</Link>
-							)}
-						</Text>
-						<Text mt={1} fontSize={{ base: "16px", md: "17px" }} lineHeight="1.7" color="text.muted">
-							{body}
-						</Text>
-					</Box>
-				</Box>
-			))}
-		</Box>
-	);
-}
 
 const facts = [
 	["paper portfolios", "25 active in the simulator"],
@@ -290,41 +251,7 @@ export default function TradingEngine() {
 					stock-selection test until 2029 unless I buy a dataset with the delisted names in it.
 				</P>
 
-				<H2>Versions</H2>
-
-				<P>
-					The engine has changed shape several times since July. Figure 1 shows v7. Each earlier
-					version has its own page with the diagram as it stood then.
-				</P>
-
-				<Versions />
-
-				<Box
-					as="dl"
-					mt={{ base: 12, md: 16 }}
-					borderTop="1px solid"
-					borderColor="border.subtle"
-					fontFamily="var(--font-mono)"
-					fontSize="12px">
-					{facts.map(([label, value]) => (
-						<Box
-							key={label}
-							display="flex"
-							flexDirection={{ base: "column", md: "row" }}
-							justifyContent="space-between"
-							gap={{ base: 1, md: 4 }}
-							py={{ base: 3, md: 2 }}
-							borderBottom="1px solid"
-							borderColor="border.subtle">
-							<Box as="dt" color="text.muted">
-								{label}
-							</Box>
-							<Box as="dd" ml={0} textAlign={{ base: "left", md: "right" }} fontWeight="700">
-								{value}
-							</Box>
-						</Box>
-					))}
-				</Box>
+				<FactList facts={facts} />
 
 				<H2>Paper trading only</H2>
 
@@ -332,6 +259,15 @@ export default function TradingEngine() {
 					It holds no credentials and connects to no broker, so it cannot move money. The two services only
 					listen on the machine itself and the repo ships no market data. I built it to test whether the ideas hold up under rules I set in advance. So far, none has passed, and the reports in the repo show why.
 				</P>
+
+				<H2>Versions</H2>
+
+				<P>
+					The engine has changed shape several times since July. Figure 1 shows v7. Each earlier
+					version has its own page with the diagram as it stood then.
+				</P>
+
+				<TradingVersionList active="v7" />
 
 				<CaseStudyFooter links={links} next={{ name: "Agent skills", href: "/skills", detail: "One home for coding-agent skills, linked into every repo" }} />
 			</Container>

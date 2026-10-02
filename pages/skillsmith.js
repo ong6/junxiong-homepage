@@ -6,6 +6,7 @@ import ProjectLinks from "../components/ProjectLinks";
 import DiagramFigure from "../components/DiagramFigure";
 import * as SkillsmithArchitecture from "../components/diagrams/SkillsmithArchitecture";
 import Layout from "../components/layouts/Articles";
+import FactList from "../components/FactList";
 
 const P = (props) => (
 	<Text mt={5} fontSize={{ base: "17px", md: "18px" }} lineHeight="1.8" {...props} />
@@ -104,14 +105,7 @@ export default function Skillsmith() {
 					New candidates get up to three serious attempts by default. An existing skill keeps its last passing version until a revision passes. A new skill is archived unless it wins on heldout cases with an uncertainty lower bound that clears the gate. <Code>lifecycle_gate.py</Code> checks the attempt history, retired heldouts and final action, while the payload helper confirms that Claude Code and Codex loaded the exact frozen files.
 				</P>
 
-				<Box as="dl" mt={{ base: 12, md: 16 }} borderTop="1px solid" borderColor="border.subtle" fontFamily="var(--font-mono)" fontSize="12px">
-					{facts.map(([label, value]) => (
-						<Box key={label} display="flex" justifyContent="space-between" gap={4} py={2} borderBottom="1px solid" borderColor="border.subtle">
-							<Box as="dt" color="text.muted">{label}</Box>
-							<Box as="dd" ml={0} textAlign="right" fontWeight="700">{value}</Box>
-						</Box>
-					))}
-				</Box>
+				<FactList facts={facts} />
 
 				<AiToolFamily current="/skillsmith" />
 				<CaseStudyFooter links={links} next={{ name: "Groundplane", href: "/groundplane", detail: "Checks an agent's declared fields against recorded tool results" }} />

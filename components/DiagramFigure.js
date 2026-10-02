@@ -4,6 +4,7 @@ import { Figure } from "uipack";
 import { MOBILE_MIN_FONT, SwipeHint, mobileScrollSx, useIsMobile, useOverflow, viewBoxWidth } from "./figureMobile";
 // One figure wrapper for every diagram. Inline, the drawing sits in a uipack
 // Figure (eyebrow, title, caption, legend, Pause and Replay, dotted canvas).
+// Its own Open canvas is switched off: Expand below is the one way to enlarge.
 // Phones keep the wide drawing and scroll it sideways (see figureMobile.js).
 // An expand control under the card opens the wide drawing full-screen with
 // wheel / pinch zoom and drag pan, written by hand on a CSS transform so
@@ -359,6 +360,7 @@ export default function DiagramFigure({ id, diagram, caption, headingLevel }) {
 				legend={meta.legend}
 				viewBox={meta.viewBox}
 				minFont={mobile ? MOBILE_MIN_FONT : 11}
+				expandable={false}
 				alt={CLAIM}>
 				<Wide id={`${id}-w`} />
 			</Figure>

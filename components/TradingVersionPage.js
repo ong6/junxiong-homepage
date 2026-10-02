@@ -1,6 +1,7 @@
 import { Box, Container, Flex, Heading, Link, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 import DiagramFigure from "./DiagramFigure";
+import FactList from "./FactList";
 import Layout from "./layouts/Articles";
 import VersionSwitcher from "./VersionSwitcher";
 import { VERSIONS } from "../lib/tradingVersions";
@@ -17,35 +18,6 @@ export const H2 = (props) => (
 
 export const Code = (props) => <Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em" {...props} />;
 
-function Facts({ facts }) {
-	return (
-		<Box
-			as="dl"
-			mt={{ base: 12, md: 14 }}
-			borderTop="1px solid"
-			borderColor="border.subtle"
-			fontFamily="var(--font-mono)"
-			fontSize="12px">
-			{facts.map(([label, value]) => (
-				<Flex
-					key={label}
-					direction={{ base: "column", md: "row" }}
-					justify="space-between"
-					gap={{ base: 1, md: 4 }}
-					py={{ base: 3, md: 2 }}
-					borderBottom="1px solid"
-					borderColor="border.subtle">
-					<Box as="dt" color="text.muted">
-						{label}
-					</Box>
-					<Box as="dd" ml={0} textAlign={{ base: "left", md: "right" }} fontWeight="700">
-						{value}
-					</Box>
-				</Flex>
-			))}
-		</Box>
-	);
-}
 
 function Neighbours({ v }) {
 	const i = VERSIONS.findIndex((version) => version.v === v);
@@ -97,7 +69,7 @@ export default function TradingVersionPage({ v, description, lead, diagram, capt
 
 				{children}
 
-				<Facts facts={facts} />
+				<FactList facts={facts} mt={{ base: 12, md: 14 }} />
 				<Neighbours v={v} />
 			</Container>
 		</Layout>

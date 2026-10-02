@@ -7,6 +7,7 @@ import { CodeBlock, CodeFigure } from "../components/CodeBlock";
 import Layout from "../components/layouts/Articles";
 import CaseStudyFooter from "../components/CaseStudyFooter";
 import ProjectLinks from "../components/ProjectLinks";
+import FactList from "../components/FactList";
 
 // A written case study in the same shape as /compoze: one ~680px column of
 // prose, the architecture figure, a code figure, and a single mono fact table.
@@ -288,31 +289,7 @@ export default function Groundplane() {
 				</P>
 
 				<Details title="Package details">
-					<Box
-						as="dl"
-						mt={3}
-						borderTop="1px solid"
-						borderColor="border.subtle"
-						fontFamily="var(--font-mono)"
-						fontSize="12px">
-						{facts.map(([label, value]) => (
-							<Box
-								key={label}
-								display="flex"
-								justifyContent="space-between"
-								gap={4}
-								py={2}
-								borderBottom="1px solid"
-								borderColor="border.subtle">
-								<Box as="dt" color="text.muted">
-									{label}
-								</Box>
-								<Box as="dd" ml={0} textAlign="right" fontWeight="700">
-									{value}
-								</Box>
-							</Box>
-						))}
-					</Box>
+					<FactList facts={facts} mt={3} />
 				</Details>
 
 				<AiToolFamily current="/groundplane" />

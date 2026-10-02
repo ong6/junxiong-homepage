@@ -9,6 +9,7 @@ import {
 import Image from "next/image";
 import NextLink from "next/link";
 import DiagramFigure from "../components/DiagramFigure";
+import FactList from "../components/FactList";
 import * as CompozeArchitecture from "../components/diagrams/CompozeArchitecture";
 import * as CompozeDurableChat from "../components/diagrams/CompozeDurableChat";
 import * as CompozeIngestFlow from "../components/diagrams/CompozeIngestFlow";
@@ -101,33 +102,6 @@ const Figure = ({ src, alt, caption }) => (
 	</Box>
 );
 
-const MonoTable = ({ rows }) => (
-	<Box
-		as="dl"
-		mt={{ base: 8, md: 10 }}
-		borderTop="1px solid"
-		borderColor="border.subtle"
-		fontFamily="var(--font-mono)"
-		fontSize="12px">
-		{rows.map(([label, value]) => (
-			<Box
-				key={label}
-				display="flex"
-				flexDirection={{ base: "column", md: "row" }}
-				gap={{ base: 1, md: 6 }}
-				py={{ base: 3, md: 2 }}
-				borderBottom="1px solid"
-				borderColor="border.subtle">
-				<Box as="dt" flex={{ md: "0 0 34%" }} color="text.muted">
-					{label}
-				</Box>
-				<Box as="dd" ml={0} flex={{ md: "1" }} lineHeight="1.6">
-					{value}
-				</Box>
-			</Box>
-		))}
-	</Box>
-);
 
 const optimisations = [
 	[
@@ -368,31 +342,7 @@ export default function Compoze() {
 				</P>
 
 				<Details title="Implementation inventory">
-					<Box
-						as="dl"
-						mt={3}
-						borderTop="1px solid"
-						borderColor="border.subtle"
-						fontFamily="var(--font-mono)"
-						fontSize="12px">
-						{facts.map(([label, value]) => (
-							<Box
-								key={label}
-								display="flex"
-								justifyContent="space-between"
-								gap={4}
-								py={2}
-								borderBottom="1px solid"
-								borderColor="border.subtle">
-								<Box as="dt" color="text.muted">
-									{label}
-								</Box>
-								<Box as="dd" ml={0} textAlign="right" fontWeight="700">
-									{value}
-								</Box>
-							</Box>
-						))}
-					</Box>
+					<FactList facts={facts} mt={3} />
 				</Details>
 
 				<DiagramFigure
@@ -418,7 +368,7 @@ export default function Compoze() {
 						and chat creation was an atomic insert-on-conflict.
 					</P>
 
-					<MonoTable rows={optimisations} />
+					<FactList facts={optimisations} mt={{ base: 8, md: 10 }} />
 
 					<P>
 						With no one else reviewing the code, automated checks did that job. Route contracts are typed, every payload is validated at runtime with Zod, and contract tests run on each push. Those checks let me keep changing 53 routes and 23 tables on my own. Each request is traced as one span tree with tokens, model and tenant on every span, so pricing is built on cost per tenant per answer. The latency I watched most closely was time to first token.

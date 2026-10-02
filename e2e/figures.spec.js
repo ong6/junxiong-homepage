@@ -91,3 +91,33 @@ for (const path of ["/uipack", "/compoze", "/groundplane", "/skills", "/skillsmi
 		expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBe(0);
 	});
 }
+
+test("/trading-engine: selecting a box shows its note beside it, and site figures have one enlarge control", async ({ page }) => {
+	await page.goto("/trading-engine");
+	const figure = page.locator("figure.uipack").first();
+	await figure.scrollIntoViewIfNeeded();
+	await expect(figure.getByRole("button", { name: "Open canvas" })).toHaveCount(0);
+	await expect(page.getByRole("button", { name: /Expand diagram/ }).first()).toBeVisible();
+	await expect(figure.getByRole("button", { name: /Clear selection/ })).toHaveCount(0);
+
+	const node = figure.getByRole("button", { name: "report, evidence" });
+	const box = await node.boundingBox();
+	await node.click();
+	const note = figure.locator(".uipack__note");
+	await expect(note).toBeVisible();
+	await expect(note).toContainText("only thing a paper portfolio sees");
+	// The note sits against the box and the drawing does not move.
+	const n = await note.boundingBox();
+	expect(n.y + n.height).toBeLessThanOrEqual(box.y);
+	expect(box.y - (n.y + n.height)).toBeLessThan(16);
+	expect(Math.abs((await node.boundingBox()).y - box.y)).toBeLessThan(2);
+	await node.click();
+	await expect(note).toHaveCount(0);
+});
+
+test("/trading-engine/v7 links every other version, including the current one", async ({ page }) => {
+	await page.goto("/trading-engine/v7");
+	const list = page.locator("ol").filter({ hasText: "One shared backtest core" });
+	await expect(list.getByRole("link", { name: /One shared backtest core/ })).toHaveAttribute("href", "/trading-engine");
+	await expect(list.getByRole("link", { name: /Scoring every candidate/ })).toHaveCount(0);
+});
