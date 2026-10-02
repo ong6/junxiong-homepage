@@ -1,7 +1,7 @@
 const { expect, test } = require("@playwright/test");
 const { SEL, packetCentre, dist, collectErrors } = require("./helpers");
 
-const VERSION_PAGES = ["/trading-engine/v1", "/trading-engine/v2", "/trading-engine/v3", "/trading-engine/v4", "/trading-engine/v5", "/trading-engine/v6"];
+const VERSION_PAGES = ["/trading-engine/v1", "/trading-engine/v2", "/trading-engine/v3", "/trading-engine/v4", "/trading-engine/v5", "/trading-engine/v6", "/trading-engine/v7"];
 const PAGES = ["/compoze", "/groundplane", "/jobforge", "/skillsmith", "/trading-engine", "/uipack", ...VERSION_PAGES];
 
 for (const path of PAGES) {

@@ -13,7 +13,7 @@ const topRoutes = [
 	{ path: "/resume", lastmod: "2026-09-25", changefreq: "weekly", priority: "0.9" },
 	{ path: "/compoze", lastmod: "2026-09-25", changefreq: "yearly", priority: "0.8" },
 	{ path: "/groundplane", lastmod: "2026-09-25", changefreq: "yearly", priority: "0.8" },
-	{ path: "/trading-engine", lastmod: "2026-09-29", changefreq: "yearly", priority: "0.8" },
+	{ path: "/trading-engine", lastmod: "2026-10-02", changefreq: "yearly", priority: "0.8" },
 	...getTradingDocRoutes().map((path) => ({
 		path,
 		lastmod: "2026-10-02",
@@ -26,6 +26,7 @@ const topRoutes = [
 		changefreq: "yearly",
 		priority: "0.4",
 	})),
+	{ path: "/trading-engine/v7", lastmod: "2026-09-29", changefreq: "yearly", priority: "0.4" },
 	{ path: "/jobforge", lastmod: "2026-09-25", changefreq: "yearly", priority: "0.8" },
 	{ path: "/skillpack", lastmod: "2026-09-25", changefreq: "yearly", priority: "0.8" },
 	{ path: "/skillsmith", lastmod: "2026-09-25", changefreq: "yearly", priority: "0.8" },

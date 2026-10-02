@@ -1,16 +1,17 @@
 import { Box, Container, Heading, Link, Text, useColorModeValue } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { CodeBlock, CodeFigure } from "../../components/CodeBlock";
-import DiagramFigure from "../../components/DiagramFigure";
-import * as TradingEngineArchitecture from "../../components/diagrams/TradingEngineArchitecture";
-import Layout from "../../components/layouts/Articles";
 import CaseStudyFooter from "../../components/CaseStudyFooter";
+import DiagramFigure from "../../components/DiagramFigure";
+import * as V8 from "../../components/diagrams/trading/V8";
+import Layout from "../../components/layouts/Articles";
 import ProjectLinks from "../../components/ProjectLinks";
 import VersionSwitcher from "../../components/VersionSwitcher";
 import { VERSIONS } from "../../lib/tradingVersions";
 
-// Case study in the same shape as /skillpack: one ~680px column of prose, the
-// architecture figure, one terminal figure, and a single mono fact table.
+// Sources: the public engine repository at a1deeef, especially BUILDLOG.md
+// (2026-09-29 through 2026-10-02), docs/system-blueprint.md, docs/product.md,
+// docs/backtest-standard.md, docs/pit-free-audit-2026-10-01.md and docs/site/*.md.
+// Counts were rerun with pytest --collect-only and tools.metrics_snapshot.
 
 const P = (props) => (
 	<Text mt={5} fontSize={{ base: "17px", md: "18px" }} lineHeight="1.8" {...props} />
@@ -19,27 +20,6 @@ const P = (props) => (
 const H2 = (props) => (
 	<Heading as="h2" mt={{ base: 12, md: 16 }} fontSize={{ base: "22px", md: "24px" }} {...props} />
 );
-
-const Code = (props) => <Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em" {...props} />;
-
-// The forward report's own words, trimmed. The numbers are the ones the
-// committed report carried on 2026-09-17.
-const E1 = [
-	["$ cat data/reports/experiments/e1-spy-monday-forward.md", "muted"],
-	["NO RESULT YET — 8 of 40 out-of-sample Mondays."],
-	["Kill criterion: after 40 Mondays, KILL if mean <= 0 or t < 0.5, net of 20 bp."],
-	["Current standing: mean -0.29%, t -1.37 — would KILL if applied today,", "hot"],
-	["which it is not. 32 Mondays to go."],
-];
-
-const FILL = [
-	["$ python -c 'from sim.fills import attempt_fill; ...'", "muted"],
-	["ValueError: look-ahead violation: fill_date 2026-09-17 !> signal_date 2026-09-17", "hot"],
-	[""],
-	["# sim/fills.py — the only guard, verbatim", "muted"],
-	["if fill_date <= signal_date:"],
-	['    raise ValueError(f"look-ahead violation: fill_date {fill_date} !> signal_date {signal_date}")'],
-];
 
 function Versions() {
 	return (
@@ -82,24 +62,17 @@ function Versions() {
 }
 
 const facts = [
+	["status", "paper only · no broker connection"],
 	["paper portfolios", "25 active in the simulator"],
-	["AI decision paths", "nightly agent since 21 Sep · candidate scoring since 29 Sep"],
-	["test portfolios", "model-ranked · rule-ranked control · rule + model veto"],
-	["paired test", "model vs rule on the same names · checked at 60, 90, 120 trading days"],
-	["entries", "volatility sizing · limit order at the open · pre-open check may only cancel"],
-	["built, switched off", "challenger lab · filing reader · text labs · optimizer"],
-	["tests logged", "103 written down in advance · counted as 139 trials"],
-	["strategy modules", "30 · one file each, rules fixed in advance"],
-	["data sources", "Yahoo · Nasdaq · FRED · Cboe · FINRA · CFTC · AAII · NAAIM · SqueezeMetrics"],
-	["research-only sources", "TradingView quotes and bars · RSS headlines"],
-	["not connected yet", "SEC 8-K (awaiting access) · Alpaca IEX · licensed history"],
-	["fill model", "next open · spread tier + 5 bp · ≤ 1 % of 60-day volume"],
-	["walk-forward", "10 folds · train 24 mo · validate 12 mo"],
-	["store", "DuckDB · one writer · raw responses kept"],
-	["api", "34 local-only routes · reads plus paper orders"],
-	["tests", "4,078 collected"],
-	["python", "~118k lines outside tests · started 2026-07-16"],
-	["status", "paper only · MIT · github.com/ong6/trading-engine"],
+	["matched AI comparison", "AI-ranked · rule-ranked · rule with an AI veto"],
+	["shared backtest", "event and portfolio strategies · one deterministic core"],
+	["evidence rules", "no peeking · named costs · gross benchmark · calendar-day deflated Sharpe"],
+	["holdout", "sealed · one opening"],
+	["synthetic proof", "planted edge found in 48/50 seeds · noise flagged in 7/200 (3.5%)"],
+	["full benchmark", "3,000 stocks × 3,800 sessions · 16 workers · 989.05 s → 0.847 s"],
+	["nightly", "about 18 minutes removed from the measured 44.5-minute path"],
+	["historical coverage", "old store held roughly 30–38% of listed names per year, 2010–25"],
+	["tests", "4,217 collected"],
 ];
 
 const links = [
@@ -119,7 +92,7 @@ export default function TradingEngine() {
 				programmingLanguage: "Python",
 				license: "https://opensource.org/licenses/MIT",
 			}}
-			description="A paper-trading research engine I run nightly on US market data, with strategies fixed in advance and a fill model that cannot see the future.">
+			description="A paper-trading research engine where every strategy runs through one shared backtest core and one evidence path.">
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
 					<Link
@@ -154,147 +127,94 @@ export default function TradingEngine() {
 						2026 · open source · paper only
 					</Text>
 
-					<VersionSwitcher active="v7" mt={6} />
+					<VersionSwitcher active="v8" mt={6} />
 
 					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="1.6" fontWeight="600">
-						I built this to test trading ideas on real US market data without placing live trades. It runs nightly on one Linux box and keeps 25 paper portfolios, each with rules fixed before trading starts. Since 29 September a model scores every nightly candidate next to a fixed rule, and a paired test decides at set dates whether the model adds anything. So far no policy has beaten its control on live data.
+						Since v7, the engine has changed shape. Every strategy is now a short
+						specification that runs through one shared backtest core and one evidence path
+						before a paper portfolio can observe it. The AI comparison is live, operations
+						are less fragile, and the data layer now shows how much history the old store
+						missed. It is still paper only. No policy has beaten its frozen control yet.
 					</Text>
 				</Box>
 
 				<ProjectLinks links={links} mt={{ base: 8, md: 10 }} />
 
 				<DiagramFigure
-					id="tearch"
+					id="te-v8"
 					headingLevel={2}
-					diagram={TradingEngineArchitecture}
-					caption="fig. 1 — one night in v7. ① Yahoo, Nasdaq, TradingView, RSS headlines and a set of macro
-					publishers feed the collectors; SEC 8-K capture waits on access. ② One writer commits every
-					batch to DuckDB, and each fact carries the time it became available. ③ A fixed rule and a
-					model both score every candidate, and the nightly agent keeps its own portfolio; event triggers
-					and the challenger lab place no orders. ④ Code sizes each position and checks risk; before
-					the open the model may cancel an order but never add one. ⑤ Orders fill at the next open or
-					a limit order at the open, and nowhere else. ⑥ Every decision lands in one ledger, is labelled later,
-					and a paired test against the rule decides at 60, 90 and 120 trading days. It is all still paper,
-					so the IBKR broker link is not open yet."
+					diagram={V8}
+					caption="fig. 1 — v8. Public and separately held private strategies become short specifications. One core owns the no-peeking view, named costs, event or portfolio simulation, gross benchmark, calendar-day deflated Sharpe and sealed holdout. Only its evidence report reaches a paper portfolio. The private live-paper bridge is next, not active."
 				/>
 
-				<H2>Scoring every candidate</H2>
+				<H2>One core, then evidence</H2>
 
 				<P>
-					Until v7 the AI made one pick a night from five standouts, and it abstained on 92% of
-					them. At that pace, twenty trades would arrive around February 2027, and twenty trades can
-					only detect an edge of about five percent per trade. That is too little evidence to judge
-					anything.
+					Before v8, a new strategy could bring its own replay machinery. Now it only
+					describes its decisions, fills, exits, universe and liquidity rule. The shared
+					core supplies data that refuses future rows, exact named costs, native event and
+					portfolio simulation, the gross-benchmark rule, calendar-day deflated Sharpe and
+					a sealed holdout that opens once.
 				</P>
 
 				<P>
-					So the unit of evidence changed from a trade to a scored candidate. Each night the model
-					and a fixed rule both score every candidate in a wider universe, and each score is later
-					labelled with what the stock did. A paired test compares the two on the same names and
-					dates, and I only read it at 60, 90 and 120 scored trading days. Three simulator portfolios trade on
-					the scores with identical mechanics: one ranked by the model, one by the rule, and one by
-					the rule with a model veto.
+					I tested the evaluator on a synthetic market where the answer was known. It
+					found the planted edge in 48 of 50 seeded runs and rejected noise in 7 of 200,
+					or 3.5%. Serial and parallel reports were byte-identical. A shared in-memory
+					price panel then cut the 16-worker, 3,000-stock benchmark from 989.05 seconds to
+					0.847 seconds without changing those bytes.
+				</P>
+
+				<H2>The AI comparison is live</H2>
+
+				<P>
+					Three matched paper portfolios now run on the same candidates and mechanics:
+					one ranks with AI, one uses the fixed rule, and one starts with the rule and lets
+					the model veto an entry. The first live cycles exposed bookkeeping and evidence
+					problems. I fixed the checks around refreshed prices, completed fills and league
+					reports without changing the scores or the comparison.
+				</P>
+
+				<H2>Less waiting, fewer hidden failures</H2>
+
+				<P>
+					Each nightly stage now records its own timing. Price checks overlap network
+					waits, earnings refreshes are bounded between weekly full passes, and the weekly
+					walk-forward uses a rolling eight-slot pool. Together the measured collection
+					changes remove about 18 minutes from a 44.5-minute nightly path.
 				</P>
 
 				<P>
-					The model still sizes nothing. Code sizes each position from recent volatility, fixes the
-					stop at entry and places a limit order for the open. Before the open the model can look again
-					and cancel an order, never add or resize one, and every cancelled order keeps the fill it
-					would have had, so the cancel decision is scored too. Headlines and intraday movers can now
-					trigger a decision within minutes, but those triggers only watch and place no orders.
+					Completed writers also publish verified read-only database snapshots. If the
+					live database is busy, read-only API routes can serve a recent snapshot and say
+					when it was taken. Repeated intraday responses keep their receipt but no longer
+					store unchanged bars again, cutting that repeated growth by about 95%. The
+					league report is rendered before a failed evidence check stops the scoring
+					report, so the current paper standings are not silently skipped.
 				</P>
 
-				<H2>Built, but switched off</H2>
+				<H2>A freer survivorship baseline</H2>
 
 				<P>
-					Next to it sits a challenger lab: other model policies on the same inputs, a reader for
-					filings and earnings releases, factor-neutral statistics, sequential tests and a
-					score-to-weight optimizer. All of it is built and none of it is on. It waits until the new
-					scoring has run a clean first cycle, and a challenger only takes over a portfolio after a sequential
-					test passes and I approve it.
-				</P>
-
-				<H2>When a simulated order can fill</H2>
-
-				<P>
-					I wanted to avoid a backtest using a price it could not have traded. The engine enforces the timing rule in one place: an order signalled from the
-					close of day <Code>t</Code> fills at the open of day <Code>t+1</Code>, and{" "}
-					<Code>attempt_fill</Code> raises if you ask for anything else. It raises under{" "}
-					<Code>python -O</Code> too, so optimisation cannot remove the timing check.
+					The free-source store now has a public ticker master with listing intervals,
+					SEC delisting notices and public insider-trade datasets. Its audit found that the
+					old store held only roughly a third of the listed names in each year from 2010
+					through 2025. A two-year whole-market daily-bar importer is ready, but it has not
+					been run without the owner&apos;s free key, so older backtests remain explicit about
+					their survivorship limit.
 				</P>
 
 				<P>
-					The fill price is the open moved against you by a half-spread estimated from the
-					sixty-day median dollar volume, plus five basis points a side. The v7 portfolios enter with a limit order at the open instead, which skips the trade when the stock opens too far above the signal close. An order over one percent
-					of that median volume is rejected outright instead of partially filled, so the engine never has to estimate how much would have filled. A missing bar leaves the order pending for
-					three trading days and then rejects it; the engine never fabricates a bar. Dividends are credited on
-					the ex-date from the same corporate-actions table the screen reads.
-				</P>
-
-				<CodeFigure
-					caption="fig. 2 — the guard as it fails, and the two lines that make it fail. There is no
-					second place a fill can be created.">
-					<CodeBlock title="same-bar fill" lines={FILL} />
-				</CodeFigure>
-
-				<H2>Writing the test rules in advance</H2>
-
-				<P>
-					Each strategy starts as a written test plan: the mechanism, the control it has to beat,
-					one primary statistic, a kill criterion, and the total number of trials. All of that is
-					written down before the first signal. I keep the rule fixed after seeing the result and record failed tests alongside the others.
-				</P>
-
-				<P>
-					Ten test plans so far. Seven are closed as rejected or inconclusive: a VIX term-structure
-					timer, turn-of-month, sell-in-May, a drawdown throttle, a vol target, a sector cap and a
-					quarterly ETF rebalance. Each failed the pass mark it set up front. The three calendar
-					timers lost to a static exposure-matched control, which keeps the comparison from simply rewarding a different amount of market exposure. Three are still accruing: a sector-momentum
-					portfolio that needs two hundred shared trading days before its kill rule can fire, a 12-1
-					cross-sectional momentum portfolio measured against an unscreened control, and a
-					forty-Monday test of SPY&apos;s open-to-close drift.
-				</P>
-
-				<P>
-					Since 28 September new strategy research runs in a private repo against this engine,
-					under the same rule of writing each test down in advance, and its results stay there. The public log
-					holds 103 tests written down in advance, counted conservatively as 139 trials when a result is corrected
-					for how many ideas were tried.
-				</P>
-
-				<CodeFigure
-					caption="fig. 3 — the Monday experiment refuses to report at eight observations. The
-					report prints what the verdict would be and then says why it is not one.">
-					<CodeBlock title="a report that will not peek" lines={E1} />
-				</CodeFigure>
-
-				<H2>The missing delisted companies</H2>
-
-				<P>
-					The price store holds only names listed today. Measured against listed-company counts,
-					that is about eleven percent of the companies that existed in 1996, a quarter of 2003
-					and forty percent of 2014. No 2008 casualty is in it, so a fold that spans 2008 is one
-					in which those names cannot lose money. The bias is not a constant; it grows the
-					further back a window reaches, and every fold table carries its universe size so a
-					reader can weight it.
-				</P>
-
-				<P>
-					The walk-forward therefore never reports absolute return as evidence. A stock-picking
-					portfolio is compared with an equal-weight basket of the same screened names, fold by fold,
-					so the bias sits on both sides of the difference. On that comparison, no screen-driven
-					portfolio beat equal weight on any window of three years or more, and the two portfolios that led
-					the live table in September had drawn down eighteen percent inside two months. That
-					result is in the repo. The engine remains paper-only, and the next research steps are
-					bound by the calendar: the point-in-time tables are not deep enough for a fair
-					stock-selection test until 2029 unless I buy a dataset with the delisted names in it.
+					Private research strategies run in a separate private repo and are backtested on
+					the shared core; a live paper book can observe one in real time without revealing
+					it. That live bridge is the next step, not an active trading path.
 				</P>
 
 				<H2>Versions</H2>
 
 				<P>
-					The engine has changed shape several times since July. Figure 1 shows v7. Each earlier
-					version has its own page with the diagram as it stood then.
+					The engine has changed shape several times since July. Figure 1 shows v8. Each
+					earlier version has its own page with the diagram as it stood then.
 				</P>
 
 				<Versions />
@@ -329,8 +249,10 @@ export default function TradingEngine() {
 				<H2>Paper trading only</H2>
 
 				<P>
-					It holds no credentials and connects to no broker, so it cannot move money. The two services only
-					listen on the machine itself and the repo ships no market data. I built it to test whether the ideas hold up under rules I set in advance. So far, none has passed, and the reports in the repo show why.
+					The engine has no broker connection or authority over real money. I built it to
+					get to a trustworthy yes or no, with every loss, unavailable input and failed
+					check left in the record. The product docs carry the full data, research and
+					operations detail.
 				</P>
 
 				<CaseStudyFooter links={links} next={{ name: "Skillpack", href: "/skillpack", detail: "One home for coding-agent skills, synced as a git subtree" }} />
