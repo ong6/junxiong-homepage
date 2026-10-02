@@ -20,9 +20,8 @@ for (const width of [390, 1440]) {
 				"Compoze",
 				"Trading engine",
 				"Skillsmith",
-				"Skillpack",
+				"Agent skills",
 				"UI Pack",
-				"Jobforge",
 			]);
 			await expect(page.getByRole("heading", { name: "Selected work" })).toBeVisible();
 			await expect(page.getByRole("heading", { name: "Also building" })).toBeVisible();
@@ -48,9 +47,8 @@ for (const width of [390, 1440]) {
 			for (const [name, href] of [
 				["UI Pack", "/uipack"],
 				["Trading engine", "/trading-engine"],
-				["Skillpack", "/skillpack"],
+				["Agent skills", "/skills"],
 				["Skillsmith", "/skillsmith"],
-				["Jobforge", "/jobforge"],
 			]) {
 				await expect(page.locator("#work").getByRole("link", { name, exact: true })).toHaveAttribute("href", href);
 			}

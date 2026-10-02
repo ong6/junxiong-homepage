@@ -41,6 +41,12 @@ module.exports = {
 				permanent: true,
 			},
 			{ source: "/skill-eval-pack", destination: "/skillsmith", permanent: true },
+			{ source: "/skillpack", destination: "/skills", permanent: true },
+			{
+				source: "/jobforge",
+				destination: "https://github.com/ong6/skills/tree/main/skills/interview-prep",
+				permanent: true,
+			},
 		];
 	},
 	async headers() {

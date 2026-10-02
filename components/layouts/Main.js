@@ -14,7 +14,7 @@ export const DEFAULT_DESCRIPTION =
 export const OG_IMAGE = `${SITE_URL}/images/og/home.jpg`;
 
 // Routes with their own card from scripts/build-og-cards.mjs; the rest share the home card.
-const OG_CARDS = new Set(["/compoze", "/groundplane", "/jobforge", "/skillpack", "/skillsmith", "/trading-engine", "/uipack"]);
+const OG_CARDS = new Set(["/compoze", "/groundplane", "/skills", "/skillsmith", "/trading-engine", "/uipack"]);
 export const ogImageFor = (canonical) => {
 	// Version pages (/trading-engine/v3) share their project's card.
 	const path = canonical.slice(SITE_URL.length).replace(/\/v\d+$/, "");

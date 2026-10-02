@@ -299,7 +299,7 @@ def scene_skillsmith():
     tree(-1.35, -1.0, 0.7, 0.75)
 
 
-def scene_skillpack():
+def scene_skills():
     plinth(3.4, 3.2)
     # A backpack with scrolls poking out.
     rbox((1.3, 0.8, 1.5), (-0.1, 0.1, 0.8), (0, 0, -8), "terracotta", 0.32)
@@ -310,24 +310,6 @@ def scene_skillpack():
         cyl(0.1, 0.7, (dx, 0.3, 1.75 + i * 0.05), (0, 12 - i * 10, -8), c, 0.03)
     tree(1.2, 0.95, 1.0)
     sphere(0.16, (1.1, -0.85, 0.2), "tennis", rough=0.9)
-
-
-def scene_jobforge():
-    plinth(3.4, 3.2)
-    # A whiteboard on an easel with a plan sketched on it, and a speech bubble.
-    for dx in (-0.7, 0.7):
-        cyl(0.04, 1.75, (dx, 0.52, 0.88), (8, 0, 0), "wood", 0.01)
-    rbox((1.9, 0.08, 1.25), (0, 0.42, 1.3), (-8, 0, 0), "white", 0.04)
-    rbox((2.0, 0.1, 0.06), (0, 0.4, 0.66), (-8, 0, 0), "wood", 0.02)
-    for (x, z, c) in ((-0.55, 1.6, "cobalt"), (0.0, 1.2, "terracotta"), (0.55, 1.6, "cobalt")):
-        rbox((0.4, 0.04, 0.24), (x, 0.36, z), (-8, 0, 0), c, 0.05)
-    rbox((0.5, 0.03, 0.04), (-0.28, 0.35, 1.4), (-8, 40, 0), "ink", 0.01)
-    rbox((0.5, 0.03, 0.04), (0.28, 0.35, 1.4), (-8, -40, 0), "ink", 0.01)
-    rbox((0.9, 0.24, 0.5), (1.0, -0.6, 0.85), (0, 0, -15), "cobalt_light", 0.2)
-    cone(0.1, 0.0, 0.3, (0.8, -0.6, 0.52), (0, 150, -15), "cobalt_light")
-    for i in range(3):
-        sphere(0.05, (0.8 + i * 0.2, -0.73, 0.85), "cobalt")
-    tree(-1.3, -0.95, 0.8, 0.85)
 
 
 def scene_uipack():
@@ -350,8 +332,7 @@ SCENES = {
     "compoze": scene_compoze,
     "trading-engine": scene_trading_engine,
     "skillsmith": scene_skillsmith,
-    "skillpack": scene_skillpack,
-    "jobforge": scene_jobforge,
+    "skills": scene_skills,
     "uipack": scene_uipack,
 }
 

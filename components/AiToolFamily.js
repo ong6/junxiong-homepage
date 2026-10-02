@@ -3,8 +3,8 @@ import NextLink from "next/link";
 
 const tools = [
 	{
-		name: "Skillpack",
-		href: "/skillpack",
+		name: "Agent skills",
+		href: "/skills",
 		stage: "01 · instruct",
 		detail: "The reusable instructions my agents load.",
 	},

@@ -3,7 +3,7 @@ const { expect, test } = require("@playwright/test");
 // Regressions from the 2026-09-16 QA pass: labels that ran past their node,
 // a narrow drawing that ran off its canvas, a 36px copy button, a focus ring
 // on the wrong token, and gallery captions copied from the case studies.
-const FIGURE_PAGES = ["/uipack", "/groundplane", "/skillpack", "/compoze", "/trading-engine"];
+const FIGURE_PAGES = ["/uipack", "/groundplane", "/skills", "/compoze", "/trading-engine"];
 
 const visibleTexts = (svgSel) => {
 	const out = [];
@@ -91,7 +91,7 @@ test("/uipack gallery does not repeat a case-study figure title or sentence", as
 		}));
 	};
 	const gallery = await grab("/uipack");
-	for (const path of ["/groundplane", "/skillpack", "/compoze"]) {
+	for (const path of ["/groundplane", "/skills", "/compoze"]) {
 		const study = await grab(path);
 		expect(gallery.titles.filter((t) => study.titles.includes(t))).toEqual([]);
 		expect(gallery.sentences.filter((s) => study.sentences.includes(s))).toEqual([]);

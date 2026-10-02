@@ -8,6 +8,8 @@ import ProjectLinks from "../../components/ProjectLinks";
 import VersionSwitcher from "../../components/VersionSwitcher";
 import { VERSIONS } from "../../lib/tradingVersions";
 
+// Case study in the same shape as /skills: one ~680px column of prose, the
+// architecture figure, one terminal figure, and a single mono fact table.
 // Sources: the public engine repository at a1deeef, especially BUILDLOG.md
 // (2026-09-29 through 2026-10-02), docs/system-blueprint.md, docs/product.md,
 // docs/backtest-standard.md, docs/pit-free-audit-2026-10-01.md and docs/site/*.md.
@@ -255,7 +257,7 @@ export default function TradingEngine() {
 					operations detail.
 				</P>
 
-				<CaseStudyFooter links={links} next={{ name: "Skillpack", href: "/skillpack", detail: "One home for coding-agent skills, synced as a git subtree" }} />
+				<CaseStudyFooter links={links} next={{ name: "Agent skills", href: "/skills", detail: "One home for coding-agent skills, linked into every repo" }} />
 			</Container>
 		</Layout>
 	);
