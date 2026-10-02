@@ -43,7 +43,7 @@ a {
 }
 
 /* Motion. Curves and budgets follow Emil Kowalski's animate skill
-   (resources/web-animation-skills.md in the store): strong ease-out for
+   (resources/web-design/web-animation-skills.md in the store): strong ease-out for
    entrances, ease-in-out for things moving on screen, UI under 300ms,
    transform and opacity only. */
 :root {
