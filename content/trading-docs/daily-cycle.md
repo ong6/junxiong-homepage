@@ -42,23 +42,39 @@ trade intraday.
 
 The hourly and four-hour observers ask related questions at fixed New York times. Missed windows
 are not replayed. Replaying them later would let the observer see facts that were unavailable at
-the original time.
+the original time. Each observer holds one database connection for the complete run, including its
+retained quote and cross-check writes, and waits no more than 60 seconds for that connection.
 
 ## After the close
 
 The main nightly driver is deterministic. It refreshes the universe, collects prices, chooses the
 latest session with broad enough coverage, screens candidates, reconciles actions, advances the
 paper league, updates frozen forward records, and queues supporting work. Each stage records its
-start, finish, duration, and exit status.
+start, finish, duration, and exit status both in the normal log and in
+`logs/stage-timings.jsonl`; `tools/stage_timings.py` summarizes recent runs.
+
+After the league and sync, the independent price verifier materializes its database slice and then
+uses four network workers behind one global request pacer. Its network phase runs alongside the
+farm drain. Earnings collection is bounded to unknown, near-term, or seven-day-stale names on an
+ordinary night, with a full eligible-universe pass each Monday. Repeated intraday bars with unchanged
+payloads reuse their first fact revision, and new facts are written as batches.
 
 The AI work comes later. First the engine retains inputs and source receipts. Then the daily
 opportunity agent runs. Half an hour later, candidate-wide scoring runs with matched rule scores and
-refreshes the paper-book and evaluation views. Keeping these jobs separate makes their information
-cutoffs and failure states visible.
+refreshes the paper-book and evaluation views. Scoring re-renders the league before it validates
+evidence. Evidence failure exits 75 after that render, and the service does not restart on that
+status. Keeping these jobs separate makes their information cutoffs and failure states visible.
 
 The historical research archive also runs in bounded slices. On weekdays it has five fixed-UTC
-slots; on weekends it has six four-hourly slots. Because this archive is retrieval-time research
-data, it never overwrites operational prices or prices a simulator fill.
+slots; on weekends it has six four-hourly slots. A caught-up TradingView symbol waits for two to
+four completed sessions and requests them together at the unchanged request rate; long backfills
+keep their existing chunk bound. Because this archive is retrieval-time research data, it never
+overwrites operational prices or prices a simulator fill.
+
+Read-only snapshots follow producer cadence rather than every timer indiscriminately. Event runs
+publish at most once per 120 minutes, pre-open publishes none, and nightly, scoring, and TradingView
+archive runs remain unthrottled. When no write-ahead log exists, the snapshot path durably copies
+the raw database and verifies it; a WAL uses DuckDB's consistent copy path.
 
 ## Weekends
 
@@ -76,4 +92,4 @@ Every scheduled driver has an advisory lock and a completion grace period. A sta
 running, interrupted, stale-running, or overdue, but it does not silently restart a job. Failures
 are investigated on demand by an agent. There is no push alerting.
 
-<!-- sources: docs/how-it-works.md, engine/run_daily.sh, server/trading-engine-agent-data-capture.timer, server/trading-engine-agent-shadow.timer, server/trading-engine-daily-opportunity.timer, server/trading-engine-hourly-opportunity.timer, server/trading-engine-four-hour-opportunity.timer, server/trading-engine-p15-preopen.timer, server/trading-engine-p15-events.timer, server/trading-engine-p15-scoring.timer, server/trading-engine-tradingview-history.timer -->
+<!-- sources: BUILDLOG.md, docs/how-it-works.md, engine/bitemporal_facts.py, engine/earnings.py, engine/lib/driver.sh, engine/run_daily.sh, engine/tradingview_history_archive.py, engine/verify_prices.py, server/hourly_opportunity_observer.py, server/run_p15_scoring.sh, server/trading-engine-agent-data-capture.timer, server/trading-engine-agent-shadow.timer, server/trading-engine-daily-opportunity.timer, server/trading-engine-hourly-opportunity.timer, server/trading-engine-four-hour-opportunity.timer, server/trading-engine-p15-preopen.timer, server/trading-engine-p15-events.timer, server/trading-engine-p15-scoring.service, server/trading-engine-p15-scoring.timer, server/trading-engine-tradingview-history.timer, tools/publish_snapshot.py, tools/stage_timings.py -->

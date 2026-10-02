@@ -34,8 +34,10 @@ rewrite old evidence.
 
 Some revisions change the policy and therefore begin a new cohort. Others bind infrastructure
 changes that leave the research meaning untouched. The active profitability registration revision
-9 is in the second group: it records timing, snapshot, contention, and collection improvements
-without changing scoring, books, gates, labels, registered values, or written rows.
+9 is in the second group: it records timing, snapshot throttling and fallback, cached projections,
+single-connection observers, fail-soft reporting, deduplicated fact writes, rolling research work,
+scratch cleanup, and bounded collection improvements without changing scoring, books, gates,
+labels, registered values, or written rows.
 
 The reason for a revision is stored with the registration. Validators bind the complete registered
 file set, so an unrecorded source edit fails closed.
@@ -55,6 +57,16 @@ Validation distinguishes three cases that can look similar:
 The first can remain valid, the second is reported as a source revision or becomes unavailable, and
 the third is fatal. A validator does not weaken the check because a report is inconveniently red.
 
+Scoring first completes its book update and re-renders the league, then runs evidence validation.
+If validation fails, the report command returns the distinct exit status 75. The service preserves
+the league render, records the failure, and is configured not to restart on that status; a bad
+evidence view therefore cannot cause an automatic retry loop or erase the completed paper state.
+
+Intraday retention applies the same identity rule before it writes: an unchanged payload for the
+same security, fact type, and event time reuses the prior revision. Changed or new facts are inserted
+as one batch with their exact response receipt. This keeps repeated five-minute captures from
+manufacturing evidence revisions while preserving real source changes.
+
 ## Read-only snapshots
 
 Completed producers publish immutable, consistent database snapshots. A manifest records the
@@ -64,7 +76,8 @@ generations are retained.
 When no write-ahead log is present, the publisher records source invariants under the normal writer
 locks, copies and synchronizes the file, releases the locks, then verifies the copy. With a
 write-ahead log, it uses the database’s consistent copy path. A snapshot failure never changes the
-producer’s own success or failure.
+producer’s own success or failure. Profitability event runs publish at most once per 120 minutes;
+pre-open runs do not publish. The nightly, scoring, and TradingView archive remain unthrottled.
 
 If the primary database is legitimately writer-locked, read-only API requests may use the latest
 valid snapshot. Responses identify that fallback and its as-of time. A corrupt primary does not
@@ -81,10 +94,16 @@ The product policy also allows a private daily off-server export, restore-checke
 pushed. Raw data and private research remain outside this public repository.
 
 Every scheduled driver stage writes a start time, end time, duration, and exit status to its normal
-log and a timing record. That makes a slow collector, blocked writer, or failed report stage visible
-without guessing from one overall runtime.
+log and to `logs/stage-timings.jsonl`. `tools/stage_timings.py` reports the median, 90th percentile,
+and failure count over recent runs. Timing publication is fail-soft, so observability cannot change
+the driver's result.
+
+The expensive profitability status is cached against the registration and every audited table's
+generation. Intraday readiness is cached against its row count and latest timestamp. Either cache is
+recomputed when its inputs change, so repeated status requests avoid full scans without serving a
+time-based guess.
 
 Reliability here does not mean pretending nothing fails. It means failures retain enough identity
 and timing for an agent to investigate them on demand without changing frozen evidence.
 
-<!-- sources: engine/bitemporal_facts.py, engine/lib/driver.sh, engine/lib/snapshots.py, server/p15-registration.json, server/status_validation.py, tools/p15_evidence_validation.py, tools/publish_snapshot.py, tools/backup_database.py -->
+<!-- sources: BUILDLOG.md, engine/bitemporal_facts.py, engine/lib/driver.sh, engine/lib/snapshots.py, server/agent_evaluation_reporting.py, server/intraday_readiness.py, server/main.py, server/p15-registration.json, server/run_p15_scoring.sh, server/status_validation.py, server/trading-engine-p15-scoring.service, tools/p15_evidence_validation.py, tools/publish_snapshot.py, tools/backup_database.py, tools/stage_timings.py -->

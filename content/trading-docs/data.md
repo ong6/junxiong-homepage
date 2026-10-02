@@ -23,7 +23,7 @@ could the system know it?” as separate questions.
 | SEC EDGAR | Acceptance-timestamped filings, 8-K events, Form 25 delisting notices, and public insider datasets | Retained with request and availability times; each consumer needs its own activation gate |
 | A local RSS/news scraper | Public headline titles collected throughout the day | Read as an owner-controlled file; each accepted line becomes a timestamped fact |
 | Tiingo’s public ticker archive | Historical listing intervals for US stocks | Loaded into an isolated free-source store, never into operational prices |
-| Massive grouped daily data | A free two-year survivor-aware bar source | The fetcher is built but remains unrun until a personal free key exists |
+| Massive grouped daily data | Free grouped daily bars for all US securities returned on each historical date | A private free key is installed; an isolated, resumable capture is running for the exact available 2024-10-02 through 2026-09-30 window |
 
 Raw market data and source transcripts are not shipped in this public repository. A new user
 regenerates local data from admitted sources.
@@ -43,6 +43,21 @@ new timestamp existed earlier.
 Corporate actions, listing events, and symbol changes follow the same idea. The engine never fills
 a gap by copying a current identity backward through time.
 
+## Free two-year survivor capture
+
+The free Massive tier reaches back exactly two years. On 2026-10-02 its earliest available grouped
+daily date was therefore 2024-10-02. The isolated capture runs through 2026-09-30, resumes from one
+exact retained response per date, and pauses requests during the registered quiet windows. Its
+initial proof load for 2026-09-30 admitted 12,613 US securities. Earlier daily responses retain
+securities that later delisted instead of starting from today's survivor list.
+
+Real grouped data is not perfectly tidy. The loader stores an individual malformed bar in a
+rejection table and continues the date when the rejected share stays within its bound; an invalid
+response envelope or more than 5% rejected bars still fails that date. Consolidated volume is
+stored as a floating-point value because fractional-share volume exists, and valid lowercase
+preferred-share and warrant suffixes are accepted. The source response remains the audit record for
+both admitted and rejected rows.
+
 ## What the engine knows it does not know
 
 The primary historical price universe is survivor-biased. It begins from names available to the
@@ -50,10 +65,11 @@ current collection process, so issuers that disappeared before collection began 
 TradingView archive is also a frozen current-liquid-universe cohort. It is useful for retrieval-time
 research, but it cannot reconstruct old index membership or fundamentals.
 
-The free Tiingo and SEC work improves listing and delisting coverage, but it does not magically turn
-the operational store into a complete historical security master. Exact ticker matching can confuse
-reused symbols. Form 25 coverage is uneven in older years. The Massive bar path is not evidence until
-it is actually run and audited.
+The free Tiingo, SEC, and Massive work improves listing, delisting, and daily-bar coverage, but it
+does not magically turn the operational store into a complete historical security master. Exact
+ticker matching can confuse reused symbols. Form 25 coverage is uneven in older years, and the free
+Massive tier provides no bars before 2024-10-02. The grouped-daily capture remains isolated research
+data until its completed window is audited; it never rewrites operational prices.
 
 Opening prices have another limit. The paper simulator uses a retail data feed’s daily open, not a
 direct record of the official opening auction or an investor’s place in that auction. Intraday bar
@@ -76,4 +92,4 @@ Those boundaries make the evidence slower to accumulate, but they also make the 
 to trust. A strategy that works only after current membership, revised text, or a later bar leaks
 backward has not worked at all.
 
-<!-- sources: engine/collect.py, engine/bitemporal_facts.py, engine/free_sources.py, engine/free_sec.py, engine/p15_event_sources.py, server/intraday_source.py, server/official_quote_source.py, server/tradingview_source.py, tools/free_sources.py, tools/free_sec.py -->
+<!-- sources: BUILDLOG.md, docs/plans/p3-point-in-time-data.md, engine/collect.py, engine/bitemporal_facts.py, engine/free_sources.py, engine/free_sec.py, engine/p15_event_sources.py, server/intraday_source.py, server/official_quote_source.py, server/tradingview_source.py, tests/test_free_sources.py, tools/free_sources.py, tools/free_sec.py -->

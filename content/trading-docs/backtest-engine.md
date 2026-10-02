@@ -31,6 +31,13 @@ portfolio targets. A fill must occur after the information used to decide it. If
 official open as a pre-market indication, the report labels that approximation rather than hiding
 it.
 
+Every event study must also say what happens when its intended exit lies beyond the evaluation
+window. `window_end="force_close"`, the compatibility default, closes at the last evaluable point;
+`window_end="unevaluable"` excludes and counts the incomplete outcome. The separate
+`require_complete_path` declaration decides whether a missing or invalid held-session bar makes the
+whole trade unevaluable. The defaults preserve earlier result bytes, but studies must declare both
+choices rather than inherit them silently.
+
 ## No-peeking data views
 
 Each input declares when its fields became available. The view also has a hard maximum date. Asking
@@ -79,6 +86,26 @@ Event strategies include zero on eligible days with no position. Capital is base
 concurrent slots times slot notional. These choices stop rare trading from manufacturing an
 impressive Sharpe by changing the denominator or removing quiet days.
 
+## One shared price panel
+
+The runner builds one immutable dense columnar price panel for a study, with constant-time ticker
+and session coordinates. Forked Linux workers inherit the same read-only pages, so they do not each
+serialize or rebuild a market-sized frame. Point-in-time checks, order precedence, fills, costs, and
+ledger serialization remain on the same path as before the optimization.
+
+The registered synthetic benchmark measured the change on 2026-10-02:
+
+- On 3,000 stocks × 3,800 sessions, 16-worker simulation fell from 989.05 seconds to 0.847 seconds
+  (1,167.5×). The legacy one-core run was stopped after more than 55 minutes; optimized simulation
+  took 7.75 seconds after a separate 133.41-second panel build.
+- On the reduced 600-stock × 3,800-session profile, serial simulation fell from 1,557.73 seconds to
+  6.69 seconds (232.8×), while 16 workers fell from 124.14 seconds to 0.558 seconds (222.5×).
+- Peak worker memory fell from about 6.85 GB to 0.82 GB. Peak parent memory fell from 7.21 GB to
+  1.67 GB, and nominal parent-plus-worker memory fell from 116.83 GB to 14.76 GB.
+
+Performance did not buy a different answer: all 295 captured pre-existing JSON outputs, totaling
+53,391,323 bytes, matched byte for byte, including the power, size, and benchmark-strategy runs.
+
 ## A synthetic proving ground
 
 The evaluator tests itself on generated markets where the truth is known. The synthetic world
@@ -94,4 +121,4 @@ That result proves the evaluator can detect this known synthetic effect at the r
 does not prove that any real strategy works. Synthetic power is a test of the ruler, not the thing
 being measured.
 
-<!-- sources: docs/backtest-standard.md, docs/plans/p18-backtest-core.md, farm/study/spec.py, farm/study/data.py, farm/study/costs.py, farm/study/benchmark.py, farm/study/stats.py, farm/study/protocol.py, farm/study/run.py, farm/study/synthetic.py, tests/test_study_synthetic.py -->
+<!-- sources: BUILDLOG.md, docs/backtest-standard.md, docs/plans/p18-backtest-core.md, farm/study/spec.py, farm/study/data.py, farm/study/panel.py, farm/study/bench.py, farm/study/costs.py, farm/study/benchmark.py, farm/study/stats.py, farm/study/protocol.py, farm/study/run.py, farm/study/simulate.py, farm/study/synthetic.py, tests/test_study_followup3.py, tests/test_study_synthetic.py -->
