@@ -9,7 +9,7 @@ import ProjectLinks from "../../components/ProjectLinks";
 import VersionSwitcher from "../../components/VersionSwitcher";
 import { VERSIONS } from "../../lib/tradingVersions";
 
-// Case study in the same shape as /skillpack: one ~680px column of prose, the
+// Case study in the same shape as /skills: one ~680px column of prose, the
 // architecture figure, one terminal figure, and a single mono fact table.
 
 const P = (props) => (
@@ -333,7 +333,7 @@ export default function TradingEngine() {
 					listen on the machine itself and the repo ships no market data. I built it to test whether the ideas hold up under rules I set in advance. So far, none has passed, and the reports in the repo show why.
 				</P>
 
-				<CaseStudyFooter links={links} next={{ name: "Skillpack", href: "/skillpack", detail: "One home for coding-agent skills, synced as a git subtree" }} />
+				<CaseStudyFooter links={links} next={{ name: "Agent skills", href: "/skills", detail: "One home for coding-agent skills, linked into every repo" }} />
 			</Container>
 		</Layout>
 	);

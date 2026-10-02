@@ -103,11 +103,11 @@ export default function Hobbies() {
 							maxW="64ch"
 							links={[
 								{ name: "Groundplane", detail: "Checks declared fields against recorded tool results", href: "/groundplane" },
-								{ name: "Jobforge", detail: "Grades the plan you say before you code", href: "/jobforge" },
+								{ name: "Agent skills", detail: "The instructions my coding agents load in every repo", href: "/skills" },
 							]}
 						/>
 					}>
-					This is my main hobby. I like trying models, building little tools, and seeing what I can get an agent to do. That is how I end up with <Link as={NextLink} href="/groundplane">Groundplane</Link>, a Python library that checks declared output fields against recorded tool results; <Link as={NextLink} href="/jobforge">Jobforge</Link>, a Claude Code plugin that grades the plan you say before you code; my notes and life admin kept as a markdown repo that an AI agent tends for me; and a <Link href="https://github.com/ong6/sg-property-analysis" target="_blank" rel="noopener noreferrer">Singapore property data-analysis project</Link>. Most of it starts with something I want to try or a problem I want to fix for myself.
+					This is my main hobby. I like trying models, building little tools, and seeing what I can get an agent to do. That is how I end up with <Link as={NextLink} href="/groundplane">Groundplane</Link>, a Python library that checks declared output fields against recorded tool results; the <Link as={NextLink} href="/skills">agent skills</Link> that Claude Code and Codex load in every repo I work in; my notes and life admin kept as a markdown repo that an AI agent tends for me; and a <Link href="https://github.com/ong6/sg-property-analysis" target="_blank" rel="noopener noreferrer">Singapore property data-analysis project</Link>. Most of it starts with something I want to try or a problem I want to fix for myself.
 				</Chapter>
 
 				<Chapter {...chapters[2]} active={active === chapters[2].id}>

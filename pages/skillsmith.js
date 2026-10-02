@@ -25,11 +25,11 @@ const facts = [
 	["clients", "Claude Code + Codex"],
 	["model calls", "0 · supplied by the host"],
 	["runtime", "Python standard library"],
-	["status", "MIT · github.com/ong6/skillsmith"],
+	["status", "MIT · a skill in github.com/ong6/skills"],
 ];
 
 const links = [
-	{ name: "Source on GitHub", detail: "MIT, Claude Code and Codex", href: "https://github.com/ong6/skillsmith", external: true },
+	{ name: "Source on GitHub", detail: "MIT, part of my public skills repo", href: "https://github.com/ong6/skills/tree/main/skills/skillsmith", external: true },
 ];
 
 export default function Skillsmith() {
@@ -40,7 +40,7 @@ export default function Skillsmith() {
 			title="Skillsmith"
 			schema={{
 				type: "SoftwareSourceCode",
-				codeRepository: "https://github.com/ong6/skillsmith",
+				codeRepository: "https://github.com/ong6/skills/tree/main/skills/skillsmith",
 				programmingLanguage: "Python",
 				license: "https://opensource.org/licenses/MIT",
 			}}

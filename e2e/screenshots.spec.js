@@ -8,13 +8,12 @@ for (const path of [
 	"/",
 	"/contact",
 	"/compoze",
-	"/skillpack",
+	"/skills",
 	"/skillsmith",
 	"/trading-engine",
 	"/uipack",
 	"/assets",
 	"/groundplane",
-	"/jobforge",
 	"/hobbies",
 ]) {
 	for (const theme of ["light", "dark"]) {

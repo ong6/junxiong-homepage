@@ -7,9 +7,10 @@ engineering through a restrained terminal-inspired interface.
 ## What is here
 
 - A single-surface homepage led by Groundplane and Compoze, with the rest of the site exposed through global navigation
-- Case studies for Groundplane (`/groundplane`, a Python boundary for agent output), Skillpack
-  (`/skillpack`, shared Claude Code and Codex skills), Skillsmith (`/skillsmith`, makes a skill
-  from a repo, then gates it against a blind no-skill baseline) and Jobforge (`/jobforge`, a Claude Code interview-prep plugin)
+- Case studies for Groundplane (`/groundplane`, a Python boundary for agent output), Agent skills
+  (`/skills`, my public Claude Code and Codex skills; `/skillpack` redirects there) and Skillsmith
+  (`/skillsmith`, makes a skill from a repo, then gates it against a blind no-skill baseline).
+  `/jobforge` redirects to the `interview-prep` skill in `ong6/skills`
 - A public case study for Compoze, with client identity and financial terms kept private
 - A case study for the trading engine (`/trading-engine`, a paper-trading research engine with
   pre-registered strategies and a next-open fill model), with the nightly-loop diagram

@@ -1,7 +1,8 @@
 // Renders the 1200×630 social cards in public/images/og/ from the site tokens,
 // pairing each title with its Blender diorama from scripts/og/renders/
 // (regenerate those with `blender -b --factory-startup -P scripts/og/scenes.py`).
-// Run after changing a project's name or summary: `node scripts/build-og-cards.mjs`.
+// Run after changing a project's name or summary: `node scripts/build-og-cards.mjs [slug...]`
+// (no slugs rebuilds every card).
 // Needs network for the Plex fonts; outputs are committed like other images.
 import { mkdir, readFile } from "node:fs/promises";
 import { chromium } from "@playwright/test";
@@ -41,16 +42,10 @@ const cards = [
 		summary: "Makes an agent skill from a repo, then keeps it only if it beats the agent without it.",
 	},
 	{
-		slug: "skillpack",
+		slug: "skills",
 		eyebrow: "AGENT TOOLING / CLAUDE + CODEX",
-		title: "Skillpack",
-		summary: "The agent skills I use in every repo, shared as a git subtree that syncs both ways.",
-	},
-	{
-		slug: "jobforge",
-		eyebrow: "INTERVIEW PRACTICE / LOCAL FIRST",
-		title: "Jobforge",
-		summary: "Coding drills that grade the plan I say out loud before I touch the keyboard.",
+		title: "Agent skills",
+		summary: "The agent skills I use in every repo, kept in one public repo and linked into place.",
 	},
 	{
 		slug: "uipack",
@@ -91,7 +86,8 @@ const html = ({ eyebrow, title, summary, art }) => `<!doctype html>
 await mkdir(OUT, { recursive: true });
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1200, height: 630 } });
-for (const card of cards) {
+const only = process.argv.slice(2);
+for (const card of cards.filter((c) => !only.length || only.includes(c.slug))) {
 	const png = await readFile(new URL(`${card.slug}.png`, RENDERS));
 	const art = `data:image/png;base64,${png.toString("base64")}`;
 	await page.setContent(html({ ...card, art }), { waitUntil: "networkidle" });

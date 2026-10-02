@@ -197,26 +197,21 @@ const supportingProjects = [
 	{
 		title: "Skillsmith",
 		href: "/skillsmith",
-		label: "Agent skills",
+		label: "Skill evaluation",
 		description: "I make a skill from the repo, then compare the agent with and without it to check whether the extra instructions help.",
 	},
 	{
-		title: "Skillpack",
-		href: "/skillpack",
+		title: "Agent skills",
+		href: "/skills",
 		label: "Agent tooling",
-		description: "The eight reusable instructions I keep in one place for Claude Code and Codex.",
+		description: "The reusable instructions I keep in one place for Claude Code and Codex.",
 	},
 	{
 		title: "UI Pack",
 		href: "/uipack",
 		label: "Design system",
 		description: "The web figures, motion rules and slide starters I reuse across my projects.",
-	},
-	{
-		title: "Jobforge",
-		href: "/jobforge",
-		label: "Interview practice",
-		description: "Coding drills that grade the plan I say out loud before I touch the keyboard.",
+		wide: true,
 	},
 ];
 

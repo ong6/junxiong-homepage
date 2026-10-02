@@ -12,10 +12,10 @@ import { MOBILE_MIN_FONT, SwipeHint, mobileScrollSx, useIsMobile, useOverflow, v
 import {
 	connectorRule,
 	deploy,
-	fieldpack,
+	fieldEngineering,
 	groundplane,
 	aiToolchain,
-	skillpack,
+	skills,
 } from "../lib/uipackGallery";
 
 // A figure breaks out of the prose column to the main container width, like
@@ -67,7 +67,7 @@ function GalleryFigure({ id, spec, parts, note }) {
 }
 
 // Match the discovered browser-suite count when its coverage changes.
-const E2E_CASES = 140;
+const E2E_CASES = 183;
 
 const GALLERY = [
 	{
@@ -84,15 +84,15 @@ const GALLERY = [
 	},
 	{
 		id: "sp",
-		spec: skillpack,
+		spec: skills,
 		parts: syncLoopParts,
-		note: "fig. 3 — skillpack. The pull and push are two connectors; each carries one head and one packet direction.",
+		note: "fig. 3 — skills. The pull and push are two connectors; each carries one head and one packet direction.",
 	},
 	{
 		id: "fp",
-		spec: fieldpack,
+		spec: fieldEngineering,
 		parts: serviceMapParts,
-		note: "fig. 4 — fieldpack. A bus on each side of the platform. Stubs carry no heads, the junction dot marks the join.",
+		note: "fig. 4 — field-engineering skills. A bus on each side of the platform. Stubs carry no heads, the junction dot marks the join.",
 	},
 	{
 		id: "dp",
