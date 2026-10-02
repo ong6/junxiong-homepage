@@ -292,19 +292,16 @@ a {
 }
 
 /* ── Link arrows ───────────────────────────────────────────────────────── */
-/* ↗ leaves the site: it flies out of the top-right corner and back in from
-   the bottom-left, clipped to its own box. → stays on the site and nudges. */
-[data-out-arrow],
-[data-in-arrow] {
+/* ↗ on every link that goes somewhere: it flies out of the top-right corner
+   and back in from the bottom-left, clipped to its own box. */
+[data-out-arrow] {
 	display: inline-block;
 	overflow: clip;
 	padding: 0 0.08em;
 	line-height: 1;
 	vertical-align: -0.05em;
 }
-[data-in-arrow] { overflow: visible; }
-[data-out-arrow] > span,
-[data-in-arrow] > span {
+[data-out-arrow] > span {
 	display: inline-block;
 	transition: transform var(--dur-ui) var(--ease-out);
 }
@@ -315,10 +312,8 @@ a {
 	100% { transform: none; }
 }
 :is(a, [data-group]):focus-visible [data-out-arrow] > span { animation: arrow-fly 400ms both; }
-a:focus-visible [data-in-arrow] > span { transform: translateX(3px); }
 @media (hover: hover) and (pointer: fine) {
 	:is(a, [data-group]):hover [data-out-arrow] > span { animation: arrow-fly 400ms both; }
-	a:hover [data-in-arrow] > span { transform: translateX(3px); }
 }
 
 /* ── Card hover fill ───────────────────────────────────────────────────── */

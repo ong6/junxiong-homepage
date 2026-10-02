@@ -36,17 +36,7 @@ function ProjectLink({ href, children }) {
 	return (
 		<LinkOverlay as={NextLink} href={href} prefetch={false} color="inherit" display="inline-flex" alignItems="center" minH="44px">
 			{children}
-			<Box
-				as="span"
-				aria-hidden="true"
-				ml={2}
-				color="brand.solid"
-				display="inline-block"
-				transition="transform var(--dur-ui) var(--ease-out)"
-				_groupHover={{ transform: "translateX(4px)" }}
-				sx={{ "@media (prefers-reduced-motion: reduce)": { transition: "none", transform: "none !important" } }}>
-				→
-			</Box>
+			<OutArrow ml={2} color="brand.solid" />
 		</LinkOverlay>
 	);
 }
@@ -289,18 +279,7 @@ function Elsewhere() {
 						_hover={{ color: "brand.solid", textDecoration: "none" }}>
 						<Flex align="center" justify="space-between" gap={2} fontWeight="750">
 							<Text>{item.name}</Text>
-							{item.external ? (
-								<OutArrow />
-							) : (
-								<Text
-									as="span"
-									aria-hidden="true"
-									display="inline-block"
-									transition="transform var(--dur-ui) var(--ease-out)"
-									_groupHover={{ transform: "translateX(4px)" }}>
-									→
-								</Text>
-							)}
+							<OutArrow />
 						</Flex>
 						<Text mt={1} color="text.muted" fontSize="13px" lineHeight="1.5">
 							{item.detail}

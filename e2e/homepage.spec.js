@@ -15,7 +15,7 @@ for (const width of [390, 1440]) {
 			await page.waitForTimeout(600);
 			await expect(page.locator("h1")).toHaveText("Ong Jun Xiong");
 			const projectHeadings = await page.locator("#work h3").allTextContents();
-			expect(projectHeadings.map((heading) => heading.replace("→", "").trim())).toEqual([
+			expect(projectHeadings.map((heading) => heading.replace(/[→↗]/, "").trim())).toEqual([
 				"Groundplane",
 				"Compoze",
 				"Trading engine",

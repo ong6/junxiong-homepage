@@ -3,7 +3,7 @@ import NextImage from "next/image";
 import NextLink from "next/link";
 import Layout from "../components/layouts/Articles";
 import SelectedWork from "../components/SelectedWork";
-import OutArrow, { NextArrow } from "../components/OutArrow";
+import OutArrow from "../components/OutArrow";
 
 const utilityLinkProps = {
 	display: "inline-flex",
@@ -137,7 +137,7 @@ function Introduction() {
 						LinkedIn <OutArrow ml="4px" />
 					</Link>
 					<Link as={NextLink} href="/resume" {...utilityLinkProps}>
-						Resume <NextArrow ml="4px" />
+						Resume <OutArrow ml="4px" />
 					</Link>
 				</Grid>
 			</Grid>

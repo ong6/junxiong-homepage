@@ -2,7 +2,7 @@ import { Box, Flex, Grid, Heading, Link, SimpleGrid, Text } from "@chakra-ui/rea
 import NextLink from "next/link";
 import HobbyScene from "../components/HobbyScene";
 import Layout from "../components/layouts/Articles";
-import OutArrow, { NextArrow } from "../components/OutArrow";
+import OutArrow from "../components/OutArrow";
 
 const links = [
 	{
@@ -126,7 +126,7 @@ export default function Contact() {
 							_hover={{ color: "brand.solid", textDecoration: "none" }}>
 							<Flex align="center" justify="space-between" gap={3} fontSize="19px" fontWeight="750">
 								<Text as="span">{item.label}</Text>
-								{item.external ? <OutArrow /> : <NextArrow />}
+								<OutArrow />
 							</Flex>
 							<Text mt={2} maxW="420px" color="text.muted" fontSize="15px" lineHeight="1.6">
 								{item.detail}

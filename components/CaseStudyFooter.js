@@ -1,4 +1,5 @@
 import { Box, Heading, LinkBox, LinkOverlay, Text } from "@chakra-ui/react";
+import OutArrow from "./OutArrow";
 import NextLink from "next/link";
 import ProjectLinks from "./ProjectLinks";
 import { toneFor } from "../lib/tones";
@@ -18,6 +19,7 @@ export default function CaseStudyFooter({ links, next }) {
 				<LinkBox
 					as="section"
 					aria-label="Next project"
+					data-group
 					data-reveal
 					data-fill
 					data-tone={toneFor(next.href)}
@@ -29,15 +31,13 @@ export default function CaseStudyFooter({ links, next }) {
 					px={5}
 					py={5}
 					transition="transform var(--dur-ui) var(--ease-out), border-color 160ms ease"
-					_hover={{ borderColor: "border.strong", "& [data-arrow]": { transform: "translateX(4px)" } }}
+					_hover={{ borderColor: "border.strong" }}
 					_active={{ transform: "scale(0.99)" }}
 					sx={{
 						"@media (hover: hover) and (pointer: fine)": { "&:hover": { transform: "translateY(-3px)" } },
 						"@media (prefers-reduced-motion: reduce)": {
 							transition: "none",
-							"& [data-arrow]": { transition: "none" },
 							"&:hover": { transform: "none" },
-							"&:hover [data-arrow]": { transform: "none" },
 						},
 					}}>
 					<Text
@@ -59,16 +59,7 @@ export default function CaseStudyFooter({ links, next }) {
 							alignItems="center"
 							minH="44px">
 							{next.name}
-							<Box
-								as="span"
-								data-arrow
-								aria-hidden="true"
-								ml={2}
-								color="brand.solid"
-								display="inline-block"
-								transition="transform var(--dur-ui) var(--ease-out)">
-								→
-							</Box>
+							<OutArrow ml={2} color="brand.solid" />
 						</LinkOverlay>
 					</Heading>
 					{next.detail && (

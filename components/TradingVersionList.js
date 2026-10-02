@@ -1,6 +1,7 @@
 import { Box, Link, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { VERSIONS } from "../lib/tradingVersions";
+import OutArrow from "./OutArrow";
 
 // Every engine version in order, for the current page and the full past
 // pages. The version on screen is plain text; every other one links out.
@@ -33,7 +34,11 @@ export default function TradingVersionList({ active }) {
 								title
 							) : (
 								<Link as={NextLink} href={href} prefetch={false} display="block" py={1}>
-									{title}&nbsp;→
+									{title.split(" ").slice(0, -1).join(" ")}{" "}
+									<Box as="span" whiteSpace="nowrap">
+										{title.split(" ").at(-1)}
+										<OutArrow ml="4px" />
+									</Box>
 								</Link>
 							)}
 						</Text>

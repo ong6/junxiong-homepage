@@ -9,13 +9,6 @@ import OutArrow from "./OutArrow";
 //
 //   links – [{ name, detail, href, external }]
 
-const reducedMotion = {
-	"@media (prefers-reduced-motion: reduce)": {
-		"& [data-arrow]": { transition: "none" },
-		"&:hover [data-arrow]": { transform: "none" },
-	},
-};
-
 function LinkRow({ name, detail, href, external, minH = "56px", py = 3 }) {
 	return (
 		<Link
@@ -32,19 +25,12 @@ function LinkRow({ name, detail, href, external, minH = "56px", py = 3 }) {
 			_last={{ borderBottom: "none" }}
 			color="page.text"
 			textDecoration="none"
-			_hover={{ textDecoration: "none", "& [data-name]": { color: "brand.solid" }, "& [data-arrow]": { transform: "translateX(4px)" } }}
-			sx={reducedMotion}>
+			_hover={{ textDecoration: "none", "& [data-name]": { color: "brand.solid" } }}>
 			<Flex align="center" justify="space-between" gap={3}>
 				<Text as="span" data-name fontWeight="700" transition="color 160ms ease">
 					{name}
 				</Text>
-				{external ? (
-					<OutArrow />
-				) : (
-					<Box as="span" data-arrow aria-hidden="true" display="inline-block" transition="transform var(--dur-ui) var(--ease-out)">
-						→
-					</Box>
-				)}
+				<OutArrow />
 			</Flex>
 			{external && <VisuallyHidden> (opens in a new tab)</VisuallyHidden>}
 			{detail && (

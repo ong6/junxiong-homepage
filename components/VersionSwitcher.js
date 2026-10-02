@@ -2,6 +2,7 @@ import { Box, Flex, Link, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useEffect, useRef } from "react";
 import { CURRENT, VERSIONS } from "../lib/tradingVersions";
+import OutArrow from "./OutArrow";
 
 // Page-level version tabs for the trading-engine case study. Each version is
 // its own route, so a past diagram can be linked and indexed. On narrow screens
@@ -82,7 +83,8 @@ export default function VersionSwitcher({ active, ...props }) {
 								whiteSpace="nowrap"
 								color="brand.solid"
 								fontWeight="700">
-								see {CURRENT.v}, the current engine →
+								see {CURRENT.v}, the current engine
+								<OutArrow ml="4px" />
 							</Link>
 						</>
 					) : null}
