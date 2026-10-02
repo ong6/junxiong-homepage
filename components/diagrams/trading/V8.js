@@ -38,15 +38,15 @@ export function Wide({ id }) {
 	];
 	const specToCore = [
 		[376, 184],
-		[432, 184],
+		[448, 184],
 	];
 	const coreToEvidence = [
-		[768, 184],
-		[824, 184],
+		[728, 184],
+		[832, 184],
 	];
 	const evidenceToPaper = [
-		[944, 184],
-		[976, 184],
+		[928, 184],
+		[992, 184],
 	];
 
 	return (
@@ -55,9 +55,9 @@ export function Wide({ id }) {
 
 			<Lane x={40} w={176} y={40} title="Strategies" />
 			<Lane x={248} w={128} y={40} title="Specification" />
-			<Lane x={408} w={384} y={40} title="Shared core" />
-			<Lane x={824} w={120} y={40} title="Evidence" />
-			<Lane x={976} w={112} y={40} title="Paper" />
+			<Lane x={424} w={328} y={40} title="Shared core" />
+			<Lane x={832} w={96} y={40} title="Evidence" />
+			<Lane x={992} w={96} y={40} title="Paper" />
 
 			<Node x={40} y={112} w={176} h={64} label="public strategy" sub="open spec" icon="doc" flow="study" />
 			<Node x={40} y={224} w={176} h={64} label="private strategy" sub="separate repo" icon="lock" dashed flow="study" />
@@ -85,23 +85,23 @@ export function Wide({ id }) {
 			<Label x={400} y={168} text="run" anchor="middle" size={10} />
 			<Packet points={specToCore} kind="request" dur={1.4} flow="study" />
 
-			<Group x={408} y={80} w={384} h={304} title="SHARED BACKTEST CORE" flow="study" accent />
-			<Node x={432} y={152} w={336} h={64} label="native simulation" sub="events + portfolios" icon="tool" flow="study" accent />
-			<Node x={432} y={256} w={96} h={48} label="no peeking" size={11} flow="study" />
-			<Node x={544} y={256} w={96} h={48} label="named costs" size={11} flow="study" />
-			<Node x={656} y={256} w={112} h={48} label="gross benchmark" size={11} flow="study" />
-			<Node x={472} y={320} w={120} h={48} label="calendar DSR" size={11} flow="study" />
+			<Group x={424} y={80} w={328} h={304} title="SHARED BACKTEST CORE" flow="study" accent />
+			<Node x={448} y={152} w={280} h={64} label="native simulation" sub="events + portfolios" icon="tool" flow="study" accent />
+			<Node x={448} y={256} w={80} h={48} label="no peeking" size={11} flow="study" />
+			<Node x={544} y={256} w={80} h={48} label="named costs" size={11} flow="study" />
+			<Node x={640} y={256} w={96} h={48} label="gross bench." size={11} flow="study" />
+			<Node x={464} y={320} w={120} h={48} label="calendar DSR" size={11} flow="study" />
 			<Node x={608} y={320} w={120} h={48} label="sealed holdout" size={11} flow="study" />
 
 			<Connector points={coreToEvidence} defs={id} kind="response" flow="study" />
-			<Label x={800} y={168} text="report" anchor="middle" size={10} />
+			<Label x={792} y={168} text="report" anchor="middle" size={10} />
 			<Packet points={coreToEvidence} kind="response" dur={1.4} delay={-0.7} flow="study" />
-			<Node x={824} y={152} w={120} h={64} label="report" sub="evidence" icon="doc" flow="study" />
+			<Node x={832} y={152} w={96} h={64} label="report" sub="evidence" flow="study" />
 
 			<Connector points={evidenceToPaper} defs={id} kind="accent" flow="study" />
 			<Label x={960} y={168} text="paper" anchor="middle" size={9} accent />
 			<Packet points={evidenceToPaper} kind="accent" dur={1.2} flow="study" />
-			<Node x={976} y={152} w={112} h={64} label="paper book" sub="paper only" flow="study" accent />
+			<Node x={992} y={152} w={96} h={64} label="paper book" sub="paper only" flow="study" accent />
 		</>
 	);
 }
@@ -158,14 +158,14 @@ export function Narrow({ id }) {
 
 			<Node x={88} y={184} w={176} h={64} label="strategy spec" sub="two modes" icon="doc" flow="study" />
 			<Connector points={specToCore} defs={id} kind="request" flow="study" />
-			<Label x={192} y={296} text="run" size={10} />
+			<Label x={192} y={272} text="run" size={10} />
 			<Packet points={specToCore} kind="request" dur={1.6} flow="study" />
 
 			<Group x={24} y={288} w={312} h={416} title="SHARED BACKTEST CORE" flow="study" accent />
 			<Node x={48} y={336} w={256} h={64} label="native simulation" sub="events + portfolios" icon="tool" flow="study" accent />
 			<Node x={48} y={456} w={120} h={56} label="no peeking" size={12} flow="study" />
 			<Node x={184} y={456} w={128} h={56} label="named costs" size={12} flow="study" />
-			<Node x={48} y={552} w={120} h={56} label="gross benchmark" size={11} flow="study" />
+			<Node x={48} y={552} w={120} h={56} label="gross bench." size={11} flow="study" />
 			<Node x={184} y={552} w={128} h={56} label="calendar DSR" size={11} flow="study" />
 			<Node x={112} y={616} w={128} h={56} label="sealed holdout" size={11} flow="study" />
 
