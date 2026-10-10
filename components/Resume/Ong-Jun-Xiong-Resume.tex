@@ -1,6 +1,11 @@
-% Public resume source for junxiong.dev, built from the store's swe template (2026-10-08 refresh).
-% Keep claims limited to facts already public on LinkedIn. No phone number
-% or private/internal business metrics (traffic, latency, sales, subsidy) belong in this version.
+%-------------------------
+% Resume - Ong Jun Xiong - swe template
+% TEMPLATE-BASE: swe
+% STRUCTURE: 2026-09-22; stable identity, chronology, education and earlier roles.
+% Tailor work bullets and technical skills only by default. See templates/README.md.
+% Single file, compile with xelatex
+% Public copy for junxiong.dev: the swe template minus the phone number (owner, 2026-10-10).
+%-------------------------
 \documentclass[11pt,a4paper]{article}
 
 % Compat shim: minimal TeX Live formats lack this kernel macro newer hyperref calls (harmless no-op).
@@ -74,7 +79,7 @@
   {\small\itshape Singapore \,\textbar\, Software Engineer \,\textbar\, Full Stack \& Applied AI} \\[3pt]
   \small
   \href{mailto:junxiongong2@gmail.com}{junxiongong2@gmail.com} \enspace\textbar\enspace
-  \href{https://junxiong.dev}{junxiong.dev} \enspace\textbar\enspace
+  \href{https://www.junxiong.dev}{junxiong.dev} \enspace\textbar\enspace
   \href{https://github.com/ong6}{github.com/ong6} \enspace\textbar\enspace
   \href{https://linkedin.com/in/junx6}{linkedin.com/in/junx6}
 \end{center}
@@ -91,18 +96,19 @@
 
 \subentry{Software Engineer II, AI Infrastructure (Promotion \& Operations)}{Oct 2025 -- Present}
 \begin{itemize}
-  \item Built a Go analytics backend on Kafka, Redis and Hive. It serves \textbf{26 statistics across eight dimensions in 13 markets}, refreshed hourly with automated risk alerts.
-  \item Built a Go/gRPC rule service and React console with operations teams in the US, Southeast Asia and the UK. It enforces product eligibility and budget stop-loss automatically, replacing a daily manual review.
-  \item Set up Hive data-quality checks, service monitoring and the on-call runbook, which caught 14 data-delay issues before they reached dashboards.
-  \item Built a Go MCP server with 16 analysis tools over the data warehouse, for a LangGraph agent platform used by \textbf{500+ operators and analysts}. Analysis fell from 5 minutes to under 30 seconds.
+  \item Designed a Go analytics backend serving 26 statistics across eight dimensions in 13 markets from about \textbf{250M rows of subsidy data a day}, at p99 under 50 ms.
+  \item Built a Go/gRPC rule engine that drops underperforming products from subsidy. In a Black Friday pilot, selected products drove \textbf{37\% of pool sales value on 5\% of pool subsidy spend}.
+  \item Took over a budget proposal service peaking at 4.7K QPS with p99 under 100 ms and added new flows.
+  \item Set up Hive data-quality and service monitoring that caught 14 data-delay risks before they hit users.
+  \item Built a Go MCP server with 16 analysis tools on about 6B rows of daily experiment data, for a LangGraph agent platform used by \textbf{500+ operators and analysts}. Analysis fell from 5 minutes to under 30 seconds.
 \end{itemize}
 
-\subentry{Software Engineer, Creator Marketplace \& Data Intelligence}{Apr 2024 -- Oct 2025}
+\subentry{Software Engineer, Seller Center \& Creator Marketplace}{Apr 2024 -- Oct 2025}
 \begin{itemize}
-  \item Owned Go/gRPC services for Creator Marketplace (about \textbf{7M daily users}) and seller analytics through \textbf{30+ on-call incidents}. Added cache monitoring and alerting that ended a recurring class of outages.
-  \item Built recommendation backends in Go for creator-product matching, with candidate generation and personalised ranking, rolled out through A/B tests.
-  \item Led backend delivery for Campaign Workbench V2 before Black Friday, including staged rollout and peak-traffic support.
-  \item Shipped launches in Japan and Mexico with zero-downtime MySQL migrations, then reworked hard-coded region logic so new markets launch by config.
+  \item Refactored the Creator Marketplace product search and product-detail services, which peak at \textbf{27K and 33K QPS}. Cut p99 and raised uptime while peak traffic grew about 5x in 2025.
+  \item Owned Go/gRPC services for Seller Center and Creator Marketplace (about 7M daily users) through 30+ on-call incidents. Fixed recurring cache outages and made new regions a config change.
+  \item Led backend delivery for Campaign Workbench V2 ahead of Black Friday, including staged rollout and peak-period support. The share of sellers monitoring live campaigns rose from 3.5\% to 12\%.
+  \item Built the Free Sample recommendation algorithm in Go. In an A/B test, daily sample applications through its recommendations more than doubled from \textbf{103 to 215}.
 \end{itemize}
 
 \companyheader{Compoze, AI Assistants for Business}{Singapore}{Jan 2025 -- Dec 2025}
@@ -110,14 +116,14 @@
 \subentry{Founder, sole engineer and sole salesperson}{Alongside the TikTok role}
 \begin{itemize}
   \item Deployed a containerised Python/FastAPI assistant backend with retrieval and tools. A configurable model layer supported hosted and private endpoints without code changes.
-  \item Owned sales, discovery, delivery and staff training. The client bought the assistant at the end of 2025.
+  \item Owned sales, discovery and delivery. The client bought the assistant outright in December 2025.
 \end{itemize}
 
 \companyheader{Thought Machine}{Singapore}{May -- Aug 2023}
 
 \subentry{Forward Deployment Engineer, Intern}{Core banking (Vault)}
 \begin{itemize}
-  \item Built a Python tool on the Vault REST API to preview and apply configuration fixes, saving client teams 20+ hours a week. Supported core-banking delivery for a Singapore bank client.
+  \item Built a Python tool on the Vault REST API to preview and apply configuration fixes, saving 20+ client hours a week. Supported core-banking delivery and shadowed scoping meetings with DBS (PayLah).
 \end{itemize}
 
 \section{Earlier Experience}
