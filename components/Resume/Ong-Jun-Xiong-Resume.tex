@@ -1,134 +1,144 @@
-% Public resume source for junxiong.dev.
-% Keep claims limited to facts already published on the site. No phone number
-% or private/internal business metrics belong in this version.
+% Public resume source for junxiong.dev, built from the store's swe template (2026-10-08 refresh).
+% Keep claims limited to facts already public on LinkedIn. No phone number
+% or private/internal business metrics (traffic, latency, sales, subsidy) belong in this version.
 \documentclass[11pt,a4paper]{article}
 
+% Compat shim: minimal TeX Live formats lack this kernel macro newer hyperref calls (harmless no-op).
 \providecommand{\IfDocumentMetadataT}[1]{}
 \providecommand{\IfDocumentMetadataTF}[2]{#2}
 
 \usepackage{fontspec}
-\usepackage[margin=0.56in,top=0.42in,bottom=0.42in]{geometry}
+\usepackage[margin=0.55in, top=0.38in, bottom=0.3in]{geometry}
 \usepackage{titlesec}
 \usepackage{enumitem}
 \usepackage{hyperref}
 \usepackage{xcolor}
 
-\setmainfont{Helvetica Neue}[
-  UprightFont = *,
-  BoldFont = * Bold,
-  ItalicFont = * Italic,
-  BoldItalicFont = * Bold Italic,
-]
+% Font: Helvetica Neue on the Macs; TeX Gyre Heros (metric-compatible clone) where it is missing, e.g. WSL
+% Common ligatures off so the PDF text layer reads "fi"/"fl", not U+FB01/FB02, for ATS keyword matching.
+% Helvetica Neue loads as AAT, which has no ligature switch, so it is shaped as OpenType (same line breaks).
+\IfFontExistsTF{Helvetica Neue}{
+  \setmainfont{Helvetica Neue}[
+    UprightFont = * ,
+    BoldFont = * Bold,
+    ItalicFont = * Italic,
+    BoldItalicFont = * Bold Italic,
+    Renderer = OpenType,
+    Ligatures = NoCommon,
+  ]
+}{
+  \setmainfont{TeX Gyre Heros}[Ligatures = NoCommon]
+}
 
-\definecolor{ink}{HTML}{17201D}
-\definecolor{accent}{HTML}{087F6D}
-\definecolor{rule}{HTML}{B7C3BE}
+% Colors
+\definecolor{link}{HTML}{0055AA}
+\definecolor{heading}{HTML}{111111}
 
-\linespread{0.96}
 \pagestyle{empty}
-\hypersetup{colorlinks=true,urlcolor=accent,linkcolor=accent}
-\color{ink}
+\hypersetup{colorlinks=true, urlcolor=link, linkcolor=link}
 
-\titleformat{\section}
-  {\normalsize\bfseries\color{ink}}
-  {}{0em}{}
-  [{\color{rule}\titlerule}]
-\titlespacing*{\section}{0pt}{7pt}{3pt}
+\titleformat{\section}{\normalsize\bfseries\color{heading}\uppercase}{}{0em}{}[{\color[HTML]{AAAAAA}\titlerule}]
+\titlespacing*{\section}{0pt}{6pt}{3pt}
 
-\setlist[itemize]{
-  nosep,
-  leftmargin=1.3em,
-  topsep=2pt,
-  parsep=0pt,
-  itemsep=1pt
-}
-\renewcommand{\labelitemi}{\footnotesize\color{accent}$\bullet$}
-\setlength{\parskip}{0pt}
-\setlength{\parindent}{0pt}
+\setlist[itemize]{nosep, leftmargin=1.4em, topsep=2pt, parsep=0pt, itemsep=2pt}
+\renewcommand{\labelitemi}{\footnotesize$\bullet$}
 
-\newcommand{\company}[3]{%
+\newcommand{\entry}[4]{%
   \vspace{3pt}
-  \noindent\textbf{#1} \hfill #2 \,\textbar\, \textit{#3}\par
+  \noindent\textbf{#1} \hfill \textnormal{#3} \\[-2pt]
+  \noindent\textit{#2} \hfill \textit{#4}
 }
-\newcommand{\role}[2]{%
+\newcommand{\subentry}[2]{%
   \vspace{2pt}
-  \noindent\textit{#1} \hfill \textit{#2}\par
+  \noindent\textit{#1} \hfill \textit{#2}
 }
-\newcommand{\earlier}[4]{%
-  \vspace{1pt}
-  \noindent\textbf{#1} \,\textbar\, \textit{#2} \hfill \textit{#4}\par
+\newcommand{\companyheader}[3]{%
+  \vspace{4pt}
+  \noindent\textbf{#1} \hfill \textnormal{#2} \enspace\textbar\enspace \textit{#3}
+}
+\newcommand{\internline}[4]{%
+  \vspace{2pt}
+  \noindent\textbf{#1} \enspace\textbar\enspace \textit{#2} \hfill \textit{#4}\\[-2pt]
   \noindent #3\par
 }
 
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{0pt}
+
+%-------------------------
 \begin{document}
 
+% Header
 \begin{center}
-  {\fontsize{23}{25}\selectfont\bfseries Ong Jun Xiong}\\[2pt]
-  {\large\bfseries\color{accent} AI Infrastructure \& Backend Engineer}\\[5pt]
+  {\Large\bfseries Ong Jun Xiong} \\[2pt]
+  {\small\itshape Singapore \,\textbar\, Software Engineer \,\textbar\, Full Stack \& Applied AI} \\[3pt]
   \small
-  Singapore \enspace\textbar\enspace
-  \href{mailto:junxiongong2@gmail.com}{junxiongong2@gmail.com}
-  \enspace\textbar\enspace
-  \href{https://junxiong.dev}{junxiong.dev}
-  \enspace\textbar\enspace
-  \href{https://github.com/ong6}{github.com/ong6}
-  \enspace\textbar\enspace
-  \href{https://www.linkedin.com/in/junx6/}{linkedin.com/in/junx6}
+  \href{mailto:junxiongong2@gmail.com}{junxiongong2@gmail.com} \enspace\textbar\enspace
+  \href{https://junxiong.dev}{junxiong.dev} \enspace\textbar\enspace
+  \href{https://github.com/ong6}{github.com/ong6} \enspace\textbar\enspace
+  \href{https://linkedin.com/in/junx6}{linkedin.com/in/junx6}
 \end{center}
 
-\vspace{-1pt}
+%-------------------------
+\section{Summary}
+\vspace{3pt}
+\noindent I build backend services and data systems for business-critical applications. I own API design, integration and production reliability, from rollout planning to monitoring and incident response.
 
-\section{Profile}
+%-------------------------
+\section{Work Experience}
 
-I build production agent runtimes, tool servers, and backend platforms. At TikTok, my work spans the shared AI layer and the Go services beneath global e-commerce operations. I also founded and sold a one-person AI company.
+\companyheader{TikTok, Global E-commerce}{Singapore}{Apr 2024 -- Present}
 
-\section{Experience}
-
-\company{TikTok, Global E-commerce}{Singapore}{Apr 2024 -- Present}
-
-\role{AI Infrastructure Engineer, Promotion \& Operations}{Oct 2025 -- Present}
+\subentry{Software Engineer II, AI Infrastructure (Promotion \& Operations)}{Oct 2025 -- Present}
 \begin{itemize}
-  \item Built the team's shared AI platform from zero: a LangGraph agent service on Google's A2A protocol, a Go MCP server exposing 16 analysis tools over the data warehouse, and a React SDK that adds streaming AI chat to a page in about five lines.
-  \item Adding LLM analysis to a new surface went from a multi-file change to a single config directory, and analysis latency dropped from minutes to seconds. In daily use by operators and analysts across the team.
-  \item Built the Marketing Strategy Center with operations teams across the US, Southeast Asia, and the UK: a Go/gRPC service and React console enforcing product eligibility and budget stop-loss continuously, replacing a daily manual review.
-  \item Shipped the Promotion Data Center analytics backend in Go with Kafka, Redis and Hive-backed OLAP: 26 statistics across 8 drill-down dimensions on 4 endpoints, serving \textasciitilde13 markets with real-time alerting.
+  \item Built a Go analytics backend on Kafka, Redis and Hive. It serves \textbf{26 statistics across eight dimensions in 13 markets}, refreshed hourly with automated risk alerts.
+  \item Built a Go/gRPC rule service and React console with operations teams in the US, Southeast Asia and the UK. It enforces product eligibility and budget stop-loss automatically, replacing a daily manual review.
+  \item Set up Hive data-quality checks, service monitoring and the on-call runbook, which caught 14 data-delay issues before they reached dashboards.
+  \item Built a Go MCP server with 16 analysis tools over the data warehouse, for a LangGraph agent platform used by \textbf{500+ operators and analysts}. Analysis fell from 5 minutes to under 30 seconds.
 \end{itemize}
 
-\role{Software Engineer, Seller Center \& Creator Marketplace}{Apr 2024 -- Oct 2025}
+\subentry{Software Engineer, Creator Marketplace \& Data Intelligence}{Apr 2024 -- Oct 2025}
 \begin{itemize}
-  \item Refactored hardcoded region logic so EU and future markets launch by configuration, and delivered the related compliance, data-pipeline and API migrations.
-  \item Built the Video Diagnosis 2.0 recommendation backend in Go (candidate generation plus personalised ranking for creator-product matching), validated through A/B tests before rollout.
-  \item Supported five owned and two contributed Go/gRPC services on the seller platform, handled 20+ on-call escalations, and added cache observability and alerting that stopped a recurring class of outages.
+  \item Owned Go/gRPC services for Creator Marketplace (about \textbf{7M daily users}) and seller analytics through \textbf{30+ on-call incidents}. Added cache monitoring and alerting that ended a recurring class of outages.
+  \item Built recommendation backends in Go for creator-product matching, with candidate generation and personalised ranking, rolled out through A/B tests.
+  \item Led backend delivery for Campaign Workbench V2 before Black Friday, including staged rollout and peak-traffic support.
+  \item Shipped launches in Japan and Mexico with zero-downtime MySQL migrations, then reworked hard-coded region logic so new markets launch by config.
 \end{itemize}
 
-\company{Compoze}{Singapore}{Jan 2025 -- Dec 2025}
-\role{Founder}{Built alongside TikTok}
+\companyheader{Compoze, AI Assistants for Business}{Singapore}{Jan 2025 -- Dec 2025}
+
+\subentry{Founder, sole engineer and sole salesperson}{Alongside the TikTok role}
 \begin{itemize}
-  \item Built and ran a one-person AI solutions company: discovery, scoping, pricing, delivery, and client training.
-  \item Shipped retrieval-augmented chat products with LlamaIndex, FastAPI, Next.js, and LlamaCloud. A client acquired the company at the end of 2025.
+  \item Deployed a containerised Python/FastAPI assistant backend with retrieval and tools. A configurable model layer supported hosted and private endpoints without code changes.
+  \item Owned sales, discovery, delivery and staff training. The client bought the assistant at the end of 2025.
 \end{itemize}
+
+\companyheader{Thought Machine}{Singapore}{May -- Aug 2023}
+
+\subentry{Forward Deployment Engineer, Intern}{Core banking (Vault)}
+\begin{itemize}
+  \item Built a Python tool on the Vault REST API to preview and apply configuration fixes, saving client teams 20+ hours a week. Supported core-banking delivery for a Singapore bank client.
+\end{itemize}
+
+\section{Earlier Experience}
+\internline{Binance}{Software Engineering Intern, Frontend}{React, TypeScript \enspace\textbar\enspace Payment checkout interfaces}{Aug -- Nov 2023}
+\internline{Tanso, Munich}{Software Engineering Intern, Full Stack}{Next.js, tRPC, Prisma, PostgreSQL \enspace\textbar\enspace Analytics dashboard}{Jul -- Dec 2022}
+\internline{DBS Bank}{Software Engineering Intern, Backend}{Java, Spring Boot, MySQL \enspace\textbar\enspace Backend services and scheduled automation}{May -- Jul 2022}
+
+%-------------------------
+\section{Technical Skills}
 
 \vspace{3pt}
-\noindent\textbf{Earlier experience}
+\noindent\textbf{Languages and APIs:} Go, Python, Java, TypeScript, Spring Boot, gRPC, REST APIs \\[2pt]
+\noindent\textbf{Data and messaging:} SQL, MySQL, PostgreSQL, Redis, Kafka, Hive, Spark, ClickHouse \\[2pt]
+\noindent\textbf{Infrastructure and practices:} Docker, Kubernetes, AWS, Linux, CI/CD, monitoring, incident response
 
-\earlier{Binance}{Software Engineering Intern, Payments \& Cards}{TypeScript and React UI, including the Crypto Box group-payment checkout flow.}{Aug -- Nov 2023}
-\earlier{Thought Machine}{Forward Deployment Engineer (Intern)}{Python remediation tool over the Vault REST API, removing 20+ hrs/week of client-configuration work.}{May -- Aug 2023}
-\earlier{Tanso, Munich}{Full-stack Engineering Intern}{Next.js, tRPC and PostgreSQL carbon-accounting dashboard; page load from 5s to under 50ms.}{Jul -- Dec 2022}
-\earlier{DBS Bank}{Backend Engineering Intern}{Java and Spring Boot services for 1,000+ daily B2B users.}{May -- Jul 2022}
-
-\section{Skills}
-
-\textbf{AI systems:} MCP, A2A, LangGraph, LlamaIndex, RAG, agentic workflows\\[2pt]
-\textbf{Backend:} Go, TypeScript, Python, Java, gRPC, REST, distributed systems\\[2pt]
-\textbf{Data \& infra:} MySQL, PostgreSQL, ClickHouse, Hive, Kafka, Redis, Docker, Kubernetes, AWS\\[2pt]
-\textbf{Frontend:} React, Next.js \hfill \textbf{Delivery:} client delivery, technical scoping
-
+%-------------------------
 \section{Education}
 
-\company{National University of Singapore}{Singapore}{Aug 2020 -- Dec 2023}
-\role{Bachelor of Computing (Honours), Computer Science}{AI and Software Engineering}
+\entry{Bachelor of Computing in Computer Science (Honours)}{National University of Singapore}{Singapore}{Aug 2020 -- Dec 2023}
 \begin{itemize}
-  \item NUS Overseas Colleges in Munich, SToW Award. President of the NUS Fintech Society (230 members).
+  \item NUS Overseas Colleges, Munich \enspace\textbar\enspace President, NUS Fintech Society (230 members)
 \end{itemize}
 
 \end{document}
