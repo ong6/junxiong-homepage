@@ -53,8 +53,8 @@ export default function TradingVersionPage({ v, description, lead, diagram, capt
 		<Layout title={`Trading engine ${v}: ${version.title}`} description={description} schema={{ type: "TechArticle" }}>
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
-					<Link as={NextLink} href="/trading-engine/v1" display="inline-flex" alignItems="center" minH="32px" my={-1.5} fontSize="13px" fontWeight="700">
-						← Engine v1
+					<Link as={NextLink} href="/trading-engine" display="inline-flex" alignItems="center" minH="32px" my={-1.5} fontSize="13px" fontWeight="700">
+						← Trading engine
 					</Link>
 					<Heading as="h1" mt={{ base: 8, md: 10 }} fontSize={{ base: "36px", md: "46px" }} lineHeight="1.05" letterSpacing="-.04em">
 						{version.title}

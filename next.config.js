@@ -42,7 +42,9 @@ module.exports = {
 			},
 			{ source: "/skill-eval-pack", destination: "/skillsmith", permanent: true },
 			{ source: "/skillpack", destination: "/skills", permanent: true },
-			// The old v3–v7 pages are now Engine v1 updates 1.3–1.7; /v1 and /v2 are the eras.
+			// The old v3–v7 pages are now Engine v1 updates 1.3–1.7; /v2 is the Engine v2 page and
+			// Engine v1 has no index of its own: the overview lists its updates.
+			{ source: "/trading-engine/v1", destination: "/trading-engine/v1/1.8", permanent: true },
 			{ source: "/trading-engine/v3", destination: "/trading-engine/v1/1.3", permanent: true },
 			{ source: "/trading-engine/v4", destination: "/trading-engine/v1/1.4", permanent: true },
 			{ source: "/trading-engine/v5", destination: "/trading-engine/v1/1.5", permanent: true },

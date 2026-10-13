@@ -100,7 +100,16 @@ export default function TradingEngine() {
 					dot; a new engine number means the engine&apos;s job changed.
 				</P>
 
-				<TradingVersionList items={ERAS} />
+				<TradingVersionList items={ERAS.filter((era) => era.v === "v2")} />
+
+				<H2>Engine v1 updates</H2>
+
+				<P>
+					Each update has its own page with the diagram as the engine stood then. Update 1.8 still
+					runs every night until Engine v2 takes over.
+				</P>
+
+				<TradingVersionList />
 
 				<CaseStudyFooter links={links} next={{ name: "Agent skills", href: "/skills", detail: "One home for coding-agent skills, linked into every repo" }} />
 			</Container>

@@ -121,17 +121,17 @@ test("engine pages link onward: 1.7 reaches 1.8, 1.8 reaches Engine v2, and the 
 	await expect(page.getByRole("link", { name: /see 1.8, the latest update/ })).toHaveAttribute("href", "/trading-engine/v1/1.8");
 	await page.goto("/trading-engine/v1/1.8");
 	await expect(page.getByRole("link", { name: /Executor and ledger/ })).toHaveAttribute("href", "/trading-engine/v2");
-	await page.goto("/trading-engine/v1");
+	await page.goto("/trading-engine");
 	const updates = page.locator("ol").filter({ hasText: "One shared backtest core" });
 	await expect(updates.getByRole("link", { name: /Scoring every candidate/ })).toHaveAttribute("href", "/trading-engine/v1/1.7");
-	await page.goto("/trading-engine");
 	const eras = page.locator("ol").filter({ hasText: "Executor and ledger" });
-	await expect(eras.getByRole("link", { name: /A research simulator/ })).toHaveAttribute("href", "/trading-engine/v1");
 	await expect(eras.getByRole("link", { name: /Executor and ledger/ })).toHaveAttribute("href", "/trading-engine/v2");
 });
 
 test("old version routes redirect to Engine v1 updates", async ({ page }) => {
 	await page.goto("/trading-engine/v5");
 	await expect(page).toHaveURL(/\/trading-engine\/v1\/1\.5$/);
+	await page.goto("/trading-engine/v1");
+	await expect(page).toHaveURL(/\/trading-engine\/v1\/1\.8$/);
 });
 
