@@ -4,7 +4,7 @@ export const CLAIM =
 	"Nightly feeds from Yahoo, Nasdaq and a set of macro and sentiment publishers land in DuckDB under one writer, each raw response kept; TradingView quotes feed the intraday agents for research only, Alpaca, SEC EDGAR and licensed history are not connected yet, and Stooq is blocked. A screen ranks about 4,100 liquid names, 21 paper portfolios with fixed rules turn it into orders at the close, and an AI agent runs one more portfolio through a locked simulator tool. Every order fills at the next open through one guard. Forward monitors, a Sunday walk-forward and an agent ledger read the results and can stop a portfolio, never move one to real money.";
 
 export const meta = {
-	number: "Figure 01 · v6",
+	number: "Figure 01 · 1.6",
 	eyebrow: "25 September 2026",
 	title: "Where the data comes from, and what each night does with it",
 	caption:
@@ -116,7 +116,7 @@ export function Wide({ id }) {
 				h={56}
 				label="intraday agents"
 				sub="TradingView quotes · no orders"
-				hint="New in v6: they read TradingView as research and never touch prices or fills."
+				hint="New in 1.6: they read TradingView as research and never touch prices or fills."
 				icon="robot"
 				size={12}
 				subSize={10}

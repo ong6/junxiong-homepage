@@ -1,10 +1,10 @@
 import { Badge, Connector, Defs, Flow, Group, Label, Lane, Line, Node } from "../parts";
 
 export const CLAIM =
-	"v2, late July 2026: Yahoo now supplies splits and dividends as well as bars, a fatal reconcile stage checks the price scale before the portfolios trade, 16 portfolios plus a discretionary portfolio fill at the next open, a forward experiment logs Mondays, and a backtest farm replays the portfolios' own code over past years.";
+	"Update 1.2, late July 2026: Yahoo now supplies splits and dividends as well as bars, a fatal reconcile stage checks the price scale before the portfolios trade, 16 portfolios plus a discretionary portfolio fill at the next open, a forward experiment logs Mondays, and a backtest farm replays the portfolios' own code over past years.";
 
 export const meta = {
-	number: "Figure 01 · v2",
+	number: "Figure 01 · 1.2",
 	eyebrow: "28 July – 3 August 2026",
 	title: "Corporate actions and a backtest farm",
 	caption: "The portfolios only trade once the split and dividend reconcile passes.",

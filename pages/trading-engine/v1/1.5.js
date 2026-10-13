@@ -1,5 +1,5 @@
-import TradingVersionPage, { Code, H2, P } from "../../components/TradingVersionPage";
-import * as V5 from "../../components/diagrams/trading/V5";
+import TradingVersionPage, { Code, H2, P } from "../../../components/TradingVersionPage";
+import * as V5 from "../../../components/diagrams/trading/V5";
 
 // Facts from BUILDLOG.md (entries 2026-09-18 → 09-24), docs/plans/p5–p13,
 // docs/history/agent-trading-review-2026-09-22.md, docs/how-it-works.md and docs/direction.md.
@@ -18,11 +18,11 @@ const facts = [
 export default function TradingEngineV5() {
 	return (
 		<TradingVersionPage
-			v="v5"
-			description="Version 5 of Ong Jun Xiong's paper-trading engine, September 2026: a written rulebook, a nightly agent with one locked paper-trade tool, observe-only intraday agents and an evaluation ledger."
-			lead="I let a model back in with v5, but only after writing a rulebook for the engine, and only with one narrow job: look at the day’s standouts and, at most, place one paper trade through a tool it cannot widen."
+			v="1.5"
+			description="Update 1.5 of Ong Jun Xiong's paper-trading engine, September 2026: a written rulebook, a nightly agent with one locked paper-trade tool, observe-only intraday agents and an evaluation ledger."
+			lead="I let a model back in with 1.5, but only after writing a rulebook for the engine, and only with one narrow job: look at the day’s standouts and, at most, place one paper trade through a tool it cannot widen."
 			diagram={V5}
-			caption="fig. 1 — v5. ① Yahoo's five-minute bars and headlines are kept as raw responses beside the daily prices; SEC and Alpaca adapters exist but stay off. ② At 02:00 UTC the daily agent reads point-in-time facts and assesses five standouts. ③ A swing needs one call to a locked tool; code sizes it, checks risk and places it in an isolated portfolio that fills at the next open. ④ Every decision, including the observe-only intraday agents', lands in a ledger that labels it against a control."
+			caption="fig. 1 — 1.5. ① Yahoo's five-minute bars and headlines are kept as raw responses beside the daily prices; SEC and Alpaca adapters exist but stay off. ② At 02:00 UTC the daily agent reads point-in-time facts and assesses five standouts. ③ A swing needs one call to a locked tool; code sizes it, checks risk and places it in an isolated portfolio that fills at the next open. ④ Every decision, including the observe-only intraday agents', lands in a ledger that labels it against a control."
 			facts={facts}>
 			<H2>The contract came first</H2>
 			<P>

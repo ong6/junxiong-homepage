@@ -1,10 +1,10 @@
 import { Badge, Connector, Defs, Flow, Group, Label, Lane, Line, Node } from "../parts";
 
 export const CLAIM =
-	"v5, 18–24 September 2026: the rule portfolios run as before, and a nightly agent reads point-in-time facts, picks from five standouts, and may place one paper trade through a locked tool that code sizes and risk-checks. Hourly and four-hour agents only observe. A ledger scores every agent decision against its control, and SEC and Alpaca are not connected.";
+	"Update 1.5, 18–24 September 2026: the rule portfolios run as before, and a nightly agent reads point-in-time facts, picks from five standouts, and may place one paper trade through a locked tool that code sizes and risk-checks. Hourly and four-hour agents only observe. A ledger scores every agent decision against its control, and SEC and Alpaca are not connected.";
 
 export const meta = {
-	number: "Figure 01 · v5",
+	number: "Figure 01 · 1.5",
 	eyebrow: "18–24 September 2026",
 	title: "An agent with one narrow job",
 	caption: "The agent can place one paper trade through a locked tool; code decides its size and whether it passes.",

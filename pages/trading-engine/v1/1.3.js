@@ -1,5 +1,5 @@
-import TradingVersionPage, { Code, H2, P } from "../../components/TradingVersionPage";
-import * as V3 from "../../components/diagrams/trading/V3";
+import TradingVersionPage, { Code, H2, P } from "../../../components/TradingVersionPage";
+import * as V3 from "../../../components/diagrams/trading/V3";
 
 // Facts from archive/agentic-2026-08/README.md, the charters it indexes, and
 // docs/history/buildlog-2026-07-15-to-2026-09-17.md (lines 84–109, 969–1080, 1231–1422).
@@ -18,11 +18,11 @@ const facts = [
 export default function TradingEngineV3() {
 	return (
 		<TradingVersionPage
-			v="v3"
-			description="Version 3 of Ong Jun Xiong's paper-trading engine, August 2026: a model beside five portfolios, bounded by written test plans and scored against frozen twins, then retired."
-			lead="v3 was my first attempt at putting a language model in the trading loop, and the most useful thing it produced was a reason to take it out. The model sat beside five portfolios, could only veto entries or move parameters inside bounds written down in advance, and each of those portfolios ran next to a twin that never changed."
+			v="1.3"
+			description="Update 1.3 of Ong Jun Xiong's paper-trading engine, August 2026: a model beside five portfolios, bounded by written test plans and scored against frozen twins, then retired."
+			lead="Update 1.3 was my first attempt at putting a language model in the trading loop, and the most useful thing it produced was a reason to take it out. The model sat beside five portfolios, could only veto entries or move parameters inside bounds written down in advance, and each of those portfolios ran next to a twin that never changed."
 			diagram={V3}
-			caption="fig. 1 — v3. ① RSS headline titles feed a morning news brief. ② Two veto agents read it and may veto or shrink the day's entries; three tuning agents may move parameters on Sundays. ③ A validator reads its bounds from each portfolio's frozen test plan and rejects anything outside them; with no veto file the portfolio trades its plain rules. ④ Each AI portfolio is compared with its untouched twin, and only the spread at 26 weeks was going to count."
+			caption="fig. 1 — 1.3. ① RSS headline titles feed a morning news brief. ② Two veto agents read it and may veto or shrink the day's entries; three tuning agents may move parameters on Sundays. ③ A validator reads its bounds from each portfolio's frozen test plan and rejects anything outside them; with no veto file the portfolio trades its plain rules. ④ Each AI portfolio is compared with its untouched twin, and only the spread at 26 weeks was going to count."
 			facts={facts}>
 			<H2>What the model was allowed to do</H2>
 			<P>
@@ -54,7 +54,7 @@ export default function TradingEngineV3() {
 				went from 25 to 18.
 			</P>
 			<P>
-				v4 replaced the model with a parameter grid and a stricter walk-forward. The twin idea
+				Update 1.4 replaced the model with a parameter grid and a stricter walk-forward. The twin idea
 				stayed. Every agent result the engine reports today sits next to a paired control.
 			</P>
 		</TradingVersionPage>

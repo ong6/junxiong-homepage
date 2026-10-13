@@ -6,7 +6,7 @@ export const CLAIM =
 
 export const meta = {
 	number: "Figure 01",
-	eyebrow: "One evidence path · v8",
+	eyebrow: "One evidence path · 1.8",
 	title: "Every strategy goes through the same core",
 	caption:
 		"A short strategy specification enters one evaluator; the evaluator owns the data boundary, simulation and proof before a paper portfolio can observe the result.",

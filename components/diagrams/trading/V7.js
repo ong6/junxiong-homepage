@@ -1,11 +1,11 @@
 import { Badge, Connector, Defs, Flow, Group, Label, Lane, Line, Node, Packet } from "../parts";
 
 export const CLAIM =
-	"v7, 29 September 2026: market data, headlines and macro feeds land in DuckDB under one writer, each fact with the time it became available. Each night a fixed rule and a model both score every candidate, and the nightly agent keeps its own portfolio. Code, not the model, turns scores into sized orders; a pre-open check may only cancel, and every order fills at the next open or through a limit order at the open. Every decision is kept in one ledger, labelled later, and a paired test against the rule decides on fixed check dates. The challenger lab and event triggers are switched off, and there is no broker yet: it is still all paper.";
+	"Update 1.7, 29 September 2026: market data, headlines and macro feeds land in DuckDB under one writer, each fact with the time it became available. Each night a fixed rule and a model both score every candidate, and the nightly agent keeps its own portfolio. Code, not the model, turns scores into sized orders; a pre-open check may only cancel, and every order fills at the next open or through a limit order at the open. Every decision is kept in one ledger, labelled later, and a paired test against the rule decides on fixed check dates. The challenger lab and event triggers are switched off, and there is no broker yet: it is still all paper.";
 
 export const meta = {
 	number: "Figure 01",
-	eyebrow: "The nightly loop · v7",
+	eyebrow: "The nightly loop · 1.7",
 	title: "The model scores, code trades, the ledger decides",
 	caption:
 		"Sources on the left, one writer, three decision paths, then sizing and fills, then the evidence on the right. Dashed boxes place no orders. Nothing here moves a strategy to real money on its own.",

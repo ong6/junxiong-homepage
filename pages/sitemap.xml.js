@@ -1,5 +1,6 @@
 import { workSlugs } from "../lib/works";
 import { getTradingDocRoutes } from "../lib/tradingDocs";
+import { VERSIONS } from "../lib/tradingVersions";
 
 const SITE = "https://junxiong.dev";
 
@@ -13,20 +14,21 @@ const topRoutes = [
 	{ path: "/resume", lastmod: "2026-09-25", changefreq: "weekly", priority: "0.9" },
 	{ path: "/compoze", lastmod: "2026-09-25", changefreq: "yearly", priority: "0.8" },
 	{ path: "/groundplane", lastmod: "2026-09-25", changefreq: "yearly", priority: "0.8" },
-	{ path: "/trading-engine", lastmod: "2026-10-02", changefreq: "yearly", priority: "0.8" },
+	{ path: "/trading-engine", lastmod: "2026-10-13", changefreq: "yearly", priority: "0.8" },
 	...getTradingDocRoutes().map((path) => ({
 		path,
 		lastmod: "2026-10-02",
 		changefreq: "monthly",
 		priority: path === "/trading-engine/docs" ? "0.7" : "0.6",
 	})),
-	...[1, 2, 3, 4, 5, 6].map((n) => ({
-		path: `/trading-engine/v${n}`,
-		lastmod: "2026-09-25",
+	{ path: "/trading-engine/v1", lastmod: "2026-10-13", changefreq: "yearly", priority: "0.5" },
+	{ path: "/trading-engine/v2", lastmod: "2026-10-13", changefreq: "weekly", priority: "0.6" },
+	...VERSIONS.map(({ href }) => ({
+		path: href,
+		lastmod: "2026-10-13",
 		changefreq: "yearly",
 		priority: "0.4",
 	})),
-	{ path: "/trading-engine/v7", lastmod: "2026-09-29", changefreq: "yearly", priority: "0.4" },
 	{ path: "/skills", lastmod: "2026-10-02", changefreq: "yearly", priority: "0.8" },
 	{ path: "/skillsmith", lastmod: "2026-10-02", changefreq: "yearly", priority: "0.8" },
 	{ path: "/uipack", lastmod: "2026-09-25", changefreq: "monthly", priority: "0.6" },

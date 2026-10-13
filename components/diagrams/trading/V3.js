@@ -1,10 +1,10 @@
 import { Badge, Connector, Defs, Flow, Group, Label, Lane, Line, Node } from "../parts";
 
 export const CLAIM =
-	"v3, August 2026: a news analyst summarises RSS headlines each morning, two veto agents can block or shrink entries and three tuning agents can move parameters, but every proposal passes a validator that reads its bounds from a frozen test plan, and each AI portfolio is scored against an untouched twin. With no veto file the portfolio trades its plain rules.";
+	"Update 1.3, August 2026: a news analyst summarises RSS headlines each morning, two veto agents can block or shrink entries and three tuning agents can move parameters, but every proposal passes a validator that reads its bounds from a frozen test plan, and each AI portfolio is scored against an untouched twin. With no veto file the portfolio trades its plain rules.";
 
 export const meta = {
-	number: "Figure 01 · v3",
+	number: "Figure 01 · 1.3",
 	eyebrow: "4–17 August 2026",
 	title: "A model beside five portfolios, inside written bounds",
 	caption: "The model could only veto, shrink or retune inside a written test plan. Retired on 18 August.",

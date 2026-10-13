@@ -1,5 +1,5 @@
-import TradingVersionPage, { Code, H2, P } from "../../components/TradingVersionPage";
-import * as V2 from "../../components/diagrams/trading/V2";
+import TradingVersionPage, { Code, H2, P } from "../../../components/TradingVersionPage";
+import * as V2 from "../../../components/diagrams/trading/V2";
 
 // Facts from docs/history/buildlog-2026-07-15-to-2026-09-17.md (lines 379–790) and
 // commit a9633cf (run_daily.sh, configs.py, db.py).
@@ -17,11 +17,11 @@ const facts = [
 export default function TradingEngineV2() {
 	return (
 		<TradingVersionPage
-			v="v2"
-			description="Version 2 of Ong Jun Xiong's paper-trading engine, late July 2026: split and dividend handling, a reconcile check that stops the night, 16 portfolios and a backtest farm."
-			lead="v2 added six portfolios, but the change that mattered was finding out the price history was wrong. Yahoo rewrites old prices after a split, the engine only re-fetched the last five days, and dividends were never stored."
+			v="1.2"
+			description="Update 1.2 of Ong Jun Xiong's paper-trading engine, late July 2026: split and dividend handling, a reconcile check that stops the night, 16 portfolios and a backtest farm."
+			lead="Update 1.2 added six portfolios, but the change that mattered was finding out the price history was wrong. Yahoo rewrites old prices after a split, the engine only re-fetched the last five days, and dividends were never stored."
 			diagram={V2}
-			caption="fig. 1 — v2. ① Yahoo now supplies splits and dividends alongside bars. ② Prices are stored as a restated cache with a watermark. ③ A reconcile stage checks the price scale and stops the night if it is broken. ④ Dividends are credited before fills. ⑤ A forward experiment logs Monday returns, and the backtest farm replays each portfolio's own code over past years."
+			caption="fig. 1 — 1.2. ① Yahoo now supplies splits and dividends alongside bars. ② Prices are stored as a restated cache with a watermark. ③ A reconcile stage checks the price scale and stops the night if it is broken. ④ Dividends are credited before fills. ⑤ A forward experiment logs Monday returns, and the backtest farm replays each portfolio's own code over past years."
 			facts={facts}>
 			<H2>What splits and missing dividends did</H2>
 			<P>
@@ -62,7 +62,7 @@ export default function TradingEngineV2() {
 			<P>
 				That result set the bar for everything after it. A stock-picking portfolio has to beat an
 				equal-weight basket of the same names, over years, before I treat it as more than noise.
-				v2 closed with seven clean nightly runs in a row, from 24 July to 3 August.
+				Update 1.2 closed with seven clean nightly runs in a row, from 24 July to 3 August.
 			</P>
 		</TradingVersionPage>
 	);

@@ -1,7 +1,7 @@
-import TradingVersionPage, { Code, H2, P } from "../../components/TradingVersionPage";
-import * as V6 from "../../components/diagrams/trading/V6";
+import TradingVersionPage, { Code, H2, P } from "../../../components/TradingVersionPage";
+import * as V6 from "../../../components/diagrams/trading/V6";
 
-// The /trading-engine page as it stood on 2026-09-25, moved here when v7
+// The /trading-engine page as it stood on 2026-09-25, moved here when 1.7
 // replaced it. Facts and copy are the ones that page carried.
 const facts = [
 	["paper portfolios", "21 rule-based (18 replayable) · 1 run by an AI agent"],
@@ -20,11 +20,11 @@ const facts = [
 export default function TradingEngineV6() {
 	return (
 		<TradingVersionPage
-			v="v6"
-			description="Version 6 of Ong Jun Xiong's paper-trading engine, 25 September 2026: TradingView quotes and bars reach the intraday agents as research input, never prices, fills or orders."
-			lead="v6 was a small change on top of v5: TradingView quotes and bars reached the intraday agents as research input. They never touched prices, fills or orders."
+			v="1.6"
+			description="Update 1.6 of Ong Jun Xiong's paper-trading engine, 25 September 2026: TradingView quotes and bars reach the intraday agents as research input, never prices, fills or orders."
+			lead="Update 1.6 was a small change on top of 1.5: TradingView quotes and bars reached the intraday agents as research input. They never touched prices, fills or orders."
 			diagram={V6}
-			caption="fig. 1 — v6. ① Yahoo, Nasdaq and a set of macro and sentiment publishers feed the collectors; Alpaca, SEC EDGAR and licensed history stay off, and Stooq is blocked. ② One writer commits every batch to DuckDB and keeps each provider's raw response. ③ The screen ranks about 4,100 liquid names and each portfolio turns the ranking into orders at the close. ④ Orders fill at the next open and nowhere else. ⑤ The monitors read the equity paths against a rule frozen before the first signal, and the Sunday walk-forward replays the rule portfolios on older bars. ⑥ The AI agent trades its own paper portfolio through a locked simulator tool; the intraday agents read TradingView quotes and only observe."
+			caption="fig. 1 — 1.6. ① Yahoo, Nasdaq and a set of macro and sentiment publishers feed the collectors; Alpaca, SEC EDGAR and licensed history stay off, and Stooq is blocked. ② One writer commits every batch to DuckDB and keeps each provider's raw response. ③ The screen ranks about 4,100 liquid names and each portfolio turns the ranking into orders at the close. ④ Orders fill at the next open and nowhere else. ⑤ The monitors read the equity paths against a rule frozen before the first signal, and the Sunday walk-forward replays the rule portfolios on older bars. ⑥ The AI agent trades its own paper portfolio through a locked simulator tool; the intraday agents read TradingView quotes and only observe."
 			facts={facts}>
 			<H2>Running unattended</H2>
 			<P>

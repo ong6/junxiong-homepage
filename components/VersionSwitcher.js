@@ -4,11 +4,11 @@ import { useEffect, useRef } from "react";
 import { CURRENT, VERSIONS } from "../lib/tradingVersions";
 import OutArrow from "./OutArrow";
 
-// Page-level version tabs for the trading-engine case study. Each version is
+// Update tabs for Engine v1 of the trading-engine case study. Each update is
 // its own route, so a past diagram can be linked and indexed. On narrow screens
 // the row scrolls sideways instead of wrapping.
 //
-//   active – "v1" … "v7"
+//   active – "1.1" … "1.8"
 
 export default function VersionSwitcher({ active, ...props }) {
 	const current = VERSIONS.find((version) => version.v === active);
@@ -28,7 +28,7 @@ export default function VersionSwitcher({ active, ...props }) {
 			<Flex
 				ref={row}
 				as="nav"
-				aria-label="Engine versions"
+				aria-label="Engine v1 updates"
 				gap={2}
 				overflowX="auto"
 				pb={1}
@@ -83,7 +83,7 @@ export default function VersionSwitcher({ active, ...props }) {
 								whiteSpace="nowrap"
 								color="brand.solid"
 								fontWeight="700">
-								see {CURRENT.v}, the current engine
+								see {CURRENT.v}, the latest update
 								<OutArrow ml="4px" />
 							</Link>
 						</>

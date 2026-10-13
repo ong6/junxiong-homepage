@@ -1,7 +1,7 @@
 const { expect, test } = require("@playwright/test");
 const { SEL, packetCentre, dist, collectErrors } = require("./helpers");
 
-const VERSION_PAGES = ["/trading-engine/v1", "/trading-engine/v2", "/trading-engine/v3", "/trading-engine/v4", "/trading-engine/v5", "/trading-engine/v6", "/trading-engine/v7"];
+const VERSION_PAGES = [1, 2, 3, 4, 5, 6, 7, 8].map((n) => `/trading-engine/v1/1.${n}`);
 const PAGES = ["/compoze", "/groundplane", "/skills", "/skillsmith", "/trading-engine", "/uipack", ...VERSION_PAGES];
 
 for (const path of PAGES) {
@@ -115,12 +115,23 @@ test("/trading-engine: selecting a box shows its note beside it, and site figure
 	await expect(note).toHaveCount(0);
 });
 
-test("version pages link onward: v7 reaches v8, and the v8 list links every past version", async ({ page }) => {
-	await page.goto("/trading-engine/v7");
+test("engine pages link onward: 1.7 reaches 1.8, 1.8 reaches Engine v2, and the overview lists both engines", async ({ page }) => {
+	await page.goto("/trading-engine/v1/1.7");
 	await expect(page.getByRole("heading", { level: 1 })).toHaveText("Scoring every candidate");
-	await expect(page.getByRole("link", { name: /see v8, the current engine/ })).toHaveAttribute("href", "/trading-engine");
+	await expect(page.getByRole("link", { name: /see 1.8, the latest update/ })).toHaveAttribute("href", "/trading-engine/v1/1.8");
+	await page.goto("/trading-engine/v1/1.8");
+	await expect(page.getByRole("link", { name: /Executor and ledger/ })).toHaveAttribute("href", "/trading-engine/v2");
+	await page.goto("/trading-engine/v1");
+	const updates = page.locator("ol").filter({ hasText: "One shared backtest core" });
+	await expect(updates.getByRole("link", { name: /Scoring every candidate/ })).toHaveAttribute("href", "/trading-engine/v1/1.7");
 	await page.goto("/trading-engine");
-	const list = page.locator("ol").filter({ hasText: "One shared backtest core" });
-	await expect(list.getByRole("link", { name: /Scoring every candidate/ })).toHaveAttribute("href", "/trading-engine/v7");
-	await expect(list.getByRole("link", { name: /One shared backtest core/ })).toHaveCount(0);
+	const eras = page.locator("ol").filter({ hasText: "Executor and ledger" });
+	await expect(eras.getByRole("link", { name: /A research simulator/ })).toHaveAttribute("href", "/trading-engine/v1");
+	await expect(eras.getByRole("link", { name: /Executor and ledger/ })).toHaveAttribute("href", "/trading-engine/v2");
 });
+
+test("old version routes redirect to Engine v1 updates", async ({ page }) => {
+	await page.goto("/trading-engine/v5");
+	await expect(page).toHaveURL(/\/trading-engine\/v1\/1\.5$/);
+});
+

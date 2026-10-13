@@ -42,6 +42,12 @@ module.exports = {
 			},
 			{ source: "/skill-eval-pack", destination: "/skillsmith", permanent: true },
 			{ source: "/skillpack", destination: "/skills", permanent: true },
+			// The old v3–v7 pages are now Engine v1 updates 1.3–1.7; /v1 and /v2 are the eras.
+			{ source: "/trading-engine/v3", destination: "/trading-engine/v1/1.3", permanent: true },
+			{ source: "/trading-engine/v4", destination: "/trading-engine/v1/1.4", permanent: true },
+			{ source: "/trading-engine/v5", destination: "/trading-engine/v1/1.5", permanent: true },
+			{ source: "/trading-engine/v6", destination: "/trading-engine/v1/1.6", permanent: true },
+			{ source: "/trading-engine/v7", destination: "/trading-engine/v1/1.7", permanent: true },
 			{
 				source: "/jobforge",
 				destination: "https://github.com/ong6/skills/tree/main/skills/interview-prep",

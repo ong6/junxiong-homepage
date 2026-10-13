@@ -1,6 +1,6 @@
-import { CodeBlock, CodeFigure } from "../../components/CodeBlock";
-import TradingVersionPage, { Code, H2, P } from "../../components/TradingVersionPage";
-import * as V7 from "../../components/diagrams/trading/V7";
+import { CodeBlock, CodeFigure } from "../../../components/CodeBlock";
+import TradingVersionPage, { Code, H2, P } from "../../../components/TradingVersionPage";
+import * as V7 from "../../../components/diagrams/trading/V7";
 
 // The forward report's own words, trimmed. The numbers are the ones the
 // committed report carried on 2026-09-17.
@@ -45,16 +45,16 @@ const facts = [
 export default function TradingEngineV7() {
 	return (
 		<TradingVersionPage
-			v="v7"
-			description="Version 7 of Ong Jun Xiong's paper-trading engine, 26–29 September 2026: a model scores every nightly candidate next to a fixed rule, three test portfolios trade those scores, and a paired test decides."
+			v="1.7"
+			description="Update 1.7 of Ong Jun Xiong's paper-trading engine, 26–29 September 2026: a model scores every nightly candidate next to a fixed rule, three test portfolios trade those scores, and a paired test decides."
 			lead="I built this to test trading ideas on real US market data without placing live trades. It runs nightly on one Linux box and keeps 25 paper portfolios, each with rules fixed before trading starts. Since 29 September a model scores every nightly candidate next to a fixed rule, and a paired test decides at set dates whether the model adds anything. So far no policy has beaten its control on live data."
 			diagram={V7}
-			caption="fig. 1 — one night in v7. ① Yahoo, Nasdaq, TradingView, RSS headlines and a set of macro publishers feed the collectors; SEC 8-K capture waits on access. ② One writer commits every batch to DuckDB, and each fact carries the time it became available. ③ A fixed rule and a model both score every candidate, and the nightly agent keeps its own portfolio; event triggers and the challenger lab place no orders. ④ Code sizes each position and checks risk; before the open the model may cancel an order but never add one. ⑤ Orders fill at the next open or a limit order at the open, and nowhere else. ⑥ Every decision lands in one ledger, is labelled later, and a paired test against the rule decides at 60, 90 and 120 trading days. It is all still paper, so the IBKR broker link is not open yet."
+			caption="fig. 1 — one night in 1.7. ① Yahoo, Nasdaq, TradingView, RSS headlines and a set of macro publishers feed the collectors; SEC 8-K capture waits on access. ② One writer commits every batch to DuckDB, and each fact carries the time it became available. ③ A fixed rule and a model both score every candidate, and the nightly agent keeps its own portfolio; event triggers and the challenger lab place no orders. ④ Code sizes each position and checks risk; before the open the model may cancel an order but never add one. ⑤ Orders fill at the next open or a limit order at the open, and nowhere else. ⑥ Every decision lands in one ledger, is labelled later, and a paired test against the rule decides at 60, 90 and 120 trading days. It is all still paper, so the IBKR broker link is not open yet."
 			facts={facts}>
 			<H2>Scoring every candidate</H2>
 
 			<P>
-				Until v7 the AI made one pick a night from five standouts, and it abstained on 92% of
+				Until 1.7 the AI made one pick a night from five standouts, and it abstained on 92% of
 				them. At that pace, twenty trades would arrive around February 2027, and twenty trades can
 				only detect an edge of about five percent per trade. That is too little evidence to judge
 				anything.
@@ -98,7 +98,7 @@ export default function TradingEngineV7() {
 
 			<P>
 				The fill price is the open moved against you by a half-spread estimated from the
-				sixty-day median dollar volume, plus five basis points a side. The v7 portfolios enter with a limit order at the open instead, which skips the trade when the stock opens too far above the signal close. An order over one percent
+				sixty-day median dollar volume, plus five basis points a side. The 1.7 portfolios enter with a limit order at the open instead, which skips the trade when the stock opens too far above the signal close. An order over one percent
 				of that median volume is rejected outright instead of partially filled, so the engine never has to estimate how much would have filled. A missing bar leaves the order pending for
 				three trading days and then rejects it; the engine never fabricates a bar. Dividends are credited on
 				the ex-date from the same corporate-actions table the screen reads.

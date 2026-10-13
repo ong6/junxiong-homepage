@@ -16,8 +16,8 @@ export const OG_IMAGE = `${SITE_URL}/images/og/home.jpg`;
 // Routes with their own card from scripts/build-og-cards.mjs; the rest share the home card.
 const OG_CARDS = new Set(["/compoze", "/groundplane", "/skills", "/skillsmith", "/trading-engine", "/uipack"]);
 export const ogImageFor = (canonical) => {
-	// Version pages (/trading-engine/v3) share their project's card.
-	const path = canonical.slice(SITE_URL.length).replace(/\/v\d+$/, "");
+	// Version pages (/trading-engine/v1, /trading-engine/v1/1.3) share their project's card.
+	const path = canonical.slice(SITE_URL.length).replace(/\/v\d+(\/\d+\.\d+)?$/, "");
 	return OG_CARDS.has(path) ? `${SITE_URL}/images/og${path}.jpg` : OG_IMAGE;
 };
 

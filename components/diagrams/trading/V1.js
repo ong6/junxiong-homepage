@@ -1,10 +1,10 @@
 import { Badge, Connector, Defs, Flow, Group, Label, Lane, Line, Node } from "../parts";
 
 export const CLAIM =
-	"v1, July 2026: Nasdaq's symbol list and Yahoo daily bars land in DuckDB, Stooq is blocked, a Minervini screen ranks the liquid names, ten paper portfolios plus a discretionary portfolio trade them, every order fills at the next open, and the reports are committed to git.";
+	"Update 1.1, July 2026: Nasdaq's symbol list and Yahoo daily bars land in DuckDB, Stooq is blocked, a Minervini screen ranks the liquid names, ten paper portfolios plus a discretionary portfolio trade them, every order fills at the next open, and the reports are committed to git.";
 
 export const meta = {
-	number: "Figure 01 · v1",
+	number: "Figure 01 · 1.1",
 	eyebrow: "16–27 July 2026",
 	title: "One source, one screen, ten portfolios",
 	caption: "The first nightly. Stooq was blocked on day one, so Yahoo became the only price source.",

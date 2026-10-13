@@ -1,5 +1,5 @@
-import TradingVersionPage, { Code, H2, P } from "../../components/TradingVersionPage";
-import * as V1 from "../../components/diagrams/trading/V1";
+import TradingVersionPage, { Code, H2, P } from "../../../components/TradingVersionPage";
+import * as V1 from "../../../components/diagrams/trading/V1";
 
 // Facts from docs/history/buildlog-2026-07-15-to-2026-09-17.md (lines 59–363) and
 // commit ead678e (run_daily.sh, sim/fills.py, sim/strategies/configs.py).
@@ -17,11 +17,11 @@ const facts = [
 export default function TradingEngineV1() {
 	return (
 		<TradingVersionPage
-			v="v1"
-			description="Version 1 of Ong Jun Xiong's paper-trading engine, July 2026: Yahoo daily bars, a Minervini screen, ten paper portfolios and a next-open fill rule."
+			v="1.1"
+			description="Update 1.1 of Ong Jun Xiong's paper-trading engine, July 2026: Yahoo daily bars, a Minervini screen, ten paper portfolios and a next-open fill rule."
 			lead="Most of what went wrong in the first version had nothing to do with trading. It was one cron job on one Linux box: pull the market, screen it, and let ten paper portfolios trade whatever passed, filling at the next morning’s open."
 			diagram={V1}
-			caption="fig. 1 — v1. ① Nasdaq's symbol list and Yahoo's daily bars are the only inputs; Stooq never worked from this host. ② One writer owns DuckDB. ③ The screen runs the Minervini trend template with a relative-strength rank. ④ Orders fill at the next open, and a small UI can add risk-checked manual orders that fill the same way."
+			caption="fig. 1 — 1.1. ① Nasdaq's symbol list and Yahoo's daily bars are the only inputs; Stooq never worked from this host. ② One writer owns DuckDB. ③ The screen runs the Minervini trend template with a relative-strength rank. ④ Orders fill at the next open, and a small UI can add risk-checked manual orders that fill the same way."
 			facts={facts}>
 			<H2>Yahoo became the only price source</H2>
 			<P>
@@ -54,8 +54,8 @@ export default function TradingEngineV1() {
 			</P>
 			<P>
 				The rule I took from it is in the log: a copy used to prove a go-live has to include every row
-				the system creates at runtime, not only what the installer creates. I kept that rule. What v1
-				still had no answer for was splits and dividends, and v2 found out how much that mattered.
+				the system creates at runtime, not only what the installer creates. I kept that rule. What 1.1
+				still had no answer for was splits and dividends, and 1.2 found out how much that mattered.
 			</P>
 		</TradingVersionPage>
 	);

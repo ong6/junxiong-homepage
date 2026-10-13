@@ -4,11 +4,10 @@ import DiagramFigure from "./DiagramFigure";
 import FactList from "./FactList";
 import Layout from "./layouts/Articles";
 import VersionSwitcher from "./VersionSwitcher";
-import { VERSIONS } from "../lib/tradingVersions";
+import { ERAS, VERSIONS } from "../lib/tradingVersions";
 
-// One past version of the trading engine: the switcher, a lead, the diagram as
-// the engine stood then, a short write-up and a fact table. The current engine
-// lives at /trading-engine; these pages keep the older shapes readable.
+// One update of Engine v1 (/trading-engine/v1/1.N): the switcher, a lead, the
+// diagram as the engine stood then, a short write-up and a fact table.
 
 export const P = (props) => <Text mt={5} fontSize={{ base: "17px", md: "18px" }} lineHeight="1.8" {...props} />;
 
@@ -22,7 +21,8 @@ export const Code = (props) => <Box as="code" fontFamily="var(--font-mono)" font
 function Neighbours({ v }) {
 	const i = VERSIONS.findIndex((version) => version.v === v);
 	const prev = VERSIONS[i - 1];
-	const next = VERSIONS[i + 1];
+	// The last v1 update hands on to the next engine.
+	const next = VERSIONS[i + 1] || ERAS.find((era) => era.v === "v2");
 	return (
 		<Flex as="nav" aria-label="Previous and next version" mt={{ base: 12, md: 16 }} gap={4} borderTop="1px solid" borderColor="border.subtle" pt={6}>
 			{[prev && ["← Previous", prev], next && ["Next →", next]].filter(Boolean).map(([dir, version]) => (
@@ -53,8 +53,8 @@ export default function TradingVersionPage({ v, description, lead, diagram, capt
 		<Layout title={`Trading engine ${v}: ${version.title}`} description={description} schema={{ type: "TechArticle" }}>
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
-					<Link as={NextLink} href="/trading-engine" display="inline-flex" alignItems="center" minH="32px" my={-1.5} fontSize="13px" fontWeight="700">
-						← Trading engine
+					<Link as={NextLink} href="/trading-engine/v1" display="inline-flex" alignItems="center" minH="32px" my={-1.5} fontSize="13px" fontWeight="700">
+						← Engine v1
 					</Link>
 					<Heading as="h1" mt={{ base: 8, md: 10 }} fontSize={{ base: "36px", md: "46px" }} lineHeight="1.05" letterSpacing="-.04em">
 						{version.title}
@@ -65,7 +65,7 @@ export default function TradingVersionPage({ v, description, lead, diagram, capt
 					</Text>
 				</Box>
 
-				<DiagramFigure id={`te-${v}`} headingLevel={2} diagram={diagram} caption={caption} />
+				<DiagramFigure id={`te-${v.replace(".", "-")}`} headingLevel={2} diagram={diagram} caption={caption} />
 
 				{children}
 

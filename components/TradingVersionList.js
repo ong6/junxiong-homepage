@@ -3,15 +3,16 @@ import NextLink from "next/link";
 import { VERSIONS } from "../lib/tradingVersions";
 import OutArrow from "./OutArrow";
 
-// Every engine version in order, for the current page and the full past
-// pages. The version on screen is plain text; every other one links out.
+// Engine versions in order: the v1 updates by default, or the engine eras on
+// the overview. The version on screen is plain text; every other one links out.
 //
-//   active – "v7" | "v8" …
+//   active – "1.7" | "v2" …
+//   items  – VERSIONS (default) or ERAS
 
-export default function TradingVersionList({ active }) {
+export default function TradingVersionList({ active, items = VERSIONS }) {
 	return (
 		<Box as="ol" listStyleType="none" mt={6} borderTop="1px solid" borderColor="border.subtle">
-			{VERSIONS.map(({ v, href, when, title, body, current }) => (
+			{items.map(({ v, href, when, title, body, current, building }) => (
 				<Box
 					as="li"
 					key={v}
@@ -28,6 +29,7 @@ export default function TradingVersionList({ active }) {
 						<Text fontFamily="var(--font-mono)" fontSize="12px" letterSpacing=".06em" color="text.muted" textTransform="uppercase">
 							{when}
 							{current ? " · current" : ""}
+							{building ? " · being built" : ""}
 						</Text>
 						<Text mt={1} fontSize={{ base: "17px", md: "18px" }} fontWeight="700">
 							{v === active ? (

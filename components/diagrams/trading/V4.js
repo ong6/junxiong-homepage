@@ -1,10 +1,10 @@
 import { Badge, Connector, Defs, Flow, Group, Label, Lane, Line, Node } from "../parts";
 
 export const CLAIM =
-	"v4, late August to mid-September 2026: no model in the loop. Yahoo stays the only price source and Nasdaq verifies it, macro feeds build regime signals, 21 portfolios trade through the revised fill model, and a 10-fold walk-forward, a no-model sweep farm and three frozen forward monitors decide what survives. Nothing on the evidence side can move a portfolio to real money.";
+	"Update 1.4, late August to mid-September 2026: no model in the loop. Yahoo stays the only price source and Nasdaq verifies it, macro feeds build regime signals, 21 portfolios trade through the revised fill model, and a 10-fold walk-forward, a no-model sweep farm and three frozen forward monitors decide what survives. Nothing on the evidence side can move a portfolio to real money.";
 
 export const meta = {
-	number: "Figure 01 · v4",
+	number: "Figure 01 · 1.4",
 	eyebrow: "18 August – 17 September 2026",
 	title: "No model, stricter evidence",
 	caption: "The agent layer is gone; grids, folds and frozen monitors do the judging.",

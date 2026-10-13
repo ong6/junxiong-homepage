@@ -1,5 +1,5 @@
-import TradingVersionPage, { H2, P } from "../../components/TradingVersionPage";
-import * as V4 from "../../components/diagrams/trading/V4";
+import TradingVersionPage, { H2, P } from "../../../components/TradingVersionPage";
+import * as V4 from "../../../components/diagrams/trading/V4";
 
 // Facts from docs/history/buildlog-2026-07-15-to-2026-09-17.md (lines 1249–2543),
 // the 2026-08-20 and 2026-09-02 history documents, docs/feedback.md and sim/fills.py.
@@ -18,11 +18,11 @@ const facts = [
 export default function TradingEngineV4() {
 	return (
 		<TradingVersionPage
-			v="v4"
-			description="Version 4 of Ong Jun Xiong's paper-trading engine, August–September 2026: no model in the loop, a 10-fold walk-forward, a simulator audit and frozen forward monitors."
-			lead="With no model in the loop, v4 spent a month testing whether any of the strategies were real. Almost none were, and most of the month went into showing that carefully enough to believe it."
+			v="1.4"
+			description="Update 1.4 of Ong Jun Xiong's paper-trading engine, August–September 2026: no model in the loop, a 10-fold walk-forward, a simulator audit and frozen forward monitors."
+			lead="With no model in the loop, 1.4 spent a month testing whether any of the strategies were real. Almost none were, and most of the month went into showing that carefully enough to believe it."
 			diagram={V4}
-			caption="fig. 1 — v4. ① Yahoo remains the only price source; Nasdaq's quote API checks it on a schedule instead of standing in for it. ② Macro feeds become regime signals in the same store. ③ The 21 paper portfolios trade on frozen rules through fill model v4. ④ Forward monitors, a Sunday walk-forward and a no-model sweep farm judge the results, and none of them can move a portfolio to real money."
+			caption="fig. 1 — 1.4. ① Yahoo remains the only price source; Nasdaq's quote API checks it on a schedule instead of standing in for it. ② Macro feeds become regime signals in the same store. ③ The 21 paper portfolios trade on frozen rules through fill model v4. ④ Forward monitors, a Sunday walk-forward and a no-model sweep farm judge the results, and none of them can move a portfolio to real money."
 			facts={facts}>
 			<H2>Grids instead of a model</H2>
 			<P>
