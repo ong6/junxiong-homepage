@@ -2,7 +2,7 @@ import { Bus } from "uipack";
 import { Connector, Defs, Group, Label, Lane, Node, Packet } from "../parts";
 
 export const CLAIM =
-	"Every public or private strategy is reduced to a short specification, then follows one shared backtest core and one evidence path before a paper portfolio can observe it. The core enforces no-peeking data, named costs, native event or portfolio simulation, a gross benchmark, calendar-day deflated Sharpe and a sealed holdout.";
+	"Every public or private strategy is reduced to a short specification, then follows one shared backtest core and one evidence path before a paper portfolio can observe it. The core enforces point-in-time reads, versioned costs against a gross benchmark, trial-deflated Sharpe, a sealed holdout, a shared in-memory price panel and a hashed run manifest.";
 
 export const meta = {
 	number: "Figure 01",
@@ -16,7 +16,7 @@ export const meta = {
 		{ label: "Evidence", kind: "response" },
 		{ label: "Paper path", kind: "accent" },
 	],
-	viewBox: "0 0 1120 456",
+	viewBox: "0 0 1120 488",
 };
 
 // Claim: public and separately held private strategies share one declarative
@@ -41,7 +41,7 @@ export function Wide({ id }) {
 		[448, 184],
 	];
 	const coreToEvidence = [
-		[728, 184],
+		[752, 184],
 		[832, 184],
 	];
 	const evidenceToPaper = [
@@ -55,7 +55,7 @@ export function Wide({ id }) {
 
 			<Lane x={40} w={176} y={40} title="Strategies" />
 			<Lane x={248} w={128} y={40} title="Specification" />
-			<Lane x={424} w={328} y={40} title="Shared core" />
+			<Lane x={424} w={352} y={40} title="Shared core" />
 			<Lane x={832} w={96} y={40} title="Evidence" />
 			<Lane x={992} w={96} y={40} title="Paper" />
 
@@ -85,13 +85,14 @@ export function Wide({ id }) {
 			<Label x={400} y={168} text="run" anchor="middle" size={10} />
 			<Packet points={specToCore} kind="request" dur={1.4} flow="study" />
 
-			<Group x={424} y={80} w={328} h={304} title="SHARED BACKTEST CORE" flow="study" accent />
-			<Node x={448} y={152} w={280} h={64} label="native simulation" sub="events + portfolios" icon="tool" hint="Replays every decision through one fill and cost path. Serial and parallel runs produce the same bytes." flow="study" accent />
-			<Node x={448} y={256} w={80} h={48} label="no peeking" size={11} hint="Asking for any field before it was available raises an error instead of quietly dropping the row." flow="study" />
-			<Node x={544} y={256} w={80} h={48} label="named costs" size={11} hint="A named cost profile plus a harsher sensitivity run. Spread, fees and adverse moves stay separate." flow="study" />
-			<Node x={640} y={256} w={96} h={48} label="gross bench." size={11} hint="Strategy return after costs against the benchmark before costs, over exactly the same window." flow="study" />
-			<Node x={464} y={320} w={120} h={48} label="calendar DSR" size={11} hint="Sharpe deflated for the number of trials, with quiet days counted as zero so rare trades cannot inflate it." flow="study" />
-			<Node x={608} y={320} w={120} h={48} label="sealed holdout" size={11} hint="A time window development cannot load. It opens once, after every choice is final." flow="study" />
+			<Group x={424} y={80} w={352} h={368} title="SHARED BACKTEST CORE" flow="study" accent />
+			<Node x={448} y={152} w={304} h={64} label="native simulation" sub="events + portfolios" icon="tool" hint="Event orders and portfolio target weights replay through one fill, cost and dividend path. Serial and parallel runs produce the same bytes." flow="study" accent />
+			<Node x={448} y={240} w={148} h={56} label="point-in-time data" sub="future read raises" size={11} subSize={10} hint="Every field carries the time it became available. Asking for one before that raises an error instead of quietly dropping the row." flow="study" />
+			<Node x={604} y={240} w={148} h={56} label="versioned costs" sub="primary + harsher" size={11} subSize={10} hint="A hashed primary cost profile and a harsher sensitivity: per-side fees, spread, funding and liquidity tiers. The strategy pays them; the benchmark it is judged against does not." flow="study" />
+			<Node x={448} y={304} w={148} h={56} label="deflated Sharpe" sub="per trial count" size={11} subSize={10} hint="Sharpe deflated for every trial ever logged, on calendar days with flat days counted as zero, so rare trades and many tries cannot inflate it." flow="study" />
+			<Node x={604} y={304} w={148} h={56} label="sealed holdout" sub="opens once" size={11} subSize={10} hint="Walk-forward folds for development; a final window the code cannot load opens once, after every choice is frozen." flow="study" />
+			<Node x={448} y={368} w={148} h={56} label="shared price panel" sub="989 s → 0.85 s" size={11} subSize={10} hint="One in-memory price panel shared by 16 workers: the 3,000-stock × 3,800-session benchmark went from 989 s to 0.85 s with byte-identical reports." flow="study" />
+			<Node x={604} y={368} w={148} h={56} label="run manifest" sub="3 input hashes" size={11} subSize={10} hint="Each run records the spec, cost-profile and data-snapshot hashes, so any report can be traced to exactly what produced it." flow="study" />
 
 			<Connector points={coreToEvidence} defs={id} kind="response" flow="study" />
 			<Label x={792} y={168} text="report" anchor="middle" size={10} />
@@ -101,7 +102,7 @@ export function Wide({ id }) {
 			<Connector points={evidenceToPaper} defs={id} kind="accent" flow="study" />
 			<Label x={960} y={168} text="paper" anchor="middle" size={9} accent />
 			<Packet points={evidenceToPaper} kind="accent" dur={1.2} flow="study" />
-			<Node x={992} y={152} w={96} h={64} label="paper book" sub="paper only" hint="A simulated portfolio that follows the result. No broker, no real money." flow="study" accent />
+			<Node x={992} y={152} w={96} h={64} label="paper book" sub="simulated" hint="A simulated portfolio that follows the result." flow="study" accent />
 		</>
 	);
 }
@@ -163,10 +164,10 @@ export function Narrow({ id }) {
 
 			<Group x={24} y={288} w={312} h={416} title="SHARED BACKTEST CORE" flow="study" accent />
 			<Node x={48} y={336} w={256} h={64} label="native simulation" sub="events + portfolios" icon="tool" hint="Replays every decision through one fill and cost path. Serial and parallel runs produce the same bytes." flow="study" accent />
-			<Node x={48} y={456} w={120} h={56} label="no peeking" size={12} hint="Asking for any field before it was available raises an error instead of quietly dropping the row." flow="study" />
-			<Node x={184} y={456} w={128} h={56} label="named costs" size={12} hint="A named cost profile plus a harsher sensitivity run. Spread, fees and adverse moves stay separate." flow="study" />
-			<Node x={48} y={552} w={120} h={56} label="gross bench." size={11} hint="Strategy return after costs against the benchmark before costs, over exactly the same window." flow="study" />
-			<Node x={184} y={552} w={128} h={56} label="calendar DSR" size={11} hint="Sharpe deflated for the number of trials, with quiet days counted as zero so rare trades cannot inflate it." flow="study" />
+			<Node x={48} y={456} w={120} h={56} label="point-in-time" size={12} hint="Asking for any field before it was available raises an error instead of quietly dropping the row." flow="study" />
+			<Node x={184} y={456} w={128} h={56} label="versioned costs" size={11} hint="A named cost profile plus a harsher sensitivity run. Spread, fees and adverse moves stay separate." flow="study" />
+			<Node x={48} y={552} w={120} h={56} label="deflated Sharpe" size={11} hint="Strategy return after costs against the benchmark before costs, over exactly the same window." flow="study" />
+			<Node x={184} y={552} w={128} h={56} label="price panel" size={11} hint="Sharpe deflated for the number of trials, with quiet days counted as zero so rare trades cannot inflate it." flow="study" />
 			<Node x={112} y={616} w={128} h={56} label="sealed holdout" size={11} hint="A time window development cannot load. It opens once, after every choice is final." flow="study" />
 
 			<Connector points={coreToEvidence} defs={id} kind="response" flow="study" />
@@ -177,7 +178,7 @@ export function Narrow({ id }) {
 			<Connector points={evidenceToPaper} defs={id} kind="accent" flow="study" />
 			<Label x={192} y={848} text="paper" size={10} accent />
 			<Packet points={evidenceToPaper} kind="accent" dur={1.4} flow="study" />
-			<Node x={72} y={864} w={208} h={64} label="paper book" sub="paper only" icon="chart" hint="A simulated portfolio that follows the result. No broker, no real money." flow="study" accent />
+			<Node x={72} y={864} w={208} h={64} label="paper book" sub="simulated" icon="chart" hint="A simulated portfolio that follows the result." flow="study" accent />
 		</>
 	);
 }

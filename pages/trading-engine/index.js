@@ -23,7 +23,7 @@ const H2 = (props) => (
 
 const links = [
 	{ name: "Product docs", detail: "How it works, research and operations", href: "/trading-engine/docs" },
-	{ name: "Source on GitHub", detail: "Paper only, MIT", href: "https://github.com/ong6/trading-engine", external: true },
+	{ name: "Source on GitHub", detail: "Python, MIT", href: "https://github.com/ong6/trading-engine", external: true },
 ];
 
 export default function TradingEngine() {
@@ -70,7 +70,7 @@ export default function TradingEngine() {
 						fontWeight="700"
 						letterSpacing=".1em"
 						textTransform="uppercase">
-						2026 · open source · paper only
+						2026 · open source · Python
 					</Text>
 
 					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="1.6" fontWeight="600">
@@ -101,15 +101,6 @@ export default function TradingEngine() {
 				</P>
 
 				<TradingVersionList items={ERAS} />
-
-				<H2>Paper trading only</H2>
-
-				<P>
-					The engine has no broker connection or authority over real money. I built it to
-					get to a trustworthy yes or no, with every loss, unavailable input and failed
-					check left in the record. The product docs carry the full data, research and
-					operations detail.
-				</P>
 
 				<CaseStudyFooter links={links} next={{ name: "Agent skills", href: "/skills", detail: "One home for coding-agent skills, linked into every repo" }} />
 			</Container>

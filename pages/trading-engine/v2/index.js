@@ -7,7 +7,7 @@ import { ERAS } from "../../../lib/tradingVersions";
 // its review rounds (2026-10-06 to 10-10). On deploy this page becomes the
 // 2.0 write-up with its diagram.
 const facts = [
-	["status", "being built · deploys 18 Oct 2026 · paper only"],
+	["status", "being built · deploys 18 Oct 2026"],
 	["accounts", "one per strategy version · $10k, $50k or $100k paper"],
 	["fills", "opening auction · closing auction · intraday from minute bars"],
 	["costs", "commission and fees on every fill · effective-dated rule set"],
@@ -54,8 +54,7 @@ export default function TradingEngineV2() {
 				from the day it opened on every settle, and treats the stored rows only as a checked cache.
 			</P>
 			<P>
-				When it deploys, this page becomes update 2.0 with its own diagram. It is still paper only:
-				no broker connection and no real money.
+				When it deploys, this page becomes update 2.0 with its own diagram.
 			</P>
 
 			<FactList facts={facts} mt={{ base: 12, md: 14 }} />

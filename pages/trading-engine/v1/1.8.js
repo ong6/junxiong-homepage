@@ -7,7 +7,6 @@ import * as V8 from "../../../components/diagrams/trading/V8";
 // docs/backtest-standard.md, docs/pit-free-audit-2026-10-01.md and docs/site/*.md.
 // Counts were rerun with pytest --collect-only and tools.metrics_snapshot.
 const facts = [
-	["status", "paper only · no broker connection"],
 	["paper portfolios", "25 active in the simulator"],
 	["matched AI comparison", "AI-ranked · rule-ranked · rule with an AI veto"],
 	["shared backtest", "event and portfolio strategies · one deterministic core"],
@@ -25,7 +24,7 @@ export default function TradingEngineV1_8() {
 		<TradingVersionPage
 			v="1.8"
 			description="Update 1.8 of Ong Jun Xiong's paper-trading engine, October 2026: every strategy runs through one shared backtest core and one evidence path."
-			lead="Since 1.7, the engine has changed shape. Every strategy is now a short specification that runs through one shared backtest core and one evidence path before a paper portfolio can observe it. The AI comparison is live, operations are less fragile, and the data layer now shows how much history the old store missed. It is still paper only. No policy has beaten its frozen control yet."
+			lead="Since 1.7, the engine has changed shape. Every strategy is now a short specification that runs through one shared backtest core and one evidence path before a paper portfolio can observe it. The AI comparison is live, operations are less fragile, and the data layer now shows how much history the old store missed. No policy has beaten its frozen control yet."
 			diagram={V8}
 			caption="fig. 1 — 1.8. Public and separately held private strategies become short specifications. One core owns the no-peeking view, named costs, event or portfolio simulation, gross benchmark, calendar-day deflated Sharpe and sealed holdout. Only its evidence report reaches a paper portfolio. The private live-paper bridge is next, not active."
 			facts={facts}>
