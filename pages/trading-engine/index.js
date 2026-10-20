@@ -78,7 +78,7 @@ export default function TradingEngine() {
 						whether a strategy, or a model reading the market, makes money after costs. Every
 						strategy runs through one shared backtest core and one evidence path before a paper
 						portfolio can trade it, and since 18 October the engine fills the orders and charges
-						commissions on every fill. Paper only. No policy has beaten its frozen control yet.
+						commissions on every fill. No policy has beaten its frozen control yet.
 					</Text>
 				</Box>
 
@@ -88,7 +88,7 @@ export default function TradingEngine() {
 					id="te-now"
 					headingLevel={2}
 					diagram={Engine2}
-					caption="fig. 1 — the engine running now (Engine v2). A change passes a fresh reviewer, replayed provider responses, the schedule check and the deploy gate before it deploys. The live engine writes to one store that only its own services open; reports read the published snapshot after the invariant monitor has checked it."
+					caption="fig. 1 — Engine v2 with the checks I am adding in the next update. A change will pass a fresh reviewer, replayed provider responses, the schedule check and the deploy gate before it deploys; the live store will open only to the engine's own services, and an invariant monitor, watch-only at first, will check each published snapshot before reports read it."
 				/>
 
 				<H2>Two engines</H2>
@@ -98,9 +98,8 @@ export default function TradingEngine() {
 					engine, through eight updates from July to October. Engine v2, live on paper since 18
 					October, changes what the engine is for. It becomes the executor and ledger: it fills the
 					orders, keeps the books and charges commissions on every fill, and each strategy moves into
-					its own paper account. Every change goes to a fresh reviewer that did not write it, and this
-					week I added tests against recorded provider responses, a check of every scheduled job, an
-					invariant monitor and a deploy gate. An
+					its own paper account. Every change goes to a fresh reviewer that did not write it, and this week I built tests against recorded provider responses, a check of every scheduled job, an
+					invariant monitor and a deploy gate, which land on the main branch in the next update. An
 					update inside an engine moves the number after the dot; a new engine number means the
 					engine&apos;s job changed.
 				</P>
