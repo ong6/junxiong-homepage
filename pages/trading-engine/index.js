@@ -2,7 +2,7 @@ import { Box, Container, Heading, Link, Text, useColorModeValue } from "@chakra-
 import NextLink from "next/link";
 import CaseStudyFooter from "../../components/CaseStudyFooter";
 import DiagramFigure from "../../components/DiagramFigure";
-import * as V8 from "../../components/diagrams/trading/V8";
+import * as Engine2 from "../../components/diagrams/trading/Engine2";
 import Layout from "../../components/layouts/Articles";
 import ProjectLinks from "../../components/ProjectLinks";
 import TradingVersionList from "../../components/TradingVersionList";
@@ -77,7 +77,8 @@ export default function TradingEngine() {
 						A paper-trading engine I have built since July 2026 to find out
 						whether a strategy, or a model reading the market, makes money after costs. Every
 						strategy runs through one shared backtest core and one evidence path before a paper
-						portfolio can trade it. No policy has beaten its frozen control yet.
+						portfolio can trade it, and since 18 October the engine fills the orders and charges
+						commissions on every fill. Paper only. No policy has beaten its frozen control yet.
 					</Text>
 				</Box>
 
@@ -86,18 +87,22 @@ export default function TradingEngine() {
 				<DiagramFigure
 					id="te-now"
 					headingLevel={2}
-					diagram={V8}
-					caption="fig. 1 — the engine running now (update 1.8). Public and separately held private strategies become short specifications. One core owns the no-peeking view, named costs, event or portfolio simulation, gross benchmark, calendar-day deflated Sharpe and sealed holdout. Only its evidence report reaches a paper portfolio. The private live-paper bridge is next, not active."
+					diagram={Engine2}
+					caption="fig. 1 — the engine running now (Engine v2). A change passes a fresh reviewer, replayed provider responses, the schedule check and the deploy gate before it deploys. The live engine writes to one store that only its own services open; reports read the published snapshot after the invariant monitor has checked it."
 				/>
 
 				<H2>Two engines</H2>
 
 				<P>
 					Engine v1 was a research simulator: every strategy ran as a paper portfolio inside the
-					engine, through eight updates from July to October. Engine v2 changes what the engine is
-					for. It becomes the executor and ledger, and each strategy trades its own paper account
-					and pays commissions on every fill. An update inside an engine moves the number after the
-					dot; a new engine number means the engine&apos;s job changed.
+					engine, through eight updates from July to October. Engine v2, live on paper since 18
+					October, changes what the engine is for. It becomes the executor and ledger: it fills the
+					orders, keeps the books and charges commissions on every fill, and each strategy moves into
+					its own paper account. Every change goes to a fresh reviewer that did not write it, and this
+					week I added tests against recorded provider responses, a check of every scheduled job, an
+					invariant monitor and a deploy gate. An
+					update inside an engine moves the number after the dot; a new engine number means the
+					engine&apos;s job changed.
 				</P>
 
 				<TradingVersionList items={ERAS.filter((era) => era.v === "v2")} />
@@ -105,8 +110,8 @@ export default function TradingEngine() {
 				<H2>Engine v1 updates</H2>
 
 				<P>
-					Each update has its own page with the diagram as the engine stood then. Update 1.8 still
-					runs every night until Engine v2 takes over.
+					Each update has its own page with the diagram as the engine stood then. Update 1.8 added
+					the shared backtest core, which Engine v2 still uses for research.
 				</P>
 
 				<TradingVersionList />

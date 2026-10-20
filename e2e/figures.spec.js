@@ -2,7 +2,7 @@ const { expect, test } = require("@playwright/test");
 const { SEL, packetCentre, dist, collectErrors } = require("./helpers");
 
 const VERSION_PAGES = [1, 2, 3, 4, 5, 6, 7, 8].map((n) => `/trading-engine/v1/1.${n}`);
-const PAGES = ["/compoze", "/groundplane", "/skills", "/skillsmith", "/trading-engine", "/uipack", ...VERSION_PAGES];
+const PAGES = ["/compoze", "/groundplane", "/skills", "/skillsmith", "/trading-engine", "/trading-engine/v2", "/uipack", ...VERSION_PAGES];
 
 for (const path of PAGES) {
 	test.describe(`${path} figures`, () => {
@@ -25,7 +25,7 @@ for (const path of PAGES) {
 
 		test("a packet holds still after Pause", async ({ page }) => {
 			const figure = page.locator("figure.uipack").first();
-			await figure.getByRole("button", { name: "Pause" }).click();
+			await figure.getByRole("button", { name: "Pause", exact: true }).click();
 			const a = await packetCentre(page);
 			await page.waitForTimeout(500);
 			const b = await packetCentre(page);
@@ -35,7 +35,7 @@ for (const path of PAGES) {
 		test("Replay restarts the timeline", async ({ page }) => {
 			const figure = page.locator("figure.uipack").first();
 			await page.waitForTimeout(700);
-			await figure.getByRole("button", { name: "Replay" }).click();
+			await figure.getByRole("button", { name: "Replay", exact: true }).click();
 			const t0 = await figure.locator("svg.uipack--wide").evaluate((svg) => svg.getCurrentTime());
 			expect(t0).toBeLessThan(0.3);
 		});
@@ -83,7 +83,7 @@ test("/groundplane expand opens the wide drawing full-screen and Esc closes it",
 	await expect(dialog).toHaveCount(0);
 });
 
-for (const path of ["/uipack", "/compoze", "/groundplane", "/skills", "/skillsmith", "/trading-engine", ...VERSION_PAGES]) {
+for (const path of ["/uipack", "/compoze", "/groundplane", "/skills", "/skillsmith", "/trading-engine", "/trading-engine/v2", ...VERSION_PAGES]) {
 	test(`${path} at 390 has no horizontal overflow`, async ({ page }) => {
 		await page.setViewportSize({ width: 390, height: 844 });
 		await page.goto(path);
@@ -100,12 +100,12 @@ test("/trading-engine: selecting a box shows its note beside it, and site figure
 	await expect(page.getByRole("button", { name: /Expand diagram/ }).first()).toBeVisible();
 	await expect(figure.getByRole("button", { name: /Clear selection/ })).toHaveCount(0);
 
-	const node = figure.getByRole("button", { name: "report, evidence" });
+	const node = figure.getByRole("button", { name: "deploy gate, fingerprint = registered" });
 	const box = await node.boundingBox();
 	await node.click();
 	const note = figure.locator(".uipack__note");
 	await expect(note).toBeVisible();
-	await expect(note).toContainText("only thing a paper portfolio sees");
+	await expect(note).toContainText("refuses a deploy whose code no longer matches");
 	// The note sits against the box and the drawing does not move.
 	const n = await note.boundingBox();
 	expect(n.y + n.height).toBeLessThanOrEqual(box.y);
