@@ -26,7 +26,8 @@ name is halted, delisted, missing, or printing a dead zero-volume quote, the ord
 After three trading days without a tradeable bar, it is rejected. A bar is never invented.
 
 Orders also face a liquidity cap. The baseline profile rejects an order whose open notional is more
-than 1% of the name’s trailing 60-session median daily dollar volume. Partial fills are not modeled
+than 1% of the name’s trailing 60-session median daily dollar volume. A name whose median dollar
+volume is exactly zero is treated as untradeable, not as unlimited. Partial fills are not modeled
 in the live league baseline, so an oversized order is rejected rather than conveniently squeezed
 through.
 
@@ -37,9 +38,12 @@ contains a liquidity-tier half-spread plus five basis points of additional adver
 side. The half-spread is 5 basis points for the most liquid names, then 10, 15, or 25 basis points as
 liquidity falls.
 
-The baseline does not claim separately verified broker fees. Research can apply named harsher
-profiles and broker-specific estimates, but unverified profiles must say so. The shared backtest
-core also requires a primary cost profile and at least one distinct, harsher sensitivity.
+Since 19 October 2026 every book also pays a registered commission schedule modelled on a retail
+broker's tiered pricing. The change was recorded as a break in each book's history, and each book's
+evaluation clock restarted there, so a result never mixes the old and new cost rules. Research can
+apply named harsher profiles; those now apply on every fill path, including auction and intraday
+fills. The shared backtest core also requires a primary cost profile and at least one distinct,
+harsher sensitivity.
 
 These costs make the paper result conservative in a useful way, but they are still a model. The
 daily open comes from retail-accessible data. It does not reproduce opening-auction queue position,
@@ -66,7 +70,28 @@ claim that the book has passed a research gate.
 
 Stale marks are displayed too. If a held name stops trading, carrying its last close can make equity
 look more certain than it is. The report identifies stale positions and pending exits instead of
-hiding them in a log.
+hiding them in a log. A holding that is delisted is closed out at its last real traded close, the
+same way for every book, so replaying the history gives the same answer.
+
+Books that stop answering a question are retired. On 21 October 2026 eight books with no edge after
+costs were retired, leaving 17 active. A retired book stops trading; its equity history and
+positions stay in the record.
+
+## Engine v2: one ledger for every account
+
+Since 18 October 2026 the engine is the single executor and ledger for every paper book and every
+separately funded paper account. An account's cash, holdings, and equity are recomputed from its
+complete history of fills, corporate actions, dividends, financing, and fees every time it
+settles; the stored balances are only a cache that must match that recomputation.
+
+Generic paper accounts can use a few more order types than the original books: opening- and
+closing-auction orders, and intraday orders that are filled later from recorded minute bars.
+Stock shorts are allowed with a recorded borrow availability and borrow cost, under margin and
+day-trading limits. Options execution is refused until real bid and ask quotes exist.
+
+An account halts automatically at a 20% fall from its peak, a 5% loss in one day, or any mismatch
+between its ledger and the recomputed state. A halted account keeps its positions and stays
+marked; it never resumes on its own.
 
 ## Matched books answer better questions
 
@@ -76,10 +101,11 @@ AI veto the rule. Because mechanics are matched, a difference is more likely to 
 or veto than from a different fill assumption.
 
 Private research strategies run in a separate private repository and reach the engine only through
-the shared backtest core and paper books. A public paper-book identity may show that a separately
-held policy is running, but its private rules and research results stay outside this repository.
+the shared backtest core and paper accounts. Each private strategy version gets its own separately
+funded account; a public identity may show that such a policy is running, but its private rules and
+research results stay outside this repository, and none of them has a proven edge.
 
 Paper equity is evidence about a simulator under stated assumptions. It is not cash, it is not a
 broker statement, and it is never permission to trade live.
 
-<!-- sources: sim/execution.py, sim/fills.py, sim/league.py, sim/p15_books.py, sim/p15_fills.py, sim/strategies/spy_benchmark.py, server/nightly_reports.py -->
+<!-- sources: docs/product.md, docs/paper-account-contract.md, docs/plans/p22-engine-v2-accounts.md, sim/book_breaks.py, sim/ledger.py, sim/execution.py, sim/fills.py, sim/league.py, sim/p15_books.py, sim/p15_fills.py, sim/strategies/spy_benchmark.py, server/nightly_reports.py -->

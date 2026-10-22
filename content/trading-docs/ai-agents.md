@@ -26,6 +26,10 @@ evidence. Only an eligible swing decision can reach the locked simulator tool, a
 checks still own symbol admission, position size, earnings windows, stops, portfolio limits, and
 next-open execution.
 
+The agent's own paper book showed no edge after costs and was retired on 21 October 2026. The
+agent still runs every night and its assessments are still recorded and scored later, but with
+its book retired a swing no longer places a simulator order.
+
 ## Three matched stock-picking books
 
 The profitability evidence loop asks a broader question: can the model rank candidates better
@@ -41,7 +45,9 @@ baseline score. The engine then runs three books with matched mechanics:
 | Hybrid veto | Starts from rule picks and lets AI reject weak ones | Whether AI is better at filtering than inventing trades |
 
 The pre-open model check can only cancel pending AI-ranked or hybrid entries. It cannot add a name,
-increase size, move a limit, or fill an order. Intraday news and mover agents are shadow-only.
+increase size, move a limit, or fill an order. Intraday news, filing, and mover agents are
+shadow-only. The filing trigger reads SEC 8-K filings; after a time-zone fix in October 2026 it
+records filings again, still without any order authority.
 
 ## Challengers
 

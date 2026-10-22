@@ -47,17 +47,19 @@ writer and launch budget remain bounded.
 Starting a second nightly or queue drain around a held producer lock is an operational error. A
 failed queue job keeps its state and error instead of disappearing into a retry loop.
 
-## Revision 9 operating profile
+## Current operating profile
 
-The profitability evidence loop's revision 9 keeps its research rules fixed while changing how
-work is measured and scheduled:
+The profitability evidence loop is at registration revision 17 (October 2026). Its research rules
+have stayed fixed while the revisions changed how work is measured, written, and scheduled:
 
 | Area | Current operating contract |
 |---|---|
 | Stage timing | Every driver stage appends start, finish, duration, and exit status to `logs/stage-timings.jsonl`. `tools/stage_timings.py` summarizes recent median and 90th-percentile runtimes. Timing publication is fail-soft. |
 | Snapshots | With no write-ahead log, the publisher takes source invariants and uses a durable raw-file copy; the DuckDB copy path remains the fallback when a WAL exists. Intraday event runs publish at most once per 120 minutes, and pre-open publishes none. |
 | Nightly network work | Price verification uses four workers behind one global request pacer and overlaps the farm drain. Earnings refreshes only unknown, near-term, or seven-day-stale names except for the Monday full pass. Caught-up TradingView requests cover two to four completed sessions without increasing request rate. |
-| Intraday facts | Unchanged payloads reuse their existing fact revision, while genuinely new rows are written in batches with the response receipt. |
+| Intraday facts | Unchanged payloads reuse their existing fact revision, while genuinely new rows are written in batches with the response receipt. Re-fetched bars identical to the stored ones are recorded as one summary row per batch; changed or rejected bars keep one evidence row each. |
+| Nightly writes | Price observations and archive facts are written as multi-row batches; each change was proven to leave stored rows identical on a copy of the store. |
+| Hourly digest | An hourly operations digest summarizes every scheduled run, stage, and log signal, checks the host schedule against its contract, and checks each new snapshot against the store invariants in shadow mode. |
 | Research queue | A priority-ordered rolling pool fills a freed slot immediately. Walk-forward workers share one immutable read-only base, keep private writable overlays, clean up on termination, and remove only scratch directories that no live process holds. |
 | Readers | Expensive profitability-status and intraday-readiness projections are cached by database generation. Hourly and four-hour observers use one connection for a whole run and wait at most 60 seconds to acquire it. |
 | Reporting | Scoring re-renders the league before evidence validation. A validation failure returns exit 75 after preserving that render; the service records the failure but does not restart into a loop. |
@@ -111,7 +113,13 @@ An admitted deployment applies the installer, verifies installed units against v
 checks service status, and exercises the relevant read-only status routes. The working tree must end
 clean because the nightly synchronizer will not build on uncommitted source or documentation.
 
+Releases follow the same caution. The release tool plans by default and acts only when told to;
+a job registry describes every scheduled unit and is audited against the installed ones without
+changing them; and a public-hygiene check refuses commits that would publish private host details
+or unapproved tool identities. A change reaches the branch the nightly runs only after the full
+test suite passes under both UTC and Singapore time.
+
 The engine remains paper-only throughout these operations. No deployment step on this server may
 add broker credentials, a broker connection, or real capital.
 
-<!-- sources: BUILDLOG.md, docs/how-it-works.md, engine/bitemporal_facts.py, engine/earnings.py, engine/lib/driver.sh, engine/queue_runner.py, engine/run_daily.sh, engine/tradingview_history_archive.py, engine/verify_prices.py, farm/walkforward/runner.py, server/agent_evaluation_reporting.py, server/hourly_opportunity_observer.py, server/intraday_readiness.py, server/main.py, server/scheduler_monitor.py, server/driver_monitor.py, server/meta_snapshot.py, server/run_p15_scoring.sh, server/trading-engine-p15-scoring.service, tools/install_automation.py, tools/publish_snapshot.py, tools/backup_database.py, tools/stage_timings.py -->
+<!-- sources: BUILDLOG.md, ops/jobs.toml, tools/ops_digest.py, tools/check_invariants.py, tools/release_deploy.py, tools/public_hygiene.py, server/trading-engine-ops-digest.timer, docs/how-it-works.md, engine/bitemporal_facts.py, engine/earnings.py, engine/lib/driver.sh, engine/queue_runner.py, engine/run_daily.sh, engine/tradingview_history_archive.py, engine/verify_prices.py, farm/walkforward/runner.py, server/agent_evaluation_reporting.py, server/hourly_opportunity_observer.py, server/intraday_readiness.py, server/main.py, server/scheduler_monitor.py, server/driver_monitor.py, server/meta_snapshot.py, server/run_p15_scoring.sh, server/trading-engine-p15-scoring.service, tools/install_automation.py, tools/publish_snapshot.py, tools/backup_database.py, tools/stage_timings.py -->

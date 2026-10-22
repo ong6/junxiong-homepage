@@ -33,11 +33,13 @@ A registration revision is a newly issued identity for an allowed change. It is 
 rewrite old evidence.
 
 Some revisions change the policy and therefore begin a new cohort. Others bind infrastructure
-changes that leave the research meaning untouched. The active profitability registration revision
-9 is in the second group: it records timing, snapshot throttling and fallback, cached projections,
-single-connection observers, fail-soft reporting, deduplicated fact writes, rolling research work,
-scratch cleanup, and bounded collection improvements without changing scoring, books, gates,
-labels, registered values, or written rows.
+changes that leave the research meaning untouched. The recent profitability registration
+revisions are in the second group. The current one, revision 17 (October 2026), binds the senior-quant
+review's fixes: the SEC acceptance clock, batched nightly writes, faster replays, and cost and
+liquidity corrections on the fill paths. Revision 16 bound its first batch: store-integrity
+repairs, statistics fixes, and operations evidence fixes. Neither changed scoring, books, gates,
+labels, schedules, or registered values. When a fix does change what an evaluation computes, as
+the SEC clock did for the 8-K source, the revision says so in its stated reason.
 
 The reason for a revision is stored with the registration. Validators bind the complete registered
 file set, so an unrecorded source edit fails closed.
@@ -66,6 +68,27 @@ Intraday retention applies the same identity rule before it writes: an unchanged
 same security, fact type, and event time reuses the prior revision. Changed or new facts are inserted
 as one batch with their exact response receipt. This keeps repeated five-minute captures from
 manufacturing evidence revisions while preserving real source changes.
+
+## Invariants and repairs
+
+Some errors are only visible across the whole store: two price bases for one stock after a split,
+a split recorded but never applied, a fill without its fee row, an active book without equity. A
+monitor checks each newly published read-only snapshot against these invariants and reports any
+regression beyond a recorded baseline. It runs in shadow mode: it reports, and an agent
+investigates; it never edits data.
+
+Repairs to stored history use a separate tool that only plans by default and is idempotent. It
+changes a bar only when the source's current history agrees, keeps every original row in a rejects
+table, and writes each change to the audit log. Its first live run, on 22 October 2026, corrected
+18,798 rows and brought the split invariants back to zero regressions on a store copy.
+
+## Speed claims need identical outputs
+
+A faster path is accepted only when it produces the same rows, values, and hashes as the old path
+on a recorded fixture or a copy of the store. A benchmarking tool prints a digest of each output
+with timings and code identity removed, so running it on two versions of the code proves identity.
+The full test suite, about 6,100 tests, runs in roughly two and a half minutes and must pass under
+both UTC and Singapore time before anything reaches the branch the nightly runs.
 
 ## Read-only snapshots
 
@@ -106,4 +129,4 @@ time-based guess.
 Reliability here does not mean pretending nothing fails. It means failures retain enough identity
 and timing for an agent to investigate them on demand without changing frozen evidence.
 
-<!-- sources: BUILDLOG.md, engine/bitemporal_facts.py, engine/lib/driver.sh, engine/lib/snapshots.py, server/agent_evaluation_reporting.py, server/intraday_readiness.py, server/main.py, server/p15-registration.json, server/run_p15_scoring.sh, server/status_validation.py, server/trading-engine-p15-scoring.service, tools/p15_evidence_validation.py, tools/publish_snapshot.py, tools/backup_database.py, tools/stage_timings.py -->
+<!-- sources: BUILDLOG.md, engine/repair_integrity.py, tools/check_invariants.py, tools/sim_bench.py, docs/plans/p24-quant-review-and-speed.md, engine/bitemporal_facts.py, engine/lib/driver.sh, engine/lib/snapshots.py, server/agent_evaluation_reporting.py, server/intraday_readiness.py, server/main.py, server/p15-registration.json, server/run_p15_scoring.sh, server/status_validation.py, server/trading-engine-p15-scoring.service, tools/p15_evidence_validation.py, tools/publish_snapshot.py, tools/backup_database.py, tools/stage_timings.py -->

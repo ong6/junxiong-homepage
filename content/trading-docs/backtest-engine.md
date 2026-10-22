@@ -106,6 +106,29 @@ The registered synthetic benchmark measured the change on 2026-10-02:
 Performance did not buy a different answer: all 295 captured pre-existing JSON outputs, totaling
 53,391,323 bytes, matched byte for byte, including the power, size, and benchmark-strategy runs.
 
+## October 2026: audited and faster again
+
+An October 2026 review audited the core and the paper fill paths against their own rules and fixed
+four defects, each with a test that fails on the old code. Fills under a harsher cost profile now
+pay that profile on every fill path, not only the baseline one; a name with zero trading volume is
+rejected instead of filled without limit; study eligibility measures liquidity over the same 60
+trading bars the fill model uses; and never-settled price bars with an impossible open are left
+out of study inputs. Because the last two change what some studies compute, the core's version
+identity moved to `p18-study-v3`, so results from the earlier version are never silently compared
+with new ones.
+
+The same review sped up the research loop and proved each change by comparing output digests
+before and after on a copy of the store:
+
+- building the shared price panel for 3,000 stocks fell from 119.4 to 6.7 seconds;
+- a one-year paper-book replay fell from 685 to 111 seconds, and one walk-forward fold from
+  4,872 to 582 seconds, with every ledger row identical; and
+- the bootstrap behind the confidence intervals fell from 2.7 to 1.6 seconds per long series.
+
+A research runner now sits beside the core for private and public studies. It reuses the core
+unchanged and keeps a content-addressed cache of price panels, universes, and tables, so an input
+is rebuilt only when its content identity changes.
+
 ## A synthetic proving ground
 
 The evaluator tests itself on generated markets where the truth is known. The synthetic world
@@ -121,4 +144,4 @@ That result proves the evaluator can detect this known synthetic effect at the r
 does not prove that any real strategy works. Synthetic power is a test of the ruler, not the thing
 being measured.
 
-<!-- sources: BUILDLOG.md, docs/backtest-standard.md, docs/plans/p18-backtest-core.md, farm/study/spec.py, farm/study/data.py, farm/study/panel.py, farm/study/bench.py, farm/study/costs.py, farm/study/benchmark.py, farm/study/stats.py, farm/study/protocol.py, farm/study/run.py, farm/study/simulate.py, farm/study/synthetic.py, tests/test_study_followup3.py, tests/test_study_synthetic.py -->
+<!-- sources: BUILDLOG.md, docs/backtest-standard.md, docs/plans/p18-backtest-core.md, farm/study/spec.py, farm/study/data.py, farm/study/panel.py, farm/study/bench.py, farm/study/costs.py, farm/study/benchmark.py, farm/study/stats.py, farm/study/protocol.py, farm/study/run.py, farm/study/simulate.py, farm/study/synthetic.py, farm/study_columnar.py, farm/research/, sim/fills.py, tools/sim_bench.py, tests/test_study_followup3.py, tests/test_study_synthetic.py -->

@@ -87,7 +87,7 @@ export default function TradingEngine() {
 					id="te-now"
 					headingLevel={2}
 					diagram={Engine2}
-					caption="fig. 1 — Engine v2 with the deploy checks coming in the next update: a fresh reviewer, replayed provider responses, a check of every scheduled job and a deploy gate. An invariant monitor, watch-only at first, will check each published snapshot before reports read it."
+					caption="fig. 1 — Engine v2 with its deploy checks, live since 21 October: a fresh reviewer, replayed provider responses, a check of every scheduled job and a deploy gate. An invariant monitor, still watch-only, checks each published snapshot before reports read it."
 				/>
 
 				<H2>Two engines</H2>
@@ -97,8 +97,8 @@ export default function TradingEngine() {
 					through eight updates from July to October. Engine v2 has been live on paper since 18
 					October and does a different job: it fills the orders, keeps the books and charges
 					commissions on every fill, and each strategy gets its own paper account. Every change goes
-					to a fresh reviewer that didn&apos;t write it. The checks in fig. 1 are built and land on
-					the main branch in the next update. A new engine number means the engine&apos;s job
+					to a fresh reviewer that didn&apos;t write it. The checks in fig. 1 went live with the 21
+					October update. A new engine number means the engine&apos;s job
 					changed; updates inside an engine move the number after the dot.
 				</P>
 

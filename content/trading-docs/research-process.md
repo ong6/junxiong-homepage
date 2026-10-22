@@ -38,6 +38,15 @@ after testing one genuinely independent idea.
 
 DSR does not repair bad data or a weak benchmark. It is one layer in a stack of protections.
 
+The statistics are audited too. An October 2026 review found that the fallback hurdle let a
+candidate's own skew lower or raise the bar it was measured against; the hurdle now assumes a
+zero-skill strategy, as the method intends. The same review fixed a comparator that could price a
+missing bar with a close from the future, short positions that paid only part of the dividends
+they owed, and an eligibility window that disagreed with the fill model's. Each fix came with a
+test that fails on the old code. The comparator fix touched no registered result in this
+repository; the hurdle fix moved recorded walk-forward DSR values by at most 0.096, and none crossed
+its bar.
+
 ## Develop in folds
 
 A walk-forward study moves through time. It chooses or fits a rule on an earlier development
@@ -98,4 +107,4 @@ The final path is intentionally long: historical screen, prospective confirmatio
 and only after an owner-approved Stage 1 pass, perhaps a future broker paper account. Today the
 engine is still paper-only, and no AI policy has cleared its prospective gate.
 
-<!-- sources: docs/backtest-standard.md, docs/system-blueprint.md, farm/study/census.py, farm/study/protocol.py, farm/study/stats.py, farm/walkforward/protocol.py, server/p15-registration.json, server/p16-registration.json -->
+<!-- sources: BUILDLOG.md, farm/stats/inference.py, docs/backtest-standard.md, docs/system-blueprint.md, farm/study/census.py, farm/study/protocol.py, farm/study/stats.py, farm/walkforward/protocol.py, server/p15-registration.json, server/p16-registration.json -->

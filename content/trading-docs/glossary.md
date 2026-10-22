@@ -32,6 +32,12 @@ a label. It is not a quality mark, a profit claim, or proof that the work is act
 | P16 | Challenger lab, text edge, and evaluation science | Builds shadow challengers, text labs, stronger statistics, portfolios, and execution measurement. |
 | P17 | Personal-host IBKR paper execution | A proposed future broker paper plan on personal hardware; explicitly not work for now. |
 | P18 | Shared backtest core | Supplies one public point-in-time evaluator for event and portfolio studies. |
+| P19 | Offline market-data auditor | Measures signal-input coverage against an independent reference population, with a fictional omission demo. |
+| P20 | Engine and paper dashboard review | Reviewed and fixed the engine and dashboard against real host evidence. |
+| P21 | Operational issue closure and separate accounts | Closed operational issues and proved isolated paper accounts for separately held strategies. |
+| P22 | Engine v2 accounts and money | Made the engine the single executor and ledger for paper accounts: commissions, auction and intraday fills, shorts, margin and halts. Live since 2026-10-18. |
+| P23 | Hourly operations digest | Summarizes every scheduled run, stage and log signal each hour so an agent can investigate failures on demand. |
+| P24 | Senior-quant review | The active 2026-10-21 review: pipeline and data-integrity fixes, statistics audit, output-identical speed work, and new private research studies. |
 
 The plan index is the single source of truth for status. “Done” means the planned work finished; it
 does not mean the strategy was profitable.
@@ -90,6 +96,10 @@ W8 means activation, while the challenger lab’s W8 means Stage 2 design.
 | Shadow decision | A retained model or rule decision with no authority to place even a simulator order. |
 | Point-in-time | Data exposed only when it would truly have been available to the decision being replayed. |
 | Kill condition | A rule frozen before testing that stops an idea when its evidence is too weak or its risk is too high. |
+| Engine v2 | The account and money foundation live since 18 October 2026: one ledger for every paper book and account, with commissions, auction and intraday fills, shorts, margin, and halts. |
+| D0 | The recorded break date (19 October 2026) from which every book pays commissions and its evaluation clock restarted. |
+| Provisional bar | A price bar stored on the night of its own session that the source may still correct; it is asked for again and never prices a fill while its open is impossible. |
+| Invariant monitor | A shadow check that compares each published snapshot against store-wide rules, such as one price basis per stock, and reports regressions without changing data. |
 
 For examples, see [How research earns a verdict](/trading-engine/docs/research-process),
 [Paper books and the league](/trading-engine/docs/paper-books), and
