@@ -12,7 +12,7 @@ const LLMS = `# Ong Jun Xiong
 
 > ${DEFAULT_DESCRIPTION}
 
-Software engineer at TikTok in Singapore, building AI infrastructure for e-commerce. Before that, Go services for TikTok's seller platform. Founded and ran Compoze alongside TikTok in 2025 until a client bought it. Studied computer science at the National University of Singapore, including NUS Overseas Colleges in Munich.
+Software engineer at TikTok in Singapore, working on AI infrastructure, Go backends and distributed systems. Before that, Go services for TikTok's seller platform. Founded and ran Compoze alongside TikTok in 2025 until a client bought it. Studied computer science at the National University of Singapore, including NUS Overseas Colleges in Munich.
 
 Contact: email via ${SITE_URL}/contact. GitHub: https://github.com/ong6. LinkedIn: https://www.linkedin.com/in/junx6/.
 
@@ -23,11 +23,12 @@ Contact: email via ${SITE_URL}/contact. GitHub: https://github.com/ong6. LinkedI
 
 ## Projects
 
-- [Groundplane](${SITE_URL}/groundplane): open-source Python library that checks declared fields in agent output against recorded tool facts, with deterministic checks and errors that include provenance. Code: https://github.com/ong6/groundplane
+- [AI tooling](${SITE_URL}/ai-tooling): three open-source tools for AI agents, by layer
+  - Context: [Agent skills](${SITE_URL}/skills): public Claude Code and Codex skills in one repo, linked into each repo per machine profile by a small CLI that also guards and publishes edits. Code: https://github.com/ong6/skills
+  - Evaluation: [Skillsmith](${SITE_URL}/skillsmith): makes an agent skill from a repo and keeps it only when it beats a no-skill baseline on heldout tasks. Code: https://github.com/ong6/skills/tree/main/skills/skillsmith
+  - Runtime checks: [Groundplane](${SITE_URL}/groundplane): open-source Python library that checks declared fields in agent output against recorded tool facts, with deterministic checks and errors that include provenance. Code: https://github.com/ong6/groundplane
 - [Compoze](${SITE_URL}/compoze): document-grounded assistants for businesses, built and run solo in 2025; a client bought the company at the end of that year
 - [Trading engine](${SITE_URL}/trading-engine): paper-trading research engine where every strategy runs through one shared no-peeking backtest core and evidence path. The live AI comparison uses three matched paper portfolios; no policy has beaten its frozen control yet. Code: https://github.com/ong6/trading-engine. Engine v1, a research simulator in eight updates each with its own diagram: ${SITE_URL}/trading-engine/v1/1.1 to /v1/1.8. Engine v2, live on paper since 18 October 2026: the engine fills orders, keeps the books and charges commissions on every fill, and the next update adds deploy checks (replayed provider responses, a scheduled-job check, a deploy gate) and an invariant monitor on every published snapshot: ${SITE_URL}/trading-engine/v2
-- [Skillsmith](${SITE_URL}/skillsmith): makes an agent skill from a repo and keeps it only when it beats a no-skill baseline on heldout tasks. Code: https://github.com/ong6/skills/tree/main/skills/skillsmith
-- [Agent skills](${SITE_URL}/skills): public Claude Code and Codex skills in one repo, linked into each repo per machine profile by a small CLI that also guards and publishes edits. Code: https://github.com/ong6/skills
 - [UI Pack](${SITE_URL}/uipack): shared web figures, motion and slide starters used across these projects. Code: https://github.com/ong6/uipack
 
 ## Trading engine product docs

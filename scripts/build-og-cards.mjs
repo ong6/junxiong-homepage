@@ -15,7 +15,13 @@ const cards = [
 		slug: "home",
 		eyebrow: "JUNXIONG.DEV / SINGAPORE",
 		title: "Ong Jun Xiong",
-		summary: "Software engineer at TikTok, building AI infrastructure for e\u2011commerce. Plus what I build on my own time.",
+		summary: "Software engineer at TikTok in Singapore, working on AI infrastructure. Plus what I build in my own time.",
+	},
+	{
+		slug: "ai-tooling",
+		eyebrow: "OPEN SOURCE / AI AGENTS",
+		title: "AI tooling",
+		summary: "Three tools for AI agents: the instructions they load, a test for those instructions, and a check on their answers.",
 	},
 	{
 		slug: "groundplane",
@@ -51,7 +57,7 @@ const cards = [
 		slug: "uipack",
 		eyebrow: "DESIGN SYSTEM / TYPESCRIPT",
 		title: "UI Pack",
-		summary: "The web figures, motion rules and slide starters I reuse across my projects.",
+		summary: "The figures, motion rules and slide starters shared across my projects.",
 	},
 ];
 

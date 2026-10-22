@@ -16,11 +16,9 @@ for (const width of [390, 1440]) {
 			await expect(page.locator("h1")).toHaveText("Ong Jun Xiong");
 			const projectHeadings = await page.locator("#work h3").allTextContents();
 			expect(projectHeadings.map((heading) => heading.replace(/[→↗]/, "").trim())).toEqual([
-				"Groundplane",
+				"AI tooling",
 				"Compoze",
 				"Trading engine",
-				"Skillsmith",
-				"Agent skills",
 				"UI Pack",
 			]);
 			await expect(page.getByRole("heading", { name: "Selected work" })).toBeVisible();
@@ -39,7 +37,7 @@ for (const width of [390, 1440]) {
 			}
 			await expect(page.locator("#about").getByRole("link", { name: "Resume", exact: true })).toHaveAttribute("href", "/resume");
 			await expect(page.locator("main").getByRole("link", { name: "Email", exact: true })).toHaveCount(0);
-			await expect(page.getByText("Before that I wrote Go services for the seller platform", { exact: false })).toBeVisible();
+			await expect(page.getByText("Most of my work is Go backends and distributed systems", { exact: false })).toBeVisible();
 			await expect(
 				page.locator("#work").getByRole("link", { name: "Compoze", exact: true }),
 			).toHaveAttribute("href", "/compoze");
@@ -47,8 +45,7 @@ for (const width of [390, 1440]) {
 			for (const [name, href] of [
 				["UI Pack", "/uipack"],
 				["Trading engine", "/trading-engine"],
-				["Agent skills", "/skills"],
-				["Skillsmith", "/skillsmith"],
+				["AI tooling", "/ai-tooling"],
 			]) {
 				await expect(page.locator("#work").getByRole("link", { name, exact: true })).toHaveAttribute("href", href);
 			}
@@ -117,3 +114,22 @@ for (const route of ["/compoze", "/groundplane"]) {
 		expect(first.y).toBeLessThan(architecture.y);
 	});
 }
+
+test("/ai-tooling lists the tools by layer and each tool links back", async ({ page }) => {
+	const errors = collectErrors(page);
+	await page.goto("/ai-tooling");
+	await expect(page.locator("h1")).toHaveText("AI tooling");
+	const layers = page.getByRole("region", { name: "Tools by layer" });
+	for (const [name, href] of [
+		["Agent skills", "/skills"],
+		["Skillsmith", "/skillsmith"],
+		["Groundplane", "/groundplane"],
+	]) {
+		await expect(layers.getByRole("link", { name, exact: true })).toHaveAttribute("href", href);
+	}
+	for (const route of ["/skills", "/skillsmith", "/groundplane"]) {
+		await page.goto(route);
+		await expect(page.getByRole("link", { name: "← AI tooling" })).toHaveAttribute("href", "/ai-tooling");
+	}
+	expect(errors).toEqual([]);
+});

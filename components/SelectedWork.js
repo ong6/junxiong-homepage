@@ -11,7 +11,9 @@ import {
 	useColorModeValue,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { Fragment } from "react";
 import OutArrow from "./OutArrow";
+import { AI_TOOLING } from "../lib/aiTooling";
 import { toneFor } from "../lib/tones";
 
 // Lift on a real pointer only; touch fires a sticky hover on tap.
@@ -102,14 +104,14 @@ function CardCopy({ eyebrow, title, href, description }) {
 	);
 }
 
-function GroundplaneCard() {
+function AiToolingCard() {
 	return (
-		<FeaturedCard span={7} href="/groundplane">
+		<FeaturedCard span={7} href="/ai-tooling">
 			<CardCopy
 				eyebrow="Open source · 2026"
-				title="Groundplane"
-				href="/groundplane"
-				description="I built Groundplane to catch cases where an agent gives the wrong winner or total despite having the right data. It checks the answer against recorded tool results."
+				title="AI tooling"
+				href="/ai-tooling"
+				description="Three open-source tools for AI agents: the instructions they load, a test for whether those instructions help, and a check on the answers they give."
 			/>
 			<Box mt="auto" px={{ base: 6, md: 8 }} pb={{ base: 6, md: 8 }}>
 				<DottedCanvas>
@@ -123,21 +125,21 @@ function GroundplaneCard() {
 						data-panel
 						p={4}>
 						<Flex justify="space-between" gap={4} color="text.muted" sx={labelStyle}>
-							<Text>Declared field</Text>
-							<Text>Check 01</Text>
+							<Text>Layer</Text>
+							<Text>Tool</Text>
 						</Flex>
-						<Grid as="dl" mt={4} templateColumns="minmax(0, 1fr) auto" rowGap={2} fontSize="16px">
-							<Text as="dt" color="text.muted">Claim</Text>
-							<Text as="dd" m={0} fontWeight="700">north</Text>
-							<Text as="dt" color="text.muted">Recorded winner</Text>
-							<Text as="dd" m={0} fontWeight="700">harbour</Text>
+						<Grid as="dl" mt={3} templateColumns="minmax(0, 1fr) auto" fontSize="16px">
+							{AI_TOOLING.map((tool) => (
+								<Fragment key={tool.href}>
+									<Text as="dt" py={2} borderTop="1px solid" borderColor="border.subtle" color="text.muted">
+										{tool.layer}
+									</Text>
+									<Text as="dd" m={0} py={2} borderTop="1px solid" borderColor="border.subtle" fontWeight="700" textAlign="right">
+										{tool.name}
+									</Text>
+								</Fragment>
+							))}
 						</Grid>
-						<Text data-stamp mt={4} pt={4} borderTop="1px solid" borderColor="border.subtle" color="status.error" fontFamily="var(--font-mono)" fontSize="12px" fontWeight="700">
-							Blocked · UnsupportedClaim
-						</Text>
-						<Text mt={2} color="text.muted" fontSize="14px" lineHeight="1.5">
-							The model named north, but the recorded facts rank harbour first, so the field is rejected.
-						</Text>
 					</Box>
 				</DottedCanvas>
 			</Box>
@@ -152,7 +154,7 @@ function CompozeCard() {
 				eyebrow="Company · 2025"
 				title="Compoze"
 				href="/compoze"
-				description="I ran Compoze alongside TikTok, building assistants that answered questions from company documents. I handled sales, development and customer training."
+				description="Assistants that answer questions from a company's own documents. A side business next to TikTok, where I did the sales, the building and the customer training."
 			/>
 			<Box mt="auto" px={{ base: 6, md: 8 }} pb={{ base: 6, md: 8 }}>
 				<DottedCanvas>
@@ -181,26 +183,14 @@ const supportingProjects = [
 		title: "Trading engine",
 		href: "/trading-engine",
 		label: "Research system",
-		description: "I use this to test trading ideas overnight, with rules set before the results come in.",
+		description: "Tests trading ideas overnight, with the rules fixed before the results come in.",
 		wide: true,
-	},
-	{
-		title: "Skillsmith",
-		href: "/skillsmith",
-		label: "Skill evaluation",
-		description: "I make a skill from the repo, then compare the agent with and without it to check whether the extra instructions help.",
-	},
-	{
-		title: "Agent skills",
-		href: "/skills",
-		label: "Agent tooling",
-		description: "The reusable instructions I keep in one place for Claude Code and Codex.",
 	},
 	{
 		title: "UI Pack",
 		href: "/uipack",
 		label: "Design system",
-		description: "The web figures, motion rules and slide starters I reuse across my projects.",
+		description: "The figures, motion rules and slide starters shared across my projects.",
 		wide: true,
 	},
 ];
@@ -307,7 +297,7 @@ export default function SelectedWork() {
 					Selected work
 				</Heading>
 				<Grid mt={{ base: 6, md: 8 }} templateColumns={{ base: "1fr", lg: "repeat(12, minmax(0, 1fr))" }} gap={{ base: 4, md: 6 }}>
-					<GroundplaneCard />
+					<AiToolingCard />
 					<CompozeCard />
 				</Grid>
 

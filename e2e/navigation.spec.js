@@ -85,7 +85,7 @@ test("contact affordance opens the contact page", async ({ page }) => {
 	await page.goto("/");
 	await page.getByRole("navigation", { name: "Site" }).getByRole("link", { name: "Contact me" }).click();
 	await expect(page).toHaveURL(/\/contact$/);
-	await expect(page.getByRole("heading", { level: 1, name: "Let's talk." })).toBeVisible();
+	await expect(page.getByRole("heading", { level: 1, name: "Contact" })).toBeVisible();
 });
 
 test("mobile menu is touch-sized and keyboard-dismissible", async ({ page }) => {

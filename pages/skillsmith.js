@@ -50,14 +50,14 @@ export default function Skillsmith() {
 				<Box pt={{ base: 10, md: 16 }}>
 					<Link
 						as={NextLink}
-						href="/#work"
+						href="/ai-tooling"
 						display="inline-flex"
 						alignItems="center"
 						minH="32px"
 						my={-1.5}
 						fontSize="13px"
 						fontWeight="700">
-						← Selected projects
+						← AI tooling
 					</Link>
 
 					<Heading as="h1" mt={{ base: 8, md: 10 }} fontSize={{ base: "40px", md: "52px" }} lineHeight="1" letterSpacing="-.045em">

@@ -24,7 +24,7 @@ const navigationLinks = [
 		href: "/#work",
 		homeHref: "#work",
 		name: "Projects",
-		activePaths: ["/compoze", "/groundplane", "/skills", "/skillsmith", "/trading-engine", "/uipack"],
+		activePaths: ["/ai-tooling", "/compoze", "/groundplane", "/skills", "/skillsmith", "/trading-engine", "/uipack"],
 	},
 	{ href: "/resume", name: "Resume" },
 	{ href: "/hobbies", name: "Hobbies" },

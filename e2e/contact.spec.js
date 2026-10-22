@@ -9,7 +9,7 @@ for (const width of [390, 1440]) {
 			await page.addInitScript((mode) => localStorage.setItem("chakra-ui-color-mode", mode), theme);
 			await page.goto("/contact");
 			await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
-			await expect(page.getByRole("heading", { level: 1, name: "Let's talk." })).toBeVisible();
+			await expect(page.getByRole("heading", { level: 1, name: "Contact" })).toBeVisible();
 			for (const [name, href] of [
 				["Email", "mailto:junxiongong2@gmail.com"],
 				["LinkedIn", "https://www.linkedin.com/in/junx6/"],

@@ -250,6 +250,20 @@ def scene_groundplane():
     tree(1.3, 1.05, 0.9)
 
 
+def scene_ai_tooling():
+    plinth(3.4, 3.2)
+    # Three stacked layers on corner posts: a scroll on top, a check below.
+    for i, (c, rz) in enumerate((("sage_dark", -4), ("cream", 3), ("cobalt_light", -2))):
+        z = 0.25 + i * 0.55
+        rbox((1.9, 1.4, 0.14), (-0.2, 0.1, z), (0, 0, rz), c, 0.05)
+        if i < 2:
+            for px, py in ((-1.0, -0.45), (0.6, -0.45), (-1.0, 0.65), (0.6, 0.65)):
+                cyl(0.04, 0.41, (px, py, z + 0.27), m="steel", bevel=0.01)
+    cyl(0.11, 0.8, (-0.6, 0.2, 1.53), (0, 90, -2), "cream", 0.03)
+    check((0.3, -0.3, 1.66), (0, 0, 0), 0.6, "up")
+    tree(1.35, 1.05, 0.85, 0.8)
+
+
 def scene_compoze():
     plinth(3.4, 3.2)
     # A stack of documents and a speech bubble that answers from them.
@@ -328,6 +342,7 @@ def scene_uipack():
 
 SCENES = {
     "home": scene_home,
+    "ai-tooling": scene_ai_tooling,
     "groundplane": scene_groundplane,
     "compoze": scene_compoze,
     "trading-engine": scene_trading_engine,

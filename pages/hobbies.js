@@ -72,7 +72,7 @@ export default function Hobbies() {
 				<Box as="header" className={styles.intro}>
 					<Box className={styles.introInner}>
 						<Text className={styles.eyebrow}>{"// OFF THE CLOCK"}</Text>
-						<Text as="h1" className={styles.title}>Things I keep returning to.</Text>
+						<Text as="h1" className={styles.title}>Hobbies</Text>
 						<Text className={styles.lede}>I spend a lot of my free time coding and trying out AI tools. I also play tennis, trade, plan trips and read.</Text>
 						<Box as="nav" aria-label="Hobby chapters" className={styles.chapterNav}>
 							{chapters.map((chapter) => (

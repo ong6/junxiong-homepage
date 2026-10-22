@@ -306,11 +306,10 @@ export default function Compoze() {
 				<H2>Safety</H2>
 
 				<P>
-					Retrieved text is untrusted input. An instruction planted in a synced
-					document can influence the model, so context arrives in a delimited
-					block the prompt declares as data. Tools are scoped per agent and
-					tenant connector. These controls limit which tools the model can call.
-					They do not guarantee that the model will ignore a planted instruction.
+					A synced document could contain instructions aimed at the model. I mark
+					retrieved text as data in the prompt and limit each agent to its own
+					tools. That limits what a planted instruction can do, but it doesn&apos;t
+					stop the model from reading it.
 				</P>
 
 				<Details title="Implementation inventory">

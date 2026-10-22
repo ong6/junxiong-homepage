@@ -61,19 +61,18 @@ function Introduction() {
 						Ong Jun Xiong
 					</Heading>
 					<Text className="hero-rise" style={{ "--i": 2 }} mt={6} fontSize={{ base: "19px", md: "23px" }} lineHeight="1.45">
-						I&apos;m a software engineer at TikTok in Singapore, building AI infrastructure for{" "}
+						I&apos;m a software engineer at TikTok in Singapore, working on AI{" "}
 						<Box as="span" whiteSpace="nowrap">
-							e-commerce.
+							infrastructure.
 						</Box>
 					</Text>
 					<Text className="hero-rise" style={{ "--i": 3 }} mt={4} maxW="640px" fontSize="16px" lineHeight="1.75" color="text.muted">
-						At TikTok I built my team&apos;s shared AI platform from zero: an agent service, an MCP
-						server over the data warehouse, and a React SDK for AI chat. Before that I
-						wrote Go services for the seller platform. Outside work, I built and ran{" "}
+						Most of my work is Go backends and distributed systems. I like taking
+						something from zero to one, and then from one to a hundred. Outside work I ran{" "}
 						<Link as={NextLink} href="/compoze">
 							Compoze
-						</Link>{" "}
-						until a client bought it. Below is what I build on my own time.
+						</Link>
+						, a small company I sold to a client in 2025. Below is what I build in my own time.
 					</Text>
 				</Box>
 

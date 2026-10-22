@@ -1,26 +1,7 @@
-import { Box, Heading, LinkBox, LinkOverlay, SimpleGrid, Text } from "@chakra-ui/react";
+import { Box, Heading, Link, LinkBox, LinkOverlay, SimpleGrid, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
-
-const tools = [
-	{
-		name: "Agent skills",
-		href: "/skills",
-		stage: "01 · instruct",
-		detail: "The reusable instructions my agents load.",
-	},
-	{
-		name: "Skillsmith",
-		href: "/skillsmith",
-		stage: "02 · make + prove",
-		detail: "Drafts a skill from the repo, then a blind test decides whether it stays.",
-	},
-	{
-		name: "Groundplane",
-		href: "/groundplane",
-		stage: "03 · check",
-		detail: "Checks agent output against recorded tool results.",
-	},
-];
+import OutArrow from "./OutArrow";
+import { AI_TOOLING } from "../lib/aiTooling";
 
 export default function AiToolFamily({ current }) {
 	const headingId = `${current.replace(/^\//, "")}-family-heading`;
@@ -33,13 +14,16 @@ export default function AiToolFamily({ current }) {
 				fontWeight="700"
 				letterSpacing=".1em"
 				textTransform="uppercase">
-				{"// AI TOOLCHAIN"}
+				{"// AI TOOLING"}
 			</Text>
 			<Heading id={headingId} as="h2" mt={2} fontSize={{ base: "22px", md: "24px" }}>
-				How these tools fit together
+				<Link as={NextLink} href="/ai-tooling" color="inherit" display="inline-flex" alignItems="center" minH="44px" textDecoration="none">
+					All three layers
+					<OutArrow ml={2} color="brand.solid" />
+				</Link>
 			</Heading>
 			<SimpleGrid columns={{ base: 1, md: 3 }} mt={5} gap={3}>
-				{tools.map((tool) => {
+				{AI_TOOLING.map((tool, index) => {
 					const active = tool.href === current;
 					return (
 						<LinkBox
@@ -52,7 +36,7 @@ export default function AiToolFamily({ current }) {
 							borderRadius="4px"
 							bg={active ? "accent.soft" : "surface.raised"}>
 							<Text color="text.muted" fontFamily="var(--font-mono)" fontSize="12px" textTransform="uppercase">
-								{tool.stage}
+								{String(index + 1).padStart(2, "0")} · {tool.layer}
 							</Text>
 							<Heading as="h3" mt={3} fontSize="18px" lineHeight="1.2">
 								<LinkOverlay as={NextLink} href={tool.href} aria-current={active ? "page" : undefined}>
@@ -60,7 +44,7 @@ export default function AiToolFamily({ current }) {
 								</LinkOverlay>
 							</Heading>
 							<Text mt={2} color="text.muted" fontSize="15px" lineHeight="1.55">
-								{tool.detail}
+								{tool.short}
 							</Text>
 						</LinkBox>
 					);

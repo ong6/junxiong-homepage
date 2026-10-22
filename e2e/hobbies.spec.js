@@ -28,7 +28,7 @@ for (const width of [390, 1440]) {
 			await page.addInitScript((t) => localStorage.setItem("chakra-ui-color-mode", t), theme);
 			await page.goto("/hobbies");
 			await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
-			await expect(page.locator("h1")).toHaveText("Things I keep returning to.");
+			await expect(page.locator("h1")).toHaveText("Hobbies");
 			await expect(page.locator("main h2")).toHaveText(labels);
 			await settleLayout(page);
 			await expectOnlyVisibleArtwork(page);

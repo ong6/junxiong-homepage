@@ -100,14 +100,14 @@ export default function Groundplane() {
 				<Box pt={{ base: 10, md: 16 }}>
 					<Link
 						as={NextLink}
-						href="/#work"
+						href="/ai-tooling"
 						display="inline-flex"
 						alignItems="center"
 						minH="32px"
 						my={-1.5}
 						fontSize="13px"
 						fontWeight="700">
-						← Selected projects
+						← AI tooling
 					</Link>
 
 					<Heading
@@ -247,8 +247,9 @@ export default function Groundplane() {
 					checker&apos;s message as the correction. A misconfigured check still
 					propagates: a developer bug is not something to reask the model about.
 					The MCP adapter records a tool result as a fact with the call as
-					provenance. It prefers the structured payload over the text blocks,
-					because text is a rendering and reading it is parsing prose again.
+					provenance. When an MCP tool returns both structured data and text, the
+					adapter records the structured data, since the text would have to be
+					parsed again.
 				</P>
 
 				<H2>Testing the checks</H2>

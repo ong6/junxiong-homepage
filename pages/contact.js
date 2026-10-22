@@ -68,7 +68,7 @@ export default function Contact() {
 						fontSize={{ base: "44px", md: "64px" }}
 						lineHeight="1"
 						letterSpacing="-.05em">
-						Let&apos;s talk.
+						Contact
 					</Heading>
 					<Text mt={6} maxW="560px" fontSize={{ base: "19px", md: "22px" }} lineHeight="1.55" fontWeight="600">
 						Email is the easiest way to reach me.
@@ -104,7 +104,7 @@ export default function Contact() {
 					{"// ELSEWHERE"}
 				</Text>
 				<Heading id="contact-links" as="h2" mt={2} fontSize={{ base: "28px", md: "36px" }}>
-					Work and writing.
+					Work and writing
 				</Heading>
 				{/* Same row grammar as the Links out block: name, arrow pinned to the
 				    row's right edge, detail below. Columns sit 24px apart. */}

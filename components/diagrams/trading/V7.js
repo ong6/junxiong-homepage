@@ -6,7 +6,7 @@ export const CLAIM =
 export const meta = {
 	number: "Figure 01",
 	eyebrow: "The nightly loop · 1.7",
-	title: "The model scores, code trades, the ledger decides",
+	title: "What happens each night",
 	caption:
 		"Sources on the left, one writer, three decision paths, then sizing and fills, then the evidence on the right. Dashed boxes place no orders. Nothing here moves a strategy to real money on its own.",
 	legend: [
