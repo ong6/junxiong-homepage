@@ -1,4 +1,14 @@
-import { Box, Container, Heading, Link, LinkBox, LinkOverlay, Text, useColorModeValue } from "@chakra-ui/react";
+import {
+	Box,
+	Container,
+	Heading,
+	Link,
+	LinkBox,
+	LinkOverlay,
+	Text,
+	VisuallyHidden,
+	useColorModeValue,
+} from "@chakra-ui/react";
 import NextLink from "next/link";
 import CaseStudyFooter from "../components/CaseStudyFooter";
 import OutArrow from "../components/OutArrow";
@@ -36,8 +46,16 @@ function Layer({ tool, index }) {
 				</Box>
 			</Text>
 			<Heading as="h2" mt={2} fontSize={{ base: "24px", md: "28px" }} lineHeight="1.1">
-				<LinkOverlay as={NextLink} href={tool.href} prefetch={false} color="inherit" display="inline-flex" alignItems="center" minH="44px">
+				<LinkOverlay
+					{...(tool.external
+						? { href: tool.href, target: "_blank", rel: "noopener noreferrer" }
+						: { as: NextLink, href: tool.href, prefetch: false })}
+					color="inherit"
+					display="inline-flex"
+					alignItems="center"
+					minH="44px">
 					{tool.name}
+					{tool.external && <VisuallyHidden> (opens in a new tab)</VisuallyHidden>}
 					<OutArrow ml={2} color="brand.solid" />
 				</LinkOverlay>
 			</Heading>
@@ -57,7 +75,7 @@ export default function AiTooling() {
 	return (
 		<Layout
 			title="AI tooling"
-			description="Open-source tools for AI agents, by layer: Agent skills for context, Skillsmith for evaluation and Groundplane for runtime checks.">
+			description="Open-source tools for AI agents, by layer: Workbase for memory, Agent skills for context, Skillsmith for evaluation and Groundplane for runtime checks.">
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
 					<Link
@@ -72,16 +90,30 @@ export default function AiTooling() {
 						← Selected projects
 					</Link>
 
-					<Heading as="h1" mt={{ base: 8, md: 10 }} fontSize={{ base: "40px", md: "52px" }} lineHeight="1" letterSpacing="-.045em">
+					<Heading
+						as="h1"
+						mt={{ base: 8, md: 10 }}
+						fontSize={{ base: "40px", md: "52px" }}
+						lineHeight="1"
+						letterSpacing="-.045em">
 						AI tooling
 					</Heading>
 
-					<Text mt={4} color={accent} fontFamily="var(--font-mono)" fontSize="12px" fontWeight="700" letterSpacing=".1em" textTransform="uppercase">
-						2026 · open source · 3 tools
+					<Text
+						mt={4}
+						color={accent}
+						fontFamily="var(--font-mono)"
+						fontSize="12px"
+						fontWeight="700"
+						letterSpacing=".1em"
+						textTransform="uppercase">
+						2026 · open source · {AI_TOOLING.length} tools
 					</Text>
 
 					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="1.6" fontWeight="600">
-						I use coding agents every day and build them at work, and these are the tools I ended up writing around them. They&apos;re ordered by where they sit in an agent&apos;s run, from what it reads before it starts to checking what it says at the end.
+						I use coding agents every day and build them at work, and these are the tools I ended up
+						writing around them. They&apos;re ordered by where they sit in an agent&apos;s run, from
+						what it reads before it starts to checking what it says at the end.
 					</Text>
 				</Box>
 
@@ -99,7 +131,13 @@ export default function AiTooling() {
 					))}
 				</Box>
 
-				<CaseStudyFooter next={{ name: "Compoze", href: "/compoze", detail: "Document-grounded assistants, a company I ran alone and sold to a client" }} />
+				<CaseStudyFooter
+					next={{
+						name: "Compoze",
+						href: "/compoze",
+						detail: "Document-grounded assistants, a company I ran alone and sold to a client",
+					}}
+				/>
 			</Container>
 		</Layout>
 	);

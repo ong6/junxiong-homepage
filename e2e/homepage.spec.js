@@ -121,6 +121,7 @@ test("/ai-tooling lists the tools by layer and each tool links back", async ({ p
 	await expect(page.locator("h1")).toHaveText("AI tooling");
 	const layers = page.getByRole("region", { name: "Tools by layer" });
 	for (const [name, href] of [
+		["Workbase (opens in a new tab)", "https://github.com/ong6/workbase"],
 		["Agent skills", "/skills"],
 		["Skillsmith", "/skillsmith"],
 		["Groundplane", "/groundplane"],

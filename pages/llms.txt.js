@@ -23,7 +23,8 @@ Contact: email via ${SITE_URL}/contact. GitHub: https://github.com/ong6. LinkedI
 
 ## Projects
 
-- [AI tooling](${SITE_URL}/ai-tooling): three open-source tools for AI agents, by layer
+- [AI tooling](${SITE_URL}/ai-tooling): four open-source tools for AI agents, by layer
+  - Memory: [Workbase](https://github.com/ong6/workbase): a per-job notes folder with a manual that tells a coding agent where decisions, wins, acronyms and fixes go and where to look before answering; template, setup script and evals
   - Context: [Agent skills](${SITE_URL}/skills): public Claude Code and Codex skills in one repo, linked into each repo per machine profile by a small CLI that also guards and publishes edits. Code: https://github.com/ong6/skills
   - Evaluation: [Skillsmith](${SITE_URL}/skillsmith): makes an agent skill from a repo and keeps it only when it beats a no-skill baseline on heldout tasks. Code: https://github.com/ong6/skills/tree/main/skills/skillsmith
   - Runtime checks: [Groundplane](${SITE_URL}/groundplane): open-source Python library that checks declared fields in agent output against recorded tool facts, with deterministic checks and errors that include provenance. Code: https://github.com/ong6/groundplane
