@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Heading, Link, LinkBox, LinkOverlay, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Container, Heading, Link, LinkBox, LinkOverlay, Text, useColorModeValue } from "@chakra-ui/react";
 import NextLink from "next/link";
 import CaseStudyFooter from "../components/CaseStudyFooter";
 import OutArrow from "../components/OutArrow";
@@ -13,7 +13,8 @@ const mono = {
 	textTransform: "uppercase",
 };
 
-// One framed column, a row per layer, so the page reads as a stack.
+// One framed column, a row per layer, so the page reads as a stack. The layer
+// sits above the name rather than in a side column, so every row shares one left edge.
 function Layer({ tool, index }) {
 	return (
 		<LinkBox
@@ -27,30 +28,25 @@ function Layer({ tool, index }) {
 			borderColor="border.subtle"
 			p={{ base: 6, md: 8 }}
 			transition="border-color 160ms ease">
-			<Grid templateColumns={{ base: "1fr", md: "176px minmax(0, 1fr)" }} columnGap={8} rowGap={3}>
-				<Box>
-					<Text sx={mono} color="brand.solid">
-						{String(index + 1).padStart(2, "0")} · {tool.layer}
-					</Text>
-					<Text mt={1} color="text.muted" fontSize="14px" lineHeight="1.5">
-						{tool.when}
-					</Text>
+			<Text sx={mono} color="brand.solid">
+				{String(index + 1).padStart(2, "0")} · {tool.layer}
+				<Box as="span" color="text.muted" fontWeight="500">
+					{" · "}
+					{tool.when}
 				</Box>
-				<Box>
-					<Heading as="h2" fontSize={{ base: "24px", md: "28px" }} lineHeight="1.1">
-						<LinkOverlay as={NextLink} href={tool.href} prefetch={false} color="inherit" display="inline-flex" alignItems="center" minH="44px">
-							{tool.name}
-							<OutArrow ml={2} color="brand.solid" />
-						</LinkOverlay>
-					</Heading>
-					<Text mt={2} fontSize={{ base: "17px", md: "18px" }} lineHeight="1.75">
-						{tool.detail}
-					</Text>
-					<Text mt={3} color="text.muted" fontFamily="var(--font-mono)" fontSize="12px">
-						{tool.meta}
-					</Text>
-				</Box>
-			</Grid>
+			</Text>
+			<Heading as="h2" mt={2} fontSize={{ base: "24px", md: "28px" }} lineHeight="1.1">
+				<LinkOverlay as={NextLink} href={tool.href} prefetch={false} color="inherit" display="inline-flex" alignItems="center" minH="44px">
+					{tool.name}
+					<OutArrow ml={2} color="brand.solid" />
+				</LinkOverlay>
+			</Heading>
+			<Text mt={2} fontSize={{ base: "17px", md: "18px" }} lineHeight="1.75">
+				{tool.detail}
+			</Text>
+			<Text mt={3} color="text.muted" fontFamily="var(--font-mono)" fontSize="12px">
+				{tool.meta}
+			</Text>
 		</LinkBox>
 	);
 }
@@ -62,7 +58,7 @@ export default function AiTooling() {
 		<Layout
 			title="AI tooling"
 			description="Open-source tools for AI agents, by layer: Agent skills for context, Skillsmith for evaluation and Groundplane for runtime checks.">
-			<Container maxW="760px" px={0} ml={0}>
+			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
 					<Link
 						as={NextLink}
@@ -85,7 +81,7 @@ export default function AiTooling() {
 					</Text>
 
 					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="1.6" fontWeight="600">
-						Tools I&apos;ve built around the AI agents I use and build. Each one sits at a different layer: what an agent is told before it starts, whether those instructions actually help, and whether its answer matches the data it pulled.
+						I use coding agents every day and build them at work, and these are the tools I ended up writing around them. They&apos;re ordered by where they sit in an agent&apos;s run, from what it reads before it starts to checking what it says at the end.
 					</Text>
 				</Box>
 

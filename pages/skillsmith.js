@@ -69,7 +69,7 @@ export default function Skillsmith() {
 					</Text>
 
 					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="1.6" fontWeight="600">
-						I wanted to know whether my agent instructions actually helped. Skillsmith drafts a skill from the repo I am working in, then runs the same task with and without it, compares the results without telling the judges which is which, and checks the candidate on cases that were not used to revise it.
+						I wanted to know whether my agent instructions actually helped. Skillsmith drafts a skill from the repo I&apos;m working in, then runs the same tasks with and without it and has judges compare the results without knowing which is which. The skill is kept only if it wins on cases it wasn&apos;t tuned on.
 					</Text>
 				</Box>
 
@@ -79,30 +79,22 @@ export default function Skillsmith() {
 					id="skillsmith-lifecycle"
 					headingLevel={2}
 					diagram={SkillsmithArchitecture}
-					caption="fig. 1 — the five steps in order. The early steps make the skill and the later ones test it against a no-skill baseline. A draft is kept only if it passes that test."
+					caption="fig. 1 — the first steps decide whether a skill is needed and draft it; the later ones test it against the agent without it. It&apos;s kept only if it passes."
 				/>
 
 				<H2>Deciding whether it should be a skill</H2>
 				<P>
-					Before anything is written, skillsmith asks whether the job needs a skill at all, or belongs in an <Code>AGENTS.md</Code> rule, a hook, a memory or a one-off answer. If a skill is right, <Code>inventory.py</Code> lists the skills and conventions the repo already has, so the new one fills a gap instead of overlapping one.
-				</P>
-				<P>
-					The draft starts from its trigger description, keeps the body under 500 lines, and passes <Code>lint_skill.py</Code> before any run. It installs as one skill for both clients: <Code>.claude/skills/skillsmith</Code> for Claude Code, exposed to Codex at <Code>.agents/skills/skillsmith</Code>.
+					First it checks whether the job needs a skill at all, or would work better as a rule in <Code>AGENTS.md</Code>, a hook or a one-off answer. If a skill makes sense, it lists what the repo already has, so the new one fills a gap instead of overlapping. The draft stays under 500 lines and has to pass a lint check before any test runs.
 				</P>
 
-				<H2>Comparing with and without the skill</H2>
+				<H2>Testing it fairly</H2>
 				<P>
-					Both versions run in fresh contexts with the same model, tools, task and scoring criteria. I use development cases to improve the skill, then separate held-out cases to decide whether to keep it. Once I use a held-out result to make an edit, that case can no longer count as a fresh test.
+					Both versions run fresh, with the same model, tools, task and scoring. I use one set of cases to improve the skill and a separate held-out set to decide whether to keep it. Once I&apos;ve used a held-out result to change the skill, that case no longer counts as a fresh test. The judges get anonymous A/B packets in a balanced order, and anything with an exact answer is checked in code first. A critical failure counts against the skill even if its average score is higher.
 				</P>
 
-				<H2>Keeping the comparison blind</H2>
+				<H2>When it doesn&apos;t pass</H2>
 				<P>
-					<Code>eval_gate.py prepare</Code> prepares anonymous A/B packets with the order balanced across comparisons. Independent judges see the full transcripts and results. Checks with exact answers run in code first. Any critical failure counts against the candidate, even if its average score is higher.
-				</P>
-
-				<H2>Keeping the previous version when an edit fails</H2>
-				<P>
-					New candidates get up to three serious attempts by default. An existing skill keeps its last passing version until a revision passes. A new skill is archived unless it wins on heldout cases with an uncertainty lower bound that clears the gate. <Code>lifecycle_gate.py</Code> checks the attempt history, retired heldouts and final action, while the payload helper confirms that Claude Code and Codex loaded the exact frozen files.
+					A new skill gets up to three serious attempts. If it still doesn&apos;t win on the held-out cases, it&apos;s archived. An existing skill keeps its last passing version until a revision beats it.
 				</P>
 
 				<FactList facts={facts} />

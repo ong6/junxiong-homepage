@@ -7,7 +7,7 @@ const lifecycle = {
 	figure: {
 		number: "Figure 01",
 		eyebrow: "Skill lifecycle · skillsmith",
-		title: "Gate, ground, draft, prove, then keep or retire",
+		title: "How a skill is drafted, tested and kept or retired",
 		caption:
 			"The gate can stop the run before anything is written, and the last step can retire the skill the run just drafted.",
 		alt: "Five stages flow left to right: gate the request, ground it in the repo's existing skills with inventory.py, draft and lint the skill with lint_skill.py, prove it against a no-skill baseline with eval_gate.py, then keep or retire it with lifecycle_gate.py.",

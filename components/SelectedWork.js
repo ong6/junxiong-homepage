@@ -111,7 +111,7 @@ function AiToolingCard() {
 				eyebrow="Open source · 2026"
 				title="AI tooling"
 				href="/ai-tooling"
-				description="Three open-source tools for AI agents: the instructions they load, a test for whether those instructions help, and a check on the answers they give."
+				description="Open-source tools I wrote for working with AI agents, sorted by where each one sits in the stack."
 			/>
 			<Box mt="auto" px={{ base: 6, md: 8 }} pb={{ base: 6, md: 8 }}>
 				<DottedCanvas>

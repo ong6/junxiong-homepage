@@ -21,7 +21,7 @@ const cards = [
 		slug: "ai-tooling",
 		eyebrow: "OPEN SOURCE / AI AGENTS",
 		title: "AI tooling",
-		summary: "Three tools for AI agents: the instructions they load, a test for those instructions, and a check on their answers.",
+		summary: "Open-source tools for working with AI agents, sorted by where each one sits in the stack.",
 	},
 	{
 		slug: "groundplane",

@@ -78,6 +78,15 @@ const facts = [
 	["status", "v0.1.0 · MIT · install from GitHub"],
 ];
 
+const checks = [
+	["superlative", "the named winner and any quoted score match the computed top value"],
+	["ranking_prefix", "a top-k list matches the computed order, including ties"],
+	["aggregate_reconciles", "a stated sum, mean, count, min, max or median matches the recorded rows"],
+	["entities_recorded", "every name the model used came from the recorded data"],
+	["row_integrity", "every field comes from the named row, not its neighbour"],
+	["comparison", "\u201cA beat B by 12%\u201d is recomputed; when it\u2019s wrong, the error says which convention it does match"],
+];
+
 const links = [
 	{ name: "Source on GitHub", detail: "Python library, MIT, install from GitHub", href: "https://github.com/ong6/groundplane", external: true },
 	{ name: "UI Pack", detail: "The figures on this page are drawn with it", href: "/uipack" },
@@ -135,9 +144,7 @@ export default function Groundplane() {
 						fontSize={{ base: "19px", md: "21px" }}
 						lineHeight="1.6"
 						fontWeight="600">
-						Groundplane checks declared fields in an agent&apos;s structured
-						output against facts recorded from tool calls. A failed check raises
-						an error with the supporting tool call attached.
+						Groundplane is a small Python library that checks an agent&apos;s answer against the tool results it was given. If the model reports the wrong winner or total, it raises an error showing what the data actually said.
 					</Text>
 				</Box>
 
@@ -146,119 +153,52 @@ export default function Groundplane() {
 				<H2>Where it came from</H2>
 
 				<P>
-					I first built this shape inside a production AI platform at TikTok.
-					Some summaries had to rank a table of numbers. A senior stakeholder pointed out that naming the wrong winner was unacceptable, even if the model usually got it right. That led me to move the ranking into code.
+					I first built this inside an AI platform at TikTok. Some of our summaries had to rank a table of numbers, and a senior stakeholder pointed out that naming the wrong winner wasn&apos;t acceptable, even if the model usually got it right. So I moved the ranking into code: code worked out the winner and the model only described it. Groundplane is that idea pulled out into a library, extended beyond picking a winner, and published under MIT.
 				</P>
 
-				<P>
-					Code computed the winner, and the model described the result.
-					Groundplane is that idea taken out of the platform, generalised past
-					argmax, and published under MIT.
-				</P>
-
-				<CodeFigure caption="fig. 1 — the README before and after. The before trusts whatever the model
-				wrote. The after records the ranking with its provenance, lets the model
-				fill a winner field, and the boundary refuses it. The error text is what
-				the library raises for this input.">
+				<CodeFigure caption="fig. 1 — before, the model&apos;s answer is trusted as is. After, the ranking is recorded with where it came from, the model fills a winner field, and Groundplane rejects it. The error is the library&apos;s real output for this input.">
 					<CodeBlock title="before" lines={BEFORE} />
 					<CodeBlock title="after" lines={AFTER} />
 					<CodeBlock title="raised" lines={ERROR} />
 				</CodeFigure>
 
-				<H2>Scope</H2>
+				<H2>What it checks, and what it doesn&apos;t</H2>
 
 				<P>
-					It validates declared fields against declared facts. If the model
-					names the right winner and editorialises misleadingly around it,
-					that passes. I kept the scope that narrow on purpose. Rankings are computed in code
-					and the model&apos;s structured output is checked against them. A judge
-					model would make that check probabilistic, and I wanted the same facts
-					to give the same result every time.
+					It only checks the fields the model declares. If the model names the right winner and then says something misleading around it, that passes. I kept it that narrow on purpose. A judge model could read the prose too, but then the check would be probabilistic, and I wanted the same facts to give the same result every time.
 				</P>
 
 				<DiagramFigure
 					id="gparch"
 					headingLevel={2}
 					diagram={GroundplaneArchitecture}
-					caption="fig. 2 — the whole library. ① Tool results are recorded as typed facts, each with the tool call that produced it; the two adapters do the same from inside LangGraph or MCP. ② A boundary names which facts a block of output may use and which checks run. ③ The model submits structured fields, never prose. ④ The configured checks validate declared fields against the recorded facts. ⑤ The first failed claim check raises UnsupportedClaim with the provenance in the message; nothing is logged and ignored."
+					caption="fig. 2 — tool results are recorded as facts along with the call that produced them, the model fills in structured fields, and the checks compare the two. The first mismatch raises UnsupportedClaim."
 				/>
 
-				<H2>Recording facts and checking fields</H2>
-
 				<P>
-					The check runs in code after the model submits its fields. Tool results go
-					into a{" "}
-					<Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">
-						FactRegistry
-					</Box>{" "}
-					as typed facts, each carrying the tool call and arguments that produced
-					it. Facts are write-once: a later call that changes the value is a new
-					fact with a new name, preserving the earlier value and its provenance.
-				</P>
-
-				<P>
-					A{" "}
-					<Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">
-						boundary
-					</Box>{" "}
-					wraps a block of model output and names the facts it may use. The model
-					emits structured fields, never prose. Submitting a plain string is a
-					TypeError. Leaving the block without submitting also raises, because a
-					caller needs to know when validation never happened.
+					Tool results go into a <Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">FactRegistry</Box>, each tagged with the tool call and arguments that produced it. A fact can&apos;t be overwritten; a new value becomes a new fact, so the old one and its source stay around. A <Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">boundary</Box> wraps the part of the agent&apos;s work being checked and says which facts it may use. The model has to submit structured fields there. A plain string is rejected, and leaving the block without submitting also raises, so you know when validation never ran.
 				</P>
 
 				<H2>The six checks</H2>
 
 				<P>
-					Each check asks how the recorded facts relate to each other, which
-					is what a per-field validator cannot see. For example, two valid values can still be assigned to the wrong rows. A field-level type check would accept both.
+					A normal validator looks at each field on its own. These look at how the values relate, because two valid values can still end up on the wrong rows.
+				</P>
+
+				<FactList facts={checks} mt={6} />
+
+				<P>
+					Numbers are compared exactly unless the caller sets a tolerance.
+				</P>
+
+				<H2>Errors that explain themselves</H2>
+
+				<P>
+					The error says which field failed, what the model said, what the data says and which tool call it came from. For a ranking it also shows where the model&apos;s pick actually placed. Inside LangGraph, a failed check can go back to the model as a correction instead of crashing the run. A misconfigured check still crashes, since that&apos;s a bug for the developer to fix, not something to ask the model about again. An MCP adapter records tool results as facts the same way.
 				</P>
 
 				<P>
-					<Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">superlative</Box>{" "}
-					checks that the named winner is the computed argmax and any quoted
-					score is the computed score. <Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">ranking_prefix</Box>{" "}
-					checks a top-k list against the computed order, including a cut inside
-					a block of tied scores. <Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">aggregate_reconciles</Box>{" "}
-					recomputes a stated sum, mean, count, min, max or median over the
-					recorded rows and refuses a truncated table. <Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">entities_recorded</Box>{" "}
-					checks that every name the model used came from a recorded set. <Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">row_integrity</Box>{" "}
-					resolves the named row first and reads every other field off that row,
-					which catches a neighbour&apos;s value in the wrong column.{" "}
-					<Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">comparison</Box>{" "}
-					recomputes &ldquo;A beat B by 12%&rdquo; in code and, when the
-					number is wrong, says which convention it does match: percentage
-					points, a ratio, or the two entities reversed.
-				</P>
-
-				<P>
-					Numeric comparisons are exact by default. Each check accepts a tolerance, starting at zero, so the caller has to choose how much difference is acceptable.
-				</P>
-
-				<H2>Making errors useful</H2>
-
-				<P>
-					I wanted the error message to explain the mismatch on its own. It includes the field, the model&apos;s answer, the recorded result and the tool call that produced it. For a ranking, it also shows where the model&apos;s choice actually placed.
-				</P>
-
-				<P>
-					Inside a LangGraph graph the same failure can become a state update
-					instead of a crash. The graph routes back to the model with the
-					checker&apos;s message as the correction. A misconfigured check still
-					propagates: a developer bug is not something to reask the model about.
-					The MCP adapter records a tool result as a fact with the call as
-					provenance. When an MCP tool returns both structured data and text, the
-					adapter records the structured data, since the text would have to be
-					parsed again.
-				</P>
-
-				<H2>Testing the checks</H2>
-
-				<P>
-					The core has no dependencies and the adapters import neither framework
-					they adapt, so a plain interpreter can read and test all of it. 169
-					tests run on five Python versions in CI, many of them adversarial cases
-					where the plausible model answer is provably wrong.
+					The core has no dependencies, and 169 tests run on five Python versions in CI. Many of them are cases where the plausible answer is wrong.
 				</P>
 
 				<Details title="Package details">

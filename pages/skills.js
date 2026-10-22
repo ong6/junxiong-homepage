@@ -108,11 +108,11 @@ export default function Skills() {
 					</Text>
 
 					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="1.6" fontWeight="600">
-						A skill is a markdown file that tells a coding agent when to act and how. I had the same
-						eight copied into several repos, and each copy drifted. Now the shareable ones live in one
-						public repo, <Code>ong6/skills</Code>. A small command links them into every repo I work
-						in, and publishes my edits back.
-					</Text>
+						A skill is a markdown file that tells a coding agent when to do something and how. I had
+					the same eight copied into several repos, and every copy drifted. Now the ones I can share
+					live in one public repo, <Code>ong6/skills</Code>, and a small command links them into
+					every repo I work in and sends my edits back.
+				</Text>
 				</Box>
 
 				<ProjectLinks links={links} mt={{ base: 8, md: 10 }} />
@@ -121,79 +121,45 @@ export default function Skills() {
 					id="sparch"
 					headingLevel={2}
 					diagram={SkillsArchitecture}
-					caption="fig. 1 — link and publish. The repo holds the skills, a catalog that
-					regenerates the README, the bin/skills command and the plugin manifest. Each
-					machine keeps one checkout. At session start, skills up fast-forwards it in the
-					background when it is clean and symlinks the skills that machine's profile
-					enables into the paths Claude Code and Codex read. An edit goes back through
-					skills publish. The plugin marketplace installs the same repo read-only."
+					caption="fig. 1 — each machine keeps one checkout of the repo. At session start, skills up updates it and links the enabled skills into the folders Claude Code and Codex read. Edits go back through skills publish."
 				/>
 
 				<H2>Editing skills where I use them</H2>
 
 				<P>
-					The plugin install is useful when I just want to use the skills. But I also want to edit them while working. Before the shared repo, a fix made in one repo stayed there and the other copies fell behind.
-				</P>
-
-				<P>
-					So the checkout is the canonical copy: one clone per machine, beside my other repos.
-					Each repo gets symlinks into it, so an edit made from any repo lands in the same files.
-					Publishing carries it upstream, and other machines pick it up at their next session
-					start. Claude Code and Codex read the same files through the same links.
+					You can install the repo as a plugin, which is fine if you only want to use the skills. I
+					also wanted to fix them while I work. Before the shared repo, a fix made in one repo stayed
+					there and the other copies fell behind. So each machine keeps one clone, every repo links
+					into it, and an edit made from anywhere lands in the same files. Publishing sends it
+					upstream, and my other machines pick it up the next time a session starts.
 				</P>
 
 				<H2>One command, run by a hook</H2>
 
 				<P>
-					<Code>skills up</Code> runs at SessionStart. It finds this machine in a{" "}
-					<Code>machines.json</Code> registry, links the skills its profile enables into{" "}
-					<Code>.claude/skills</Code> and <Code>.agents/skills</Code>, and removes links it no
-					longer wants. Fetching runs in the background, and a checkout only fast-forwards when it
-					is clean. The hook never prompts, always exits 0, and returns in well under a second when
-					nothing changed.
+					<Code>skills up</Code> runs when a session starts. It looks the machine up in{" "}
+					<Code>machines.json</Code>, links the skills that machine should have and removes the ones
+					it shouldn&apos;t. It never prompts, only updates a clean checkout, and finishes in well
+					under a second when nothing has changed. <Code>skills publish</Code> goes the other way: it
+					runs a safety check, lints what changed, then commits and pushes.
 				</P>
 
-				<P>
-					A profile picks the scope. Project scope links into named repos only; user scope links
-					into the home folders, so every repo sees the skills. <Code>enable</Code> and{" "}
-					<Code>disable</Code> take skill names or a whole category. Only symlinks that point into
-					the checkouts are ever created or removed; anything else in a link folder is left alone
-					and reported.
-				</P>
-
-				<P>
-					<Code>skills publish</Code> is the way back. It takes a lock, runs the public-safety
-					guard, lints the skills that changed, commits and pushes. If the push is rejected, it
-					rebases once and tries again. <Code>skills doctor</Code> reports the profile, every link,
-					dirty checkouts and the last fetch, and exits 1 when something is off.
-				</P>
-
-				<CodeFigure
-					caption="fig. 2 — a session start as the hook sees it, then the guard on a home path
-				added to a public skill. publish runs the same guard and refuses with exit 2, before
-				anything is committed.">
+				<CodeFigure caption="fig. 2 — a session start, then the safety check catching a home-directory path in a public skill. Publish runs the same check and stops before anything is committed.">
 					<CodeBlock title="a session start" lines={SESSION} />
 					<CodeBlock title="a home path in a public skill" lines={GUARD} />
 				</CodeFigure>
 
 				<P>
-					The tests build temporary homes, checkouts and bare remotes, then exercise linking,
-					stale and foreign links, both scopes, category selectors, publishing and the guard. CI
-					runs them on Python 3.12 and on 3.7, the oldest machine I link skills into. All of it runs
-					locally, with no network.
+					The tests build throwaway home folders and git remotes and run without a network, on
+					Python 3.12 and on 3.7, the oldest machine I link skills into.
 				</P>
 
-				<H2>Keeping the catalog current</H2>
+				<H2>The catalog</H2>
 
 				<P>
-					<Code>catalog.yaml</Code> puts each skill in exactly one category and lists, per category,
-					other people&apos;s skills I rate. A script regenerates the README tables from it plus
-					each skill&apos;s frontmatter, and exits 1 if a folder on disk is missing from the catalog
-					or the catalog names a folder that does not exist. This catches a missing or renamed skill when the catalog is built. <Code>bin/skills</Code> reads the same file, so a profile can switch a whole category on or off.
-				</P>
-
-				<P>
-					Five of the seven categories also link to other people&apos;s projects. I want the catalog to be useful even where I have not written a skill myself.
+					A catalog file puts each skill in one category and also lists other people&apos;s skills I
+					rate, so the README is useful even where I haven&apos;t written one myself. The README
+					tables are generated from it, and the build fails if the catalog and the folders disagree.
 				</P>
 
 				<FactList facts={facts} />
@@ -201,12 +167,11 @@ export default function Skills() {
 				<H2>What stays out</H2>
 
 				<P>
-					Only shareable skills go in. Anything naming my paths, accounts or voice lives in a
-					separate private repo, which can use public skills by name; the public repo never points
-					back. <Code>skills guard</Code> blocks home-directory paths, personal email addresses,
-					phone numbers, keys and tokens, and skill code that launches another agent CLI. The 24
-					here cover research, writing, design, trips and shopping, interview practice,
-					field-engineering decks and pilot evidence, and making and testing skills.
+					Only skills I can share go in. Anything with my paths, accounts or writing voice lives in a
+					private repo. Before anything is published, <Code>skills guard</Code> blocks things like
+					home-directory paths, personal email addresses, keys and tokens. The 24 public ones cover
+					research, writing, design, trips and shopping, interview practice, and making and testing
+					skills.
 				</P>
 
 				<AiToolFamily current="/skills" />

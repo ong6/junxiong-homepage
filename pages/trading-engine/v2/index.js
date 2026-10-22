@@ -32,7 +32,7 @@ export default function TradingEngineV2() {
 				id="te-v2"
 				headingLevel={2}
 				diagram={Engine2}
-				caption="fig. 1 — Engine v2 with the checks I am adding in the next update. A change will pass a fresh reviewer, replayed provider responses, the schedule check and the deploy gate before it deploys; the live store will open only to the engine's own services, and an invariant monitor, watch-only at first, will check each published snapshot before reports read it."
+				caption="fig. 1 — Engine v2 with the deploy checks coming in the next update: a fresh reviewer, replayed provider responses, a check of every scheduled job and a deploy gate. An invariant monitor, watch-only at first, will check each published snapshot before reports read it."
 			/>
 
 			<H2>Why a new engine</H2>

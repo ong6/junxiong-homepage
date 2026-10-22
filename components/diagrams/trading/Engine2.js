@@ -6,7 +6,7 @@ export const CLAIM =
 export const meta = {
 	number: "Figure 01",
 	eyebrow: "Engine v2 · checks landing next",
-	title: "Checked before it deploys, checked again after every night, from the next update",
+	title: "Engine v2, with the deploy checks coming next",
 	caption:
 		"With the next update, a change will pass four checks before it can deploy, and reports will read the published snapshot only after the invariant monitor has checked it.",
 	legend: [

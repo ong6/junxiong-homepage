@@ -379,7 +379,9 @@ export default function DiagramFigure({ id, diagram, caption, headingLevel }) {
 				number={meta.number}
 				eyebrow={meta.eyebrow}
 				title={meta.title}
-				caption={meta.caption}
+				// The page caption already describes the drawing; showing the module's
+				// own caption as well said the same thing twice.
+				caption={caption ? undefined : meta.caption}
 				legend={meta.legend}
 				viewBox={meta.viewBox}
 				minFont={mobile ? MOBILE_MIN_FONT : 11}

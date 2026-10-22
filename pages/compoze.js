@@ -162,27 +162,27 @@ export default function Compoze() {
 						fontSize={{ base: "19px", md: "21px" }}
 						lineHeight="1.6"
 						fontWeight="600">
-						Compoze was an evenings-and-weekends company, run alongside my full-time job at TikTok. It built assistants that answer questions from a company&apos;s own documents, and it was sold to a client at the end of 2025.
+						Compoze was a company I ran on evenings and weekends alongside my job at TikTok. It built assistants that answer questions from a company&apos;s own documents, and a client bought it at the end of 2025.
 					</Text>
 				</Box>
 
 				<ProjectLinks links={links} mt={{ base: 8, md: 10 }} />
 
 				<P>
-					The idea was to help staff find answers in company documents without searching through them by hand. Compoze included the sources with each answer so people could open them and check.
+					Staff could ask a question and get an answer with its sources attached, so they could open the document and check it instead of searching through files by hand.
 				</P>
 
 				<Figure
 					src="/images/compoze/compoze-02.webp"
 					alt="An answered question in Compoze: a knowledge base search over three documents, a structured answer containing a table, and cited sources listed with match scores."
-					caption="fig. 1 — the tool call is shown, the answer is structured, and the sources sit under it with their match scores."
+					caption="fig. 1 — an answer with the search it ran and the sources it used, each with a match score."
 				/>
 
 				<DiagramFigure
 					id="cuf"
 					headingLevel={2}
 					diagram={CompozeUserFlow}
-					caption="fig. 2 — two people use it. An admin fills the knowledge base and watches ingest; a user asks and checks the sources. The dashed hop marks the handoff from the admin&apos;s side to the user&apos;s."
+					caption="fig. 2 — an admin connects the document sources and watches them process; a user picks an assistant, asks a question and checks the sources."
 				/>
 
 				<H2>Working alone</H2>
@@ -195,112 +195,65 @@ export default function Compoze() {
 					id="carch"
 					headingLevel={2}
 					diagram={CompozeArchitecture}
-					caption="fig. 3 — the whole system. A question walks ① agent → ② retrieval → ③ pgvector → ④ gateway → ⑤ cited answer inside one request. Ingest runs elsewhere: Ⓐ download, Ⓑ extract, Ⓒ chunk, Ⓓ embed, Ⓔ store. Everything sits in one database, with every row under a tenant id and row-level security."
+					caption="fig. 3 — a question goes through the assistant, search and the model gateway in one request. Documents are processed separately in the background. Everything lives in one Postgres database, with every row tagged by customer."
 				/>
 
 				<Figure
 					src="/images/compoze/compoze-01.webp"
 					alt="Compoze chat in its empty state, showing the selected agent, four example prompts and the list of tools it can use."
-					caption="fig. 4 — the empty state. Each agent arrives with its own example prompts and a visible list of what it can reach."
+					caption="fig. 4 — a new chat shows example prompts and the tools the assistant can use, so someone new can see what to ask."
 				/>
 
-				<P>
-					The chat opens with example prompts and a list of the tools it can use, so someone new can see what to ask. Past conversations stay in the sidebar.
-				</P>
-
-				<H2>One codebase, configured per customer</H2>
+				<H2>One codebase for every customer</H2>
 
 				<P>
-					Compoze ran on two stacks: a Python assistant on LlamaIndex and FastAPI with
-					managed indexing on LlamaCloud, and the platform described here. That platform
-					is Next.js 15 and React 19 on the front, Postgres with pgvector behind
-					Drizzle. Every core table carries a tenant id. Tenant checks in the
-					application and Postgres row-level security provide two layers of
-					isolation. One shared database keeps migrations and billing in one
-					place, while tenant scoping has to stay consistent across both layers.
-					On top: three roles (Admin, Manager, User), an admin portal
-					per tenant, and nine models from OpenAI, Anthropic and Google behind
-					one gateway, picked per environment in configuration.
+					Compoze ran on two stacks: a Python assistant on LlamaIndex and FastAPI with LlamaCloud doing the indexing, and the platform on this page, built on Next.js and Postgres with pgvector. Every customer shared one codebase and one database. Each customer&apos;s rows carry a tenant id and are kept apart twice, once in the app and once with Postgres row-level security. One database kept migrations and billing simple, but it meant the tenant checks had to be right everywhere. Nine models from OpenAI, Anthropic and Google sit behind one gateway, chosen per environment in config.
 				</P>
 
 				<H2>Finding the right passages</H2>
 
 				<P>
-					Documents are chunked at about a thousand characters. Each chunk gets a
-					one-sentence header placing it in its document and is embedded with
-					OpenAI at 1536 dimensions. A question runs across up to five knowledge
-					bases in parallel. Each lane is hybrid: cosine search over an HNSW
-					index, keyword search beside it because dense search misses exact
-					tokens, the two ranked lists merged with reciprocal rank fusion. Chunks
-					under a 0.35 similarity floor are dropped. An LLM scores the survivors
-					per database, and a cross-encoder reading question and chunk together
-					sets the final order.
+					Documents are split into chunks of about a thousand characters, and each chunk gets a one-line header saying where in the document it came from. A question searches up to five knowledge bases at once, using both embeddings and plain keyword search, since embeddings alone miss exact words like codes and names. Anything under a 0.35 similarity score is dropped, and a reranker puts the rest in order.
 				</P>
 
 				<DiagramFigure
 					id="cqf"
 					diagram={CompozeQueryFlow}
-					caption="fig. 5 — one question, five knowledge bases at once. Only chunks over the 0.35 floor survive, and a cross-encoder orders them."
+					caption="fig. 5 — one question searching five knowledge bases at once. Passages under the 0.35 cutoff are dropped, and each citation is checked before the answer is shown."
 				/>
 
 				<P>
-					Citations are stored with the message, checked for entailment against
-					the sentence they support, and rendered with their match scores. The source links and scores let readers check how well a passage supports the answer.
-				</P>
-
-				<P>
-					The prompt is fixed blocks (role, rules, context tagged with chunk
-					ids, history, question) so the static prefix caches per tenant. The
-					rules: answer only from the context, name what is missing, and refuse
-					when the best chunk sits under the floor.
+					Each citation is checked against the sentence it supports, and the source links and scores let readers see how well a passage backs up the answer. When even the best passage is under the cutoff, the assistant says it can&apos;t answer instead of guessing.
 				</P>
 
 				<H2>How I knew it worked</H2>
 
 				<P>
-					A fixed set of question and answer pairs came from logs and testing, including questions the documents couldn&apos;t answer, where the expected reply was a refusal. Retrieval and generation are scored apart: context precision for whether the good chunks ranked high, faithfulness for whether each claim is entailed by what came back. The set runs in CI, and a prompt, chunker or model change fails on a regression against main. The comparison is against the previous version rather than a fixed score threshold.
+					I kept a fixed set of questions and expected answers from logs and testing, including questions the documents couldn&apos;t answer, where the right reply was a refusal. Search and the written answer are scored separately. The set runs in CI, so a change to the prompt, the chunking or the model fails if it does worse than the version on main.
 				</P>
 
 				<H2>Getting the documents in</H2>
 
 				<P>
-					Files come from Lark and Google Drive over OAuth, with an MCP server
-					for Lark docs, wiki, sheets and bitable. Ingest is
-					async through QStash: download, extract with LlamaParse, chunk,
-					batch-embed, store. The failure paths took more of my time than the
-					happy one, because a run that dies after the download leaves a
-					document that looks uploaded and answers nothing.
+					Files come in from Lark and Google Drive, and processing runs in the background on QStash. The failure cases took more of my time than the normal path, because a job that dies halfway leaves a document that looks uploaded but never shows up in answers. So each step can be retried on its own, uploading the same file twice does nothing, and anything that keeps failing lands in a dead-letter queue with the error attached. That gave me a record of what failed and what needed retrying.
 				</P>
 
 				<DiagramFigure
 					id="cif"
 					diagram={CompozeIngestFlow}
-					caption="fig. 6 — a content hash drops files already seen, PII comes out before chunking, and the dashed region runs later on QStash. Each stage is a checkpoint, so a dead run can be retried from the step that broke."
+					caption="fig. 6 — duplicate files are dropped, personal data is removed before chunking, and a failed run can be retried from the step that broke."
 				/>
 
 				<Figure
 					src="/images/compoze/compoze-04.webp"
 					alt="The Compoze admin knowledge base page: a document table with type, size, source connector and ingest status, status filter counts above it, and a banner saying processing continues in the background."
-					caption="fig. 7 — the admin view of ingest. Every document shows where it came from and where it stopped; the counts across the top are how an admin finds the failures."
+					caption="fig. 7 — the admin view. Each document shows where it came from and how far it got; the counts at the top are how an admin finds the failures."
 				/>
-
-				<P>
-					Jobs are keyed by content hash, so a re-upload is a no-op; embeddings
-					are cached by chunk hash and model, so editing one paragraph re-embeds
-					one chunk. PII is redacted at ingest, which keeps the embeddings
-					clean. Anything that exhausts its retries lands in a dead-letter
-					queue with the payload and the error attached. That gave me a record of what failed and what needed retrying.
-				</P>
-
-				<P>
-					Nine tools: contextual RAG search, retrieve, summarise, read, create
-					and update a document, web search, extract and crawl.
-				</P>
 
 				<Figure
 					src="/images/compoze/compoze-03.webp"
 					alt="The Compoze agent picker showing four domain agents, each with a short description."
-					caption="fig. 8 — four domain agents, each with its own prompt, tools and examples. Which ones a tenant sees is configuration."
+					caption="fig. 8 — four assistants, each with its own prompt, tools and examples. Which ones a customer sees is set in config."
 				/>
 
 				<H2>Safety</H2>
@@ -312,25 +265,14 @@ export default function Compoze() {
 					stop the model from reading it.
 				</P>
 
-				<Details title="Implementation inventory">
-					<FactList facts={facts} mt={3} />
-				</Details>
-
 				<DiagramFigure
 					id="cdc"
 					diagram={CompozeDurableChat}
-					caption="fig. 9 — chat streams by default. If the reader leaves before the answer completes, the job moves to durable QStash steps, and a retry resumes after the last one that finished."
+					caption="fig. 9 — if the reader closes the tab mid-answer, the job moves to QStash and finishes in the background, picking up from the last step that completed."
 				/>
 
-				<Details title="Optimisations and operating details">
-					<P>
-						Chat streams by default. If the client disconnected mid-answer and
-						the stream had not completed, an abort listener handed the job to a
-						QStash workflow. Each phase (init, load context, RAG query,
-						generation, finalise) was a durable step, so a retry could resume
-						after the last completed phase. When QStash was unreachable the
-						route fell back to plain streaming.
-					</P>
+				<Details title="Implementation details">
+					<FactList facts={facts} mt={3} />
 
 					<P>
 						Edge middleware replaced any client-supplied identity header with
@@ -342,7 +284,7 @@ export default function Compoze() {
 					<FactList facts={optimisations} mt={{ base: 8, md: 10 }} />
 
 					<P>
-						With no one else reviewing the code, automated checks did that job. Route contracts are typed, every payload is validated at runtime with Zod, and contract tests run on each push. Those checks let me keep changing 53 routes and 23 tables on my own. Each request is traced as one span tree with tokens, model and tenant on every span, so pricing is built on cost per tenant per answer. The latency I watched most closely was time to first token.
+						With no one else reviewing the code, I leaned on automated checks: typed route contracts, Zod validation on every payload and contract tests on each push. Each request is traced with tokens, model and tenant, which is what pricing was based on.
 					</P>
 				</Details>
 
