@@ -1,23 +1,12 @@
-import NextLink from "next/link";
 import NextImage from "next/image";
-import { Heading, Box, Link, Badge } from "@chakra-ui/react";
-import { ChevronRightIcon } from "@chakra-ui/icons";
+import { Heading, Box } from "@chakra-ui/react";
+import { BackLink } from "./ArticleParts";
 
+// Same opening as every other article page: a 44px back link, then the h1.
 export const Title = ({ children }) => (
-	<Box pt={{ base: 12, md: 16 }} mb={6}>
-		<Link as={NextLink} href="/works">
-			Archive
-		</Link>
-		<span>
-			{" "}
-			<ChevronRightIcon />{" "}
-		</span>
-		<Heading
-			display="inline-block"
-			as="h1"
-			fontSize={{ base: "26px", md: "32px" }}
-			letterSpacing="-.02em"
-			ml={1}>
+	<Box pt={{ base: 10, md: 16 }} mb={6}>
+		<BackLink href="/works">Archive</BackLink>
+		<Heading as="h1" mt={{ base: 8, md: 10 }} fontSize={{ base: "26px", md: "32px" }} letterSpacing="-.02em">
 			{children}
 		</Heading>
 	</Box>
@@ -44,8 +33,18 @@ export const WorkImage = ({ src, alt, width, height, animated = false }) => (
 	</Box>
 );
 
+// Meta labels use the site's mono label (the FactList look), not Chakra's
+// default green badge.
 export const Meta = ({ children }) => (
-	<Badge colorScheme="green" mr={2}>
+	<Box
+		as="span"
+		mr={3}
+		color="text.muted"
+		fontFamily="var(--font-mono)"
+		fontSize="12px"
+		fontWeight="700"
+		letterSpacing=".08em"
+		textTransform="uppercase">
 		{children}
-	</Badge>
+	</Box>
 );

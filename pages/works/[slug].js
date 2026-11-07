@@ -1,6 +1,5 @@
 import {
 	AspectRatio,
-	Badge,
 	Box,
 	Button,
 	Center,
@@ -13,7 +12,8 @@ import {
 	usePrefersReducedMotion,
 } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
-import { ExternalLinkIcon, TriangleUpIcon } from "@chakra-ui/icons";
+import { TriangleUpIcon } from "@chakra-ui/icons";
+import OutArrow from "../../components/OutArrow";
 import { Title, WorkImage, Meta } from "../../components/Work";
 import P from "../../components/Paragraph";
 import Layout from "../../components/layouts/Articles";
@@ -37,9 +37,9 @@ const youtubeWatchUrl = (src) => {
 
 const EmbedFallback = ({ href, children }) => (
 	<Text mt={2} fontSize="14px" color="text.muted">
-		<Link href={href} target="_blank" rel="noopener noreferrer">
+		<Link href={href} target="_blank" rel="noopener noreferrer" display="inline-flex" alignItems="center" minH="44px" my={-3}>
 			{children}
-			<ExternalLinkIcon mx="2px" />
+			<OutArrow ml="4px" />
 		</Link>
 	</Text>
 );
@@ -157,9 +157,9 @@ const MetaValue = ({ item }) => {
 	if (!item.href) return <span>{item.text}</span>;
 
 	return (
-		<Link href={item.href} target="_blank" rel="noopener noreferrer">
+		<Link href={item.href} target="_blank" rel="noopener noreferrer" display="inline-flex" alignItems="center" minH="44px" my={-3}>
 			{item.text}
-			<ExternalLinkIcon mx="2px" />
+			<OutArrow ml="4px" />
 		</Link>
 	);
 };
@@ -171,7 +171,10 @@ const WorkPage = ({ slug }) => {
 		<Layout title={work.title} description={work.description} schema={{ type: "Article" }}>
 			<Box>
 				<Title>
-					{work.heading} <Badge>{work.dateRange}</Badge>
+					{work.heading}{" "}
+						<Box as="span" color="text.muted" fontFamily="var(--font-mono)" fontSize="12px" fontWeight="700" letterSpacing=".08em" whiteSpace="nowrap">
+							{work.dateRange}
+						</Box>
 				</Title>
 				<P>{work.body}</P>
 				<List ml={4} my={4}>
