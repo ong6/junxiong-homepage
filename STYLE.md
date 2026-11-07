@@ -106,16 +106,16 @@ semantic token or CSS variable named in the note where useful). Translucent line
 | `--ui-ease-settle` | `cubic-bezier(0.23, 1, 0.32, 1)` | `cubic-bezier(0.23, 1, 0.32, 1)` |
 | `--ui-ease-travel` | `cubic-bezier(0.77, 0, 0.175, 1)` | `cubic-bezier(0.77, 0, 0.175, 1)` |
 | `--ui-dur-quick` | `160ms` | `160ms` |
-| `--ui-dur-base` | TODO: core fixes 320ms; the site's `--dur-ui` is 220ms (see Open TODOs) | TODO: same |
+| `--ui-dur-base` | `320ms` | `320ms` |
 | `--ui-dur-slow` | `560ms` | `560ms` |
 | `--ui-backdrop` | `none` | `none` |
 | `--ui-backdrop-mask` | `none` | `none` |
 | `--ui-frame-border` | `1px solid rgba(41,35,31,.18)` | `1px solid rgba(242,236,227,.16)` |
 | `--ui-frame-shadow` | `none` | `none` |
 | `--ui-card-shadow` | `none` | `none` |
-| `--ui-marker-size` | `7px` | `7px` |
-| `--ui-marker-shape` | `0` (a square turned 45°, résumé section kickers only) | `0` (a square turned 45°) |
-| `--ui-marker-color` | `#4B70CF` | `#4B70CF` |
+| `--ui-marker-size` | `0` (the eyebrow marker is the `//` text prefix) | `0` |
+| `--ui-marker-shape` | `none` | `none` |
+| `--ui-marker-color` | `#234EA2` (the `//` prefix, in the accent) | `#9AB6FF` |
 | `--ui-section-rule` | `none` | `none` |
 | `--ui-nav-fill` | `rgba(243,239,231,.9)` | `rgba(21,19,17,.9)` |
 | `--ui-nav-blur` | `14px` | `14px` |
@@ -132,7 +132,7 @@ semantic token or CSS variable named in the note where useful). Translucent line
 | `--ui-font-heading` | `var(--ui-font-display)` | `var(--ui-font-display)` |
 | `--ui-canvas-pattern` | `radial-gradient(rgba(36,87,197,.17) 1px, transparent 1px) 0 0 / 12px 12px` | `radial-gradient(rgba(142,174,255,.18) 1px, transparent 1px) 0 0 / 12px 12px` |
 | `--ui-cta-fill` | `#234EA2` | `#9AB6FF` |
-| `--ui-on-cta` | `#F3EFE7` | `#151311` |
+| `--ui-on-cta` | `#FFFFFF` | `#151311` |
 | `--ui-em-decoration` | TODO: no emphasis treatment | TODO: no emphasis treatment |
 | `--ui-num-ring` | `none` | `none` |
 <!-- /generated -->
@@ -151,7 +151,18 @@ Site tokens with no contract role, kept here so a future style file can carry th
 
 | Medium | Display | Text | Label |
 | --- | --- | --- | --- |
-| Page | IBM Plex Sans 720, −0.035em (hero h1 −0.06em at 46 / 58 / 74px; page h1s 40–64px at −0.045 to −0.05em) | IBM Plex Sans 400 / 600; body 16px at 1.65, case-study prose 17 / 18px at 1.8 | IBM Plex Mono 400 / 700, 12px minimum, uppercase eyebrows tracked 0.08–0.12em |
+| Page | IBM Plex Sans 720, −0.035em (h1s per the scale below) | IBM Plex Sans 400 / 600; body 16px at 1.65, case-study prose 17 / 18px at 1.8 | IBM Plex Mono 400 / 700, 12px minimum; uppercase eyebrows and meta lines tracked 0.08em |
+
+**h1 scale, one size per page type** (`LANDING_TITLE` and `ARTICLE_TITLE` in `components/ArticleParts.js`):
+
+| Page type | Pages | h1 |
+| --- | --- | --- |
+| Home (landing) | `/`, `/contact`, `/hobbies` | 46 / 58 / 74px (below 500, from 500, from 960), line-height 0.98, −0.06em |
+| Article / case study | Case studies, `/ai-tooling`, `/uipack`, trading era and update pages, `/resume`, `/assets`, `/404` | 40 / 52px (below 768, from 768), line-height 1, −0.045em |
+| Docs | `/trading-engine/docs/*` | 40 / 52px (below 900, from 900, UiPack's shell switch), the article size |
+| Archive | `/works` and its entries | 40 / 52px, the article size: the ledger is an article page |
+
+Section heads (h2) are 22 / 24px in articles and 32 / 44px for the homepage's and résumé's section titles; Hobbies' chapter heads are 36 / 46 / 52px so they stay below its h1.
 
 Both faces load through `next/font/google` in `pages/_app.js` (latin subset, `display: swap`,
 self-hosted at build time): IBM Plex Sans as the variable font, IBM Plex Mono at 400 and 700
@@ -168,6 +179,18 @@ gaps 16 / 24px; page tops 40 / 64px; group gaps at least twice the gaps inside a
 eyebrow → name 16, name → subtitle 24, subtitle → body 16). Prose sits in a 680px column; résumé
 bullets cap at 760px. Body 16px at 1.65–1.75, case-study prose 17 / 18px at 1.8. Controls are 44px.
 
+### Motion
+
+Curves are the site's own (`--ease-out` `cubic-bezier(0.23, 1, 0.32, 1)` for entrances, `--ease-in-out` for movement); durations are UiPack's core timings, as tokens in `styles/globals.css`:
+
+| Token | Value | Used for |
+| --- | --- | --- |
+| `--dur-hover`, `--dur-press` | 160ms | Hover and press feedback: colour, border, the 3px card lift, the preview panel's nudge, the logo turn, the mobile menu, the arrow's return |
+| `--dur-ui` | 320ms (base) | Things that travel: the ↗ fly-out, the card's category fill, the theme icon turn |
+| `--dur-enter` | 560ms (slow) | Entrances: the page fade-up, the hero settle, the portrait coming to rest |
+
+Exception, recorded: the ↗ fly-out and the card fill are triggered by hover but take the base 320ms rather than the 120–160ms hover range, because each travels across its element (the arrow out of its box and back, the fill across the whole card); at 160ms both read as a flicker. Scroll-driven reveals have no duration (they follow the scroll). Reduced motion drops movement everywhere.
+
 ## Ornaments
 
 **Slots**
@@ -176,13 +199,13 @@ bullets cap at 760px. Body 16px at 1.65–1.75, case-study prose 17 / 18px at 1.
 | --- | --- |
 | `--ui-backdrop`, `--ui-backdrop-mask` | None behind the hero. Article pages instead get UiPack's drifting dot grid in the side gutters (`SideBackdrop`, `uipack/web`), only at 1280px and up, in the accent; never on Home or Hobbies |
 | `--ui-canvas-pattern` | A 12px cobalt dot grid on the homepage's technical previews only (`DottedCanvas`) |
-| Eyebrow marker | A `//` text prefix in mono caps (`// PROJECTS`, `// ELSEWHERE`, `// NEXT`), in the accent. Résumé section kickers use a 7px cobalt square turned 45° instead, and the résumé's top kicker (`SINGAPORE · RÉSUMÉ`) has no prefix |
+| Eyebrow marker | One mono label everywhere (`Eyebrow` in `components/ArticleParts.js`): a `//` prefix in mono caps, 12px, 700, tracked 0.08em, in the accent (`// PROJECTS`, `// ELSEWHERE`, `// NEXT`, `// ROLES`). The résumé's diamond markers were replaced in 2026-11 |
 | `--ui-section-rule` | None; ruled lists (Links out, Around the site, fact tables) carry 1px rules |
 | `--ui-frame-border`, `--ui-frame-shadow`, `--ui-card-shadow` | 1px border.subtle, flat. Hover on a fine pointer lifts a card 3px with a soft shadow and spreads its category fill from the pointer |
 | Preview panel | A 1px framed panel with a 4px offset hard shadow (`preview.shadow`) that "presses" onto its canvas as it scrolls in |
 | `--ui-nav-fill`, `--ui-nav-blur` | Paper at 90% with a 14px blur, 1px bottom rule |
 | `--ui-grain`, `--ui-glow` | 0 |
-| `--ui-cta-*` | The one filled button (Email me on Contact) is the accent with paper text, 6px radius; hover drops it to 88% opacity. Every other action is a link or a 1px-outlined 4px-radius control |
+| `--ui-cta-*` | One filled button style (`components/FilledButton.js`): Chakra's solid button on the accent, white label in light and ink label in dark, the 4px control radius, 44px tall, a darker accent on hover. Used for Email me (Contact) and Download PDF (résumé). Every other action is a link or a 1px-outlined 4px-radius control |
 | Link arrow | One ↗ on every link that goes somewhere, flying out of the top-right and back in on hover and focus (`components/OutArrow.js`) |
 | Theme change | Paint drizzles down the page (UiPack's `withPaintTransition`); instant under reduced motion |
 | Reading progress | A 2px accent bar at the top of case studies (scroll-driven) |
@@ -193,7 +216,7 @@ bullets cap at 760px. Body 16px at 1.65–1.75, case-study prose 17 / 18px at 1.
 | --- | --- |
 | `--ui-perf` | TODO: not used |
 | Chapter chips | Hobbies' chapter index (`01 Travel` …): 999px pills with a 1px rule, mono 12px, accent border when current |
-| `--ui-card-*` | Card fill surface.raised, inset 24 / 32px, 6px radius on lead cards and Links out, 4px on supporting cards |
+| `--ui-card-*` | Card fill surface.raised, inset 24 / 32px; every card-like container (project cards, AI tooling cards, Links out, the Next card, Archive screenshots) uses the one container radius, 6px. 4px (`--ui-radius-sm`) is for controls and for panels inside a card (the dotted canvas, the preview panel) |
 | `--ui-num-*` | Plain mono numbers (`01 / 06` on Hobbies, `fig. 1 —` captions), no ring or bubble |
 | Fact tables | `FactList`: a mono 12px `dl`, a fixed 13rem label column in muted ink, regular-weight left-aligned values, 1px rules |
 | `--ui-quote-*`, `--ui-cell-*`, `--ui-window-*`, `--ui-stamp-*` | TODO: not used |
@@ -225,10 +248,12 @@ and `/404`. They do not use UiPack's `LayerSection` parts, so the layout is cust
 
 | Setting | This site |
 | --- | --- |
-| Grid | A 680px text column on the container's start edge (left-aligned, not centred), with figures breaking out to the 1120px container; one column at every width; the gutter dot grid only at 1280px and up |
-| Regions | Back link, h1, mono meta line, lede (semibold, 19 / 21px), Links out block, prose with figures and h2 sections, fact table, Links out repeated, `// NEXT` card, footer |
+| Grid | A 680px text column on the container's start edge (left-aligned, not centred), with figures breaking out to the 1120px container; one column below 1200px. From 1200px long articles add a 224px contents rail in the right column (184px gap from the prose); the gutter dot grid only at 1280px and up |
+| Regions | Back link, h1, mono meta line, lede (semibold, 19 / 21px), Links out block, prose with figures and h2 sections, fact table, Links out repeated, `// NEXT` card, footer; from 1200px on long articles, the `// On this page` rail |
 | Section order | Back link → h1 → meta → lede → Links out → body (prose, `fig. N` figures, h2 sections, native disclosures for inventories) → fact table → closing Links out → Next project |
 | Hero | No hero: the back link, the plain-name h1 and a one-paragraph lede; the first figure follows the opening paragraph |
+
+**Wide screens: the contents rail** (`components/ArticleContents.js`, `contents` on the article layout). Chosen over moving the fact table or figures into a side column because it keeps the DOM and reading order, adds no words (it lists the page's own h2s) and leaves every figure at full width. It is on the case studies (Compoze, Groundplane, Agent skills, Skillsmith, Trading engine) and the trading era and update pages; short pages (`/ai-tooling`) and the `/uipack` gallery go without. Behaviour: sticky 96px below the top, the section being read marked with a 2px accent rule, 32px rows (44px on coarse pointers); a full-width figure carries an opaque ground above the rail, and the rail fades out (160ms) while one crosses it. Below 1200px, without script, or with fewer than three sections nothing renders and the prose keeps its 680px measure.
 
 ### Documentation
 
@@ -284,9 +309,6 @@ cartoon`, pins `e6b6ed7`.
 
 - TODO: the diagram decision (above). Decides the four flow roles, `--ui-node` and whether
   `styles/globals.css` keeps its figure overrides.
-- TODO: `--ui-dur-base`: core fixes the base duration at 320ms; the site's `--dur-ui` is 220ms
-  (cards, arrows, panels). Either the site moves to 320ms or the owner asks UiPack to change the
-  core timing.
 - TODO: `--ui-ink-3`, `--ui-line-soft`, the accent surface and emphasis: the site uses two inks
   and one line weight; decided only if a design needs a third step.
 - TODO: data, inverted and warning roles: no charts, bands or warnings today; decided when one is
@@ -294,6 +316,3 @@ cartoon`, pins `e6b6ed7`.
 - TODO: density scalar and type ratio: sizes and spacing are set per component; a ratio would
   only be picked if UiPack renders this look.
 - TODO: slide faces: the site has no deck of its own; decided if it adds one.
-- TODO: two container radii are in use (6px lead cards, Links out and Next card; 4px supporting
-  cards, canvases and controls). Core allows one container radius per site; the owner picks
-  whether supporting cards move to 6px (see `docs/ui-review-2026-11.md`).

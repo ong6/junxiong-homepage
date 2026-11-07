@@ -262,6 +262,28 @@ pixels, now fixed.
 Brand changes proposed: none beyond 4. The palette, faces and terminal flavour fit the site and
 should stay.
 
+## Second pass (same branch)
+
+Done after the first review, at the owner's request to improve the UI as far as possible without
+changing words, palette or fonts. Tier 1 still passes on all 17 pages (68 views); lint, build and the
+browser suite pass. Screenshots: `after-pass2/` in the evidence folder, plus `rail-*.png` (the
+contents rail mid-scroll).
+
+| Finding | What changed |
+| --- | --- |
+| 7, h1 drift | One h1 per page type, recorded in STYLE.md, Type: home/landing 46 / 58 / 74px (`/`, `/contact`, `/hobbies`); article, docs and archive 40 / 52px. `LANDING_TITLE` / `ARTICLE_TITLE` in `components/ArticleParts.js`; docs h1 via `styles/globals.css`. Hobbies' chapter heads dropped to 36 / 46 / 52px so they stay below its h1 |
+| 9, two radii | Every card-like container is 6px (supporting cards, AI tooling cards, Archive screenshots joined the lead cards); 4px stays for controls and panels inside cards |
+| 9, two eyebrows | One `Eyebrow` (`//`, mono 12px 700, 0.08em, accent) on every page; the résumé's diamond and unprefixed kicker now use it; meta lines and Hobbies' labels tracked 0.08em |
+| 9, two buttons | `components/FilledButton.js`: Email me and Download PDF share Chakra's solid accent button, 4px radius, 44px |
+| 11, motion | Core timings: hover/press 160ms, base 320ms, slow 560ms (the hero settle was 700ms, the portrait 900ms, the menu 180ms, the logo 200ms, UI 220ms). Exception recorded in STYLE.md: the ↗ fly-out and the card fill take base 320ms because they travel across the element |
+| 10, empty right half | From 1200px, long articles get a sticky `// On this page` rail built from the page's own h2s (`components/ArticleContents.js`), on the case studies and trading pages. Full-width figures carry an opaque ground and the rail fades while one crosses it. Prose keeps its 680px measure; DOM and reading order are unchanged; no words added. Recorded in STYLE.md, Layout: Article |
+| 6, Archive | "Project Showcase" is a left-aligned article h2, not a centred 16px head |
+| Polish | Leftover mint-era greenish rules (`rgba(26,36,32,…)`) on the portrait frame, Archive ledger and résumé header replaced with the border token |
+
+Still proposals (they need copy cuts or an owner decision): cutting Compoze and the trading pages
+(finding 10, items 1 and 3), the copy suggestions above, the diagram decision (12), the phone figure
+scale (4, implemented and flagged), and the UiPack bump below.
+
 ## Notes for the UiPack bump (not done in this pass)
 
 The site pins `e6b6ed7`, 581 commits behind uipack `main` (`f10d920`). Bump after uipack tags
