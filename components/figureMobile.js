@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 
 // Phones get the wide drawing, not a squeezed or re-laid-out one. It renders
 // at MOBILE_SCALE of its designed width and the canvas scrolls sideways, so the
-// layout stays intact and text is only slightly smaller. The font floor drops
-// to MOBILE_MIN_FONT there so uipack doesn't enlarge labels past their boxes.
+// layout stays intact. Labels never render below MOBILE_MIN_FONT, UiPack's 11px
+// figure type floor. Until 2026-11 phones drew at 0.85 with a 9.5px floor;
+// raising the floor at 0.85 enlarged labels past their boxes, so phones now
+// draw at the designed size, exactly as on desktop, and swipe a little further.
 // Used by DiagramFigure (case studies) and the /uipack gallery.
 export const MOBILE_QUERY = "(max-width: 720px)";
-export const MOBILE_SCALE = 0.85;
-export const MOBILE_MIN_FONT = 9.5;
+export const MOBILE_SCALE = 1;
+export const MOBILE_MIN_FONT = 11;
 
 export const viewBoxWidth = (viewBox) => Number(String(viewBox).trim().split(/\s+/)[2]) || 1088;
 
