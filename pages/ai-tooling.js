@@ -13,7 +13,7 @@ import CaseStudyFooter from "../components/CaseStudyFooter";
 import OutArrow from "../components/OutArrow";
 import Layout from "../components/layouts/Articles";
 import { AI_TOOLING } from "../lib/aiTooling";
-import { BackLink } from "../components/ArticleParts";
+import { BackLink, ARTICLE_TITLE } from "../components/ArticleParts";
 
 const mono = {
 	fontFamily: "var(--font-mono)",
@@ -83,7 +83,7 @@ export default function AiTooling() {
 					<Heading
 						as="h1"
 						mt={{ base: 8, md: 10 }}
-						fontSize={{ base: "40px", md: "52px" }}
+						fontSize={ARTICLE_TITLE}
 						lineHeight="1"
 						letterSpacing="-.045em">
 						AI tooling
@@ -95,7 +95,7 @@ export default function AiTooling() {
 						fontFamily="var(--font-mono)"
 						fontSize="12px"
 						fontWeight="700"
-						letterSpacing=".1em"
+						letterSpacing=".08em"
 						textTransform="uppercase">
 						2026 · open source · {AI_TOOLING.length} tools
 					</Text>

@@ -19,16 +19,17 @@
 	font-family: var(--font-mono);
 	font-size: 12px;
 	font-weight: 700;
-	letter-spacing: .11em;
+	letter-spacing: .08em;
 	color: var(--chakra-colors-brand-solid);
 }
 .title {
 	margin: 16px 0 24px;
 	max-width: 11ch;
-	font-size: clamp(52px, 7.4vw, 104px);
+	/* The landing h1 scale shared with Home and Contact (STYLE.md, Type). */
+	font-size: 74px;
 	font-weight: 720;
 	letter-spacing: -.06em;
-	line-height: .9;
+	line-height: .98;
 }
 .lede {
 	max-width: 620px;
@@ -70,7 +71,7 @@
 .copy { min-width: 0; max-width: 480px; }
 .heading {
 	margin: 16px 0 24px;
-	font-size: clamp(42px, 4.6vw, 64px);
+	font-size: clamp(40px, 3.6vw, 52px);
 	line-height: .98;
 	letter-spacing: -.05em;
 }
@@ -88,7 +89,7 @@
 
 @media (max-width: 959px) {
 	.intro { min-height: 0; padding-top: 72px; padding-bottom: 56px; }
-	.title { max-width: 10ch; font-size: clamp(50px, 10vw, 76px); }
+	.title { max-width: 10ch; font-size: 58px; }
 	.chapter {
 		grid-template-columns: minmax(0, 1fr);
 		row-gap: 32px;
@@ -97,18 +98,18 @@
 		padding-bottom: 64px;
 	}
 	.copy { max-width: 620px; }
-	.heading { font-size: clamp(40px, 8vw, 58px); }
+	.heading { font-size: clamp(36px, 6vw, 46px); }
 	.visual { height: clamp(300px, 68vw, 500px); }
 }
 
 @media (max-width: 479px) {
 	.intro { padding-top: 56px; padding-bottom: 40px; }
-	.title { font-size: clamp(44px, 14vw, 58px); line-height: .94; }
+	.title { font-size: 46px; }
 	.lede { font-size: 16px; }
 	.chapterNav { margin-top: 24px; }
 	.chapterNav a { padding: 0 12px; font-size: 12px; }
 	.chapter { row-gap: 24px; padding-top: 48px; padding-bottom: 48px; scroll-margin-top: 64px; }
-	.heading { margin: 8px 0 16px; font-size: clamp(38px, 11vw, 46px); }
+	.heading { margin: 8px 0 16px; font-size: 36px; }
 	.prose { font-size: 16px; line-height: 1.68; }
 	.visual { height: min(76vw, 320px); min-height: 260px; }
 }

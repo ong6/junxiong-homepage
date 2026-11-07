@@ -4,6 +4,7 @@ import NextLink from "next/link";
 import Layout from "../components/layouts/Articles";
 import Section from "../components/Section";
 import works, { workSlugs } from "../lib/works";
+import { ARTICLE_TITLE } from "../components/ArticleParts";
 
 // A dated ledger, newest year first, derived from lib/works.js. An entry sits
 // under the year it started, in the order the entries are declared there.
@@ -19,7 +20,7 @@ for (const id of workSlugs) {
 }
 ledger.sort((a, b) => b.year.localeCompare(a.year));
 
-const Row = ({ entry, rule }) => (
+const Row = ({ entry }) => (
 	<Flex
 		as={NextLink}
 		href={`/works/${entry.id}`}
@@ -27,7 +28,7 @@ const Row = ({ entry, rule }) => (
 		gap={4}
 		py={4}
 		borderTopWidth="1px"
-		borderColor={rule}
+		borderColor="border.subtle"
 		data-group
 		_hover={{ bg: "surface.raised" }}
 		transitionProperty="background-color"
@@ -84,7 +85,6 @@ const Row = ({ entry, rule }) => (
 );
 
 const Works = () => {
-	const rule = useColorModeValue("rgba(26,36,32,.16)", "rgba(230,235,232,.14)");
 	const yearColor = useColorModeValue("mint.700", "mint.300");
 
 	return (
@@ -93,7 +93,7 @@ const Works = () => {
 			description="Archive of Ong Jun Xiong's NUS projects, 2020 to 2023: hackathons, coursework, design work and open source. Current projects are on the homepage.">
 			<Box pt={{ base: 10, md: 14 }}>
 				<Flex align="baseline" justify="space-between" wrap="wrap" gap={2}>
-					<Heading as="h1" fontSize={{ base: "26px", md: "30px" }}>
+					<Heading as="h1" fontSize={ARTICLE_TITLE} lineHeight="1" letterSpacing="-.045em">
 						Archive, 2020&ndash;2023
 					</Heading>
 					<Text fontFamily="var(--font-mono)" fontSize="12px" color="text.muted">
@@ -129,7 +129,7 @@ const Works = () => {
 								</Text>
 								<Box flex="1" minW={0} w="100%">
 									{group.entries.map((entry) => (
-										<Row key={entry.id} entry={entry} rule={rule} />
+										<Row key={entry.id} entry={entry} />
 									))}
 								</Box>
 							</Flex>

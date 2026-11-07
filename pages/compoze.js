@@ -17,7 +17,7 @@ import * as CompozeUserFlow from "../components/diagrams/CompozeUserFlow";
 import Layout from "../components/layouts/Articles";
 import CaseStudyFooter from "../components/CaseStudyFooter";
 import ProjectLinks from "../components/ProjectLinks";
-import { BackLink, P, H2 } from "../components/ArticleParts";
+import { BackLink, P, H2, ARTICLE_TITLE } from "../components/ArticleParts";
 
 // A written case study: one ~680px column of prose, screenshots as inline
 // figures, and a single mono fact table. Deliberately unlike the homepage
@@ -103,6 +103,7 @@ export default function Compoze() {
 
 	return (
 		<Layout
+			contents
 			title="Compoze"
 			schema={{ type: "TechArticle" }}
 			description="Compoze built document-grounded assistants for businesses. I ran it alone alongside a full-time job in 2025, until a client bought the company.">
@@ -113,7 +114,7 @@ export default function Compoze() {
 					<Heading
 						as="h1"
 						mt={{ base: 8, md: 10 }}
-						fontSize={{ base: "40px", md: "52px" }}
+						fontSize={ARTICLE_TITLE}
 						lineHeight="1"
 						letterSpacing="-.045em">
 						Compoze
@@ -125,7 +126,7 @@ export default function Compoze() {
 						fontFamily="var(--font-mono)"
 						fontSize="12px"
 						fontWeight="700"
-						letterSpacing=".1em"
+						letterSpacing=".08em"
 						textTransform="uppercase">
 						2025 · sole founder · sold to a client
 					</Text>

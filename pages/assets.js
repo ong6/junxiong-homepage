@@ -1,27 +1,23 @@
-import { Box, Container, Heading, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Container, Heading, Text } from "@chakra-ui/react";
 import { AssetBrowser } from "uipack/browser";
 import manifest from "uipack/assets/manifest.json";
 import Layout from "../components/layouts/Articles";
-import { BackLink } from "../components/ArticleParts";
+import { BackLink, ARTICLE_TITLE, Eyebrow } from "../components/ArticleParts";
 
 // Unlisted: noindex, not in the sitemap, not in the nav or footer. The only
 // way in is the link on /uipack. Previews are copied from the uipack package
 // into public/uipack-assets at build time (scripts/copy-uipack-assets.mjs).
 
 export default function Assets() {
-	const accent = useColorModeValue("mint.700", "mint.300");
-
 	return (
 		<Layout title="Assets" noindex description="My own asset browser for the uipack figure parts.">
 			<Container maxW="680px" px={0} ml={0}>
 				<Box maxW="680px" pt={{ base: 10, md: 16 }}>
 					<BackLink href="/uipack">Components</BackLink>
 
-					<Text mt={{ base: 8, md: 10 }} color={accent} fontFamily="var(--font-mono)" fontSize="12px" fontWeight="700" letterSpacing=".1em" textTransform="uppercase">
-						{"// assets"}
-					</Text>
+					<Eyebrow mt={{ base: 8, md: 10 }}>assets</Eyebrow>
 
-					<Heading as="h1" mt={3} fontSize={{ base: "40px", md: "52px" }} lineHeight="1" letterSpacing="-.045em">
+					<Heading as="h1" mt={3} fontSize={ARTICLE_TITLE} lineHeight="1" letterSpacing="-.045em">
 						Assets
 					</Heading>
 

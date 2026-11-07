@@ -3,6 +3,7 @@ import OutArrow from "./OutArrow";
 import NextLink from "next/link";
 import ProjectLinks from "./ProjectLinks";
 import { toneFor } from "../lib/tones";
+import { Eyebrow } from "./ArticleParts";
 
 // The deliberate end of a case study: the links out once more, then one
 // door to the next project. Replaces the bare spacer before the footer.
@@ -19,6 +20,7 @@ export default function CaseStudyFooter({ links, next }) {
 				<LinkBox
 					as="section"
 					aria-label="Next project"
+					data-contents-skip
 					data-group
 					data-reveal
 					data-fill
@@ -30,7 +32,7 @@ export default function CaseStudyFooter({ links, next }) {
 					borderRadius="6px"
 					px={5}
 					py={5}
-					transition="transform var(--dur-ui) var(--ease-out), border-color 160ms ease"
+					transition="transform var(--dur-hover) var(--ease-out), border-color var(--dur-hover) ease"
 					_hover={{ borderColor: "border.strong" }}
 					_active={{ transform: "scale(0.99)" }}
 					sx={{
@@ -40,15 +42,7 @@ export default function CaseStudyFooter({ links, next }) {
 							"&:hover": { transform: "none" },
 						},
 					}}>
-					<Text
-						fontFamily="var(--font-mono)"
-						fontSize="12px"
-						fontWeight="700"
-						letterSpacing=".08em"
-						textTransform="uppercase"
-						color="brand.solid">
-						{"// NEXT"}
-					</Text>
+					<Eyebrow>NEXT</Eyebrow>
 					<Heading as="h2" mt={3} fontSize="24px" lineHeight="1.1">
 						<LinkOverlay
 							as={NextLink}

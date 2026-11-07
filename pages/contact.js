@@ -3,7 +3,8 @@ import NextLink from "next/link";
 import HobbyScene from "../components/HobbyScene";
 import Layout from "../components/layouts/Articles";
 import OutArrow from "../components/OutArrow";
-import { BackLink } from "../components/ArticleParts";
+import FilledButton from "../components/FilledButton";
+import { BackLink, Eyebrow, LANDING_TITLE } from "../components/ArticleParts";
 
 const links = [
 	{
@@ -44,42 +45,21 @@ export default function Contact() {
 				pt={{ base: 10, md: 16 }}>
 				<Box>
 					<BackLink href="/">Home</BackLink>
-					<Text
-						mt={{ base: 8, md: 10 }}
-						color="brand.solid"
-						fontFamily="var(--font-mono)"
-						fontSize="12px"
-						fontWeight="700"
-						letterSpacing=".1em">
-						{"// CONTACT / SINGAPORE"}
-					</Text>
+					<Eyebrow mt={{ base: 8, md: 10 }}>CONTACT / SINGAPORE</Eyebrow>
 					<Heading
 						as="h1"
 						mt={4}
-						fontSize={{ base: "44px", md: "64px" }}
-						lineHeight="1"
-						letterSpacing="-.05em">
+						fontSize={LANDING_TITLE}
+						lineHeight=".98"
+						letterSpacing="-.06em">
 						Contact
 					</Heading>
 					<Text mt={6} maxW="560px" fontSize={{ base: "19px", md: "22px" }} lineHeight="1.55" fontWeight="600">
 						Email is the easiest way to reach me.
 					</Text>
-					<Link
-						href="mailto:junxiongong2@gmail.com"
-						display="inline-flex"
-						alignItems="center"
-						gap={3}
-						mt={8}
-						px={6}
-						minH="48px"
-						bg="brand.solid"
-						color="page.bg"
-						borderRadius="6px"
-						fontWeight="700"
-						textDecoration="none"
-						_hover={{ opacity: 0.88, textDecoration: "none" }}>
-						Email me <OutArrow />
-					</Link>
+					<FilledButton href="mailto:junxiongong2@gmail.com" mt={8} data-group>
+						Email me <OutArrow ml={2} />
+					</FilledButton>
 					<Text mt={4} fontFamily="var(--font-mono)" fontSize="14px" color="text.muted" userSelect="all">
 						junxiongong2@gmail.com
 					</Text>
@@ -91,9 +71,7 @@ export default function Contact() {
 			</Grid>
 
 			<Box as="section" aria-labelledby="contact-links" mt={{ base: 10, md: 12 }}>
-				<Text color="brand.solid" fontFamily="var(--font-mono)" fontSize="12px" fontWeight="700" letterSpacing=".1em">
-					{"// ELSEWHERE"}
-				</Text>
+				<Eyebrow>ELSEWHERE</Eyebrow>
 				<Heading id="contact-links" as="h2" mt={2} fontSize={{ base: "28px", md: "36px" }}>
 					Work and writing
 				</Heading>

@@ -8,7 +8,7 @@ import CaseStudyFooter from "../components/CaseStudyFooter";
 import ProjectLinks from "../components/ProjectLinks";
 import Details from "../components/Details";
 import FactList from "../components/FactList";
-import { BackLink, P, H2 } from "../components/ArticleParts";
+import { BackLink, P, H2, ARTICLE_TITLE } from "../components/ArticleParts";
 
 // A written case study in the same shape as /compoze: one ~680px column of
 // prose, the architecture figure, a code figure, and a single mono fact table.
@@ -81,6 +81,7 @@ export default function Groundplane() {
 
 	return (
 		<Layout
+			contents
 			title="Groundplane"
 			schema={{
 				type: "SoftwareSourceCode",
@@ -96,7 +97,7 @@ export default function Groundplane() {
 					<Heading
 						as="h1"
 						mt={{ base: 8, md: 10 }}
-						fontSize={{ base: "40px", md: "52px" }}
+						fontSize={ARTICLE_TITLE}
 						lineHeight="1"
 						letterSpacing="-.045em">
 						Groundplane
@@ -108,7 +109,7 @@ export default function Groundplane() {
 						fontFamily="var(--font-mono)"
 						fontSize="12px"
 						fontWeight="700"
-						letterSpacing=".1em"
+						letterSpacing=".08em"
 						textTransform="uppercase">
 						2026 · open source · python
 					</Text>

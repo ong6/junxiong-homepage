@@ -7,7 +7,7 @@ import Layout from "../components/layouts/Articles";
 import CaseStudyFooter from "../components/CaseStudyFooter";
 import ProjectLinks from "../components/ProjectLinks";
 import FactList from "../components/FactList";
-import { BackLink, P, H2, Code } from "../components/ArticleParts";
+import { BackLink, P, H2, Code, ARTICLE_TITLE } from "../components/ArticleParts";
 
 // Case study in the same shape as /groundplane: one ~680px column of prose,
 // the link-and-publish figure, a terminal figure, and a single mono fact table.
@@ -58,6 +58,7 @@ export default function Skills() {
 
 	return (
 		<Layout
+			contents
 			title="Agent skills"
 			schema={{
 				type: "SoftwareSourceCode",
@@ -73,7 +74,7 @@ export default function Skills() {
 					<Heading
 						as="h1"
 						mt={{ base: 8, md: 10 }}
-						fontSize={{ base: "40px", md: "52px" }}
+						fontSize={ARTICLE_TITLE}
 						lineHeight="1"
 						letterSpacing="-.045em">
 						Agent skills
@@ -85,7 +86,7 @@ export default function Skills() {
 						fontFamily="var(--font-mono)"
 						fontSize="12px"
 						fontWeight="700"
-						letterSpacing=".1em"
+						letterSpacing=".08em"
 						textTransform="uppercase">
 						2026 · open source · claude code + codex
 					</Text>

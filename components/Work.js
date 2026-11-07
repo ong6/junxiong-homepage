@@ -1,12 +1,12 @@
 import NextImage from "next/image";
 import { Heading, Box } from "@chakra-ui/react";
-import { BackLink } from "./ArticleParts";
+import { BackLink, ARTICLE_TITLE } from "./ArticleParts";
 
 // Same opening as every other article page: a 44px back link, then the h1.
 export const Title = ({ children }) => (
 	<Box pt={{ base: 10, md: 16 }} mb={6}>
 		<BackLink href="/works">Archive</BackLink>
-		<Heading as="h1" mt={{ base: 8, md: 10 }} fontSize={{ base: "26px", md: "32px" }} letterSpacing="-.02em">
+		<Heading as="h1" mt={{ base: 8, md: 10 }} fontSize={ARTICLE_TITLE} lineHeight="1" letterSpacing="-.045em">
 			{children}
 		</Heading>
 	</Box>
@@ -27,7 +27,7 @@ export const WorkImage = ({ src, alt, width, height, animated = false }) => (
 			style={{
 				width: "100%",
 				height: "auto",
-				borderRadius: "var(--chakra-radii-lg)",
+				borderRadius: "6px",
 			}}
 		/>
 	</Box>

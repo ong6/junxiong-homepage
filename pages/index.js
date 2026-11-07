@@ -1,9 +1,10 @@
-import { Box, Flex, Grid, Heading, Link, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Flex, Grid, Heading, Link, Text } from "@chakra-ui/react";
 import NextImage from "next/image";
 import NextLink from "next/link";
 import Layout from "../components/layouts/Articles";
 import SelectedWork from "../components/SelectedWork";
 import OutArrow from "../components/OutArrow";
+import { Eyebrow, LANDING_TITLE } from "../components/ArticleParts";
 
 const utilityLinkProps = {
 	display: "inline-flex",
@@ -17,26 +18,11 @@ const utilityLinkProps = {
 	textUnderlineOffset: "4px",
 };
 
-function Eyebrow({ children, ...props }) {
-	return (
-		<Text
-			{...props}
-			fontFamily="var(--font-mono)"
-			fontSize="12px"
-			fontWeight="700"
-			letterSpacing=".12em"
-			color={useColorModeValue("cobalt.700", "cobalt.300")}>
-			{children}
-		</Text>
-	);
-}
-
 function Introduction() {
-	const portraitBorder = useColorModeValue("rgba(26,36,32,.18)", "rgba(230,235,232,.18)");
 
 	return (
 		<Box as="header" id="about" scrollMarginTop="96px" pt={{ base: 6, md: 20 }}>
-			<Eyebrow className="hero-rise">{"// JUNXIONG.DEV / SINGAPORE"}</Eyebrow>
+			<Eyebrow className="hero-rise">JUNXIONG.DEV / SINGAPORE</Eyebrow>
 
 			<Grid
 				gridTemplateColumns={{
@@ -55,7 +41,7 @@ function Introduction() {
 					<Heading
 						as="h1"
 						className="hero-settle"
-						fontSize={{ base: "46px", smmd: "58px", lg: "74px" }}
+						fontSize={LANDING_TITLE}
 						lineHeight=".98"
 						letterSpacing="-.06em">
 						Ong Jun Xiong
@@ -83,7 +69,7 @@ function Introduction() {
 					maxW={{ base: "144px", md: "310px" }}>
 					<Box
 						border="1px solid"
-						borderColor={portraitBorder}
+						borderColor="border.subtle"
 						bg="surface.raised"
 						p={{ base: 2, md: 4 }}
 						className="portrait-frame">

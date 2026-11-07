@@ -1,21 +1,12 @@
-import { Box, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Heading } from "@chakra-ui/react";
+import { Eyebrow } from "./ArticleParts";
 
-// The 16px under the heading clears its descenders off the section's first
-// rule; every résumé section opens with that rule.
+// Résumé section head: the site's `// LABEL` eyebrow over the h2 (it used a
+// cobalt diamond until 2026-11). The 16px under the heading clears its
+// descenders off the section's first rule; every résumé section opens with it.
 const TermHeading = ({ children, kicker = "Selected signal", ...props }) => (
 	<Box mb={4} {...props}>
-		<Flex align="center" gap={2} mb={2}>
-			<Box w="7px" h="7px" bg="mint.500" transform="rotate(45deg)" aria-hidden="true" />
-			<Text
-				fontFamily="var(--font-mono)"
-				fontSize="12px"
-				fontWeight="700"
-				letterSpacing=".11em"
-				textTransform="uppercase"
-				color="text.muted">
-				{kicker}
-			</Text>
-		</Flex>
+		<Eyebrow mb={2}>{kicker}</Eyebrow>
 		<Heading as="h2" fontSize={{ base: "32px", md: "44px" }} lineHeight="1.08">
 			{children}
 		</Heading>

@@ -438,3 +438,13 @@ body {
 @media (max-width: 899px) {
 	#docs-layout .uipack-docs__prose h4 { font-size: 23px; margin-top: 44px; }
 }
+
+/* Section heads land below the fixed nav when the contents rail jumps to them. */
+article h2[id] { scroll-margin-top: 96px; }
+
+/* Docs pages share the article h1 scale (STYLE.md, Type): 40px on phones,
+   52px from 900px, where UiPack's shell switches layout. */
+:root .uipack-docs__prose h1 { font-size: 40px; line-height: 1; letter-spacing: -0.045em; }
+@media (min-width: 900px) {
+	:root .uipack-docs__prose h1 { font-size: 52px; }
+}

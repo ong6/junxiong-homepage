@@ -5,7 +5,7 @@ import FactList from "./FactList";
 import Layout from "./layouts/Articles";
 import VersionSwitcher from "./VersionSwitcher";
 import { ERAS, VERSIONS } from "../lib/tradingVersions";
-import { BackLink } from "./ArticleParts";
+import { BackLink, ARTICLE_TITLE } from "./ArticleParts";
 
 // One update of Engine v1 (/trading-engine/v1/1.N): the switcher, a lead, the
 // diagram as the engine stood then, a short write-up and a fact table.
@@ -51,11 +51,11 @@ function Neighbours({ v }) {
 export default function TradingVersionPage({ v, description, lead, diagram, caption, facts, children }) {
 	const version = VERSIONS.find((item) => item.v === v);
 	return (
-		<Layout title={`Trading engine ${v}: ${version.title}`} description={description} schema={{ type: "TechArticle" }}>
+		<Layout title={`Trading engine ${v}: ${version.title}`} description={description} schema={{ type: "TechArticle" }} contents>
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
 					<BackLink href="/trading-engine">Trading engine</BackLink>
-					<Heading as="h1" mt={{ base: 8, md: 10 }} fontSize={{ base: "36px", md: "46px" }} lineHeight="1.05" letterSpacing="-.04em">
+					<Heading as="h1" mt={{ base: 8, md: 10 }} fontSize={ARTICLE_TITLE} lineHeight="1" letterSpacing="-.045em">
 						{version.title}
 					</Heading>
 					<VersionSwitcher active={v} mt={6} />

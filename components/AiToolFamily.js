@@ -11,20 +11,13 @@ import {
 import NextLink from "next/link";
 import OutArrow from "./OutArrow";
 import { AI_TOOLING } from "../lib/aiTooling";
+import { Eyebrow } from "./ArticleParts";
 
 export default function AiToolFamily({ current }) {
 	const headingId = `${current.replace(/^\//, "")}-family-heading`;
 	return (
 		<Box as="section" aria-labelledby={headingId} mt={{ base: 12, md: 16 }}>
-			<Text
-				color="brand.solid"
-				fontFamily="var(--font-mono)"
-				fontSize="12px"
-				fontWeight="700"
-				letterSpacing=".1em"
-				textTransform="uppercase">
-				{"// AI TOOLING"}
-			</Text>
+			<Eyebrow>AI TOOLING</Eyebrow>
 			<Heading id={headingId} as="h2" mt={2} fontSize={{ base: "22px", md: "24px" }}>
 				<Link
 					as={NextLink}
@@ -49,7 +42,7 @@ export default function AiToolFamily({ current }) {
 							minH="152px"
 							border="1px solid"
 							borderColor={active ? "brand.solid" : "border.subtle"}
-							borderRadius="4px"
+							borderRadius="6px"
 							bg={active ? "accent.soft" : "surface.raised"}>
 							<Text
 								color="text.muted"

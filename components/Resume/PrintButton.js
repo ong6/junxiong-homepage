@@ -1,18 +1,10 @@
-import { Button } from "@chakra-ui/react";
 import { FiDownload } from "react-icons/fi";
+import FilledButton from "../FilledButton";
 
 const PrintButton = (props) => (
-	<Button
-		as="a"
-		href="/resume/Ong-Jun-Xiong-Resume.pdf"
-		download
-		leftIcon={<FiDownload />}
-		colorScheme="mint"
-		minH="44px"
-		px={4}
-		{...props}>
+	<FilledButton href="/resume/Ong-Jun-Xiong-Resume.pdf" download leftIcon={<FiDownload />} {...props}>
 		Download PDF
-	</Button>
+	</FilledButton>
 );
 
 export default PrintButton;

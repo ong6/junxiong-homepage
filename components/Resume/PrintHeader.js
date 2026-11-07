@@ -4,10 +4,10 @@ import {
 	Heading,
 	Link,
 	Text,
-	useColorModeValue,
 } from "@chakra-ui/react";
 import PrintButton from "./PrintButton";
 import OutArrow from "../OutArrow";
+import { ARTICLE_TITLE, Eyebrow } from "../ArticleParts";
 
 const contactLinks = [
 	{ label: "Email", href: "mailto:junxiongong2@gmail.com" },
@@ -16,27 +16,17 @@ const contactLinks = [
 ];
 
 export default function PrintHeader() {
-	const borderColor = useColorModeValue("rgba(26,36,32,.18)", "rgba(230,235,232,.18)");
-	const eyebrow = useColorModeValue("mint.700", "mint.300");
 
 	return (
-		<Box pb={8} mb={8} borderBottomWidth="1px" borderColor={borderColor}>
+		<Box pb={8} mb={8} borderBottomWidth="1px" borderColor="border.subtle">
 			<Flex
 				direction={{ base: "column", md: "row" }}
 				justify="space-between"
 				align={{ base: "flex-start", md: "flex-end" }}
 				gap={6}>
 				<Box maxW="590px">
-					<Text
-						fontFamily="var(--font-mono)"
-						fontSize="12px"
-						fontWeight="700"
-						letterSpacing="0.1em"
-						textTransform="uppercase"
-						color={eyebrow}>
-						Singapore · résumé
-					</Text>
-					<Heading as="h1" fontSize={{ base: "34px", md: "44px" }} lineHeight="1.08" mt={2}>
+					<Eyebrow>Singapore · résumé</Eyebrow>
+					<Heading as="h1" fontSize={ARTICLE_TITLE} lineHeight="1" letterSpacing="-.045em" mt={2}>
 						Ong Jun Xiong
 					</Heading>
 					<Text fontSize={{ base: "18px", md: "21px" }} fontWeight="700" mt={2}>

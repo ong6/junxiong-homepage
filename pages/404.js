@@ -1,6 +1,7 @@
 import { Box, Container, Heading, Link, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 import Layout from "../components/layouts/Articles";
+import { ARTICLE_TITLE } from "../components/ArticleParts";
 
 const NotFound = () => (
 	<Layout title="Page not found" noindex>
@@ -10,12 +11,12 @@ const NotFound = () => (
 					fontFamily="var(--font-mono)"
 					fontSize="12px"
 					fontWeight="700"
-					letterSpacing=".1em"
+					letterSpacing=".08em"
 					textTransform="uppercase"
 					color="text.muted">
 					404
 				</Text>
-				<Heading as="h1" mt={4} fontSize={{ base: "26px", md: "32px" }}>
+				<Heading as="h1" mt={4} fontSize={ARTICLE_TITLE} lineHeight="1" letterSpacing="-.045em">
 					There is nothing at this address.
 				</Heading>
 				<Text mt={4} fontSize="16px" lineHeight="1.7" color="text.muted">

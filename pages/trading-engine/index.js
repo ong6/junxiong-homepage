@@ -6,7 +6,7 @@ import Layout from "../../components/layouts/Articles";
 import ProjectLinks from "../../components/ProjectLinks";
 import TradingVersionList from "../../components/TradingVersionList";
 import { ERAS } from "../../lib/tradingVersions";
-import { BackLink, P, H2 } from "../../components/ArticleParts";
+import { BackLink, P, H2, ARTICLE_TITLE } from "../../components/ArticleParts";
 
 // Overview of the trading engine: what it is, the engine running now, and the
 // two engine eras. Each era has its own page (/trading-engine/v1, /v2) and each
@@ -25,6 +25,7 @@ export default function TradingEngine() {
 
 	return (
 		<Layout
+			contents
 			title="Trading engine"
 			schema={{
 				type: "SoftwareSourceCode",
@@ -40,7 +41,7 @@ export default function TradingEngine() {
 					<Heading
 						as="h1"
 						mt={{ base: 8, md: 10 }}
-						fontSize={{ base: "40px", md: "52px" }}
+						fontSize={ARTICLE_TITLE}
 						lineHeight="1"
 						letterSpacing="-.045em">
 						Trading engine
@@ -52,7 +53,7 @@ export default function TradingEngine() {
 						fontFamily="var(--font-mono)"
 						fontSize="12px"
 						fontWeight="700"
-						letterSpacing=".1em"
+						letterSpacing=".08em"
 						textTransform="uppercase">
 						2026 · open source · Python
 					</Text>

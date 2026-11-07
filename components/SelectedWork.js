@@ -63,7 +63,7 @@ function FeaturedCard({ span, index = 0, href, children }) {
 			data-fill
 			data-tone={toneFor(href)}
 			style={{ "--i": index }}
-			transition="transform var(--dur-ui) var(--ease-out), box-shadow var(--dur-ui) var(--ease-out), border-color 160ms ease"
+			transition="transform var(--dur-hover) var(--ease-out), box-shadow var(--dur-hover) var(--ease-out), border-color var(--dur-hover) ease"
 			_hover={{ borderColor: "border.strong" }}
 			_active={{ transform: "scale(0.99)" }}
 			sx={liftOnHover("0 18px 42px -34px rgba(39,32,27,.65)")}>
@@ -203,14 +203,14 @@ function SupportingCard({ project, index }) {
 			bg="surface.raised"
 			border="1px solid"
 			borderColor="border.subtle"
-			borderRadius="4px"
+			borderRadius="6px"
 			p={{ base: 6, md: 8 }}
 			gridColumn={{ md: project.wide ? "span 2" : undefined }}
 			data-reveal
 			data-fill
 			data-tone={toneFor(project.href)}
 			style={{ "--i": index % 2 }}
-			transition="border-color 160ms ease, transform var(--dur-ui) var(--ease-out), box-shadow var(--dur-ui) var(--ease-out)"
+			transition="border-color var(--dur-hover) ease, transform var(--dur-hover) var(--ease-out), box-shadow var(--dur-hover) var(--ease-out)"
 			_hover={{ borderColor: "border.strong" }}
 			_active={{ transform: "scale(0.99)" }}
 			sx={liftOnHover("0 16px 36px -30px rgba(39,32,27,.55)")}>

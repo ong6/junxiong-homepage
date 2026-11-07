@@ -6,7 +6,7 @@ import DiagramFigure from "../components/DiagramFigure";
 import * as SkillsmithArchitecture from "../components/diagrams/SkillsmithArchitecture";
 import Layout from "../components/layouts/Articles";
 import FactList from "../components/FactList";
-import { BackLink, P, H2, Code } from "../components/ArticleParts";
+import { BackLink, P, H2, Code, ARTICLE_TITLE } from "../components/ArticleParts";
 
 
 
@@ -31,6 +31,7 @@ export default function Skillsmith() {
 
 	return (
 		<Layout
+			contents
 			title="Skillsmith"
 			schema={{
 				type: "SoftwareSourceCode",
@@ -43,11 +44,11 @@ export default function Skillsmith() {
 				<Box pt={{ base: 10, md: 16 }}>
 					<BackLink href="/ai-tooling">AI tooling</BackLink>
 
-					<Heading as="h1" mt={{ base: 8, md: 10 }} fontSize={{ base: "40px", md: "52px" }} lineHeight="1" letterSpacing="-.045em">
+					<Heading as="h1" mt={{ base: 8, md: 10 }} fontSize={ARTICLE_TITLE} lineHeight="1" letterSpacing="-.045em">
 						Skillsmith
 					</Heading>
 
-					<Text mt={4} color={accent} fontFamily="var(--font-mono)" fontSize="12px" fontWeight="700" letterSpacing=".1em" textTransform="uppercase">
+					<Text mt={4} color={accent} fontFamily="var(--font-mono)" fontSize="12px" fontWeight="700" letterSpacing=".08em" textTransform="uppercase">
 						2026 · open source · claude code + codex
 					</Text>
 

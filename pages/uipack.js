@@ -23,7 +23,7 @@ import CaseStudyFooter from "../components/CaseStudyFooter";
 import ProjectLinks from "../components/ProjectLinks";
 import LazyMount from "../components/LazyMount";
 import UipackDocs from "../components/UipackDocs";
-import { BackLink, P, H2, Code } from "../components/ArticleParts";
+import { BackLink, P, H2, Code, ARTICLE_TITLE, Eyebrow } from "../components/ArticleParts";
 // Load the animated gallery only after the selected category is known.
 const UipackWebGallery = dynamic(() => import("../components/UipackWebGallery"), {
 	loading: () => (
@@ -71,21 +71,12 @@ export default function Uipack() {
 				<Box maxW="680px" pt={{ base: 10, md: 16 }}>
 					<BackLink href="/">Home</BackLink>
 
-					<Text
-						mt={{ base: 8, md: 10 }}
-						color={accent}
-						fontFamily="var(--font-mono)"
-						fontSize="12px"
-						fontWeight="700"
-						letterSpacing=".1em"
-						textTransform="uppercase">
-						{"// design across projects"}
-					</Text>
+					<Eyebrow mt={{ base: 8, md: 10 }}>design across projects</Eyebrow>
 
 					<Heading
 						as="h1"
 						mt={3}
-						fontSize={{ base: "40px", md: "52px" }}
+						fontSize={ARTICLE_TITLE}
 						lineHeight="1"
 						letterSpacing="-.045em">
 						UI Pack
@@ -97,7 +88,7 @@ export default function Uipack() {
 						fontFamily="var(--font-mono)"
 						fontSize="12px"
 						fontWeight="700"
-						letterSpacing=".1em"
+						letterSpacing=".08em"
 						textTransform="uppercase">
 						2026 · open source · react + svg
 					</Text>

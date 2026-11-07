@@ -3,7 +3,6 @@ import {
 	Box,
 	Button,
 	Center,
-	Heading,
 	Link,
 	List,
 	ListItem,
@@ -15,6 +14,7 @@ import { useEffect, useRef, useState } from "react";
 import { TriangleUpIcon } from "@chakra-ui/icons";
 import OutArrow from "../../components/OutArrow";
 import { Title, WorkImage, Meta } from "../../components/Work";
+import { H2 } from "../../components/ArticleParts";
 import P from "../../components/Paragraph";
 import Layout from "../../components/layouts/Articles";
 import works, { workSlugs } from "../../lib/works";
@@ -186,9 +186,7 @@ const WorkPage = ({ slug }) => {
 					))}
 				</List>
 
-				<Heading as="h2" fontSize={16} my={8}>
-					<Center>Project Showcase</Center>
-				</Heading>
+				<H2 mb={6}>Project Showcase</H2>
 
 				<Stack spacing={8}>
 					{work.showcase.map((block) => (
