@@ -372,6 +372,11 @@ export default function DiagramFigure({ id, diagram, caption, headingLevel }) {
 			mx={0}
 			w={`min(100vw - 32px, ${natural(meta.viewBox)}px)`}
 			maxW="none"
+			// Above the wide-screen contents rail, on an opaque ground, so a full-width
+			// drawing slides over the rail instead of under its text.
+			position="relative"
+			zIndex={1}
+			bg="page.bg"
 			sx={mobileScrollSx(viewBoxWidth(meta.viewBox))}>
 			<Figure
 				id={`${id}-figure`}

@@ -1,7 +1,9 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { BUILD_DATE, SITE_URL, canonicalFor, ogImageFor } from "./Main";
+import { useRef } from "react";
 import SideBackdrop from "../SideBackdrop";
+import ArticleContents from "../ArticleContents";
 
 // Page-level metadata for every route except the homepage.
 //
@@ -13,6 +15,7 @@ import SideBackdrop from "../SideBackdrop";
 //                  Setting it also switches og:type to `article`. Without it
 //                  the page is a plain WebPage.
 //   noindex      – keep the page out of search engines (404, drafts)
+//   contents     – show the wide-screen "On this page" rail (long articles)
 //
 // The homepage renders without any of these and keeps the defaults from Main.
 // Overrides work by `key`: next/head dedupes tags that share one, and this
@@ -48,14 +51,15 @@ const pageSchema = ({ canonical, name, description, schema, image }) => {
 	};
 };
 
-const Layout = ({ children, title, description, schema, noindex = false, animate = true }) => {
+const Layout = ({ children, title, description, schema, noindex = false, animate = true, contents = false }) => {
 	const router = useRouter();
+	const articleRef = useRef(null);
 	const pageTitle = title ? `${title} — Ong Jun Xiong` : null;
 	const canonical = canonicalFor(router?.asPath);
 	const image = ogImageFor(canonical);
 
 	return (
-		<article className={animate ? "fade-up" : undefined} style={{ position: "relative" }}>
+		<article ref={articleRef} className={animate ? "fade-up" : undefined} style={{ position: "relative" }}>
 			{(pageTitle || description || noindex) && (
 				<Head>
 					{pageTitle && <title>{pageTitle}</title>}
@@ -87,6 +91,7 @@ const Layout = ({ children, title, description, schema, noindex = false, animate
 			{/* Home and Hobbies (animate={false}) carry their own motion. */}
 			{animate && <SideBackdrop />}
 			{children}
+			{contents && <ArticleContents containerRef={articleRef} />}
 		</article>
 	);
 };
