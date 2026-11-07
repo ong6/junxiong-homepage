@@ -6,11 +6,13 @@ import { useEffect, useRef, useState } from "react";
 // rail fills it with the page's own section heads, sticky below the nav, the
 // one being read marked. It reads the h2s already on the page, so it adds no
 // words. Figures that break out to the full width carry an opaque ground and
-// sit above the rail; while one crosses the rail's band the rail fades out
-// (160ms) so it is never seen half covered, and it returns after the figure. Below 1200px, without script, or with fewer than three sections it
+// sit above the rail; only while one overlaps the rail's own box does the
+// rail fade out (160ms, instant under reduced motion), so it is never seen
+// half covered, and it returns as soon as the figure has passed. Below 1200px, without script, or with fewer than three sections it
 // renders nothing and the page is unchanged.
 
 const MIN_SECTIONS = 3;
+const STICKY_TOP = 96;
 const slug = (text) =>
 	text
 		.toLowerCase()
@@ -23,32 +25,48 @@ export default function ArticleContents({ containerRef }) {
 	const [covered, setCovered] = useState(false);
 	const navRef = useRef(null);
 
-	// Fade out while a figure wider than the prose column crosses the rail.
+	// Hide the rail only while a full-width element overlaps the rail's own box.
+	// One IntersectionObserver watches the elements wider than the prose column
+	// that reach into the rail's column, with its root shrunk to the rail's
+	// vertical band (rootMargin), so plain text beside the rail never hides it.
+	// The observer is rebuilt when the rail's height or the viewport changes.
 	useEffect(() => {
 		const root = containerRef.current;
 		const nav = navRef.current;
-		if (!root || !nav) return undefined;
-		let frame = 0;
-		const check = () => {
-			frame = 0;
+		if (!root || !nav || typeof IntersectionObserver === "undefined") return undefined;
+		let observer = null;
+		const crossing = new Set();
+		const build = () => {
+			if (observer) observer.disconnect();
+			crossing.clear();
 			const r = nav.getBoundingClientRect();
 			if (!r.width) return;
-			const hit = [...root.querySelectorAll("figure")].some((f) => {
-				const b = f.getBoundingClientRect();
-				return b.right > r.left && b.top < r.bottom && b.bottom > r.top;
+			// The band the rail occupies once it sticks (it sticks 96px from the
+			// top before any wide figure reaches it).
+			const top = STICKY_TOP;
+			const bottom = Math.max(0, Math.round(window.innerHeight - STICKY_TOP - nav.offsetHeight));
+			observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((e) => (e.isIntersecting ? crossing.add(e.target) : crossing.delete(e.target)));
+					setCovered(crossing.size > 0);
+				},
+				{ rootMargin: `-${top}px 0px -${bottom}px 0px` },
+			);
+			// Wide = it reaches into the rail's column (a full-width figure, not a
+			// prose-width screenshot).
+			root.querySelectorAll("figure").forEach((f) => {
+				if (f.parentElement && f.parentElement.closest("figure")) return;
+				if (f.getBoundingClientRect().right > r.left) observer.observe(f);
 			});
-			setCovered(hit);
 		};
-		const onScroll = () => {
-			if (!frame) frame = requestAnimationFrame(check);
-		};
-		check();
-		window.addEventListener("scroll", onScroll, { passive: true });
-		window.addEventListener("resize", onScroll);
+		build();
+		const ro = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(build);
+		if (ro) ro.observe(nav);
+		window.addEventListener("resize", build);
 		return () => {
-			window.removeEventListener("scroll", onScroll);
-			window.removeEventListener("resize", onScroll);
-			if (frame) cancelAnimationFrame(frame);
+			if (observer) observer.disconnect();
+			if (ro) ro.disconnect();
+			window.removeEventListener("resize", build);
 		};
 	}, [containerRef, items.length]);
 
@@ -98,10 +116,11 @@ export default function ArticleContents({ containerRef }) {
 				ref={navRef}
 				aria-label="On this page"
 				position="sticky"
-				top="96px"
+				top={`${STICKY_TOP}px`}
 				opacity={covered ? 0 : 1}
 				visibility={covered ? "hidden" : "visible"}
-				transition={covered ? "opacity var(--dur-hover) ease, visibility 0s linear var(--dur-hover)" : "opacity var(--dur-hover) ease"}>
+				transition={covered ? "opacity var(--dur-hover) ease, visibility 0s linear var(--dur-hover)" : "opacity var(--dur-hover) ease"}
+				sx={{ "@media (prefers-reduced-motion: reduce)": { transition: "none" } }}>
 				<Text
 					fontFamily="var(--font-mono)"
 					fontSize="12px"
