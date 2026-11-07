@@ -76,7 +76,7 @@ function LinkItem({ href, active, external, children }) {
 			{children}
 			{external && (
 				<>
-					<OutArrow ml="3px" fontSize="11px" />
+					<OutArrow ml="3px" fontSize="12px" />
 					<VisuallyHidden> (opens in a new tab)</VisuallyHidden>
 				</>
 			)}

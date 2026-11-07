@@ -1,21 +1,23 @@
 import { Box, Heading, Text, useColorMode } from "@chakra-ui/react";
 import { DocsLayout, DocsMarkdown, extractDocsHeadings } from "uipack/docs";
 
-const source = `# Product documentation
+// The sample sits under this page's own h2, so its headings start at h3 (the
+// page keeps one h1); the contents rail lists them as levels 2 and 3.
+const source = `### Product documentation
 
 A reusable shell keeps navigation and context around a measured reading column.
 
-## Start with the map
+#### Start with the map
 
 Pages stay grouped by section while the current article keeps its own heading links.
 
 > **Note:** On mobile, navigation moves into a disclosure and the right-hand contents rail is hidden.
 
-## Keep prose readable
+#### Keep prose readable
 
 Tables, \`code spans\`, callouts, and adjacent-page links use the same light and dark tokens.
 
-### Link every heading
+##### Link every heading
 
 Anchors are visible on hover and keyboard focus.
 `;
@@ -37,8 +39,8 @@ const sections = [
 export default function UipackDocs() {
 	const { colorMode } = useColorMode();
 	const onThisPage = extractDocsHeadings(source)
-		.filter(({ level }) => level === 2 || level === 3)
-		.map(({ id, level, title }) => ({ id, level, title }));
+		.filter(({ level }) => level === 4 || level === 5)
+		.map(({ id, level, title }) => ({ id, level: level - 2, title }));
 
 	return (
 		<Box id="docs-layout" mt={{ base: 12, md: 16 }}>

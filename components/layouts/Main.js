@@ -121,7 +121,26 @@ const Main = ({ children, router }) => {
 		// clip, not hidden: hidden turns this box into a scroll container, which
 		// breaks position: sticky and pins every scroll-driven animation to it.
 		// A full-height column whose main grows, so a short page (404) still
-		// puts the footer at the bottom of the window.
+		// puts the footer at the bottom of the window. The skip link sits outside
+		// it so the clipped column never clips its focus ring.
+		<>
+		<Link
+			href="#main-content"
+			position="fixed"
+			top={3}
+			left={3}
+			zIndex={2000}
+			px={4}
+			py={2.5}
+			borderRadius="md"
+			bg="page.text"
+			color="page.bg"
+			fontWeight="700"
+			transform="translateY(-160%)"
+			transition="transform 0.15s ease"
+			_focus={{ transform: "translateY(0)", outline: "2px solid", outlineColor: "brand.solid", outlineOffset: "2px" }}>
+			Skip to content
+		</Link>
 		<Box pb={8} overflowX="clip" display="flex" flexDirection="column" minH="100dvh">
 			<Head>
 				<meta
@@ -177,23 +196,6 @@ const Main = ({ children, router }) => {
 				)}
 			</Head>
 
-			<Link
-				href="#main-content"
-				position="fixed"
-				top={3}
-				left={3}
-				zIndex={2000}
-				px={4}
-				py={2.5}
-				borderRadius="md"
-				bg="gray.900"
-				color="white"
-				fontWeight="700"
-				transform="translateY(-160%)"
-				transition="transform 0.15s ease"
-				_focus={{ transform: "translateY(0)", outline: "3px solid", outlineColor: "mint.300" }}>
-				Skip to content
-			</Link>
 
 			<Box as="header">
 				<Navbar path={router.asPath} />
@@ -207,6 +209,7 @@ const Main = ({ children, router }) => {
 				<Footer />
 			</Container>
 		</Box>
+		</>
 	);
 };
 

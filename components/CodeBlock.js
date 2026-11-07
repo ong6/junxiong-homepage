@@ -18,7 +18,7 @@ export const CodeBlock = ({ title, lines }) => {
 				px={{ base: 4, md: 5 }}
 				pt={{ base: 4, md: 5 }}
 				fontFamily="var(--font-mono)"
-				fontSize={{ base: "11px", md: "12px" }}
+				fontSize="12px"
 				fontWeight="700"
 				letterSpacing=".08em"
 				textTransform="uppercase"
@@ -50,7 +50,7 @@ export const CodeBlock = ({ title, lines }) => {
 					as="pre"
 					m={0}
 					fontFamily="var(--font-mono)"
-					fontSize={{ base: "11.5px", md: "12.5px" }}
+					fontSize={{ base: "12px", md: "12.5px" }}
 					lineHeight="1.75"
 					whiteSpace="pre"
 					w="max-content"

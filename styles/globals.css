@@ -294,10 +294,14 @@ a {
 /* ── Link arrows ───────────────────────────────────────────────────────── */
 /* ↗ on every link that goes somewhere: it flies out of the top-right corner
    and back in from the bottom-left, clipped to its own box. */
+/* The clip box is padded 0.2em above and below (and pulled back by the same
+   negative margin, so the line box does not grow): at line-height 1 the
+   glyph's ascent and descent otherwise poke 2-6px out of the box and get cut. */
 [data-out-arrow] {
 	display: inline-block;
 	overflow: clip;
-	padding: 0 0.08em;
+	padding: 0.2em 0.08em;
+	margin-block: -0.2em;
 	line-height: 1;
 	vertical-align: -0.05em;
 }
@@ -390,4 +394,47 @@ a {
 /* UI Pack's side gutters (components/SideBackdrop.js) take the site accent. */
 body {
 	--web-gutters-color: var(--chakra-colors-brand-solid);
+}
+
+/* ── Focus rings inside clipping boxes ─────────────────────────────────── */
+/* UiPack's docs sidebar and contents rail, the object gallery's scene list
+   and a figure's scrollable canvas clip their overflow, which cut the outside
+   ring off. Inside those boxes the ring is drawn inset instead. */
+:root .uipack-docs__sidebar a:focus-visible,
+:root .uipack-docs__toc a:focus-visible,
+:root .uipack-scene-list button:focus-visible,
+:root .uipack .uipack__canvas:focus-visible {
+	outline: 2px solid var(--chakra-colors-brand-solid);
+	outline-offset: -2px;
+	/* No transition into focus: the ring is there on the first frame. */
+	transition: none;
+}
+
+/* The docs header's product and docs links are 44px targets on touch
+   screens, like every other control on the site. */
+@media (pointer: coarse) {
+	.uipack-docs__identity > a {
+		display: inline-flex;
+		align-items: center;
+		min-height: 44px;
+	}
+}
+
+/* UiPack's object gallery, inspector and edition labels set system-ui in a
+   `font:` shorthand on each part; on this site they use the site's sans. */
+:root .uipack-animation-workspace :is(h3, button, strong, small, label, select, p),
+:root .uipack-object-review :is(h3, button, strong, small, label, select, p),
+:root .uipack-object-frame :is(span, button),
+:root .uipack-object :is(span, button),
+:root .uipack-object__illustration text {
+	font-family: var(--font-sans);
+}
+
+/* The /uipack docs sample (components/UipackDocs.js) starts its headings at h3
+   so the page keeps one h1; draw them at the sizes of the real docs pages. */
+#docs-layout .uipack-docs__prose h3 { font-size: clamp(36px, 5vw, 52px); margin: 0 0 28px; }
+#docs-layout .uipack-docs__prose h4 { font-size: 26px; margin: 56px 0 16px; }
+#docs-layout .uipack-docs__prose h5 { font-size: 20px; margin: 36px 0 12px; }
+@media (max-width: 899px) {
+	#docs-layout .uipack-docs__prose h4 { font-size: 23px; margin-top: 44px; }
 }
