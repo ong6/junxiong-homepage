@@ -1,0 +1,10 @@
+{
+  "name": "junxiong.dev",
+  "styleSpec": "STYLE.md",
+  "textFloors": [{ "selector": "svg", "px": 11 }],
+  "themes": {
+    "light": { "colorScheme": "light", "localStorage": { "chakra-ui-color-mode": "light" } },
+    "dark": { "colorScheme": "dark", "localStorage": { "chakra-ui-color-mode": "dark" } }
+  },
+  "ready": { "selector": "main h1", "settleMs": 400 }
+}

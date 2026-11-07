@@ -7,8 +7,8 @@ export default class Document extends NextDocument {
 		return (
 			<Html lang="en">
 				<Head>
-					<meta name="theme-color" content="#F1EEE6" media="(prefers-color-scheme: light)" />
-					<meta name="theme-color" content="#0E1512" media="(prefers-color-scheme: dark)" />
+					<meta name="theme-color" content="#F3EFE7" media="(prefers-color-scheme: light)" />
+					<meta name="theme-color" content="#151311" media="(prefers-color-scheme: dark)" />
 				</Head>
 				<body>
 					{/* Must run before any React output so the first paint already
