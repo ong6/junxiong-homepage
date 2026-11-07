@@ -1,6 +1,6 @@
-import { Box, Container, Heading, Link, Text, useColorModeValue } from "@chakra-ui/react";
-import NextLink from "next/link";
+import { Box, Container, Heading, Text, useColorModeValue } from "@chakra-ui/react";
 import Layout from "./layouts/Articles";
+import { BackLink } from "./ArticleParts";
 
 // One engine era (/trading-engine/v1, /trading-engine/v2): back link, title,
 // mono eyebrow and a bold lead, then the page's own sections.
@@ -14,9 +14,7 @@ export default function TradingEraPage({ era, status, description, lead, childre
 		<Layout title={`Trading engine ${era.v}: ${era.title}`} description={description} schema={{ type: "TechArticle" }}>
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
-					<Link as={NextLink} href="/trading-engine" display="inline-flex" alignItems="center" minH="32px" my={-1.5} fontSize="13px" fontWeight="700">
-						← Trading engine
-					</Link>
+					<BackLink href="/trading-engine">Trading engine</BackLink>
 					<Heading as="h1" mt={{ base: 8, md: 10 }} fontSize={{ base: "36px", md: "46px" }} lineHeight="1.05" letterSpacing="-.04em">
 						{era.title}
 					</Heading>

@@ -31,7 +31,11 @@ export default function VersionSwitcher({ active, ...props }) {
 				aria-label="Engine v1 updates"
 				gap={2}
 				overflowX="auto"
-				pb={1}
+				// 6px of room on every side so a focused chip's ring is not clipped by
+				// the scroller; the negative margin keeps the row where it was.
+				p="6px"
+				m="-6px"
+				pb="10px"
 				sx={{ scrollbarWidth: "none", "&::-webkit-scrollbar": { display: "none" } }}>
 				{VERSIONS.map(({ v, href, current: isCurrent }) => {
 					const selected = v === active;
@@ -79,7 +83,8 @@ export default function VersionSwitcher({ active, ...props }) {
 								href={CURRENT.href}
 								display="inline-flex"
 								alignItems="center"
-								minH="32px"
+								minH="44px"
+								my="-14px"
 								whiteSpace="nowrap"
 								color="brand.solid"
 								fontWeight="700">

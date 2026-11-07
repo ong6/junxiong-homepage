@@ -2,12 +2,10 @@ import {
 	Box,
 	Container,
 	Heading,
-	Link,
 	Text,
 	useColorModeValue,
 } from "@chakra-ui/react";
 import Image from "next/image";
-import NextLink from "next/link";
 import DiagramFigure from "../components/DiagramFigure";
 import Details from "../components/Details";
 import FactList from "../components/FactList";
@@ -19,29 +17,14 @@ import * as CompozeUserFlow from "../components/diagrams/CompozeUserFlow";
 import Layout from "../components/layouts/Articles";
 import CaseStudyFooter from "../components/CaseStudyFooter";
 import ProjectLinks from "../components/ProjectLinks";
+import { BackLink, P, H2 } from "../components/ArticleParts";
 
 // A written case study: one ~680px column of prose, screenshots as inline
 // figures, and a single mono fact table. Deliberately unlike the homepage
 // (mono `//` eyebrows over huge titles), /hobbies (numbered log) and /works
 // (dated ledger).
 
-const P = (props) => (
-	<Text
-		mt={5}
-		fontSize={{ base: "17px", md: "18px" }}
-		lineHeight="1.8"
-		{...props}
-	/>
-);
 
-const H2 = (props) => (
-	<Heading
-		as="h2"
-		mt={{ base: 12, md: 16 }}
-		fontSize={{ base: "22px", md: "24px" }}
-		{...props}
-	/>
-);
 
 
 // The product shots are light-UI captures. In dark mode they are pulled down
@@ -125,17 +108,7 @@ export default function Compoze() {
 			description="Compoze built document-grounded assistants for businesses. I ran it alone alongside a full-time job in 2025, until a client bought the company.">
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
-					<Link
-						as={NextLink}
-						href="/#work"
-						display="inline-flex"
-						alignItems="center"
-						minH="32px"
-						my={-1.5}
-						fontSize="13px"
-						fontWeight="700">
-						← Selected projects
-					</Link>
+					<BackLink href="/#work">Selected projects</BackLink>
 
 					<Heading
 						as="h1"

@@ -58,8 +58,11 @@ export default function AiToolFamily({ current }) {
 								textTransform="uppercase">
 								{String(index + 1).padStart(2, "0")} · {tool.layer}
 							</Text>
-							<Heading as="h3" mt={3} fontSize="18px" lineHeight="1.2">
+							<Heading as="h3" mt={1} fontSize="18px" lineHeight="1.2">
 								<LinkOverlay
+									display="inline-flex"
+									alignItems="center"
+									minH="44px"
 									{...(tool.external
 										? { href: tool.href, target: "_blank", rel: "noopener noreferrer" }
 										: { as: NextLink, href: tool.href })}

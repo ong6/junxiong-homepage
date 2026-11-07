@@ -1,5 +1,4 @@
-import { Box, Container, Heading, Link, Text, useColorModeValue } from "@chakra-ui/react";
-import NextLink from "next/link";
+import { Box, Container, Heading, Text, useColorModeValue } from "@chakra-ui/react";
 import AiToolFamily from "../components/AiToolFamily";
 import CaseStudyFooter from "../components/CaseStudyFooter";
 import ProjectLinks from "../components/ProjectLinks";
@@ -7,16 +6,10 @@ import DiagramFigure from "../components/DiagramFigure";
 import * as SkillsmithArchitecture from "../components/diagrams/SkillsmithArchitecture";
 import Layout from "../components/layouts/Articles";
 import FactList from "../components/FactList";
+import { BackLink, P, H2, Code } from "../components/ArticleParts";
 
-const P = (props) => (
-	<Text mt={5} fontSize={{ base: "17px", md: "18px" }} lineHeight="1.8" {...props} />
-);
 
-const H2 = (props) => (
-	<Heading as="h2" mt={{ base: 12, md: 16 }} fontSize={{ base: "22px", md: "24px" }} {...props} />
-);
 
-const Code = (props) => <Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em" {...props} />;
 
 const facts = [
 	["steps", "5 · gate through keep or retire"],
@@ -48,17 +41,7 @@ export default function Skillsmith() {
 			description="Skillsmith makes an agent skill from your repo, tests it against a no-skill baseline, and keeps it only when it wins on fresh heldout tasks.">
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
-					<Link
-						as={NextLink}
-						href="/ai-tooling"
-						display="inline-flex"
-						alignItems="center"
-						minH="32px"
-						my={-1.5}
-						fontSize="13px"
-						fontWeight="700">
-						← AI tooling
-					</Link>
+					<BackLink href="/ai-tooling">AI tooling</BackLink>
 
 					<Heading as="h1" mt={{ base: 8, md: 10 }} fontSize={{ base: "40px", md: "52px" }} lineHeight="1" letterSpacing="-.045em">
 						Skillsmith

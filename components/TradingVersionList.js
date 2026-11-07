@@ -35,7 +35,7 @@ export default function TradingVersionList({ active, items = VERSIONS }) {
 							{v === active ? (
 								title
 							) : (
-								<Link as={NextLink} href={href} prefetch={false} display="block" py={1}>
+								<Link as={NextLink} href={href} prefetch={false} display="block" minH="44px" py="7px" my="-3px">
 									{title.split(" ").slice(0, -1).join(" ")}{" "}
 									<Box as="span" whiteSpace="nowrap">
 										{title.split(" ").at(-1)}

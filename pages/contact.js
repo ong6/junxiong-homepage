@@ -3,6 +3,7 @@ import NextLink from "next/link";
 import HobbyScene from "../components/HobbyScene";
 import Layout from "../components/layouts/Articles";
 import OutArrow from "../components/OutArrow";
+import { BackLink } from "../components/ArticleParts";
 
 const links = [
 	{
@@ -42,17 +43,7 @@ export default function Contact() {
 				alignItems="center"
 				pt={{ base: 10, md: 16 }}>
 				<Box>
-					<Link
-						as={NextLink}
-						href="/"
-						display="inline-flex"
-						alignItems="center"
-						minH="32px"
-						my={-1.5}
-						fontSize="13px"
-						fontWeight="700">
-						← Home
-					</Link>
+					<BackLink href="/">Home</BackLink>
 					<Text
 						mt={{ base: 8, md: 10 }}
 						color="brand.solid"

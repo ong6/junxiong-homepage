@@ -1,5 +1,4 @@
-import { Box, Container, Heading, Link, Text, useColorModeValue } from "@chakra-ui/react";
-import NextLink from "next/link";
+import { Box, Container, Heading, Text, useColorModeValue } from "@chakra-ui/react";
 import AiToolFamily from "../components/AiToolFamily";
 import DiagramFigure from "../components/DiagramFigure";
 import * as GroundplaneArchitecture from "../components/diagrams/GroundplaneArchitecture";
@@ -9,27 +8,12 @@ import CaseStudyFooter from "../components/CaseStudyFooter";
 import ProjectLinks from "../components/ProjectLinks";
 import Details from "../components/Details";
 import FactList from "../components/FactList";
+import { BackLink, P, H2 } from "../components/ArticleParts";
 
 // A written case study in the same shape as /compoze: one ~680px column of
 // prose, the architecture figure, a code figure, and a single mono fact table.
 
-const P = (props) => (
-	<Text
-		mt={5}
-		fontSize={{ base: "17px", md: "18px" }}
-		lineHeight="1.8"
-		{...props}
-	/>
-);
 
-const H2 = (props) => (
-	<Heading
-		as="h2"
-		mt={{ base: 12, md: 16 }}
-		fontSize={{ base: "22px", md: "24px" }}
-		{...props}
-	/>
-);
 
 
 // Straight from the README. The "before" is what most agents do today; the
@@ -107,17 +91,7 @@ export default function Groundplane() {
 			description="Groundplane is an open-source Python library that checks the fields an agent declares against the tool results it recorded, and traces each error to its source.">
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
-					<Link
-						as={NextLink}
-						href="/ai-tooling"
-						display="inline-flex"
-						alignItems="center"
-						minH="32px"
-						my={-1.5}
-						fontSize="13px"
-						fontWeight="700">
-						← AI tooling
-					</Link>
+					<BackLink href="/ai-tooling">AI tooling</BackLink>
 
 					<Heading
 						as="h1"

@@ -1,5 +1,4 @@
-import { Box, Container, Heading, Link, Text, useColorModeValue } from "@chakra-ui/react";
-import NextLink from "next/link";
+import { Box, Container, Heading, Text, useColorModeValue } from "@chakra-ui/react";
 import CaseStudyFooter from "../../components/CaseStudyFooter";
 import DiagramFigure from "../../components/DiagramFigure";
 import * as Engine2 from "../../components/diagrams/trading/Engine2";
@@ -7,18 +6,13 @@ import Layout from "../../components/layouts/Articles";
 import ProjectLinks from "../../components/ProjectLinks";
 import TradingVersionList from "../../components/TradingVersionList";
 import { ERAS } from "../../lib/tradingVersions";
+import { BackLink, P, H2 } from "../../components/ArticleParts";
 
 // Overview of the trading engine: what it is, the engine running now, and the
 // two engine eras. Each era has its own page (/trading-engine/v1, /v2) and each
 // v1 update its own write-up (/trading-engine/v1/1.N).
 
-const P = (props) => (
-	<Text mt={5} fontSize={{ base: "17px", md: "18px" }} lineHeight="1.8" {...props} />
-);
 
-const H2 = (props) => (
-	<Heading as="h2" mt={{ base: 12, md: 16 }} fontSize={{ base: "22px", md: "24px" }} {...props} />
-);
 
 
 const links = [
@@ -41,17 +35,7 @@ export default function TradingEngine() {
 			description="A paper-trading research engine where every strategy runs through one shared backtest core and one evidence path.">
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
-					<Link
-						as={NextLink}
-						href="/#work"
-						display="inline-flex"
-						alignItems="center"
-						minH="32px"
-						my={-1.5}
-						fontSize="13px"
-						fontWeight="700">
-						← Selected projects
-					</Link>
+					<BackLink href="/#work">Selected projects</BackLink>
 
 					<Heading
 						as="h1"

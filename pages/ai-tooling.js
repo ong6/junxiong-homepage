@@ -2,7 +2,6 @@ import {
 	Box,
 	Container,
 	Heading,
-	Link,
 	LinkBox,
 	LinkOverlay,
 	Text,
@@ -14,6 +13,7 @@ import CaseStudyFooter from "../components/CaseStudyFooter";
 import OutArrow from "../components/OutArrow";
 import Layout from "../components/layouts/Articles";
 import { AI_TOOLING } from "../lib/aiTooling";
+import { BackLink } from "../components/ArticleParts";
 
 const mono = {
 	fontFamily: "var(--font-mono)",
@@ -78,17 +78,7 @@ export default function AiTooling() {
 			description="Open-source tools for AI agents, by layer: Workbase for memory, Agent skills for context, Skillsmith for evaluation and Groundplane for runtime checks.">
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
-					<Link
-						as={NextLink}
-						href="/#work"
-						display="inline-flex"
-						alignItems="center"
-						minH="32px"
-						my={-1.5}
-						fontSize="13px"
-						fontWeight="700">
-						← Selected projects
-					</Link>
+					<BackLink href="/#work">Selected projects</BackLink>
 
 					<Heading
 						as="h1"

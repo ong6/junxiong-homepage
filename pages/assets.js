@@ -1,8 +1,8 @@
-import { Box, Container, Heading, Link, Text, useColorModeValue } from "@chakra-ui/react";
-import NextLink from "next/link";
+import { Box, Container, Heading, Text, useColorModeValue } from "@chakra-ui/react";
 import { AssetBrowser } from "uipack/browser";
 import manifest from "uipack/assets/manifest.json";
 import Layout from "../components/layouts/Articles";
+import { BackLink } from "../components/ArticleParts";
 
 // Unlisted: noindex, not in the sitemap, not in the nav or footer. The only
 // way in is the link on /uipack. Previews are copied from the uipack package
@@ -15,9 +15,7 @@ export default function Assets() {
 		<Layout title="Assets" noindex description="My own asset browser for the uipack figure parts.">
 			<Container maxW="680px" px={0} ml={0}>
 				<Box maxW="680px" pt={{ base: 10, md: 16 }}>
-					<Link as={NextLink} href="/uipack" display="inline-flex" alignItems="center" minH="32px" my={-1.5} fontSize="13px" fontWeight="700">
-						← Components
-					</Link>
+					<BackLink href="/uipack">Components</BackLink>
 
 					<Text mt={{ base: 8, md: 10 }} color={accent} fontFamily="var(--font-mono)" fontSize="12px" fontWeight="700" letterSpacing=".1em" textTransform="uppercase">
 						{"// assets"}

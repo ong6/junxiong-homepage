@@ -1,5 +1,4 @@
-import { Box, Container, Heading, Link, Text, useColorModeValue } from "@chakra-ui/react";
-import NextLink from "next/link";
+import { Box, Container, Heading, Text, useColorModeValue } from "@chakra-ui/react";
 import AiToolFamily from "../components/AiToolFamily";
 import DiagramFigure from "../components/DiagramFigure";
 import * as SkillsArchitecture from "../components/diagrams/SkillsArchitecture";
@@ -8,19 +7,13 @@ import Layout from "../components/layouts/Articles";
 import CaseStudyFooter from "../components/CaseStudyFooter";
 import ProjectLinks from "../components/ProjectLinks";
 import FactList from "../components/FactList";
+import { BackLink, P, H2, Code } from "../components/ArticleParts";
 
 // Case study in the same shape as /groundplane: one ~680px column of prose,
 // the link-and-publish figure, a terminal figure, and a single mono fact table.
 
-const P = (props) => (
-	<Text mt={5} fontSize={{ base: "17px", md: "18px" }} lineHeight="1.8" {...props} />
-);
 
-const H2 = (props) => (
-	<Heading as="h2" mt={{ base: 12, md: 16 }} fontSize={{ base: "22px", md: "24px" }} {...props} />
-);
 
-const Code = (props) => <Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em" {...props} />;
 
 // Real output from bin/skills in a scratch home with one machine profile and
 // a fresh clone of ong6/skills; the guard hit is a home path added on purpose.
@@ -75,17 +68,7 @@ export default function Skills() {
 			description="The Claude Code and Codex skills I run in every repo, kept in one public repo and linked into place on each machine. A skill edited in one repo reaches the rest.">
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
-					<Link
-						as={NextLink}
-						href="/ai-tooling"
-						display="inline-flex"
-						alignItems="center"
-						minH="32px"
-						my={-1.5}
-						fontSize="13px"
-						fontWeight="700">
-						← AI tooling
-					</Link>
+					<BackLink href="/ai-tooling">AI tooling</BackLink>
 
 					<Heading
 						as="h1"

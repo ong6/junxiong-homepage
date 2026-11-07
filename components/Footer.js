@@ -43,8 +43,11 @@ const Footer = () => (
 						rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
 						display="inline-flex"
 						alignItems="center"
-						// 32px targets on a 32px row pitch (24px box + 8px row gap): wrapped rows touch, never overlap.
-						minH="32px"
+						// 44px touch targets on phones (36px box + 8px row gap: wrapped rows touch,
+						// never overlap); 32px with a fine pointer, where the floor is 24px.
+						minH={{ base: "44px", md: "32px" }}
+						minW={{ base: "44px", md: 0 }}
+						justifyContent="center"
 						my={-1}
 						fontSize="12px"
 						fontWeight="650"
@@ -53,7 +56,7 @@ const Footer = () => (
 						_hover={{ color: "page.text", textDecoration: "underline" }}>
 						{link.label}
 						{link.href.startsWith("http") && (
-							<OutArrow ml="3px" fontSize="11px" />
+							<OutArrow ml="3px" fontSize="12px" />
 						)}
 					</Link>
 				))}

@@ -23,6 +23,7 @@ import CaseStudyFooter from "../components/CaseStudyFooter";
 import ProjectLinks from "../components/ProjectLinks";
 import LazyMount from "../components/LazyMount";
 import UipackDocs from "../components/UipackDocs";
+import { BackLink, P, H2, Code } from "../components/ArticleParts";
 // Load the animated gallery only after the selected category is known.
 const UipackWebGallery = dynamic(() => import("../components/UipackWebGallery"), {
 	loading: () => (
@@ -35,13 +36,6 @@ const UipackWebGallery = dynamic(() => import("../components/UipackWebGallery"),
 const UipackObjects = dynamic(() => import("../components/UipackObjects"));
 const UipackWebMotion = dynamic(() => import("../components/UipackWebMotion"));
 
-const P = (props) => (
-	<Text mt={5} fontSize={{ base: "17px", md: "18px" }} lineHeight="1.8" {...props} />
-);
-const H2 = (props) => (
-	<Heading as="h2" mt={{ base: 12, md: 16 }} fontSize={{ base: "22px", md: "24px" }} {...props} />
-);
-const Code = (props) => <Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em" {...props} />;
 const subscribeToHydration = () => () => {};
 
 const links = [
@@ -75,17 +69,7 @@ export default function Uipack() {
 			description="UI Pack brings reusable web design, animation and presentation systems into one place, including slide layouts and the words used to present them.">
 			<Container maxW="1088px" px={0} ml={0}>
 				<Box maxW="680px" pt={{ base: 10, md: 16 }}>
-					<Link
-						as={NextLink}
-						href="/"
-						display="inline-flex"
-						alignItems="center"
-						minH="32px"
-						my={-1.5}
-						fontSize="13px"
-						fontWeight="700">
-						← Home
-					</Link>
+					<BackLink href="/">Home</BackLink>
 
 					<Text
 						mt={{ base: 8, md: 10 }}
