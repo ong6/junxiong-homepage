@@ -137,7 +137,7 @@ const Main = ({ children, router }) => {
 			color="page.bg"
 			fontWeight="700"
 			transform="translateY(-160%)"
-			transition="transform 0.15s ease"
+			transition="transform var(--dur-press) ease"
 			_focus={{ transform: "translateY(0)", outline: "2px solid", outlineColor: "brand.solid", outlineOffset: "2px" }}>
 			Skip to content
 		</Link>

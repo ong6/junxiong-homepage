@@ -42,15 +42,16 @@ a {
 	}
 }
 
-/* Motion. Curves and budgets follow Emil Kowalski's animate skill
-   (resources/web-design/web-animation-skills.md in the store): strong ease-out for
-   entrances, ease-in-out for things moving on screen, UI under 300ms,
-   transform and opacity only. */
+/* Motion. Curves follow Emil Kowalski's animate skill (strong ease-out for
+   entrances, ease-in-out for things moving on screen, transform and opacity
+   only); durations are UiPack's core timings (STYLE.md, Motion): hover and
+   press 160ms, base 320ms for anything that travels, slow 560ms for entrances. */
 :root {
 	--ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 	--ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+	--dur-hover: 160ms;
 	--dur-press: 160ms;
-	--dur-ui: 220ms;
+	--dur-ui: 320ms;
 	--dur-enter: 560ms;
 }
 
@@ -73,7 +74,7 @@ a {
 	animation-delay: calc(var(--i, 0) * 70ms);
 }
 .hero-settle {
-	animation: settle 700ms var(--ease-out) both;
+	animation: settle var(--dur-enter) var(--ease-out) both;
 }
 
 /* Portrait: the print lands straight, then tilts to rest. On a real pointer
@@ -85,8 +86,8 @@ a {
 @media (min-width: 48em) {
 	.portrait-frame {
 		transform: rotate(1.5deg);
-		animation: portrait-rest 900ms var(--ease-out) 240ms both;
-		transition: transform var(--dur-ui) var(--ease-out), box-shadow var(--dur-ui) var(--ease-out);
+		animation: portrait-rest var(--dur-enter) var(--ease-out) 240ms both;
+		transition: transform var(--dur-hover) var(--ease-out), box-shadow var(--dur-hover) var(--ease-out);
 	}
 }
 @media (min-width: 48em) and (hover: hover) and (pointer: fine) {
@@ -106,7 +107,7 @@ a {
 	to { opacity: 1; transform: none; }
 }
 [data-panel] {
-	transition: translate var(--dur-ui) var(--ease-out), box-shadow var(--dur-ui) var(--ease-out);
+	transition: translate var(--dur-hover) var(--ease-out), box-shadow var(--dur-hover) var(--ease-out);
 }
 @keyframes panel-press {
 	from { transform: translate(6px, 6px); box-shadow: 0 0 0 var(--chakra-colors-preview-shadow); }
@@ -164,7 +165,7 @@ a {
 /* Mobile menu drops in from the bar. Translate, not scale, so its 44px
    targets are full size from the first frame. */
 #navbar-menu {
-	transition: opacity 180ms var(--ease-out), transform 180ms var(--ease-out);
+	transition: opacity var(--dur-press) var(--ease-out), transform var(--dur-press) var(--ease-out);
 }
 @starting-style {
 	#navbar-menu { opacity: 0; transform: translateY(-6px); }
@@ -176,7 +177,7 @@ a {
 	to { opacity: 1; transform: none; }
 }
 .theme-icon {
-	animation: icon-turn 300ms var(--ease-out) both;
+	animation: icon-turn var(--dur-ui) var(--ease-out) both;
 }
 
 /* Reduced motion keeps opacity, drops movement. */
@@ -307,7 +308,7 @@ a {
 }
 [data-out-arrow] > span {
 	display: inline-block;
-	transition: transform var(--dur-ui) var(--ease-out);
+	transition: transform var(--dur-hover) var(--ease-out);
 }
 @keyframes arrow-fly {
 	0% { transform: none; animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45); }
@@ -315,9 +316,9 @@ a {
 	42.01% { transform: translate(-120%, 120%); animation-timing-function: var(--ease-out); }
 	100% { transform: none; }
 }
-:is(a, [data-group]):focus-visible [data-out-arrow] > span { animation: arrow-fly 400ms both; }
+:is(a, [data-group]):focus-visible [data-out-arrow] > span { animation: arrow-fly var(--dur-ui) both; }
 @media (hover: hover) and (pointer: fine) {
-	:is(a, [data-group]):hover [data-out-arrow] > span { animation: arrow-fly 400ms both; }
+	:is(a, [data-group]):hover [data-out-arrow] > span { animation: arrow-fly var(--dur-ui) both; }
 }
 
 /* ── Card hover fill ───────────────────────────────────────────────────── */
@@ -328,7 +329,8 @@ a {
 [data-fill] {
 	position: relative;
 	isolation: isolate;
-	--fill-dur: 380ms;
+	/* Base, not hover: the fill travels across the whole card (STYLE.md, Motion). */
+	--fill-dur: var(--dur-ui);
 	--cascade-fill: var(--tone, var(--chakra-colors-brand-solid));
 	--cascade-on: var(--chakra-colors-page-bg);
 }
@@ -375,7 +377,7 @@ a {
    the card's on-fill text colour. */
 [data-fill] [data-panel] { color: var(--chakra-colors-page-text); }
 [data-fill] :not([data-panel], [data-panel] *) {
-	transition: color var(--fill-dur) var(--ease-out), transform var(--dur-ui) var(--ease-out);
+	transition: color var(--fill-dur) var(--ease-out), transform var(--dur-hover) var(--ease-out);
 }
 @media (hover: hover) and (pointer: fine) {
 	[data-fill]:hover::after { clip-path: circle(150% at var(--x, 50%) var(--y, 50%)); }

@@ -12,7 +12,7 @@ const LogoBox = styled.span`
 	line-height: 20px;
 
 	img {
-		transition: transform 200ms var(--ease-out);
+		transition: transform var(--dur-hover) var(--ease-out);
 	}
 
 	@media (hover: hover) and (pointer: fine) {
