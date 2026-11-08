@@ -6,13 +6,16 @@ import Layout from "../components/layouts/Articles";
 import ProjectLinks from "../components/ProjectLinks";
 import styles from "../styles/Hobbies.module.css";
 
+// Two of UI Pack's photographic looks, so the six read as one set (STYLE.md,
+// Component looks): Kinetic sculptures (2) for the instruments, Realistic
+// close-ups (4) for the things on a desk or a court.
 const chapters = [
-	{ id: "travel", index: "01", label: "Travel", kind: "travel", variant: 1 },
-	{ id: "coding-ai", index: "02", label: "Coding & AI", kind: "ai", variant: 3 },
-	{ id: "tennis", index: "03", label: "Tennis", kind: "tennis", variant: 0 },
-	{ id: "reading", index: "04", label: "Reading", kind: "reading", variant: 2 },
-	{ id: "home-servers", index: "05", label: "Home servers", kind: "server", variant: 3 },
-	{ id: "trading", index: "06", label: "Trading", kind: "trading", variant: 0 },
+	{ id: "travel", index: "01", label: "Travel", kind: "travel", variant: 2 },
+	{ id: "coding-ai", index: "02", label: "Coding & AI", kind: "ai", variant: 2 },
+	{ id: "tennis", index: "03", label: "Tennis", kind: "tennis", variant: 4 },
+	{ id: "reading", index: "04", label: "Reading", kind: "reading", variant: 4 },
+	{ id: "home-servers", index: "05", label: "Home servers", kind: "server", variant: 4 },
+	{ id: "trading", index: "06", label: "Trading", kind: "trading", variant: 2 },
 ];
 
 function Chapter({ id, index, label, kind, active, variant, after, children }) {

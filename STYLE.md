@@ -4,9 +4,9 @@ site: junxiong.dev (Ong Jun Xiong's personal site)
 extends: core
 pages: [landing, article, documentation]
 layouts: { landing: custom, article: custom, documentation: docs-shell }
-components: { diagrams: blueprint, 3d: [studio, paper-theatre, kinetic, cartoon] }
+components: { diagrams: blueprint, 3d: [kinetic, realistic, cartoon] }
 status: draft
-uipack: e6b6ed7d356b8973e788a8ff5d845173a5ac9104
+uipack: v0.2.0
 values: none
 ---
 
@@ -168,7 +168,9 @@ Both faces load through `next/font/google` in `pages/_app.js` (latin subset, `di
 self-hosted at build time): IBM Plex Sans as the variable font, IBM Plex Mono at 400 and 700
 only. `next/font` generates the metric-matched fallback faces and exposes the stacks as
 `--font-sans` and `--font-mono`, which the Chakra theme's `heading`, `body` and `mono` fonts read.
-`next/font` preloads both. Figures read the same faces through `--uipack-sans` and `--uipack-mono`.
+`next/font` preloads both. Figures read the same faces through `--uipack-sans` and `--uipack-mono`;
+UiPack's other parts (docs shell, object player, asset browser) read the `--ui-font-*` roles, which
+`styles/globals.css` points at the same two faces.
 Kickers, dates and captions never go below 12px (raised from 11px, 2026-09-28).
 
 ## Density and rhythm
@@ -277,7 +279,7 @@ as Markdown" or "Edit on GitHub" links.
 | Component | junxiong.dev picks | Why |
 | --- | --- | --- |
 | Diagrams | `blueprint` | The site draws case-study figures with UiPack (framed figure, lanes, nodes, packets, hints). See the open decision below |
-| 3D object scenes | `studio`, `paper-theatre`, `kinetic`, `cartoon` | Hobbies pins Cartoon (Coding & AI, Home servers), Studio (Tennis, Trading), Paper worlds (Travel) and Kinetic (Reading); Contact pins Cartoon. The `/uipack` gallery shows all six looks as UiPack's catalogue, not as site picks |
+| 3D object scenes | `kinetic`, `realistic`, `cartoon` | Hobbies pins two photographic looks so the six chapters read as one set: Kinetic sculptures (variant 2) for Travel (armillary globe), Coding & AI (neural orrery) and Trading (market balance), and Realistic close-ups (4) for Tennis (match point), Reading (quiet chapter) and Home servers (hot swap). Chosen 2026-11-08 from renders of every look each subject offers, light and dark, 1280 and 390: Studio's folded atlas (Travel's first-listed look) was the only scene whose dark room took the palette's blue-grey and the only third framing, so Travel takes the Kinetic globe, which shares the orrery's and the balance's brass and plinth. Kinetic and Realistic are `fixed` looks, so `hobbyScenePalettes` (`lib/theme.js`) no longer changes Hobbies; it still tints Studio in the `/uipack` gallery. Contact pins Cartoon. The `/uipack` gallery shows every look as UiPack's catalogue, not as site picks |
 
 **Open owner decision: do diagrams look the same on every site?** The Blueprint look is `fixed`
 in UiPack (figures identical on every site, only light and dark following the host), but this
@@ -286,7 +288,13 @@ site does not follow that today. `styles/globals.css` (the `.uipack`, `.uipack-o
 muted, ground, surface, border and accent to the Chakra roles (`--uipack-fg: page.text`,
 `--uipack-bg: page.bg`, `--uipack-accent: brand.solid`…), and the flow colours to its own hexes
 (request `#3d63d9` / `#8ea4ff`, response `#2fa778` / `#5fd39b`, change `#8a55d6` / `#c39aff`, light /
-dark). The owner has not decided which way it goes:
+dark). Since uipack v0.2.0 those `--uipack-*` names are aliases for the `--ui-*` roles, kept for
+sites like this one; the same block also sets `--ui-font-heading` (figure titles in the site's
+sans), `--ui-canvas-pattern: initial` (the 12px dot grid instead of Technical's drafting grid) and
+keeps figure titles at 700. Two further bridges sit beside it: the `--lightningcss-light/-dark`
+pair on `:root`, without which every `light-dark()` role uipack ships resolves to nothing under this
+site's browserslist, and the asset browser's tile grounds. The owner has not decided which way it
+goes:
 
 | Option | What it means | What changes |
 | --- | --- | --- |
@@ -302,8 +310,8 @@ Extends `core`. No site reuses this spec yet; notes.junxiong.dev has its own loo
 rust accent, serif and sans) and would write its own spec or say `extends: junxiong-dev` if the
 owner wants the two to match. Registry row to add in UiPack's `siteRegistry`
 (`playground/docs-manifest.ts`): site junxiong.dev, repo `ong6/junxiong-homepage`, spec
-`junxiong-homepage:STYLE.md`, looks `diagrams: blueprint, 3d: studio, paper-theatre, kinetic,
-cartoon`, pins `e6b6ed7`.
+`junxiong-homepage:STYLE.md`, looks `diagrams: blueprint, 3d: kinetic, realistic, cartoon`, pins
+`v0.2.0`.
 
 ## Open TODOs
 

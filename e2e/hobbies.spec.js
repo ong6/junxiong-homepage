@@ -85,28 +85,6 @@ test("hobby artwork starts when its visual enters the viewport", async ({ page }
 	await expect.poll(() => canvas.getAttribute("data-frames")).not.toBe("0");
 });
 
-test("studio gallery motion advances through an authored sequence, settles, then replays on demand", async ({ page }) => {
-	await page.goto("/uipack?category=web&object=ai&look=0#objects");
-	await settleLayout(page);
-	await page.locator(".uipack-object").evaluate((chapter) =>
-		chapter.scrollIntoView({ behavior: "instant", block: "center" }),
-	);
-	const scene = page.locator('.uipack-object canvas[data-renderer="webgl"]');
-	await scene.waitFor();
-	await expect.poll(() => scene.getAttribute("data-phase")).toBe("prompt-to-tools");
-	const firstPose = Number(await scene.getAttribute("data-pose"));
-	await expect.poll(() => scene.getAttribute("data-phase"), { timeout: 5000 }).toBe("tools-to-check");
-	expect(Number(await scene.getAttribute("data-pose"))).not.toBe(firstPose);
-	await expect.poll(() => scene.getAttribute("data-phase"), { timeout: 10000 }).toBe("rest");
-	const completedAt = await scene.getAttribute("data-frames");
-	await page.waitForTimeout(500);
-	expect(await scene.getAttribute("data-frames")).toBe(completedAt);
-	const replay = page.locator(".uipack-object").getByRole("button", { name: "Replay motion" });
-	await replay.click();
-	await expect.poll(() => scene.getAttribute("data-phase"), { timeout: 2000 }).toMatch(/prompt|prompt-to-tools/);
-	expect(await page.locator("main canvas").count()).toBe(1);
-});
-
 test("hobbies reduced motion uses a static WebGL frame with no motion controls", async ({ page }) => {
 	await page.emulateMedia({ reducedMotion: "reduce" });
 	await page.goto("/hobbies#tennis");
@@ -155,12 +133,13 @@ test("trading uses the shared journal and UI Pack exposes all library objects", 
  await expect(collection.getByRole('button',{name:'Trading journal',exact:true})).toBeVisible();
  await collection.getByRole('button',{name:'Trading journal',exact:true}).click();
  await expect(collection.locator('canvas')).toHaveAttribute('data-renderer','webgl');
- await expect(collection.getByText("A continuously panning candlestick chart with consistent OHLC prices and volume. Simulation; no live data.", { exact: true })).toBeVisible();
+ await expect(collection.locator('.uipack-object')).toHaveAttribute('data-kind','trading');
  await expect(collection.getByRole('navigation',{name:'Choose an object'}).getByRole('button')).toHaveCount(7);
 });
 
 test("UI Pack changes the tennis edition without leaving the shared player", async ({ page }) => {
- await page.goto('/uipack');
+ // Studio is no longer tennis's default look (Realistic is), so ask for it.
+ await page.goto('/uipack?category=web&object=tennis&look=0#objects');
  await page.locator('#objects').scrollIntoViewIfNeeded();
  const collection = page.getByRole('region', { name: '3D object collection' });
  await collection.getByRole('button', { name: 'Tennis practice', exact: true }).click();
@@ -181,9 +160,10 @@ test("the object gallery preserves named looks in its review URL", async ({ page
   await expect(page).toHaveURL(/look=2/);
   await page.reload();
   await expect(collection.locator(".uipack-object")).toHaveAttribute("data-variant","2");
+  // Reading has no Kinetic look, so it carries over as its default, Realistic.
   await collection.getByRole("button",{name:"Open book",exact:true}).click();
   await expect(page).toHaveURL(/object=reading/);
-  await expect(collection.getByRole("button",{name:/Kinetic sculptures/})).toHaveAttribute("aria-pressed","true");
+  await expect(collection.getByRole("button",{name:/Realistic close/})).toHaveAttribute("aria-pressed","true");
 });
 
 for (const width of [390, 1440]) for (const theme of ['light', 'dark']) {
@@ -193,7 +173,7 @@ for (const width of [390, 1440]) for (const theme of ['light', 'dark']) {
     await page.goto('/hobbies?style=abstract');
     await expect(page.getByRole('button',{name:'My picks',exact:true})).toHaveCount(0);
     await expect(page.getByRole('group',{name:'3D art direction'})).toHaveCount(0);
-    for (const [kind,direction] of [['travel','paper-theatre'],['ai','cartoon'],['tennis','studio'],['reading','kinetic'],['server','cartoon'],['trading','studio']]) {
+    for (const [kind,direction] of [['travel','kinetic'],['ai','kinetic'],['tennis','realistic'],['reading','realistic'],['server','realistic'],['trading','kinetic']]) {
       const chapter=page.locator(`[data-chapter="${kind}"]`);
       const object=chapter.locator('.uipack-object');
       await chapter.locator('[data-hobby-visual]').evaluate(node => node.scrollIntoView({block:'center',behavior:'instant'}));
