@@ -168,6 +168,8 @@ test("the object gallery preserves named looks in its review URL", async ({ page
 
 for (const width of [390, 1440]) for (const theme of ['light', 'dark']) {
   test(`fixed hobby artwork blends with the page at ${width} in ${theme}`, async ({page}, info) => {
+    // Six scene builds in one page: software WebGL under a parallel run can pass 30 s.
+    test.setTimeout(90_000);
     await page.setViewportSize({width, height:900});
     await page.addInitScript(mode => localStorage.setItem('chakra-ui-color-mode', mode), theme);
     await page.goto('/hobbies?style=abstract');
