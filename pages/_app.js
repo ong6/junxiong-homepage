@@ -36,7 +36,7 @@ function MyApp({ Component, pageProps, router }) {
 	}, []);
 
 	return (
-		<div className={`${plexSans.variable} ${plexMono.variable}`}>
+		<div className={`site-root ${plexSans.variable} ${plexMono.variable}`}>
 			<SiteProvider theme={theme}>
 				<Layout router={router}>
 					<Component {...pageProps} key={router.route} />

@@ -19,7 +19,7 @@ test.describe("/assets", () => {
 		const errors = collectErrors(page);
 		await page.goto("/assets");
 		const status = page.getByRole("status");
-		await expect(status).toHaveText(/^60 assets$/);
+		await expect(status).toHaveText(/^44 assets$/);
 		await page.getByRole("button", { name: /^Icons/ }).click();
 		await expect(status).toHaveText("25 assets in Icons");
 		await expect(page.locator(".uipack-browser__card")).toHaveCount(25);

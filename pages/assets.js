@@ -22,7 +22,7 @@ export default function Assets() {
 					</Heading>
 
 					<Text mt={6} fontSize={{ base: "17px", md: "18px" }} lineHeight="1.8">
-						Everything uipack can draw, with a preview and a copy button. This page is for me
+						Every icon, motion token, background and mark in uipack, with a preview and a copy button. This page is for me
 						and is unlisted; it is here so I can check what exists before drawing it again.
 					</Text>
 				</Box>

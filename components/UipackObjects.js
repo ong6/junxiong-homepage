@@ -13,7 +13,7 @@ export default function UipackObjects() {
 	return (
 		<Box as="section" id="objects" scrollMarginTop="100px" aria-label="3D object collection" my={{ base: 10, md: 14 }}>
 			<Heading as="h2" fontSize={{ base: "22px", md: "24px" }}>Objects in motion</Heading>
-			<Text mt={3} mb={6} maxW="680px" color="text.muted">Pick an object, explore six art directions, and open the canvas for a closer look. The original editions live inside Studio.</Text>
+			<Text mt={3} mb={6} maxW="680px" color="text.muted">Pick an object, switch between the two or three looks it comes in, and open the canvas for a closer look. The original editions live inside Studio, for the objects that have it.</Text>
 			<ObjectGallery kind={selected} variant={variant} edition={edition} theme={colorMode} palette={hobbyScenePalettes[colorMode]} onChange={choose} />
 		</Box>
 	);

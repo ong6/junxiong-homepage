@@ -14,7 +14,7 @@ for (const theme of ['light', 'dark']) for (const width of [390, 1440]) {
     await expect(gallery.locator('canvas')).toHaveCSS('opacity', '1');
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
     await gallery.screenshot({ path: info.outputPath('website-gallery.png') });
-    await gallery.getByRole('button', { name: 'Studio objects', exact: true }).click();
+    await gallery.getByRole('button', { name: /^Studio objects/ }).click();
     await gallery.getByRole('combobox', { name: /Studio edition/ }).selectOption('2');
     await page.reload();
     await expect(gallery.locator('.uipack-object')).toHaveAttribute('data-edition', '2');
@@ -24,9 +24,10 @@ for (const theme of ['light', 'dark']) for (const width of [390, 1440]) {
 test('all original editions remain usable after switching', async ({ page }) => {
   // This checks 21 renderer replacements; each readiness assertion keeps its own short timeout.
   test.setTimeout(120000);
-  await page.goto('/uipack?category=web&object=ai&look=0');
+  // The subjects that offer Studio (uipack v0.2.0 dropped it for AI and reading).
+  await page.goto('/uipack?category=web&object=tennis&look=0');
   const gallery = page.getByRole('region', { name: '3D object collection' });
-  for (const [title, kind] of [['Agent session','ai'],['Tennis practice','tennis'],['Trading journal','trading'],['Inference study','server'],['Local map','travel'],['Open book','reading'],['Contact inbox','contact']]) {
+  for (const [title, kind] of [['Tennis practice','tennis'],['Trading journal','trading'],['Inference study','server'],['Local map','travel'],['Contact inbox','contact']]) {
     await gallery.getByRole('button', { name: title, exact: true }).click();
     const object = gallery.locator('.uipack-object');
     await expect(object).toHaveAttribute('data-kind', kind);
@@ -41,13 +42,14 @@ test('all original editions remain usable after switching', async ({ page }) => 
   }
 });
 
-for (const [name,id,variant] of [['Cartoon worlds','cartoon',3],['Realistic close-ups','realistic',4],['Abstract forms','abstract',5]]) {
+// Each on a subject that offers it (uipack v0.2.0 gives each subject two or three looks).
+for (const [name,id,variant,object] of [['Cartoon worlds','cartoon',3,'tennis'],['Realistic close-ups','realistic',4,'tennis'],['Abstract forms','abstract',5,'ai']]) {
   test(`new direction ${id} persists in the gallery`, async ({page}) => {
     await page.setViewportSize({width:390,height:1000});
-    await page.goto(`/uipack?category=web&object=travel&look=${variant}#objects`);
+    await page.goto(`/uipack?category=web&object=${object}&look=${variant}#objects`);
     const gallery=page.getByRole('region',{name:'3D object collection'});
     await expect(gallery.locator('.uipack-object')).toHaveAttribute('data-art-direction',id);
-    await expect(gallery.getByRole('button',{name,exact:true})).toHaveAttribute('aria-pressed','true');
+    await expect(gallery.getByRole('button',{name:new RegExp('^'+name.slice(0,9))})).toHaveAttribute('aria-pressed','true');
     await gallery.getByRole('button',{name:'Contact inbox',exact:true}).click();
     await expect(gallery.locator('canvas')).toHaveAttribute('data-renderer','webgl');
     if (variant === 3) await expect(gallery.locator('.uipack-object')).toHaveAttribute('data-art-direction','cartoon');

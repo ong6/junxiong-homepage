@@ -198,7 +198,12 @@ a {
 /* uipack figures take the site's tokens. Chakra flips the semantic colours
    with its colour mode and sets data-theme on <html>, so the figure follows
    the site toggle, not only the OS. The object frame and the canvas dialog
-   sit outside a figure, so they take the same tokens. */
+   sit outside a figure, so they take the same tokens. Since uipack v0.2.0 the
+   --uipack-* names are aliases on .uipack for the --ui-* roles; a rule here
+   (loaded after uipack's CSS) still wins. Two things no longer follow them:
+   the figure title reads --ui-font-heading, and the canvas ground reads
+   --ui-canvas-pattern (Technical's drafting grid); `initial` brings back the
+   12px dot grid drawn in --uipack-grid. */
 .uipack,
 .uipack-object-frame,
 .uipack-canvas-dialog {
@@ -214,23 +219,49 @@ a {
 	--uipack-token-request: #3d63d9;
 	--uipack-token-response: #2fa778;
 	--uipack-token-change: #8a55d6;
+	--ui-font-heading: var(--uipack-sans);
+	--ui-canvas-pattern: initial;
 }
-/* :root raises the dark blocks to (0,3,0) so they also beat uipack's
-   prefers-color-scheme: dark defaults (:root:not([data-theme="light"]) …),
-   which otherwise repaint figures mint-on-green for OS-dark visitors. */
-:root[data-theme="dark"] .uipack,
-:root[data-theme="dark"] .uipack-object-frame,
-:root[data-theme="dark"] .uipack-canvas-dialog {
-	--uipack-fg: var(--chakra-colors-page-text);
-	--uipack-muted: var(--chakra-colors-text-muted);
-	--uipack-bg: var(--chakra-colors-page-bg);
-	--uipack-surface: var(--chakra-colors-surface-raised);
-	--uipack-border: var(--chakra-colors-border-subtle);
-	--uipack-accent: var(--chakra-colors-brand-solid);
+/* Figure titles stay at the 700 they had before uipack v0.2.0 (now 600). */
+.uipack .uipack__title {
+	font-weight: 700;
+}
+/* Dark: only the values that are not semantic tokens. uipack v0.2.0 dropped
+   its prefers-color-scheme colour defaults, so no specificity boost is needed. */
+[data-theme="dark"] .uipack,
+[data-theme="dark"] .uipack-object-frame,
+[data-theme="dark"] .uipack-canvas-dialog {
 	--uipack-grid: rgba(230, 235, 232, 0.14);
 	--uipack-token-request: #8ea4ff;
 	--uipack-token-response: #5fd39b;
 	--uipack-token-change: #c39aff;
+}
+/* UiPack v0.2.0 writes its roles with light-dark(). For this browserslist
+   Next's CSS step lowers light-dark() to a --lightningcss-light/-dark pair that
+   only a color-scheme declaration in compiled CSS switches; Chakra sets
+   color-scheme at runtime, which the polyfill never sees, so without these
+   every light-dark() role (the docs palette, for one) resolves to nothing. */
+:root {
+	color-scheme: light;
+	--lightningcss-light: initial;
+	--lightningcss-dark: ;
+}
+:root[data-theme="dark"] {
+	color-scheme: dark;
+	--lightningcss-light: ;
+	--lightningcss-dark: initial;
+}
+/* UiPack's other parts (the docs shell, the object player, the asset browser)
+   read the --ui-* type roles directly. Technical names "IBM Plex Sans", which
+   next/font serves under its own family name, so point the roles at the site's
+   faces. On <html> too, for portals; [data-ui-style] re-declares Technical's. */
+html,
+.site-root,
+[data-ui-style] {
+	--ui-font-text: var(--font-sans);
+	--ui-font-display: var(--font-sans);
+	--ui-font-heading: var(--font-sans);
+	--ui-font-label: var(--font-mono);
 }
 /* The asset browser takes the same tokens, and its counts and status line
    stay at full opacity: faded muted text on the warm page falls to 2.9:1. */
@@ -247,8 +278,12 @@ a {
 	/* The category list sticks below the 72px fixed header, like the docs
 	   sidebar. Below 720px uipack makes the list static. */
 	--uipack-browser-sticky-top: 96px;
+	/* Preview tiles kept on the grounds they had before uipack v0.2.0, where
+	   the tile took Technical's paper role (a blue-black in dark). */
+	--uipack-tile: #f6f5f1;
 }
 :root[data-theme="dark"] .uipack-browser {
+	--uipack-tile: #0a100d;
 	--uipack-fg: var(--chakra-colors-page-text);
 	--uipack-muted: var(--chakra-colors-text-muted);
 	--uipack-bg: var(--chakra-colors-page-bg);

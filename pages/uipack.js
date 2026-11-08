@@ -157,7 +157,7 @@ export default function Uipack() {
 							<Box maxW="680px">
 								<H2>Assets</H2>
 								<P>
-									Every part, icon, motion token, background and mark is catalogued with a rendered
+									Every icon, motion token, background and mark is catalogued with a rendered
 									preview and a copy action, so I can find what I have before I draw it again. Open
 									the{" "}
 									<Link as={NextLink} href="/assets">
