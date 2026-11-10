@@ -57,5 +57,10 @@
 		"@playwright/test": "^1.61.1",
 		"eslint": "^9.39.5",
 		"eslint-config-next": "^16.3.4"
+	},
+	"overrides": {
+		"@typescript-eslint/typescript-estree": {
+			"minimatch": "^11.0.5"
+		}
 	}
 }
