@@ -29,6 +29,8 @@ const CSP = [
 
 module.exports = {
 	reactStrictMode: true,
+	// AGENTS.md is hand-written; stop `next dev` appending its managed block.
+	agentRules: false,
 	poweredByHeader: false,
 	images: {
 		formats: ["image/avif", "image/webp"],
