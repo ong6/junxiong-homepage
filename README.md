@@ -53,8 +53,9 @@ For the full browser suite, leave port 3011 free and run:
 CI=1 npm run test:e2e -- --reporter=line
 ```
 
-Lint, build, and browser checks run manually before publishing. Vercel deploys pushes to `main`;
-the repository does not configure an automatic test gate for those deployments.
+Browser checks run manually before publishing. GitHub Actions runs `npm run verify` (lint and the
+UI ownership check) and the build on every push, but Vercel deploys pushes to `main` without
+waiting for it.
 
 ## Structure
 
