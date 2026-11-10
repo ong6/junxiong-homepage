@@ -19,10 +19,10 @@ test.describe("/assets", () => {
 		const errors = collectErrors(page);
 		await page.goto("/assets");
 		const status = page.getByRole("status");
-		await expect(status).toHaveText(/^44 assets$/);
+		await expect(status).toHaveText(/^51 assets$/);
 		await page.getByRole("button", { name: /^Icons/ }).click();
-		await expect(status).toHaveText("25 assets in Icons");
-		await expect(page.locator(".uipack-browser__card")).toHaveCount(25);
+		await expect(status).toHaveText("32 assets in Icons");
+		await expect(page.locator(".uipack-browser__card")).toHaveCount(32);
 		await page.getByRole("searchbox").fill("robot");
 		await expect(status).toHaveText("1 asset in Icons");
 		const broken = await page.evaluate(() => [...document.querySelectorAll(".uipack-browser__tile img")].filter((i) => i.complete && i.naturalWidth === 0).map((i) => i.src));

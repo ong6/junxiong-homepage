@@ -1,6 +1,6 @@
 # junxiong.dev: agent guide
 
-Next.js 16 (pages router), React 18, Chakra UI v2 + Emotion, `uipack` from GitHub. Node >= 20.
+Next.js 16 (pages router), React 18, Chakra UI v2 + Emotion, `uipack` from its GitHub release tarball (`npm install https://github.com/ong6/uipack/releases/download/vX.Y.Z/uipack-X.Y.Z.tgz`; never `npm i uipack`, an unrelated package). Node >= 20.
 Pushing to `main` deploys to production on Vercel; CI (`.github/workflows/ci.yml`) runs verify + build.
 
 ## Commands

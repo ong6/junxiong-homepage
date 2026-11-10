@@ -6,7 +6,7 @@ pages: [landing, article, documentation]
 layouts: { landing: custom, article: custom, documentation: docs-shell }
 components: { diagrams: blueprint, 3d: [kinetic, realistic, cartoon] }
 status: draft
-uipack: v0.2.0
+uipack: v0.4.0
 values: none
 ---
 
@@ -311,7 +311,7 @@ rust accent, serif and sans) and would write its own spec or say `extends: junxi
 owner wants the two to match. Registry row to add in UiPack's `siteRegistry`
 (`playground/docs-manifest.ts`): site junxiong.dev, repo `ong6/junxiong-homepage`, spec
 `junxiong-homepage:STYLE.md`, looks `diagrams: blueprint, 3d: kinetic, realistic, cartoon`, pins
-`v0.2.0`.
+`v0.4.0`.
 
 ## Open TODOs
 

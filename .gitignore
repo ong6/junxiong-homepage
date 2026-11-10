@@ -37,7 +37,7 @@ yarn-error.log*
 /playwright-report
 /test-results
 
-# derived from the pinned uipack commit at build time
+# derived from the pinned uipack release at build time
 public/uipack-assets/
 
 .playwright-mcp/

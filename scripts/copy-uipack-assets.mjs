@@ -1,6 +1,6 @@
 // Copies uipack's rendered asset previews into public/ so /assets can serve
 // them. Runs before every build (see package.json "prebuild"); the output is
-// gitignored because it is derived from the pinned uipack commit.
+// gitignored because it is derived from the pinned uipack release.
 import { cpSync, mkdirSync, rmSync } from "node:fs";
 import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
