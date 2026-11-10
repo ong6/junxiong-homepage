@@ -31,6 +31,7 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "eslint .",
+		"verify": "npm run lint && npm run check:ui-ownership",
 		"sync:trading-docs": "node scripts/sync-trading-docs.mjs",
 		"test:e2e": "playwright test",
 		"check:ui-ownership": "node scripts/check-ui-ownership.mjs"
