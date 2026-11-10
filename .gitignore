@@ -48,3 +48,6 @@ public/uipack-assets/
 
 # Blender intermediates for the social cards; regenerate with scripts/og/scenes.py
 scripts/og/renders/
+
+# private redaction list for scripts/sync-trading-docs.mjs; never commit
+scripts/.forbidden-terms.local

@@ -14,7 +14,6 @@ import { fileURLToPath } from "node:url";
 
 const SECTIONS = ["Start here", "How it works", "Research", "Operations"];
 const REQUIRED_FIELDS = ["title", "summary", "order", "section"];
-const FORBIDDEN = ["trae", "traecli", "bytedance", "devbox", "lark", "10.199.", "jun.ong"];
 const ROUTE_ROOT = "/trading-engine/docs";
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const siteRoot = path.resolve(scriptDirectory, "..");
@@ -23,6 +22,26 @@ const destination = path.join(siteRoot, "content", "trading-docs");
 
 function fail(message) {
 	throw new Error(`Trading docs sync failed: ${message}`);
+}
+
+// The redaction list names private identifiers, so it lives in a gitignored
+// local file (one case-insensitive substring per line; blank lines and # comments
+// are ignored). Without it the scan cannot run, so the sync refuses to.
+const forbiddenTermsFile = path.join(scriptDirectory, ".forbidden-terms.local");
+
+function loadForbiddenTerms() {
+	if (!existsSync(forbiddenTermsFile)) {
+		fail(
+			`${path.relative(siteRoot, forbiddenTermsFile)} is missing. Create it with one forbidden ` +
+				"term per line (it is gitignored) so the public-content scan can run.",
+		);
+	}
+	const terms = readFileSync(forbiddenTermsFile, "utf8")
+		.split("\n")
+		.map((line) => line.trim().toLocaleLowerCase("en-US"))
+		.filter((line) => line && !line.startsWith("#"));
+	if (!terms.length) fail(`${path.relative(siteRoot, forbiddenTermsFile)} lists no terms`);
+	return terms;
 }
 
 function expandHome(value) {
@@ -108,9 +127,11 @@ function sourceReader(options) {
 	};
 }
 
+let forbiddenTerms = [];
+
 function assertPublic(file, source) {
 	const lower = source.toLocaleLowerCase("en-US");
-	const forbidden = FORBIDDEN.find((identifier) => lower.includes(identifier));
+	const forbidden = forbiddenTerms.find((identifier) => lower.includes(identifier));
 	if (forbidden) fail(`${file} contains forbidden identifier "${forbidden}"`);
 }
 
@@ -222,6 +243,7 @@ function writeOutput(pages) {
 }
 
 function main() {
+	forbiddenTerms = loadForbiddenTerms();
 	const options = parseArguments(process.argv.slice(2));
 	const source = sourceReader(options);
 	const available = source.files();
