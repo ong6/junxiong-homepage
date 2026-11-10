@@ -168,8 +168,11 @@ export default function Uipack() {
 
 								<H2>Install</H2>
 								<P>
-									Not on npm yet, so it installs from GitHub with <Code>dist/</Code> committed:{" "}
-									<Code>npm install github:ong6/uipack</Code>. The README on{" "}
+									Not on npm yet, so it installs from the GitHub release tarball:{" "}
+									<Code>
+										npm install https://github.com/ong6/uipack/releases/download/v0.4.0/uipack-0.4.0.tgz
+									</Code>
+									. The README on{" "}
 									<Link href="https://github.com/ong6/uipack" isExternal>
 										GitHub
 									</Link>{" "}
