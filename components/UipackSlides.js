@@ -53,7 +53,6 @@ export default function UipackSlides() {
 			</Box>
 			<Text mt={8} maxW="680px" fontSize="16px" lineHeight="1.75" color="text.muted">
 				The slide and the words stay together while you work, but only the 16:9 SVG is downloaded.
-				A reusable deck template and presentation export are the next pieces to build.
 			</Text>
 		</Box>
 	);

@@ -12,7 +12,6 @@ for (const path of [
 	"/skillsmith",
 	"/trading-engine",
 	"/uipack",
-	"/assets",
 	"/groundplane",
 	"/hobbies",
 ]) {

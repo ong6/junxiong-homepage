@@ -26,7 +26,6 @@ Pushing to `main` deploys to production on Vercel; CI (`.github/workflows/ci.yml
 ## Generated: never hand-edit (and skip reading)
 - `content/trading-docs/`: `npm run sync:trading-docs` from the engine repo's `docs/site`; needs the gitignored `scripts/.forbidden-terms.local`
 - `public/uipack-slides/`: from `lib/uipackSlides.mjs` via `node scripts/build-uipack-slides.mjs`
-- `public/uipack-assets/`: gitignored, copied from uipack by `predev`/`prebuild`
 - `package-lock.json`: change only through npm · `docs/ui-review-2026-11.md`: a dated review, history only
 - `AGENTS.md` stays hand-written: `agentRules: false` in `next.config.js` stops `next dev` appending its block
 

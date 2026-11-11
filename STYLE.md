@@ -158,7 +158,7 @@ Site tokens with no contract role, kept here so a future style file can carry th
 | Page type | Pages | h1 |
 | --- | --- | --- |
 | Home (landing) | `/`, `/contact`, `/hobbies` | 46 / 58 / 74px (below 500, from 500, from 960), line-height 0.98, −0.06em |
-| Article / case study | Case studies, `/ai-tooling`, `/uipack`, trading era and update pages, `/resume`, `/assets`, `/404` | 40 / 52px (below 768, from 768), line-height 1, −0.045em |
+| Article / case study | Case studies, `/ai-tooling`, `/uipack`, trading era and update pages, `/resume`, `/404` | 40 / 52px (below 768, from 768), line-height 1, −0.045em |
 | Docs | `/trading-engine/docs/*` | 40 / 52px (below 900, from 900, UiPack's shell switch), the article size |
 | Archive | `/works` and its entries | 40 / 52px, the article size: the ledger is an article page |
 
@@ -169,7 +169,7 @@ self-hosted at build time): IBM Plex Sans as the variable font, IBM Plex Mono at
 only. `next/font` generates the metric-matched fallback faces and exposes the stacks as
 `--font-sans` and `--font-mono`, which the Chakra theme's `heading`, `body` and `mono` fonts read.
 `next/font` preloads both. Figures read the same faces through `--uipack-sans` and `--uipack-mono`;
-UiPack's other parts (docs shell, object player, asset browser) read the `--ui-font-*` roles, which
+UiPack's other parts (docs shell, object player) read the `--ui-font-*` roles, which
 `styles/globals.css` points at the same two faces.
 Kickers, dates and captions never go below 12px (raised from 11px, 2026-09-28).
 
@@ -291,9 +291,9 @@ muted, ground, surface, border and accent to the Chakra roles (`--uipack-fg: pag
 dark). Since uipack v0.2.0 those `--uipack-*` names are aliases for the `--ui-*` roles, kept for
 sites like this one; the same block also sets `--ui-font-heading` (figure titles in the site's
 sans), `--ui-canvas-pattern: initial` (the 12px dot grid instead of Technical's drafting grid) and
-keeps figure titles at 700. Two further bridges sit beside it: the `--lightningcss-light/-dark`
+keeps figure titles at 700. A further bridge sits beside it: the `--lightningcss-light/-dark`
 pair on `:root`, without which every `light-dark()` role uipack ships resolves to nothing under this
-site's browserslist, and the asset browser's tile grounds. The owner has not decided which way it
+site's browserslist. The owner has not decided which way it
 goes:
 
 | Option | What it means | What changes |

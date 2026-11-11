@@ -251,7 +251,7 @@ a {
 	--lightningcss-light: ;
 	--lightningcss-dark: initial;
 }
-/* UiPack's other parts (the docs shell, the object player, the asset browser)
+/* UiPack's other parts (the docs shell, the object player)
    read the --ui-* type roles directly. Technical names "IBM Plex Sans", which
    next/font serves under its own family name, so point the roles at the site's
    faces. On <html> too, for portals; [data-ui-style] re-declares Technical's. */
@@ -262,35 +262,6 @@ html,
 	--ui-font-display: var(--font-sans);
 	--ui-font-heading: var(--font-sans);
 	--ui-font-label: var(--font-mono);
-}
-/* The asset browser takes the same tokens, and its counts and status line
-   stay at full opacity: faded muted text on the warm page falls to 2.9:1. */
-.uipack-browser {
-	--uipack-fg: var(--chakra-colors-page-text);
-	--uipack-muted: var(--chakra-colors-text-muted);
-	--uipack-bg: var(--chakra-colors-page-bg);
-	--uipack-surface: var(--chakra-colors-surface-raised);
-	--uipack-border: var(--chakra-colors-border-subtle);
-	--uipack-accent: var(--chakra-colors-brand-solid);
-	--uipack-mono: var(--font-mono);
-	--uipack-sans: var(--font-sans);
-	--uipack-surface-raised: var(--chakra-colors-surface-quiet);
-	/* The category list sticks below the 72px fixed header, like the docs
-	   sidebar. Below 720px uipack makes the list static. */
-	--uipack-browser-sticky-top: 96px;
-	/* Preview tiles kept on the grounds they had before uipack v0.2.0, where
-	   the tile took Technical's paper role (a blue-black in dark). */
-	--uipack-tile: #f6f5f1;
-}
-:root[data-theme="dark"] .uipack-browser {
-	--uipack-tile: #0a100d;
-	--uipack-fg: var(--chakra-colors-page-text);
-	--uipack-muted: var(--chakra-colors-text-muted);
-	--uipack-bg: var(--chakra-colors-page-bg);
-	--uipack-surface: var(--chakra-colors-surface-raised);
-	--uipack-surface-raised: var(--chakra-colors-surface-quiet);
-	--uipack-border: var(--chakra-colors-border-subtle);
-	--uipack-accent: var(--chakra-colors-brand-solid);
 }
 /* The object player, the 3D object gallery, the slide starter and its speaker
    guide carry their own variables on the element, with a [data-theme]

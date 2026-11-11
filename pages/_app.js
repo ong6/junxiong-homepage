@@ -1,5 +1,4 @@
 import "uipack/theme.css";
-import "uipack/browser.css";
 import "uipack/objects.css";
 import "uipack/presentations.css";
 import "uipack/docs.css";

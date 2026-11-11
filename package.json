@@ -26,8 +26,7 @@
 	],
 	"scripts": {
 		"dev": "next dev",
-		"prebuild": "npm run check:ui-ownership && node scripts/copy-uipack-assets.mjs",
-		"predev": "node scripts/copy-uipack-assets.mjs",
+		"prebuild": "npm run check:ui-ownership",
 		"build": "next build",
 		"start": "next start",
 		"lint": "eslint .",

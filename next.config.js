@@ -53,6 +53,8 @@ module.exports = {
 			{ source: "/trading-engine/v5", destination: "/trading-engine/v1/1.5", permanent: true },
 			{ source: "/trading-engine/v6", destination: "/trading-engine/v1/1.6", permanent: true },
 			{ source: "/trading-engine/v7", destination: "/trading-engine/v1/1.7", permanent: true },
+			// The asset browser moved to the uipack docs site.
+			{ source: "/assets", destination: "https://ui.junxiong.dev/gallery", permanent: true },
 			{
 				source: "/jobforge",
 				destination: "https://github.com/ong6/skills/tree/main/skills/interview-prep",

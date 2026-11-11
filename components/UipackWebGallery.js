@@ -66,9 +66,6 @@ function GalleryFigure({ id, spec, parts, n, note }) {
 	);
 }
 
-// Match the discovered browser-suite count when its coverage changes.
-const E2E_CASES = 183;
-
 const GALLERY = [
 	{
 		id: "ai",
@@ -96,7 +93,7 @@ const GALLERY = [
 	},
 	{
 		id: "dp",
-		spec: deploy(E2E_CASES),
+		spec: deploy,
 		parts: pipelineParts,
 		note: "this site. I run the browser suite before pushing. Vercel deploys main automatically; these checks are not an enforced deployment gate.",
 	},

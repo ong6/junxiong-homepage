@@ -13,7 +13,6 @@ import {
 	Text,
 	useColorModeValue,
 } from "@chakra-ui/react";
-import NextLink from "next/link";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useSyncExternalStore } from "react";
@@ -23,7 +22,7 @@ import CaseStudyFooter from "../components/CaseStudyFooter";
 import ProjectLinks from "../components/ProjectLinks";
 import LazyMount from "../components/LazyMount";
 import UipackDocs from "../components/UipackDocs";
-import { BackLink, P, H2, Code, ARTICLE_TITLE, Eyebrow } from "../components/ArticleParts";
+import { BackLink, P, H2, ARTICLE_TITLE, Eyebrow } from "../components/ArticleParts";
 // Load the animated gallery only after the selected category is known.
 const UipackWebGallery = dynamic(() => import("../components/UipackWebGallery"), {
 	loading: () => (
@@ -38,8 +37,15 @@ const UipackWebMotion = dynamic(() => import("../components/UipackWebMotion"));
 
 const subscribeToHydration = () => () => {};
 
+// Everything that changes with a release (install, parts, API, the asset list)
+// lives on the docs site, so this page never needs a version bump.
+const DOCS = "https://ui.junxiong.dev";
+const GALLERY = `${DOCS}/gallery`;
+
 const links = [
-	{ name: "Source on GitHub", detail: "Not on npm yet; installs from GitHub", href: "https://github.com/ong6/uipack", external: true },
+	{ name: "Docs", detail: "The current parts, install steps and API", href: DOCS, external: true },
+	{ name: "Asset gallery", detail: "Every icon, motion token, background and mark, with a preview", href: GALLERY, external: true },
+	{ name: "Source on GitHub", detail: "ong6/uipack", href: "https://github.com/ong6/uipack", external: true },
 ];
 
 export default function Uipack() {
@@ -137,9 +143,8 @@ export default function Uipack() {
 									Web design
 								</Heading>
 								<P color="text.muted">
-									A shared set of visual building blocks for my websites. The working library covers
-									figures, icons, backgrounds and animation; reusable page layouts are the next
-									layer.
+									A shared set of visual building blocks for my websites: figures, icons, backgrounds
+									and animation.
 								</P>
 								<H2>Figures &amp; motion</H2>
 								<P>
@@ -158,25 +163,24 @@ export default function Uipack() {
 								<H2>Assets</H2>
 								<P>
 									Every icon, motion token, background and mark is catalogued with a rendered
-									preview and a copy action, so I can find what I have before I draw it again. Open
-									the{" "}
-									<Link as={NextLink} href="/assets">
-										asset browser
+									preview, so I can find what I have before I draw it again. Open the{" "}
+									<Link href={GALLERY} isExternal>
+										asset gallery
 									</Link>
 									.
 								</P>
 
-								<H2>Install</H2>
+								<H2>Docs</H2>
 								<P>
-									Not on npm yet, so it installs from the GitHub release tarball:{" "}
-									<Code>
-										npm install https://github.com/ong6/uipack/releases/download/v0.4.0/uipack-0.4.0.tgz
-									</Code>
-									. The README on{" "}
+									The{" "}
+									<Link href={DOCS} isExternal>
+										docs
+									</Link>{" "}
+									have the parts, the install steps and the API; the source is on{" "}
 									<Link href="https://github.com/ong6/uipack" isExternal>
 										GitHub
-									</Link>{" "}
-									has the parts, the connector rule, the hover API and the presets.
+									</Link>
+									.
 								</P>
 							</Box>
 						</TabPanel>

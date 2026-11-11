@@ -31,7 +31,7 @@ const topRoutes = [
 	})),
 	{ path: "/skills", lastmod: "2026-10-22", changefreq: "yearly", priority: "0.8" },
 	{ path: "/skillsmith", lastmod: "2026-10-22", changefreq: "yearly", priority: "0.8" },
-	{ path: "/uipack", lastmod: "2026-09-25", changefreq: "monthly", priority: "0.6" },
+	{ path: "/uipack", lastmod: "2026-11-11", changefreq: "monthly", priority: "0.6" },
 	{ path: "/works", lastmod: "2026-09-01", changefreq: "monthly", priority: "0.7" },
 	{ path: "/hobbies", lastmod: "2026-10-22", changefreq: "monthly", priority: "0.5" },
 ];

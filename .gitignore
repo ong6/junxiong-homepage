@@ -37,9 +37,6 @@ yarn-error.log*
 /playwright-report
 /test-results
 
-# derived from the pinned uipack release at build time
-public/uipack-assets/
-
 .playwright-mcp/
 
 # Blender intermediates for the social cards; regenerate with scripts/og/scenes.py

@@ -173,3 +173,9 @@ for (const theme of ["light", "dark"]) {
 		});
 	}
 }
+
+test("/assets redirects permanently to the uipack gallery", async ({ request }) => {
+	const res = await request.get("/assets", { maxRedirects: 0 });
+	expect(res.status()).toBe(308);
+	expect(res.headers().location).toBe("https://ui.junxiong.dev/gallery");
+});
