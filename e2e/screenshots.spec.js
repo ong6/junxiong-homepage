@@ -22,7 +22,7 @@ for (const path of [
 		]) {
 			test(`shot ${path} ${theme} ${w}`, async ({ page }) => {
 				await page.setViewportSize({ width: w, height: h });
-				await page.addInitScript((t) => localStorage.setItem("chakra-ui-color-mode", t), theme);
+				await page.addInitScript((t) => localStorage.setItem("junxiong-theme", t), theme);
 				await page.goto(path);
 				await page.evaluate(() => document.fonts.ready);
 				for (

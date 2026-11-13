@@ -58,7 +58,7 @@ for (const path of PAGES) {
 	for (const theme of ["light", "dark"]) {
 		test(`${path} in ${theme} renders with no console errors`, async ({ page }) => {
 			const errors = collectErrors(page);
-			await page.addInitScript((t) => localStorage.setItem("chakra-ui-color-mode", t), theme);
+			await page.addInitScript((t) => localStorage.setItem("junxiong-theme", t), theme);
 			await page.goto(path);
 			await page.locator("figure.uipack").first().waitFor();
 			await expect(page.locator("html")).toHaveAttribute("data-theme", theme);

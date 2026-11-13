@@ -57,7 +57,7 @@ function GalleryFigure({ id, spec, parts, n, note }) {
 					mt={3}
 					fontFamily="var(--font-mono)"
 					fontSize="12px"
-					lineHeight="1.6"
+					lineHeight="text"
 					color="text.muted">
 					fig. {n} — {note}
 				</Text>

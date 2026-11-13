@@ -100,7 +100,7 @@ export default function WorkExperience() {
 				fontFamily="var(--font-mono)"
 				fontSize="12px"
 				fontWeight="700"
-				letterSpacing="0.08em"
+				letterSpacing=".08em"
 				textTransform="uppercase"
 				opacity={0.68}>
 				Earlier experience

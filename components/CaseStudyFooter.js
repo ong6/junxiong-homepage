@@ -43,7 +43,7 @@ export default function CaseStudyFooter({ links, next }) {
 						},
 					}}>
 					<Eyebrow>NEXT</Eyebrow>
-					<Heading as="h2" mt={3} fontSize="24px" lineHeight="1.1">
+					<Heading as="h2" mt={3} fontSize="24px" lineHeight="heading">
 						<LinkOverlay
 							as={NextLink}
 							href={next.href}
@@ -57,7 +57,7 @@ export default function CaseStudyFooter({ links, next }) {
 						</LinkOverlay>
 					</Heading>
 					{next.detail && (
-						<Text mt={2} color="text.muted" fontSize="16px" lineHeight="1.6">
+						<Text mt={2} color="text.muted" fontSize="16px" lineHeight="text">
 							{next.detail}
 						</Text>
 					)}

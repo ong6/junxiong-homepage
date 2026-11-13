@@ -1,4 +1,4 @@
-import { Box, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 
 // Code rendered as text, not an image, so it stays selectable and readable in
 // both themes. `tone` marks the one line the figure is about. Lines wider than
@@ -6,14 +6,15 @@ import { Box, Text, useColorModeValue } from "@chakra-ui/react";
 // background-attachment trick) shows there is more, and disappears once the
 // reader has scrolled to the end.
 export const CodeBlock = ({ title, lines }) => {
-	const muted = useColorModeValue("graphite.500", "graphite.300");
-	const hot = useColorModeValue("mint.700", "mint.300");
-	const [bg, bg0, shadow] = useColorModeValue(
-		["#F8F6F0", "rgba(248,246,240,0)", "rgba(26,36,32,.16)"],
-		["#151F1B", "rgba(21,31,27,0)", "rgba(0,0,0,.55)"]
-	);
+	// Tokens, so the first paint is in the right theme: the ground is the
+	// preview canvas (a warm neutral in both themes), the marked line the accent.
+	const muted = "text.muted";
+	const hot = "brand.solid";
+	const bg = "var(--chakra-colors-preview-canvas)";
+	const bg0 = "transparent";
+	const shadow = "var(--chakra-colors-scroll-shadow)";
 	return (
-		<Box mt={4} border="1px solid" borderColor="border.subtle" bg={bg}>
+		<Box mt={4} border="1px solid" borderColor="border.subtle" bg="preview.canvas">
 			<Text
 				px={{ base: 4, md: 5 }}
 				pt={{ base: 4, md: 5 }}
@@ -45,13 +46,13 @@ export const CodeBlock = ({ title, lines }) => {
 					backgroundRepeat: "no-repeat",
 					backgroundAttachment: "local, local, scroll, scroll",
 				}}
-				_focusVisible={{ outline: "2px solid", outlineColor: "mint.500", outlineOffset: "-2px" }}>
+				_focusVisible={{ outline: "2px solid", outlineColor: "brand.solid", outlineOffset: "-2px" }}>
 				<Box
 					as="pre"
 					m={0}
 					fontFamily="var(--font-mono)"
 					fontSize={{ base: "12px", md: "12.5px" }}
-					lineHeight="1.75"
+					lineHeight="text"
 					whiteSpace="pre"
 					w="max-content"
 					minW="100%">
@@ -79,7 +80,7 @@ export const CodeFigure = ({ caption, children }) => (
 			mt={3}
 			fontFamily="var(--font-mono)"
 			fontSize="12px"
-			lineHeight="1.6"
+			lineHeight="text"
 			color="text.muted">
 			{caption}
 		</Text>

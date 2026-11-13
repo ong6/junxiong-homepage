@@ -9,4 +9,4 @@ for (const { id } of slideLayouts) {
 		await writeFile(`${dir}/${id}-${theme}.svg`, renderSlide(id, theme));
 	}
 }
-console.log("UI Pack slide starters generated.");
+console.log("UiPack slide starters generated.");

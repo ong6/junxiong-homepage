@@ -54,7 +54,7 @@ export default function Contact() {
 						letterSpacing="-.06em">
 						Contact
 					</Heading>
-					<Text mt={6} maxW="560px" fontSize={{ base: "19px", md: "22px" }} lineHeight="1.55" fontWeight="600">
+					<Text mt={6} maxW="560px" fontSize={{ base: "19px", md: "22px" }} lineHeight="lede" fontWeight="600">
 						Email is the easiest way to reach me.
 					</Text>
 					<FilledButton href="mailto:junxiongong2@gmail.com" mt={8} data-group>
@@ -97,7 +97,7 @@ export default function Contact() {
 								<Text as="span">{item.label}</Text>
 								<OutArrow />
 							</Flex>
-							<Text mt={2} maxW="420px" color="text.muted" fontSize="15px" lineHeight="1.6">
+							<Text mt={2} maxW="420px" color="text.muted" fontSize="15px" lineHeight="lede">
 								{item.detail}
 							</Text>
 						</Link>

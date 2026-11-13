@@ -6,7 +6,7 @@ for (const width of [390, 1440]) {
 		test(`contact page at ${width} in ${theme} exposes every contact path`, async ({ page }, info) => {
 			const errors = collectErrors(page);
 			await page.setViewportSize({ width, height: 900 });
-			await page.addInitScript((mode) => localStorage.setItem("chakra-ui-color-mode", mode), theme);
+			await page.addInitScript((mode) => localStorage.setItem("junxiong-theme", mode), theme);
 			await page.goto("/contact");
 			await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
 			await expect(page.getByRole("heading", { level: 1, name: "Contact" })).toBeVisible();

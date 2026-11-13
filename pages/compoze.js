@@ -3,7 +3,6 @@ import {
 	Container,
 	Heading,
 	Text,
-	useColorModeValue,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import DiagramFigure from "../components/DiagramFigure";
@@ -50,7 +49,7 @@ const Figure = ({ src, alt, caption }) => (
 			mt={3}
 			fontFamily="var(--font-mono)"
 			fontSize="12px"
-			lineHeight="1.6"
+			lineHeight="text"
 			color="text.muted">
 			{caption}
 		</Text>
@@ -94,12 +93,12 @@ const facts = [
 ];
 
 const links = [
-	{ name: "UI Pack", detail: "The system figures on this page are drawn with it", href: "/uipack" },
+	{ name: "UiPack", detail: "The system figures on this page are drawn with it", href: "/uipack" },
 	{ name: "Notes", detail: "Longer working notes", href: "https://notes.junxiong.dev", external: true },
 ];
 
 export default function Compoze() {
-	const accent = useColorModeValue("mint.700", "mint.300");
+	const accent = "brand.solid";
 
 	return (
 		<Layout
@@ -134,7 +133,7 @@ export default function Compoze() {
 					<Text
 						mt={8}
 						fontSize={{ base: "19px", md: "21px" }}
-						lineHeight="1.6"
+						lineHeight="lede"
 						fontWeight="600">
 						Compoze was a company I ran on evenings and weekends alongside my job at TikTok. It built assistants that answer questions from a company&apos;s own documents, and a client bought it at the end of 2025.
 					</Text>
@@ -262,7 +261,7 @@ export default function Compoze() {
 					</P>
 				</Details>
 
-				<CaseStudyFooter links={links} next={{ name: "UI Pack", href: "/uipack", detail: "The design system behind these figures" }} />
+				<CaseStudyFooter links={links} next={{ name: "UiPack", href: "/uipack", detail: "The design system behind these figures" }} />
 			</Container>
 		</Layout>
 	);

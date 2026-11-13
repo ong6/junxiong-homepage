@@ -46,13 +46,13 @@ function Introduction() {
 						letterSpacing="-.06em">
 						Ong Jun Xiong
 					</Heading>
-					<Text className="hero-rise" style={{ "--i": 2 }} mt={6} fontSize={{ base: "19px", md: "23px" }} lineHeight="1.45">
+					<Text className="hero-rise" style={{ "--i": 2 }} mt={6} fontSize={{ base: "19px", md: "23px" }} lineHeight="lede">
 						I&apos;m a software engineer at TikTok in Singapore, working on AI{" "}
 						<Box as="span" whiteSpace="nowrap">
 							infrastructure.
 						</Box>
 					</Text>
-					<Text className="hero-rise" style={{ "--i": 3 }} mt={4} maxW="640px" fontSize="16px" lineHeight="1.75" color="text.muted">
+					<Text className="hero-rise" style={{ "--i": 3 }} mt={4} maxW="640px" fontSize="16px" lineHeight="text" color="text.muted">
 						Most of my work is Go backends and distributed systems. I like taking
 						something from zero to one, and then from one to a hundred. Outside work I ran{" "}
 						<Link as={NextLink} href="/compoze">

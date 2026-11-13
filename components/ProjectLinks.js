@@ -34,7 +34,7 @@ function LinkRow({ name, detail, href, external, minH = "56px", py = 3 }) {
 			</Flex>
 			{external && <VisuallyHidden> (opens in a new tab)</VisuallyHidden>}
 			{detail && (
-				<Text as="span" display="block" mt={1} color="text.muted" fontSize="14px" lineHeight="1.5">
+				<Text as="span" display="block" mt={1} color="text.muted" fontSize="14px" lineHeight="text">
 					{detail}
 				</Text>
 			)}

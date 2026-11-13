@@ -1,8 +1,8 @@
-import { Box, Flex, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import TermHeading from "../TermHeading";
 
 export default function Education() {
-	const borderColor = useColorModeValue("rgba(65,54,45,0.2)", "whiteAlpha.200");
+	const borderColor = "border.subtle";
 
 	return (
 		<Box>
@@ -18,7 +18,7 @@ export default function Education() {
 					<Text as="h3" fontSize="17px" fontWeight="800">
 						National University of Singapore
 					</Text>
-					<Text fontSize="15px" lineHeight="1.65" opacity={0.82} mt={1}>
+					<Text fontSize="15px" lineHeight="text" opacity={0.82} mt={1}>
 						Bachelor of Computing (Honours), Computer Science. Specialised in
 						AI and software engineering; NUS Overseas Colleges in Munich.
 					</Text>

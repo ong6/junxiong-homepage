@@ -46,7 +46,7 @@ export default function FactList({ facts, ...props }) {
 					<Box as="dt" color="text.muted">
 						{label}
 					</Box>
-					<Box as="dd" ml={0} lineHeight="1.6" sx={{ textWrap: "pretty" }}>
+					<Box as="dd" ml={0} lineHeight="text" sx={{ textWrap: "pretty" }}>
 						<Value value={value} />
 					</Box>
 				</Box>

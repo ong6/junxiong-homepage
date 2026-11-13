@@ -4,18 +4,15 @@ import {
 	ListItem,
 	Text,
 	UnorderedList,
-	useColorModeValue,
 } from "@chakra-ui/react";
 
 export default function ResumeDetail({ detail, compact = false }) {
-	const borderColor = useColorModeValue("rgba(65,54,45,0.2)", "whiteAlpha.200");
-
 	return (
 		<Box
 			as="section"
 			py={compact ? 4 : 6}
 			borderTopWidth="1px"
-			borderColor={borderColor}>
+			borderColor="border.subtle">
 			<Flex
 				direction={{ base: "column", smmd: "row" }}
 				justify="space-between"
@@ -28,7 +25,7 @@ export default function ResumeDetail({ detail, compact = false }) {
 					fontFamily="var(--font-mono)"
 					fontSize="12px"
 					fontWeight="700"
-					letterSpacing="0.06em"
+					letterSpacing=".08em"
 					textTransform="uppercase"
 					color="text.muted">
 					{detail.location}
@@ -59,7 +56,7 @@ export default function ResumeDetail({ detail, compact = false }) {
 							<ListItem
 								key={description}
 								fontSize="15px"
-								lineHeight="1.65"
+								lineHeight="text"
 								opacity={0.92}>
 								{description}
 							</ListItem>

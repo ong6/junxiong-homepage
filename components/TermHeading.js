@@ -7,7 +7,7 @@ import { Eyebrow } from "./ArticleParts";
 const TermHeading = ({ children, kicker = "Selected signal", ...props }) => (
 	<Box mb={4} {...props}>
 		<Eyebrow mb={2}>{kicker}</Eyebrow>
-		<Heading as="h2" fontSize={{ base: "32px", md: "44px" }} lineHeight="1.08">
+		<Heading as="h2" fontSize={{ base: "32px", md: "44px" }} lineHeight="heading">
 			{children}
 		</Heading>
 	</Box>

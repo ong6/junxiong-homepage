@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Link, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Flex, Heading, Link, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import NextLink from "next/link";
 import Layout from "../components/layouts/Articles";
@@ -77,7 +77,7 @@ const Row = ({ entry }) => (
 					</Text>
 				)}
 			</Flex>
-			<Text fontSize="15px" lineHeight="1.6" color="text.muted" mt={1}>
+			<Text fontSize="15px" lineHeight="text" color="text.muted" mt={1}>
 				{entry.description}
 			</Text>
 		</Box>
@@ -85,7 +85,7 @@ const Row = ({ entry }) => (
 );
 
 const Works = () => {
-	const yearColor = useColorModeValue("mint.700", "mint.300");
+	const yearColor = "brand.solid";
 
 	return (
 		<Layout
@@ -100,7 +100,7 @@ const Works = () => {
 						{workSlugs.length} entries
 					</Text>
 				</Flex>
-				<Text mt={3} maxW="620px" fontSize="15px" lineHeight="1.7" color="text.muted">
+				<Text mt={3} maxW="620px" fontSize="15px" lineHeight="text" color="text.muted">
 					Projects from my NUS years, including coursework, hackathons and open-source contributions. Current projects are on the{" "}
 					<Link as={NextLink} href="/#work">
 						homepage
@@ -120,7 +120,7 @@ const Works = () => {
 									fontFamily="var(--font-mono)"
 									fontSize={{ base: "13px", md: "14px" }}
 									fontWeight="700"
-									letterSpacing=".06em"
+									letterSpacing=".08em"
 									color={yearColor}
 									w={{ md: "72px" }}
 									flexShrink={0}

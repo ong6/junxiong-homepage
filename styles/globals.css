@@ -23,7 +23,7 @@ a {
 }
 
 :focus-visible {
-	outline: 2px solid var(--chakra-colors-brand-solid, #234ea2);
+	outline: 2px solid var(--site-brand-solid);
 	outline-offset: 3px;
 }
 
@@ -40,6 +40,31 @@ a {
 		transition-duration: 0.01ms !important;
 		scroll-behavior: auto !important;
 	}
+}
+
+/* The site's colours as plain variables on <html> only. Chakra re-declares
+   its own tokens on every [data-theme] element, so a UiPack part that carries
+   the server's light guess as its theme (a 3D scene's still, the docs shell)
+   was a light island on a dark page until hydration. These follow the page's
+   theme wherever they are read. Values mirror lib/theme.js; e2e/basics.spec.js
+   fails if the two drift. */
+:root {
+	--site-page-bg: #F3EFE7;
+	--site-page-text: #29231F;
+	--site-text-muted: #655C55;
+	--site-surface-raised: #FBF8F2;
+	--site-border-subtle: rgba(41,35,31,.18);
+	--site-brand-solid: #234EA2;
+	--site-preview-shadow: #D9CFC3;
+}
+:root[data-theme="dark"] {
+	--site-page-bg: #151311;
+	--site-page-text: #F2ECE3;
+	--site-text-muted: #BDB3A8;
+	--site-surface-raised: #211D1A;
+	--site-border-subtle: rgba(242,236,227,.16);
+	--site-brand-solid: #9AB6FF;
+	--site-preview-shadow: #0D0C0B;
 }
 
 /* Motion. Curves follow Emil Kowalski's animate skill (strong ease-out for
@@ -59,8 +84,14 @@ a {
 	from { opacity: 0; transform: translateY(10px); }
 	to { opacity: 1; transform: none; }
 }
+/* A page's entrance moves and never fades: nothing starts at opacity 0, so a
+   page change shows the new page whole on its first frame (STYLE.md, Motion). */
+@keyframes page-rise {
+	from { transform: translateY(10px); }
+	to { transform: none; }
+}
 .fade-up {
-	animation: fade-up var(--dur-enter) var(--ease-out) both;
+	animation: page-rise var(--dur-enter) var(--ease-out) both;
 }
 
 /* Homepage intro: a short staggered rise. The name only moves (no fade) so
@@ -110,7 +141,7 @@ a {
 	transition: translate var(--dur-hover) var(--ease-out), box-shadow var(--dur-hover) var(--ease-out);
 }
 @keyframes panel-press {
-	from { transform: translate(6px, 6px); box-shadow: 0 0 0 var(--chakra-colors-preview-shadow); }
+	from { transform: translate(6px, 6px); box-shadow: 0 0 0 var(--site-preview-shadow); }
 	to { transform: none; }
 }
 @keyframes stamp {
@@ -155,7 +186,7 @@ a {
 		right: 0;
 		height: 2px;
 		z-index: 30;
-		background: var(--chakra-colors-brand-solid);
+		background: var(--site-brand-solid);
 		transform-origin: left;
 		animation: progress linear both;
 		animation-timeline: scroll(root);
@@ -171,12 +202,19 @@ a {
 	#navbar-menu { opacity: 0; transform: translateY(-6px); }
 }
 
-/* Theme icon turns in when the mode flips. */
+/* Parts with a drawing per theme (the logo's mark, the toggle's icon) carry
+   both in the HTML; the theme on <html> picks one, from the first paint. */
+:root:not([data-theme="dark"]) .theme-dark-only,
+:root[data-theme="dark"] .theme-light-only {
+	display: none !important;
+}
+
+/* Theme icon turns in when the mode flips, never on a page load. */
 @keyframes icon-turn {
 	from { opacity: 0; transform: rotate(-90deg) scale(0.8); }
 	to { opacity: 1; transform: none; }
 }
-.theme-icon {
+:root[data-theme-changed] .theme-icon {
 	animation: icon-turn var(--dur-ui) var(--ease-out) both;
 }
 
@@ -207,12 +245,12 @@ a {
 .uipack,
 .uipack-object-frame,
 .uipack-canvas-dialog {
-	--uipack-fg: var(--chakra-colors-page-text);
-	--uipack-muted: var(--chakra-colors-text-muted);
-	--uipack-bg: var(--chakra-colors-page-bg);
-	--uipack-surface: var(--chakra-colors-surface-raised);
-	--uipack-border: var(--chakra-colors-border-subtle);
-	--uipack-accent: var(--chakra-colors-brand-solid);
+	--uipack-fg: var(--site-page-text);
+	--uipack-muted: var(--site-text-muted);
+	--uipack-bg: var(--site-page-bg);
+	--uipack-surface: var(--site-surface-raised);
+	--uipack-border: var(--site-border-subtle);
+	--uipack-accent: var(--site-brand-solid);
 	--uipack-mono: var(--font-mono);
 	--uipack-sans: var(--font-sans);
 	--uipack-grid: rgba(26, 36, 32, 0.14);
@@ -271,30 +309,30 @@ html,
    uipack's palette into the SVG) and the canvas dialog (hard-coded colours). */
 .uipack-object,
 :root .uipack-object[data-theme] {
-	--object-ink: var(--chakra-colors-page-text);
-	--object-rule: var(--chakra-colors-border-subtle);
-	--object-accent: var(--chakra-colors-brand-solid);
+	--object-ink: var(--site-page-text);
+	--object-rule: var(--site-border-subtle);
+	--object-accent: var(--site-brand-solid);
 }
 .uipack-animation-workspace,
 :root .uipack-animation-workspace[data-theme] {
-	--gallery-ink: var(--chakra-colors-page-text);
-	--gallery-muted: var(--chakra-colors-text-muted);
-	--gallery-rule: var(--chakra-colors-border-subtle);
-	--gallery-surface: var(--chakra-colors-surface-raised);
-	--gallery-accent: var(--chakra-colors-brand-solid);
+	--gallery-ink: var(--site-page-text);
+	--gallery-muted: var(--site-text-muted);
+	--gallery-rule: var(--site-border-subtle);
+	--gallery-surface: var(--site-surface-raised);
+	--gallery-accent: var(--site-brand-solid);
 }
 .uipack-slide-starter,
 .uipack-speaker-guide,
 :root .uipack-slide-starter[data-theme],
 :root .uipack-speaker-guide[data-theme] {
-	--presentation-surface: var(--chakra-colors-surface-raised);
-	--presentation-ink: var(--chakra-colors-page-text);
-	--presentation-muted: var(--chakra-colors-text-muted);
-	--presentation-rule: var(--chakra-colors-border-subtle);
-	--presentation-accent: var(--chakra-colors-brand-solid);
+	--presentation-surface: var(--site-surface-raised);
+	--presentation-ink: var(--site-page-text);
+	--presentation-muted: var(--site-text-muted);
+	--presentation-rule: var(--site-border-subtle);
+	--presentation-accent: var(--site-brand-solid);
 }
 .uipack__ctl:focus-visible {
-	outline: 2px solid var(--chakra-colors-brand-solid);
+	outline: 2px solid var(--site-brand-solid);
 	outline-offset: 2px;
 }
 
@@ -337,8 +375,8 @@ html,
 	isolation: isolate;
 	/* Base, not hover: the fill travels across the whole card (STYLE.md, Motion). */
 	--fill-dur: var(--dur-ui);
-	--cascade-fill: var(--tone, var(--chakra-colors-brand-solid));
-	--cascade-on: var(--chakra-colors-page-bg);
+	--cascade-fill: var(--tone, var(--site-brand-solid));
+	--cascade-on: var(--site-page-bg);
 }
 /* One tone per project category (lib/tones.js). Light fills carry page-bg
    text at 5.3:1 or better, dark fills page-bg (near-black) text at 9:1+. */
@@ -381,7 +419,7 @@ html,
 [data-fill="row"]::after { inset: 0 -12px; }
 /* Preview panels keep reading as themselves; they would otherwise inherit
    the card's on-fill text colour. */
-[data-fill] [data-panel] { color: var(--chakra-colors-page-text); }
+[data-fill] [data-panel] { color: var(--site-page-text); }
 [data-fill] :not([data-panel], [data-panel] *) {
 	transition: color var(--fill-dur) var(--ease-out), transform var(--dur-hover) var(--ease-out);
 }
@@ -399,9 +437,9 @@ html,
 	}
 }
 
-/* UI Pack's side gutters (components/SideBackdrop.js) take the site accent. */
+/* UiPack's side gutters (components/SideBackdrop.js) take the site accent. */
 body {
-	--web-gutters-color: var(--chakra-colors-brand-solid);
+	--web-gutters-color: var(--site-brand-solid);
 }
 
 /* ── Focus rings inside clipping boxes ─────────────────────────────────── */
@@ -412,7 +450,7 @@ body {
 :root .uipack-docs__toc a:focus-visible,
 :root .uipack-scene-list button:focus-visible,
 :root .uipack .uipack__canvas:focus-visible {
-	outline: 2px solid var(--chakra-colors-brand-solid);
+	outline: 2px solid var(--site-brand-solid);
 	outline-offset: -2px;
 	/* No transition into focus: the ring is there on the first frame. */
 	transition: none;
@@ -450,9 +488,13 @@ body {
 /* Section heads land below the fixed nav when the contents rail jumps to them. */
 article h2[id] { scroll-margin-top: 96px; }
 
-/* Docs pages share the article h1 scale (STYLE.md, Type): 40px on phones,
-   52px from 900px, where UiPack's shell switches layout. */
-:root .uipack-docs__prose h1 { font-size: 40px; line-height: 1; letter-spacing: -0.045em; }
+/* Docs pages share the article's title and section heading (STYLE.md, Type):
+   the h1 at 40px on phones and 52px from 900px, where UiPack's shell switches
+   layout; the h2 at 22 / 24px. Both at the site's display weight. The /uipack
+   sample (#docs-layout) starts at h3 and keeps UiPack's own sizes. */
+:root .uipack-docs__prose h1 { font-size: 40px; line-height: 1; letter-spacing: -0.045em; font-weight: 720; }
+:root .uipack-docs__prose h2 { font-size: 22px; line-height: 1.2; letter-spacing: -0.035em; font-weight: 720; }
 @media (min-width: 900px) {
 	:root .uipack-docs__prose h1 { font-size: 52px; }
+	:root .uipack-docs__prose h2 { font-size: 24px; }
 }

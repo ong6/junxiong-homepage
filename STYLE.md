@@ -145,6 +145,9 @@ Site tokens with no contract role, kept here so a future style file can carry th
 | `preview.shadow` | `#D9CFC3` | `#0D0C0B` | The 4px offset shadow under a preview panel |
 | `accent.terracotta` / `accent.soft` | `#963D25` / `#F8DDD1` | `#EEBBA7` / `#56271F` | Product evidence (the Compoze preview's header strip) |
 | `--tone-agents` … `--tone-site` | `#234ea2` `#a3452b` `#2f6a4a` `#6a3f86` `#8a5410` `#29231f` | `#9ab6ff` `#f2a184` `#8fd3a8` `#d2b0f0` `#f0c274` `#f2ece3` | Card hover fill per project category (`lib/tones.js`); page-bg text on each at 4.5:1 or better |
+| `preview.dot` | `rgba(36,87,197,.17)` | `rgba(142,174,255,.18)` | The dots of the dotted canvas |
+| `scroll.shadow` | `rgba(41,35,31,.16)` | `rgba(0,0,0,.55)` | The edge shadow of a code panel that scrolls sideways (the panel's ground is `preview.canvas`) |
+| `brand.onSolid`, `brand.hover`, `brand.active` | `#FFFFFF`, `#203F7E`, `#1D3566` | `#151311`, `#BFCFFF`, `#7194ED` | The filled button's label, hover and press |
 | `::selection` | `#BFCFFF` on `#151311` | `#315DB6` on `#FBF8F2` | Text selection |
 
 ## Type
@@ -162,13 +165,28 @@ Site tokens with no contract role, kept here so a future style file can carry th
 | Docs | `/trading-engine/docs/*` | 40 / 52px (below 900, from 900, UiPack's shell switch), the article size |
 | Archive | `/works` and its entries | 40 / 52px, the article size: the ledger is an article page |
 
-Section heads (h2) are 22 / 24px in articles and 32 / 44px for the homepage's and résumé's section titles; Hobbies' chapter heads are 36 / 46 / 52px so they stay below its h1.
+One name per page: the nav label, the `<title>`, the h1 and the links to it say the same words ("Contact", "Hobbies", "UiPack", "Page not found"). Two recorded exceptions: `/works` is "Archive" everywhere and its h1 adds the years, and `/resume`'s h1 is the name on the résumé.
+
+Section heads (h2) are 22 / 24px at 720 and line-height 1.2 in articles and in the docs shell (`styles/globals.css` gives `.uipack-docs__prose h2` the article's spec, and its h1 the 720 weight) and 32 / 44px for the homepage's and résumé's section titles; Hobbies' chapter heads are 36 / 46 / 52px so they stay below its h1.
+
+**Leading, six steps** (`lineHeights` in `lib/theme.js`; components name the step, never a number):
+
+| Step | Value | Used for |
+| --- | --- | --- |
+| `display` | 1 (0.98 on the landing h1 and Hobbies' chapter heads) | Page titles |
+| `heading` | 1.2 | Section heads and card titles |
+| `label` | 1.3 | The contents rail's rows; UiPack's own figure labels |
+| `lede` | 1.6 | The 19–23px lede under a title |
+| `text` | 1.65 | Body, card blurbs, captions, tables, code |
+| `prose` | 1.8 | Reading prose at 16–18px: case studies, Hobbies' chapters |
+
+Mono caps labels (eyebrows, meta lines, kickers) share one tracking, 0.08em. `e2e/basics.spec.js` fails a leading outside the set or a label off the tracking. Not reachable from here until UiPack ships its `--docs-leading-*` hooks: the docs shell's prose (1.78) and its sidebar and rail keep UiPack's own leadings.
 
 Both faces load through `next/font/google` in `pages/_app.js` (latin subset, `display: swap`,
 self-hosted at build time): IBM Plex Sans as the variable font, IBM Plex Mono at 400 and 700
 only. `next/font` generates the metric-matched fallback faces and exposes the stacks as
 `--font-sans` and `--font-mono`, which the Chakra theme's `heading`, `body` and `mono` fonts read.
-`next/font` preloads both. Figures read the same faces through `--uipack-sans` and `--uipack-mono`;
+`_app.js` also writes the two stacks onto `:root` in the document's `<head>`, so `<body>` and portals have the faces on the first paint (a class added after hydration painted every page in the fallback face first). `next/font` preloads both. Figures read the same faces through `--uipack-sans` and `--uipack-mono`;
 UiPack's other parts (docs shell, object player) read the `--ui-font-*` roles, which
 `styles/globals.css` points at the same two faces.
 Kickers, dates and captions never go below 12px (raised from 11px, 2026-09-28).
@@ -189,9 +207,9 @@ Curves are the site's own (`--ease-out` `cubic-bezier(0.23, 1, 0.32, 1)` for ent
 | --- | --- | --- |
 | `--dur-hover`, `--dur-press` | 160ms | Hover and press feedback: colour, border, the 3px card lift, the preview panel's nudge, the logo turn, the mobile menu, the arrow's return |
 | `--dur-ui` | 320ms (base) | Things that travel: the ↗ fly-out, the card's category fill, the theme icon turn |
-| `--dur-enter` | 560ms (slow) | Entrances: the page fade-up, the hero settle, the portrait coming to rest |
+| `--dur-enter` | 560ms (slow) | Entrances: the page's 10px rise, the hero settle, the portrait coming to rest |
 
-Exception, recorded: the ↗ fly-out and the card fill are triggered by hover but take the base 320ms rather than the 120–160ms hover range, because each travels across its element (the arrow out of its box and back, the fill across the whole card); at 160ms both read as a flicker. Scroll-driven reveals have no duration (they follow the scroll). Reduced motion drops movement everywhere.
+Exception, recorded: the ↗ fly-out and the card fill are triggered by hover but take the base 320ms rather than the 120–160ms hover range, because each travels across its element (the arrow out of its box and back, the fill across the whole card); at 160ms both read as a flicker. A page's entrance moves and never fades (2026-11-13; it faded up from opacity 0, which blanked the content for about 100ms on every page change): the new page is whole on its first frame. The homepage hero's lines under the name still fade in, staggered. Scroll-driven reveals have no duration (they follow the scroll). Reduced motion drops movement everywhere.
 
 ## Ornaments
 
@@ -229,6 +247,12 @@ Every page shares one shell: a fixed 64px (mobile) / 72px (tablet up) nav whose 
 the content's left edge, a 1120px container with 16px gutters, and a ruled footer. Every layout
 keeps the floors.
 
+**One site width.** Every page's content, the header's content and the footer sit in one centred column: the window less a 16px gutter each side, 1088px at most (a 1120px container). So the logo and the last control (the theme toggle; the menu button on a phone) are at the same x on every page and on the content's edges (UiPack's layout floor 8); only the header's ground and rule run the window. `e2e/basics.spec.js` ("one header") holds it on every page type at 2560, 1920, 1440, 1280, 1024, 768 and 390.
+
+### Theme
+
+The reader's last choice, then the system's. Only the toggle stores a choice (`localStorage`, key `junxiong-theme`, `lib/themeChoice.js`); with none stored the page follows `prefers-color-scheme`, live. A script first in `<head>` sets `data-theme` before any stylesheet, and an inline rule beside it paints the ground, so the first byte is in the right theme. Nothing is drawn for the other theme before hydration: colours are semantic tokens keyed off `data-theme` (never `useColorModeValue` or `mode()`, which bake the server's light guess into the HTML), the logo's mark and the toggle's icon are both in the HTML with CSS showing the theme's, and UiPack's parts read the `--site-*` variables on `<html>`. Dark grounds are warm neutrals: only the accent's own fill is blue.
+
 ### Landing
 
 The homepage (`/`). Contact and Hobbies are single-surface pages that follow the same grid with
@@ -239,7 +263,7 @@ chapters, text beside a 3D object, stacking on narrow screens).
 | --- | --- |
 | Grid | One 1120px column, 16px gutters below it. Hero: copy on ~1.35fr beside the portrait on ~0.65fr (min 260px) from 768px, 56–80px apart; below 768px the copy spans the width and a 144px portrait sits beside a one-column utility-link list. Selected work: a 12-column grid from 960px (7 + 5), one column below, 16 / 24px gaps |
 | Regions | Nav, hero (eyebrow, h1, subtitle, body, portrait, utility links), Selected work, Also building, Around the site, footer |
-| Section order | Hero → Selected work (AI tooling, Compoze, each with a static preview) → Also building (Trading engine, UI Pack as full-width cards) → Around the site (Hobbies, Notes, Archive, Resume rows) → footer |
+| Section order | Hero → Selected work (AI tooling, Compoze, each with a static preview) → Also building (Trading engine, UiPack as full-width cards) → Around the site (Hobbies, Notes, Archive, Resume rows) → footer |
 | Hero | The name as the only h1 and only heavy element, a regular-weight subtitle naming TikTok, Singapore and AI infrastructure, one muted paragraph, a framed portrait and GitHub / LinkedIn / Resume links; the first project title stays inside a 390×900 first screen |
 
 ### Article
@@ -271,7 +295,7 @@ as Markdown" or "Edit on GitHub" links.
 | Tone and register | First person, conversational, plain: the problem, the choice and the result in ordinary language. Reads like a person, not a résumé (except `/resume`, which is a résumé by design). No pitch, no "open to roles", no slogans or kickers |
 | Title form | Page h1: plain name ("Compoze", "Contact", "Hobbies", "Archive, 2020–2023"). Section heads: plain names of 1–4 words ("Working alone", "Selected work", "Around the site"). Figure titles: plain descriptions, never taglines; captions are one sentence starting `fig. N —` |
 | Copy density | Short prose paragraphs of 2–4 sentences, no bullets outside `/resume`; numbers go in the fact table, not the prose; supporting inventories go in native disclosures; one description per figure (a page caption hides the diagram's own blurb) |
-| House words | "UI Pack" (two words) for the design library; "Archive" for `/works`; "Resume" in navigation; Compoze was "sold to a client"; card blurbs say what a project is and don't open with "I built" / "I ran"; no internal plan codes on trading pages; no "paper only" disclaimers; no internal business metrics anywhere |
+| House words | "UiPack" (one word, as the product spells itself; "UI Pack" until 2026-11-13) for the design library; "Contact" for `/contact` in the nav, the footer and its h1; "Archive" for `/works`; "Resume" in navigation; Compoze was "sold to a client"; card blurbs say what a project is and don't open with "I built" / "I ran"; no internal plan codes on trading pages; no "paper only" disclaimers; no internal business metrics anywhere |
 | Budgets | The ceilings, plus: card blurbs at most two sentences; eyebrows 1–5 words in mono caps; Links out details one line |
 
 ## Component looks

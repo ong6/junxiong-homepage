@@ -25,7 +25,7 @@ for (const width of [390, 1440]) {
 		test(`hobbies chapters at ${width} in ${theme} preserve reading order and native scroll`, async ({ page }) => {
 			const errors = collectErrors(page);
 			await page.setViewportSize({ width, height: 900 });
-			await page.addInitScript((t) => localStorage.setItem("chakra-ui-color-mode", t), theme);
+			await page.addInitScript((t) => localStorage.setItem("junxiong-theme", t), theme);
 			await page.goto("/hobbies");
 			await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
 			await expect(page.locator("h1")).toHaveText("Hobbies");
@@ -123,7 +123,7 @@ test("hobbies returns to the labelled fallback when a WebGL context is lost", as
 	await expect(page.locator("#tennis").getByRole("button", { name: /motion/i })).toHaveCount(0);
 });
 
-test("trading uses the shared journal and UI Pack exposes all library objects", async ({ page }) => {
+test("trading uses the shared journal and UiPack exposes all library objects", async ({ page }) => {
  await page.goto("/hobbies#trading");
  await expect(page.locator('#trading canvas')).toHaveAttribute('data-renderer','webgl');
  await page.goto('/uipack');
@@ -137,7 +137,7 @@ test("trading uses the shared journal and UI Pack exposes all library objects", 
  await expect(collection.getByRole('navigation',{name:'Choose an object'}).getByRole('button')).toHaveCount(7);
 });
 
-test("UI Pack changes the tennis edition without leaving the shared player", async ({ page }) => {
+test("UiPack changes the tennis edition without leaving the shared player", async ({ page }) => {
  // Studio is no longer tennis's default look (Realistic is), so ask for it.
  await page.goto('/uipack?category=web&object=tennis&look=0#objects');
  await page.locator('#objects').scrollIntoViewIfNeeded();
@@ -171,7 +171,7 @@ for (const width of [390, 1440]) for (const theme of ['light', 'dark']) {
     // Six scene builds in one page: software WebGL under a parallel run can pass 30 s.
     test.setTimeout(90_000);
     await page.setViewportSize({width, height:900});
-    await page.addInitScript(mode => localStorage.setItem('chakra-ui-color-mode', mode), theme);
+    await page.addInitScript(mode => localStorage.setItem('junxiong-theme', mode), theme);
     await page.goto('/hobbies?style=abstract');
     await expect(page.getByRole('button',{name:'My picks',exact:true})).toHaveCount(0);
     await expect(page.getByRole('group',{name:'3D art direction'})).toHaveCount(0);

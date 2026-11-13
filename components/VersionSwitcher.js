@@ -73,7 +73,7 @@ export default function VersionSwitcher({ active, ...props }) {
 				})}
 			</Flex>
 			{current ? (
-				<Text mt={3} color="text.muted" fontFamily="var(--font-mono)" fontSize="12px" letterSpacing=".04em">
+				<Text mt={3} color="text.muted" fontFamily="var(--font-mono)" fontSize="12px" letterSpacing=".08em">
 					{current.v} · {current.when} · {current.title}
 					{isPast ? (
 						<>

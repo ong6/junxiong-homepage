@@ -1,12 +1,14 @@
 import { Box, Button, Heading, Text, useColorMode } from "@chakra-ui/react";
+import { useThemeToggle } from "../lib/themeChoice";
 import { flushSync } from "react-dom";
 import { withPaintTransition } from "uipack/web";
 
-// Gallery entry for the page-level motion this site uses from UI Pack: the
+// Gallery entry for the page-level motion this site uses from UiPack: the
 // paint-drizzle theme change and the drifting gutters (visible in this page's
 // own margins on wide screens).
 export default function UipackWebMotion() {
-	const { colorMode, toggleColorMode } = useColorMode();
+	const { colorMode } = useColorMode();
+	const toggleColorMode = useThemeToggle();
 	return (
 		<Box as="section" id="page-motion" scrollMarginTop="100px" aria-labelledby="page-motion-heading" my={{ base: 10, md: 14 }}>
 			<Heading id="page-motion-heading" as="h2" fontSize={{ base: "22px", md: "24px" }}>

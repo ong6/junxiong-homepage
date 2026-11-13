@@ -17,10 +17,10 @@ const NotFound = () => (
 					404
 				</Text>
 				<Heading as="h1" mt={4} fontSize={ARTICLE_TITLE} lineHeight="1" letterSpacing="-.045em">
-					There is nothing at this address.
+					Page not found
 				</Heading>
-				<Text mt={4} fontSize="16px" lineHeight="1.7" color="text.muted">
-					The page may have moved, or the link was never right.{" "}
+				<Text mt={4} fontSize="16px" lineHeight="text" color="text.muted">
+					There is nothing at this address. The page may have moved, or the link was never right.{" "}
 					<Link as={NextLink} href="/">
 						Back to the homepage
 					</Link>

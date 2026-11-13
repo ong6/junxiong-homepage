@@ -11,7 +11,6 @@ import {
 	TabPanels,
 	Tabs,
 	Text,
-	useColorModeValue,
 } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
@@ -49,7 +48,7 @@ const links = [
 ];
 
 export default function Uipack() {
-	const accent = useColorModeValue("mint.700", "mint.300");
+	const accent = "brand.solid";
 	const router = useRouter();
 	const hydrated = useSyncExternalStore(subscribeToHydration, () => true, () => false);
 	const category = router.query.category === "slides" ? 1 : 0;
@@ -65,14 +64,14 @@ export default function Uipack() {
 
 	return (
 		<Layout
-			title="UI Pack"
+			title="UiPack"
 			schema={{
 				type: "SoftwareSourceCode",
 				codeRepository: "https://github.com/ong6/uipack",
 				programmingLanguage: "TypeScript",
 				license: "https://opensource.org/licenses/MIT",
 			}}
-			description="UI Pack brings reusable web design, animation and presentation systems into one place, including slide layouts and the words used to present them.">
+			description="UiPack brings reusable web design, animation and presentation systems into one place, including slide layouts and the words used to present them.">
 			<Container maxW="1088px" px={0} ml={0}>
 				<Box maxW="680px" pt={{ base: 10, md: 16 }}>
 					<BackLink href="/">Home</BackLink>
@@ -85,7 +84,7 @@ export default function Uipack() {
 						fontSize={ARTICLE_TITLE}
 						lineHeight="1"
 						letterSpacing="-.045em">
-						UI Pack
+						UiPack
 					</Heading>
 
 					<Text
@@ -99,8 +98,8 @@ export default function Uipack() {
 						2026 · open source · react + svg
 					</Text>
 
-					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="1.6" fontWeight="600">
-						I keep the diagrams, animations and slide starters I reuse in UI Pack. It lets my projects share type, colours and spacing without setting them up again each time.
+					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="lede" fontWeight="600">
+						I keep the diagrams, animations and slide starters I reuse in UiPack. It lets my projects share type, colours and spacing without setting them up again each time.
 					</Text>
 					<P color="text.muted">
 						It started with the diagrams on this site. I&apos;m building it out in two directions:
@@ -118,7 +117,7 @@ export default function Uipack() {
 					lazyBehavior="unmount"
 					mt={{ base: 8, md: 12 }}
 					colorScheme="mint">
-					<TabList aria-label="UI Pack categories" borderColor="border.subtle">
+					<TabList aria-label="UiPack categories" borderColor="border.subtle">
 						{["Web design", "Slide creation"].map((label) => (
 							<Tab
 								key={label}
@@ -227,7 +226,7 @@ export default function Uipack() {
 					</Box>
 					<Box>
 						<Text fontWeight="700">Same habits</Text>
-						<Text mt={2} fontSize="15px" lineHeight="1.7" color="text.muted">
+						<Text mt={2} fontSize="15px" lineHeight="text" color="text.muted">
 							Clear hierarchy, room to read, and motion that explains what changed.
 						</Text>
 					</Box>

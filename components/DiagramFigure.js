@@ -1,4 +1,4 @@
-import { Box, Portal, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Portal, Text } from "@chakra-ui/react";
 import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
 import { Figure } from "uipack";
 import { MOBILE_MIN_FONT, MOBILE_QUERY, MOBILE_SCALE, SwipeHint, mobileScrollSx, useIsMobile, useOverflow, viewBoxWidth } from "./figureMobile";
@@ -63,7 +63,7 @@ function Overlay({ Wide, id, viewBox, alt, caption, onClose }) {
 	const pointers = useRef(new Map());
 	const gesture = useRef(null);
 
-	const scrim = useColorModeValue("#F3EFE7", "#151311");
+	const scrim = "page.bg";
 	const captionRef = useRef(null);
 
 	// Read the drawing's native size from its viewBox, then fit it between the
@@ -327,7 +327,7 @@ function Overlay({ Wide, id, viewBox, alt, caption, onClose }) {
 					<Text
 						fontFamily="var(--font-mono)"
 						fontSize="12px"
-						lineHeight="1.6"
+						lineHeight="text"
 						color="text.muted"
 						noOfLines={{ base: 2, md: 4 }}>
 						{caption}
@@ -403,7 +403,7 @@ export default function DiagramFigure({ id, diagram, caption, headingLevel }) {
 					pt={2}
 					fontFamily="var(--font-mono)"
 					fontSize="12px"
-					lineHeight="1.6"
+					lineHeight="text"
 					color="text.muted">
 					{caption}
 				</Text>

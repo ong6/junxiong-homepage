@@ -19,7 +19,7 @@ test("desktop navigation exposes the primary destinations and current section", 
 		"href",
 		"https://notes.junxiong.dev",
 	);
-	await expect(nav.getByRole("link", { name: "Contact me" })).toHaveAttribute(
+	await expect(nav.getByRole("link", { name: "Contact", exact: true })).toHaveAttribute(
 		"href",
 		"/contact",
 	);
@@ -44,7 +44,7 @@ test("header has deliberate vertical room at desktop and mobile widths", async (
 		expect(mainTop).toBe(expectedHeight);
 		// The brand and controls sit on the bar's vertical centre, not its top edge.
 		const brand = await page.getByRole("link", { name: "Ong Jun Xiong — home" }).boundingBox();
-		const contact = await page.getByRole("navigation", { name: "Site" }).getByRole("link", { name: "Contact me" }).boundingBox();
+		const contact = await page.getByRole("navigation", { name: "Site" }).getByRole("link", { name: "Contact", exact: true }).boundingBox();
 		for (const box of [brand, contact]) {
 			expect(Math.abs(box.y + box.height / 2 - nav.height / 2)).toBeLessThan(1);
 		}
@@ -64,7 +64,7 @@ test("hobbies content shares the header's left edge at every width", async ({ pa
 for (const theme of ["light", "dark"]) {
 	test(`header touches a non-transparent root canvas in ${theme}`, async ({ page }) => {
 		await page.setViewportSize({ width: 1440, height: 900 });
-		await page.addInitScript((mode) => localStorage.setItem("chakra-ui-color-mode", mode), theme);
+		await page.addInitScript((mode) => localStorage.setItem("junxiong-theme", mode), theme);
 		await page.goto("/");
 		const geometry = await page.getByRole("navigation", { name: "Site" }).evaluate((nav) => {
 			const navBox = nav.getBoundingClientRect();
@@ -83,7 +83,7 @@ for (const theme of ["light", "dark"]) {
 
 test("contact affordance opens the contact page", async ({ page }) => {
 	await page.goto("/");
-	await page.getByRole("navigation", { name: "Site" }).getByRole("link", { name: "Contact me" }).click();
+	await page.getByRole("navigation", { name: "Site" }).getByRole("link", { name: "Contact", exact: true }).click();
 	await expect(page).toHaveURL(/\/contact$/);
 	await expect(page.getByRole("heading", { level: 1, name: "Contact" })).toBeVisible();
 });
@@ -149,7 +149,7 @@ test("mobile route navigation closes the menu and preserves browser history", as
 for (const theme of ["light", "dark"]) {
 	for (const width of [390, 768, 1440]) {
 		test(`navigation fits and shows keyboard focus at ${width}px in ${theme}`, async ({ page }) => {
-			await page.addInitScript((mode) => localStorage.setItem("chakra-ui-color-mode", mode), theme);
+			await page.addInitScript((mode) => localStorage.setItem("junxiong-theme", mode), theme);
 			await page.setViewportSize({ width, height: 844 });
 			await page.goto("/");
 			await expect(page.locator("html")).toHaveAttribute("data-theme", theme);

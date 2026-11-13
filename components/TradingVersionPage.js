@@ -10,7 +10,7 @@ import { BackLink, ARTICLE_TITLE } from "./ArticleParts";
 // One update of Engine v1 (/trading-engine/v1/1.N): the switcher, a lead, the
 // diagram as the engine stood then, a short write-up and a fact table.
 
-export const P = (props) => <Text mt={5} fontSize={{ base: "17px", md: "18px" }} lineHeight="1.8" {...props} />;
+export const P = (props) => <Text mt={5} fontSize={{ base: "17px", md: "18px" }} lineHeight="prose" {...props} />;
 
 export const H2 = (props) => (
 	<Heading as="h2" mt={{ base: 12, md: 14 }} fontSize={{ base: "22px", md: "24px" }} {...props} />
@@ -36,7 +36,7 @@ function Neighbours({ v }) {
 					textAlign={dir.startsWith("Next") ? "right" : "left"}
 					textDecoration="none"
 					_hover={{ textDecoration: "none", "& [data-title]": { color: "brand.solid" } }}>
-					<Text fontFamily="var(--font-mono)" fontSize="12px" color="text.muted" letterSpacing=".06em">
+					<Text fontFamily="var(--font-mono)" fontSize="12px" color="text.muted" letterSpacing=".08em">
 						{dir} · {version.v}
 					</Text>
 					<Text data-title mt={1} fontWeight="700">
@@ -59,7 +59,7 @@ export default function TradingVersionPage({ v, description, lead, diagram, capt
 						{version.title}
 					</Heading>
 					<VersionSwitcher active={v} mt={6} />
-					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="1.6" fontWeight="600">
+					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="lede" fontWeight="600">
 						{lead}
 					</Text>
 				</Box>
