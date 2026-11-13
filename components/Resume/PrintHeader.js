@@ -58,7 +58,7 @@ export default function PrintHeader() {
 						target={link.href.startsWith("http") ? "_blank" : undefined}
 						rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}>
 						{link.label}
-						{link.href.startsWith("http") && <OutArrow ml="4px" fontSize="12px" />}
+						{link.href.startsWith("http") && <OutArrow newTab ml="4px" fontSize="12px" />}
 					</Link>
 				))}
 			</Flex>

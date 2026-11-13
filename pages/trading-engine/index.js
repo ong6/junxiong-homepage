@@ -36,7 +36,7 @@ export default function TradingEngine() {
 			description="A paper-trading research engine where every strategy runs through one shared backtest core and one evidence path.">
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
-					<BackLink href="/#work">Selected projects</BackLink>
+					<BackLink href="/#work">Selected work</BackLink>
 
 					<Heading
 						as="h1"

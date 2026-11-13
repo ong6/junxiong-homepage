@@ -112,14 +112,14 @@ function Introduction() {
 						target="_blank"
 						rel="noopener noreferrer"
 						{...utilityLinkProps}>
-						GitHub <OutArrow ml="4px" />
+						GitHub <OutArrow newTab ml="4px" />
 					</Link>
 					<Link
 						href="https://www.linkedin.com/in/junx6/"
 						target="_blank"
 						rel="noopener noreferrer"
 						{...utilityLinkProps}>
-						LinkedIn <OutArrow ml="4px" />
+						LinkedIn <OutArrow newTab ml="4px" />
 					</Link>
 					<Link as={NextLink} href="/resume" {...utilityLinkProps}>
 						Resume <OutArrow ml="4px" />

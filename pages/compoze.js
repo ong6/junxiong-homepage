@@ -108,7 +108,7 @@ export default function Compoze() {
 			description="Compoze built document-grounded assistants for businesses. I ran it alone alongside a full-time job in 2025, until a client bought the company.">
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
-					<BackLink href="/#work">Selected projects</BackLink>
+					<BackLink href="/#work">Selected work</BackLink>
 
 					<Heading
 						as="h1"

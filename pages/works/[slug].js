@@ -14,8 +14,7 @@ import { useEffect, useRef, useState } from "react";
 import { TriangleUpIcon } from "@chakra-ui/icons";
 import OutArrow from "../../components/OutArrow";
 import { Title, WorkImage, Meta } from "../../components/Work";
-import { H2 } from "../../components/ArticleParts";
-import P from "../../components/Paragraph";
+import { H2, P } from "../../components/ArticleParts";
 import Layout from "../../components/layouts/Articles";
 import works, { workSlugs } from "../../lib/works";
 
@@ -39,7 +38,7 @@ const EmbedFallback = ({ href, children }) => (
 	<Text mt={2} fontSize="14px" color="text.muted">
 		<Link href={href} target="_blank" rel="noopener noreferrer" display="inline-flex" alignItems="center" minH="44px" my={-3}>
 			{children}
-			<OutArrow ml="4px" />
+			<OutArrow newTab ml="4px" />
 		</Link>
 	</Text>
 );
@@ -159,7 +158,7 @@ const MetaValue = ({ item }) => {
 	return (
 		<Link href={item.href} target="_blank" rel="noopener noreferrer" display="inline-flex" alignItems="center" minH="44px" my={-3}>
 			{item.text}
-			<OutArrow ml="4px" />
+			<OutArrow newTab ml="4px" />
 		</Link>
 	);
 };
@@ -176,7 +175,7 @@ const WorkPage = ({ slug }) => {
 							{work.dateRange}
 						</Box>
 				</Title>
-				<P>{work.body}</P>
+				<P mt={0} maxW="680px">{work.body}</P>
 				<List ml={4} my={4}>
 					{work.meta.map((item) => (
 						<ListItem key={`${item.label}-${item.text}`}>
@@ -186,7 +185,7 @@ const WorkPage = ({ slug }) => {
 					))}
 				</List>
 
-				<H2 mb={6}>Project Showcase</H2>
+				<H2 mb={6}>Project showcase</H2>
 
 				<Stack spacing={8}>
 					{work.showcase.map((block) => (

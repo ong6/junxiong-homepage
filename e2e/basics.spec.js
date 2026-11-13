@@ -456,3 +456,52 @@ test("dark mode paints no blue or green ground", async ({ browser }) => {
 	}
 	await context.close();
 });
+
+// ── 8. From the independent review (2026-11-13) ──────────────────────────
+test("only the newest engine update is current; older ones link on to it", async ({ page }) => {
+	await page.goto("/trading-engine/v1/1.8");
+	await expect(page.locator('main a[href="/trading-engine/v1/1.8"]', { hasText: "latest update" })).toHaveCount(0);
+	await page.goto("/trading-engine/v1/1.7");
+	await expect(page.locator('main a[href="/trading-engine/v1/1.8"]', { hasText: "latest update" })).toHaveCount(1);
+});
+
+test("back links name the homepage section they return to", async ({ page }) => {
+	await page.goto("/");
+	await expect(page.locator("#work")).toContainText("Selected work");
+	for (const path of ["/compoze", "/ai-tooling", "/trading-engine", "/uipack"]) {
+		await page.goto(path);
+		const back = page.locator("main a").first();
+		await expect(back, path).toHaveText("← Selected work");
+		await expect(back, path).toHaveAttribute("href", "/#work");
+	}
+});
+
+test("every link that opens a new tab says so", async ({ page }) => {
+	for (const path of ["/", "/contact", "/works/codeparty", "/resume", "/compoze"]) {
+		await page.goto(path);
+		const silent = await page.locator('a[target="_blank"]').evaluateAll((links) =>
+			links.filter((link) => !/opens in a new tab/.test(link.textContent + (link.getAttribute("aria-label") || ""))).map((link) => link.textContent.trim().slice(0, 30)),
+		);
+		expect(silent, `${path}: new-tab links with no announcement`).toEqual([]);
+	}
+});
+
+test("an archive entry is an article: a 680px column, and the ledger has headings", async ({ page }) => {
+	await page.setViewportSize({ width: 1440, height: 900 });
+	await page.goto("/works/codeparty");
+	expect((await page.locator("main article p").first().boundingBox()).width).toBeLessThanOrEqual(680);
+	await expect(page.locator("main h1")).toContainText("Aug 2023 – Nov 2023");
+	await page.goto("/works");
+	expect(await page.locator("main h2").count()).toBeGreaterThan(2);
+	expect(await page.locator("main h3").count()).toBeGreaterThan(10);
+});
+
+test("figure controls take the 4px control corner and docs prose the site's leading", async ({ page }) => {
+	await page.setViewportSize({ width: 1440, height: 900 });
+	await page.goto("/compoze");
+	await page.locator(".uipack__ctl").first().waitFor();
+	expect(await page.locator(".uipack__ctl").first().evaluate((el) => getComputedStyle(el).borderTopLeftRadius)).toBe("4px");
+	await page.goto("/trading-engine/docs/data");
+	const leading = await page.locator(".uipack-docs__prose p").first().evaluate((el) => parseFloat(getComputedStyle(el).lineHeight) / parseFloat(getComputedStyle(el).fontSize));
+	expect(leading).toBeCloseTo(1.8, 2);
+});

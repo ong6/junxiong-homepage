@@ -61,6 +61,7 @@ const Row = ({ entry }) => (
 		<Box minW={0}>
 			<Flex align="baseline" wrap="wrap" columnGap={3} rowGap={0}>
 				<Text
+					as="h3"
 					fontSize={{ base: "16px", md: "17px" }}
 					fontWeight="700"
 					_groupHover={{ textDecoration: "underline" }}
@@ -117,6 +118,7 @@ const Works = () => {
 								gap={{ base: 2, md: 6 }}
 								mb={{ base: 8, md: 10 }}>
 								<Text
+									as="h2"
 									fontFamily="var(--font-mono)"
 									fontSize={{ base: "13px", md: "14px" }}
 									fontWeight="700"

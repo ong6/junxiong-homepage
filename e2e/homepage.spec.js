@@ -32,7 +32,9 @@ for (const width of [390, 1440]) {
 			);
 			// The ↗ is aria-hidden (components/OutArrow.js), so it is not part of the name.
 			for (const label of ["GitHub", "LinkedIn", "Resume"]) {
-				const target = await page.getByRole("link", { name: label, exact: true }).first().boundingBox();
+				// GitHub and LinkedIn open a new tab and say so in their name.
+				const name = label === "Resume" ? label : `${label} (opens in a new tab)`;
+				const target = await page.getByRole("link", { name, exact: true }).first().boundingBox();
 				expect(target.height).toBeGreaterThanOrEqual(43.9);
 			}
 			await expect(page.locator("#about").getByRole("link", { name: "Resume", exact: true })).toHaveAttribute("href", "/resume");

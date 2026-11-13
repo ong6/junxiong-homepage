@@ -74,7 +74,7 @@ export default function Uipack() {
 			description="UiPack brings reusable web design, animation and presentation systems into one place, including slide layouts and the words used to present them.">
 			<Container maxW="1088px" px={0} ml={0}>
 				<Box maxW="680px" pt={{ base: 10, md: 16 }}>
-					<BackLink href="/">Home</BackLink>
+					<BackLink href="/#work">Selected work</BackLink>
 
 					<Eyebrow mt={{ base: 8, md: 10 }}>design across projects</Eyebrow>
 

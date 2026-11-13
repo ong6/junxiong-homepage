@@ -1,4 +1,6 @@
 import NextDocument, { Html, Head, Main, NextScript } from "next/document";
+import { diagramThemeCss } from "uipack";
+import { sitePaper } from "../components/diagrams/theme";
 import { GROUND, themeScript } from "../lib/themeChoice";
 
 // The ground from the first byte (STYLE.md, Theme): the theme script sets
@@ -15,6 +17,8 @@ export default class Document extends NextDocument {
 					<meta name="theme-color" content={GROUND.dark} media="(prefers-color-scheme: dark)" />
 					<script id="theme-script" dangerouslySetInnerHTML={{ __html: themeScript }} />
 					<style id="theme-ground" dangerouslySetInnerHTML={{ __html: groundStyle }} />
+					{/* Every figure's colours, faces and canvas ground: the site's diagram theme. */}
+					<style id="diagram-theme" dangerouslySetInnerHTML={{ __html: diagramThemeCss(sitePaper, { scope: ":root" }) }} />
 				</Head>
 				<body>
 					<Main />

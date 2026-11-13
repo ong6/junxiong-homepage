@@ -81,7 +81,7 @@ export default function TradingEngineV1_8() {
 				SEC delisting notices and public insider-trade datasets. Its audit found that the
 				old store held only roughly a third of the listed names in each year from 2010
 				through 2025. A two-year whole-market daily-bar importer is ready, but it has not
-				been run without the owner&apos;s free key, so older backtests remain explicit about
+				been run without my free key, so older backtests remain explicit about
 				their survivorship limit.
 			</P>
 

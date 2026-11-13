@@ -56,7 +56,7 @@ const Footer = () => (
 						_hover={{ color: "page.text", textDecoration: "underline" }}>
 						{link.label}
 						{link.href.startsWith("http") && (
-							<OutArrow ml="3px" fontSize="12px" />
+							<OutArrow newTab ml="3px" fontSize="12px" />
 						)}
 					</Link>
 				))}

@@ -77,7 +77,7 @@ export default function AiTooling() {
 			description="Open-source tools for AI agents, by layer: Workbase for memory, Agent skills for context, Skillsmith for evaluation and Groundplane for runtime checks.">
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
-					<BackLink href="/#work">Selected projects</BackLink>
+					<BackLink href="/#work">Selected work</BackLink>
 
 					<Heading
 						as="h1"

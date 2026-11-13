@@ -95,7 +95,7 @@ export default function Contact() {
 							_hover={{ color: "brand.solid", textDecoration: "none" }}>
 							<Flex align="center" justify="space-between" gap={3} fontSize="19px" fontWeight="750">
 								<Text as="span">{item.label}</Text>
-								<OutArrow />
+								<OutArrow newTab={Boolean(item.external && item.href.startsWith("http"))} />
 							</Flex>
 							<Text mt={2} maxW="420px" color="text.muted" fontSize="15px" lineHeight="lede">
 								{item.detail}

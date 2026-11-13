@@ -267,7 +267,7 @@ function Elsewhere() {
 						_hover={{ color: "brand.solid", textDecoration: "none" }}>
 						<Flex align="center" justify="space-between" gap={2} fontWeight="750">
 							<Text>{item.name}</Text>
-							<OutArrow />
+							<OutArrow newTab={Boolean(item.external)} />
 						</Flex>
 						<Text mt={1} color="text.muted" fontSize="13px" lineHeight="text">
 							{item.detail}
