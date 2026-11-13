@@ -7,7 +7,9 @@ import { ERAS } from "../../../lib/tradingVersions";
 
 // Engine v2, live on paper since 2026-10-18. Facts from the engine repo and
 // its host (git log, BUILDLOG, /meta, pytest --collect-only on main 454cfc6a),
-// counted 2026-10-22.
+// counted 2026-10-22. The 13 November section and the test count are from
+// BUILDLOG, docs/revision-21-storage-deploy-checklist.md and
+// pytest --collect-only on main 7699e0de, 2026-11-13.
 const facts = [
 	["status", "live on paper since 18 Oct 2026"],
 	["paper portfolios", "17, each updated every night · 8 retired 21 Oct"],
@@ -16,7 +18,8 @@ const facts = [
 	["costs", "commission and fees on every fill · dated rate table"],
 	["risk halts", "−20% from peak · −5% in a day · any ledger mismatch"],
 	["first night", "every stage finished · 74 fills, each charged fees"],
-	["tests", "6,076 on main"],
+	["tests", "6,749 on main"],
+	["store", "API reads published read-only copies · since 13 Nov"],
 	["speed", "walk-forward fold 4,872 s → 582 s · identical ledgers"],
 	["reviews", "six held the deploy · a fresh reviewer on every change"],
 	["edge", "none shown yet"],
@@ -125,8 +128,28 @@ export default function TradingEngineV2() {
 				trading volume could still be filled. Studies judged which stocks qualified over a different
 				window than the fills used. Bars with a known opening-price fault still reached studies. All
 				four are fixed. A rehearsal on a copy of the store also caught a backup step that needed
-				13.5 GB of memory, so that storage change waits until it passes. None of the new strategy
-				studies found an edge worth trading.
+				13.5 GB of memory, so that storage change was held back until 13 November. None of the new
+				strategy studies found an edge worth trading.
+			</P>
+
+			<H2>Read-only copies of the store</H2>
+			<P>
+				The storage change went live on 13 November. The API used to open the engine&apos;s
+				database to answer a request. Now the engine publishes read-only copies of the store,
+				called generations, and the API serves the newest one. When that copy is older than its
+				budget, 24 hours for the board and 3.5 hours for evidence, the response is marked stale
+				instead of refused. The jobs that write still read the primary. Publishing holds the store
+				only while it copies the file, about two minutes in rehearsal against ten before, and
+				builds the generation from the copy.
+			</P>
+			<P>
+				The same release raised the cap on archived data from 80 to 120 GiB. The old cap had
+				refused four archive jobs every night since 2 November. It also fixed the weekly
+				liquidity backfill, which had counted empty padding rows as failures, skipped the calendar and price work
+				for evaluations that already have their final labels, and put the pre-open
+				check&apos;s lock waits under one deadline. No data collection was switched off. The deploy
+				script stopped once, on a proof that looked for a module in the wrong folder; the proof
+				passed with the path corrected and the release went out at 07:02 UTC.
 			</P>
 
 			<FactList facts={facts} mt={{ base: 12, md: 14 }} />

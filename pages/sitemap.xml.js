@@ -22,7 +22,7 @@ const topRoutes = [
 		changefreq: "monthly",
 		priority: path === "/trading-engine/docs" ? "0.7" : "0.6",
 	})),
-	{ path: "/trading-engine/v2", lastmod: "2026-10-20", changefreq: "weekly", priority: "0.6" },
+	{ path: "/trading-engine/v2", lastmod: "2026-11-13", changefreq: "weekly", priority: "0.6" },
 	...VERSIONS.map(({ href }) => ({
 		path: href,
 		lastmod: "2026-10-13",
