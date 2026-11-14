@@ -14,7 +14,8 @@ engineering through a restrained terminal-inspired interface.
   `/jobforge` redirects to the `interview-prep` skill in `ong6/skills`
 - A public case study for Compoze, with client identity and financial terms kept private
 - A case study for the trading engine (`/trading-engine`, a paper-trading research engine with
-  pre-registered strategies), with Engine v1's eight update pages and the Engine v2 page
+  pre-registered strategies), with Engine v1's eight updates on one page (`/trading-engine/v1`;
+  the old `/v1/1.N` routes redirect to its sections) and the Engine v2 page
   (live on paper since 2026-10-18, with its deploy-check diagram)
 - A browser and print-friendly resume
 - UiPack with Web design and Slide creation views, shared styling, downloadable SVG starters and

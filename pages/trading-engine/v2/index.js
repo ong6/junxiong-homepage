@@ -2,7 +2,7 @@ import DiagramFigure from "../../../components/DiagramFigure";
 import * as Engine2 from "../../../components/diagrams/trading/Engine2";
 import FactList, { pickFacts } from "../../../components/FactList";
 import TradingEraPage from "../../../components/TradingEraPage";
-import { H2, P } from "../../../components/TradingVersionPage";
+import { H2, P } from "../../../components/ArticleParts";
 import { ERAS } from "../../../lib/tradingVersions";
 
 // Engine v2, live on paper since 2026-10-18. Facts from the engine repo and

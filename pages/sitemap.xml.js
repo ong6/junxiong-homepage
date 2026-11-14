@@ -1,5 +1,4 @@
 import { getTradingDocRoutes } from "../lib/tradingDocs";
-import { VERSIONS } from "../lib/tradingVersions";
 import { modifiedFor } from "../lib/pageDates";
 
 const SITE = "https://junxiong.dev";
@@ -20,11 +19,7 @@ const topRoutes = [
 		priority: path === "/trading-engine/docs" ? "0.7" : "0.6",
 	})),
 	{ path: "/trading-engine/v2", changefreq: "weekly", priority: "0.6" },
-	...VERSIONS.map(({ href }) => ({
-		path: href,
-		changefreq: "yearly",
-		priority: "0.4",
-	})),
+	{ path: "/trading-engine/v1", changefreq: "yearly", priority: "0.5" },
 	{ path: "/skills", changefreq: "yearly", priority: "0.8" },
 	{ path: "/skillsmith", changefreq: "yearly", priority: "0.8" },
 	{ path: "/workbase", changefreq: "yearly", priority: "0.8" },
