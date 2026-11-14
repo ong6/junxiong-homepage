@@ -3,6 +3,7 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import Layout from "../components/layouts/Articles";
+import { PAGE_META } from "../lib/pageMeta";
 import Section from "../components/Section";
 import ArchiveEntry from "../components/ArchiveEntry";
 import works, { workSlugs } from "../lib/works";
@@ -61,9 +62,7 @@ const Works = () => {
 	}, [router.events, toggle]);
 
 	return (
-		<Layout
-			title="Archive"
-			description="Archive of Ong Jun Xiong's NUS projects, 2020 to 2023: hackathons, coursework, design work and open source. Current projects are on the homepage.">
+		<Layout {...PAGE_META["/works"]}>
 			<Box pt={{ base: 10, md: 14 }}>
 				<Flex align="baseline" justify="space-between" wrap="wrap" gap={2}>
 					<Heading as="h1" fontSize={ARTICLE_TITLE} lineHeight="1" letterSpacing="-.045em">
