@@ -69,18 +69,10 @@ function Layer({ tool, index }) {
 	);
 }
 
-// The page has no fact table; the side rail repeats its meta line.
-const railFacts = [
-	["year", "2026"],
-	["status", "open source"],
-	["tools", String(AI_TOOLING.length)],
-];
-
 export default function AiTooling() {
 	return (
 		<Layout
 			contents
-			facts={railFacts}
 			{...PAGE_META["/ai-tooling"]}>
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
