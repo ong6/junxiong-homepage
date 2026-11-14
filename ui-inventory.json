@@ -28,7 +28,7 @@
       "component": "components/SideBackdrop.js",
       "packageExport": "uipack/web",
       "gallery": "components/UipackWebMotion.js",
-      "description": "Drifting gutter grid on article pages and the paint-drizzle theme change (ThemeToggleButton)"
+      "description": "Drifting gutter grid on article pages; the gallery also demonstrates UiPack's paint theme change"
     },
     {
       "component": "components/TradingDocsPage.js",

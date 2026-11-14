@@ -18,6 +18,7 @@ function LinkRow({ name, detail, href, external, minH = "56px", py = 3 }) {
 			target={external ? "_blank" : undefined}
 			rel={external ? "noopener noreferrer" : undefined}
 			display="block"
+			data-hover="row"
 			minH={minH}
 			py={py}
 			borderBottom="1px solid"

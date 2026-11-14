@@ -30,8 +30,7 @@ function Layer({ tool, index }) {
 			as="article"
 			data-group
 			data-reveal
-			data-fill
-			data-tone="agents"
+			data-hover="row"
 			style={{ "--i": index }}
 			borderTop={index ? "1px solid" : undefined}
 			borderColor="border.subtle"
@@ -114,7 +113,10 @@ export default function AiTooling() {
 					border="1px solid"
 					borderColor="border.subtle"
 					borderRadius="6px"
-					overflow="clip">
+					overflow="clip"
+					// Room for the last layer's hover rule on the frame's bottom border
+					// (styles/globals.css, Card hover); Chrome snaps the clip 1px in.
+					sx={{ overflowClipMargin: "2px" }}>
 					{AI_TOOLING.map((tool, index) => (
 						<Layer key={tool.href} tool={tool} index={index} />
 					))}

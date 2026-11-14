@@ -396,6 +396,59 @@ test("the toggle's choice is kept across pages, reloads and system changes", asy
 	await context.close();
 });
 
+// The toggle's theme change (STYLE.md, Motion): a view transition that prints
+// the new theme in through the dot screen, keyed off data-theme-transition;
+// instant under reduced motion and without view transitions.
+const recordTransitions = () => {
+	window.__transitions = [];
+	const start = Document.prototype.startViewTransition;
+	if (!start) return;
+	Document.prototype.startViewTransition = function (update) {
+		const entry = { attr: document.documentElement.dataset.themeTransition, names: [] };
+		window.__transitions.push(entry);
+		const transition = start.call(this, update);
+		transition.ready.then(() => {
+			entry.names = document.getAnimations().filter((a) => a.effect?.pseudoElement).map((a) => `${a.effect.pseudoElement} ${a.animationName}`);
+		});
+		return transition;
+	};
+};
+
+test("the toggle prints the new theme in through the halftone view transition", async ({ browser }) => {
+	const context = await browser.newContext({ colorScheme: "light" });
+	await context.addInitScript(recordTransitions);
+	const page = await context.newPage();
+	await page.goto("/");
+	await page.getByRole("button", { name: "Use dark theme" }).click();
+	await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+	await expect.poll(() => page.evaluate(() => window.__transitions[0]?.names.length || 0)).toBeGreaterThan(0);
+	const [entry] = await page.evaluate(() => window.__transitions);
+	expect(entry.attr).toBe("halftone");
+	expect(entry.names).toContain("::view-transition-new(root) theme-halftone");
+	// The attribute only lasts as long as the transition.
+	await expect(page.locator("html")).not.toHaveAttribute("data-theme-transition", /.*/);
+	await context.close();
+});
+
+test("under reduced motion, or without view transitions, the theme changes at once", async ({ browser }) => {
+	for (const options of [{ reducedMotion: "reduce" }, { noTransitions: true }]) {
+		const context = await browser.newContext({ colorScheme: "light", reducedMotion: options.reducedMotion });
+		if (options.noTransitions) await context.addInitScript(() => delete Document.prototype.startViewTransition);
+		await context.addInitScript(recordTransitions);
+		const page = await context.newPage();
+		const errors = [];
+		page.on("pageerror", (error) => errors.push(error.message));
+		await page.goto("/");
+		await page.getByRole("button", { name: "Use dark theme" }).click();
+		await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+		expect(await themeOf(page)).toEqual({ theme: "dark", stored: "dark", ground: GROUND.dark });
+		expect(await page.evaluate(() => window.__transitions.length)).toBe(0);
+		await expect(page.locator("html")).not.toHaveAttribute("data-theme-transition", /.*/);
+		expect(errors).toEqual([]);
+		await context.close();
+	}
+});
+
 // ── 6. A phone: 44px targets, no sideways scroll ─────────────────────────
 test("every control is a 44px target at 390 and no page scrolls sideways", async ({ browser }) => {
 	test.setTimeout(90_000);
