@@ -12,7 +12,7 @@ import CaseStudyFooter from "../components/CaseStudyFooter";
 import OutArrow from "../components/OutArrow";
 import Layout from "../components/layouts/Articles";
 import { AI_TOOLING } from "../lib/aiTooling";
-import { BackLink, ARTICLE_TITLE } from "../components/ArticleParts";
+import { BackLink, MetaLine, ARTICLE_TITLE } from "../components/ArticleParts";
 
 const mono = {
 	fontFamily: "var(--font-mono)",
@@ -44,7 +44,7 @@ function Layer({ tool, index }) {
 					{tool.when}
 				</Box>
 			</Text>
-			<Heading as="h2" mt={2} fontSize={{ base: "24px", md: "28px" }} lineHeight="heading">
+			<Heading as="h2" data-contents-title={tool.name} mt={2} fontSize={{ base: "24px", md: "28px" }} lineHeight="heading">
 				<LinkOverlay
 					{...(tool.external
 						? { href: tool.href, target: "_blank", rel: "noopener noreferrer" }
@@ -68,11 +68,18 @@ function Layer({ tool, index }) {
 	);
 }
 
-export default function AiTooling() {
-	const accent = "brand.solid";
+// The page has no fact table; the side rail repeats its meta line.
+const railFacts = [
+	["year", "2026"],
+	["status", "open source"],
+	["tools", String(AI_TOOLING.length)],
+];
 
+export default function AiTooling() {
 	return (
 		<Layout
+			contents
+			facts={railFacts}
 			title="AI tooling"
 			description="Open-source tools for AI agents, by layer: Workbase for memory, Agent skills for context, Skillsmith for evaluation and Groundplane for runtime checks.">
 			<Container maxW="680px" px={0} ml={0}>
@@ -88,16 +95,7 @@ export default function AiTooling() {
 						AI tooling
 					</Heading>
 
-					<Text
-						mt={4}
-						color={accent}
-						fontFamily="var(--font-mono)"
-						fontSize="12px"
-						fontWeight="700"
-						letterSpacing=".08em"
-						textTransform="uppercase">
-						2026 · open source · {AI_TOOLING.length} tools
-					</Text>
+					<MetaLine>2026 · open source · {AI_TOOLING.length} tools</MetaLine>
 
 					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="lede" fontWeight="600">
 						I use coding agents every day and build them at work, and these are the tools I ended up

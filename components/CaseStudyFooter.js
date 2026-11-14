@@ -5,7 +5,8 @@ import ProjectLinks from "./ProjectLinks";
 import { toneFor } from "../lib/tones";
 import { Eyebrow } from "./ArticleParts";
 
-// The deliberate end of a case study: the links out once more, then one
+// The deliberate end of a case study: the links out (the only copy in the
+// reading order; the wide-screen rail repeats them for the eye), then one
 // door to the next project. Replaces the bare spacer before the footer.
 //
 //   links – passed to ProjectLinks (optional)
@@ -14,7 +15,7 @@ import { Eyebrow } from "./ArticleParts";
 export default function CaseStudyFooter({ links, next }) {
 	return (
 		<Box mt={{ base: 12, md: 16 }}>
-			{links && links.length > 0 && <ProjectLinks links={links} />}
+			{links && links.length > 0 && <ProjectLinks id="links-out" links={links} />}
 
 			{next && (
 				<LinkBox

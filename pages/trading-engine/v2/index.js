@@ -1,6 +1,6 @@
 import DiagramFigure from "../../../components/DiagramFigure";
 import * as Engine2 from "../../../components/diagrams/trading/Engine2";
-import FactList from "../../../components/FactList";
+import FactList, { pickFacts } from "../../../components/FactList";
 import TradingEraPage from "../../../components/TradingEraPage";
 import { H2, P } from "../../../components/TradingVersionPage";
 import { ERAS } from "../../../lib/tradingVersions";
@@ -25,10 +25,13 @@ const facts = [
 	["edge", "none shown yet"],
 ];
 
+const railFacts = pickFacts(facts, ["paper portfolios", "fills", "tests", "edge"]);
+
 export default function TradingEngineV2() {
 	return (
 		<TradingEraPage
 			era={ERAS[1]}
+			facts={railFacts}
 			status="live on paper since 18 Oct 2026"
 			description="Engine v2 of Ong Jun Xiong's paper-trading engine, live on paper since 18 October 2026: the engine fills orders, keeps the books and charges commissions on every fill, with deploy checks since 21 October."
 			lead="Engine v2 went live on 18 October 2026, on paper. The engine is now the strategies' broker: it fills their orders, keeps the books, charges commissions on every fill and halts an account that breaks its loss limits. Nothing it runs has shown an edge yet.">

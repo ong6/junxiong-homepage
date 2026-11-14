@@ -1,5 +1,7 @@
 import { Box, Heading, Link, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
+import { formatDate, modifiedFor } from "../lib/pageDates";
 
 // The shared parts of every article page (STYLE.md, Layout: Article): the back
 // link above the h1, prose paragraphs, section heads and inline code. One copy
@@ -34,6 +36,39 @@ export const Code = (props) => <Box as="code" fontFamily="var(--font-mono)" font
 // page uses the article size.
 export const LANDING_TITLE = { base: "46px", smmd: "58px", lg: "74px" };
 export const ARTICLE_TITLE = { base: "40px", md: "52px" };
+
+// The mono meta line under an article's h1 (`2026 · open source · python`),
+// closed by the date the page last changed, from lib/pageDates.js (the same
+// date as the sitemap's lastmod and the JSON-LD dateModified). The date sits
+// in muted ink and never wraps inside itself.
+export function MetaLine({ children, ...props }) {
+	const router = useRouter();
+	const date = modifiedFor(router?.asPath || "/");
+	return (
+		<Text
+			mt={4}
+			color="brand.solid"
+			fontFamily="var(--font-mono)"
+			fontSize="12px"
+			fontWeight="700"
+			letterSpacing=".08em"
+			textTransform="uppercase"
+			{...props}>
+			{children}
+			{date && (
+				<>
+					<Box as="span" display={{ base: "none", md: "inline" }}>
+						{" · "}
+					</Box>
+					{/* Its own line on phones, so the line never breaks inside the meta. */}
+					<Box as="span" display={{ base: "block", md: "inline" }} mt={{ base: 1, md: 0 }} color="text.muted" whiteSpace="nowrap">
+						Updated <time dateTime={date}>{formatDate(date)}</time>
+					</Box>
+				</>
+			)}
+		</Text>
+	);
+}
 
 // The site's one mono label: `// LABEL` in the accent (STYLE.md, Ornaments).
 // Pass the words without the slashes.

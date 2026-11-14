@@ -69,6 +69,8 @@
 	border-bottom: 1px solid var(--chakra-colors-border-subtle);
 }
 .copy { min-width: 0; max-width: 480px; }
+/* After the six chapters: the notes about the page itself, on the page edge. */
+.outro { padding: 48px var(--page-edge) 64px; }
 .heading {
 	margin: 16px 0 24px;
 	font-size: clamp(40px, 3.6vw, 52px);
@@ -109,6 +111,7 @@
 	.chapterNav { margin-top: 24px; }
 	.chapterNav a { padding: 0 12px; font-size: 12px; }
 	.chapter { row-gap: 24px; padding-top: 48px; padding-bottom: 48px; scroll-margin-top: 64px; }
+	.outro { padding-top: 40px; padding-bottom: 48px; }
 	.heading { margin: 8px 0 16px; font-size: 36px; }
 	.prose { font-size: 16px; line-height: 1.8; }
 	.visual { height: min(76vw, 320px); min-height: 260px; }

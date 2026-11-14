@@ -7,7 +7,7 @@ import {
 import Image from "next/image";
 import DiagramFigure from "../components/DiagramFigure";
 import Details from "../components/Details";
-import FactList from "../components/FactList";
+import FactList, { pickFacts } from "../components/FactList";
 import * as CompozeArchitecture from "../components/diagrams/CompozeArchitecture";
 import * as CompozeDurableChat from "../components/diagrams/CompozeDurableChat";
 import * as CompozeIngestFlow from "../components/diagrams/CompozeIngestFlow";
@@ -15,8 +15,8 @@ import * as CompozeQueryFlow from "../components/diagrams/CompozeQueryFlow";
 import * as CompozeUserFlow from "../components/diagrams/CompozeUserFlow";
 import Layout from "../components/layouts/Articles";
 import CaseStudyFooter from "../components/CaseStudyFooter";
-import ProjectLinks from "../components/ProjectLinks";
-import { BackLink, P, H2, ARTICLE_TITLE } from "../components/ArticleParts";
+import { BackLink, MetaLine, P, H2, ARTICLE_TITLE } from "../components/ArticleParts";
+import { withNotes } from "../lib/notes";
 
 // A written case study: one ~680px column of prose, screenshots as inline
 // figures, and a single mono fact table. Deliberately unlike the homepage
@@ -28,7 +28,7 @@ import { BackLink, P, H2, ARTICLE_TITLE } from "../components/ArticleParts";
 
 // The product shots are light-UI captures. In dark mode they are pulled down
 // a step so they sit in the page rather than glow off it.
-const Figure = ({ src, alt, caption }) => (
+const Figure = ({ src, alt, caption, preload = false }) => (
 	<Box as="figure" my={{ base: 10, md: 14 }} mx={0}>
 		<Box
 			border="1px solid"
@@ -41,6 +41,7 @@ const Figure = ({ src, alt, caption }) => (
 				width={1440}
 				height={900}
 				sizes="(max-width: 768px) 100vw, 800px"
+				preload={preload}
 				style={{ width: "100%", height: "auto" }}
 			/>
 		</Box>
@@ -92,17 +93,19 @@ const facts = [
 	["typescript", "~76k lines"],
 ];
 
-const links = [
+const railFacts = pickFacts(facts, ["domain agents", "models / providers", "knowledge bases per search", "typescript"]);
+
+const links = withNotes("/compoze", [
 	{ name: "UiPack", detail: "The system figures on this page are drawn with it", href: "/uipack" },
 	{ name: "Notes", detail: "Longer working notes", href: "https://notes.junxiong.dev", external: true },
-];
+]);
 
 export default function Compoze() {
-	const accent = "brand.solid";
-
 	return (
 		<Layout
 			contents
+			facts={railFacts}
+			links={links}
 			title="Compoze"
 			schema={{ type: "TechArticle" }}
 			description="Compoze built document-grounded assistants for businesses. I ran it alone alongside a full-time job in 2025, until a client bought the company.">
@@ -119,16 +122,7 @@ export default function Compoze() {
 						Compoze
 					</Heading>
 
-					<Text
-						mt={4}
-						color={accent}
-						fontFamily="var(--font-mono)"
-						fontSize="12px"
-						fontWeight="700"
-						letterSpacing=".08em"
-						textTransform="uppercase">
-						2025 · sole founder · sold to a client
-					</Text>
+					<MetaLine>2025 · sole founder · sold to a client</MetaLine>
 
 					<Text
 						mt={8}
@@ -139,17 +133,16 @@ export default function Compoze() {
 					</Text>
 				</Box>
 
-				<ProjectLinks links={links} mt={{ base: 8, md: 10 }} />
-
-				<P>
-					Staff could ask a question and get an answer with its sources attached, so they could open the document and check it instead of searching through files by hand.
-				</P>
-
 				<Figure
+					preload
 					src="/images/compoze/compoze-02.webp"
 					alt="An answered question in Compoze: a knowledge base search over three documents, a structured answer containing a table, and cited sources listed with match scores."
 					caption="fig. 1 — an answer with the search it ran and the sources it used, each with a match score."
 				/>
+
+				<P>
+					Staff could ask a question and get an answer with its sources attached, so they could open the document and check it instead of searching through files by hand.
+				</P>
 
 				<DiagramFigure
 					id="cuf"

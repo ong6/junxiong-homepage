@@ -4,6 +4,7 @@ import Head from "next/head";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
 import { trackFillOrigin } from "../../lib/fillOrigin";
+import { modifiedFor } from "../../lib/pageDates";
 
 export const SITE_URL = "https://junxiong.dev";
 
@@ -85,7 +86,7 @@ const profileSchema = {
 			url: `${SITE_URL}/`,
 			name: DEFAULT_TITLE,
 			description: DEFAULT_DESCRIPTION,
-			dateModified: BUILD_DATE,
+			dateModified: modifiedFor("/") || BUILD_DATE,
 			isPartOf: { "@id": `${SITE_URL}/#website` },
 			mainEntity: { "@id": `${SITE_URL}/#person` },
 		},
@@ -104,7 +105,7 @@ const webPageSchema = (canonical) => ({
 	"@id": canonical,
 	url: canonical,
 	isPartOf: { "@id": `${SITE_URL}/#website` },
-	dateModified: BUILD_DATE,
+	dateModified: modifiedFor(canonical.slice(SITE_URL.length) || "/") || BUILD_DATE,
 	about: { "@id": `${SITE_URL}/#person` },
 	primaryImageOfPage: OG_IMAGE,
 });

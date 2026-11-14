@@ -464,8 +464,12 @@ body {
 	#docs-layout .uipack-docs__prose h4 { font-size: 23px; margin-top: 44px; }
 }
 
-/* Section heads land below the fixed nav when the contents rail jumps to them. */
-article h2[id] { scroll-margin-top: 96px; }
+/* Section heads (and the closing Links out) land below the fixed nav when the
+   contents list jumps to them; below 1200px also below the "On this page" bar. */
+article h2[id], #links-out { scroll-margin-top: 124px; }
+@media (min-width: 1200px) {
+	article h2[id], #links-out { scroll-margin-top: 96px; }
+}
 
 /* The docs shell takes the site's leadings and label tracking (STYLE.md, Type)
    through UiPack's hooks (v0.7.0). The /uipack sample shows UiPack's own. */
