@@ -16,10 +16,10 @@ engineering through a restrained terminal-inspired interface.
   pre-registered strategies), with Engine v1's eight update pages and the Engine v2 page
   (live on paper since 2026-10-18, with its deploy-check diagram)
 - A browser and print-friendly resume
-- UI Pack with Web design and Slide creation views, shared styling, downloadable SVG starters and
+- UiPack with Web design and Slide creation views, shared styling, downloadable SVG starters and
   speaker guides for what to say, how to deliver it and how to enter the next slide; its docs and
   asset gallery live on [ui.junxiong.dev](https://ui.junxiong.dev) (`/assets` redirects to the gallery)
-- A Contact page with email, LinkedIn, GitHub, résumé and notes around a shared UI Pack 3D scene
+- A Contact page with email, LinkedIn, GitHub, résumé and notes around a shared UiPack 3D scene
 - A Hobbies page with procedural Three.js scenes, native scroll and readable fallbacks; 3D loads
   when a chapter reaches the centre of the viewport and unloads when you return to the introduction
 - An archive of university projects
@@ -76,9 +76,9 @@ Slide examples live in `lib/uipackSlides.mjs`; layout, SVG rendering and speaker
 The source is available for reference. Personal copy, work history, and images remain the property
 of Ong Jun Xiong.
 
-## UI Pack first
+## UiPack first
 
-Significant visuals are authored and registered in [UI Pack](../uipack/docs/component-first.md) before use here. Run `npm run check:ui-ownership` to verify the shared imports and renderer boundary. `ui-inventory.json` tracks collection ownership and existing page-specific compositions. The six hobby scenes are imported from `uipack/objects` and previewed in `/uipack`.
+Significant visuals are authored and registered in [UiPack](../uipack/docs/component-first.md) before use here. Run `npm run check:ui-ownership` to verify the shared imports and renderer boundary. `ui-inventory.json` tracks collection ownership and existing page-specific compositions. The six hobby scenes are imported from `uipack/objects` and previewed in `/uipack`.
 
 
 ## Object variants

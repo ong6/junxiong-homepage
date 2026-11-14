@@ -149,7 +149,7 @@ export default function ArticleContents({ containerRef }) {
 									color={current ? "page.text" : "text.muted"}
 									fontSize="14px"
 									fontWeight={current ? "700" : "500"}
-									lineHeight="1.4"
+									lineHeight="label"
 									textDecoration="none"
 									transition="color var(--dur-hover) ease, border-color var(--dur-hover) ease"
 									sx={{ "@media (pointer: coarse)": { minHeight: "44px" } }}

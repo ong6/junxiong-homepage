@@ -1,4 +1,4 @@
-import { Box, Container, Heading, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Container, Heading, Text } from "@chakra-ui/react";
 import CaseStudyFooter from "../../components/CaseStudyFooter";
 import DiagramFigure from "../../components/DiagramFigure";
 import * as Engine2 from "../../components/diagrams/trading/Engine2";
@@ -21,7 +21,7 @@ const links = [
 ];
 
 export default function TradingEngine() {
-	const accent = useColorModeValue("mint.700", "mint.300");
+	const accent = "brand.solid";
 
 	return (
 		<Layout
@@ -36,7 +36,7 @@ export default function TradingEngine() {
 			description="A paper-trading research engine where every strategy runs through one shared backtest core and one evidence path.">
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
-					<BackLink href="/#work">Selected projects</BackLink>
+					<BackLink href="/#work">Selected work</BackLink>
 
 					<Heading
 						as="h1"
@@ -58,7 +58,7 @@ export default function TradingEngine() {
 						2026 · open source · Python
 					</Text>
 
-					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="1.6" fontWeight="600">
+					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="lede" fontWeight="600">
 						A paper-trading engine I&apos;ve been building since July 2026, to find out whether a
 						strategy, or a model reading the market, makes money after costs. Every strategy goes
 						through the same backtest core and the same evidence checks before it gets a paper

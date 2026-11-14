@@ -7,7 +7,7 @@ const links = [
 	{ label: "Hobbies", href: "/hobbies", internal: true },
 	{ label: "Archive", href: "/works", internal: true },
 	{ label: "Notes", href: "https://notes.junxiong.dev" },
-	{ label: "UI Pack", href: "/uipack", internal: true },
+	{ label: "UiPack", href: "/uipack", internal: true },
 	{ label: "GitHub", href: "https://github.com/ong6" },
 	{ label: "LinkedIn", href: "https://www.linkedin.com/in/junx6/" },
 	{ label: "Source", href: "https://github.com/ong6/junxiong-homepage" },
@@ -56,7 +56,7 @@ const Footer = () => (
 						_hover={{ color: "page.text", textDecoration: "underline" }}>
 						{link.label}
 						{link.href.startsWith("http") && (
-							<OutArrow ml="3px" fontSize="12px" />
+							<OutArrow newTab ml="3px" fontSize="12px" />
 						)}
 					</Link>
 				))}

@@ -8,7 +8,6 @@ import {
 	LinkOverlay,
 	SimpleGrid,
 	Text,
-	useColorModeValue,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { Fragment } from "react";
@@ -73,14 +72,13 @@ function FeaturedCard({ span, index = 0, href, children }) {
 }
 
 function DottedCanvas({ children }) {
-	const dot = useColorModeValue("rgba(36,87,197,.17)", "rgba(142,174,255,.18)");
 	return (
 		<Box
 			border="1px solid"
 			borderColor="border.subtle"
 			borderRadius="4px"
 			bg="preview.canvas"
-			backgroundImage={`radial-gradient(${dot} 1px, transparent 1px)`}
+			backgroundImage="radial-gradient(var(--chakra-colors-preview-dot) 1px, transparent 1px)"
 			backgroundSize="12px 12px"
 			p={{ base: 4, md: 6 }}>
 			{children}
@@ -94,10 +92,10 @@ function CardCopy({ eyebrow, title, href, description }) {
 			<Text sx={labelStyle} color="brand.solid">
 				{eyebrow}
 			</Text>
-			<Heading as="h3" mt={2} fontSize={{ base: "30px", md: "38px" }} lineHeight="1.05">
+			<Heading as="h3" mt={2} fontSize={{ base: "30px", md: "38px" }} lineHeight="heading">
 				<ProjectLink href={href}>{title}</ProjectLink>
 			</Heading>
-			<Text mt={4} maxW="610px" color="text.muted" fontSize="16px" lineHeight="1.7">
+			<Text mt={4} maxW="610px" color="text.muted" fontSize="16px" lineHeight="text">
 				{description}
 			</Text>
 		</Box>
@@ -164,10 +162,10 @@ function CompozeCard() {
 							<Text>3 sources</Text>
 						</Flex>
 						<Box p={4}>
-							<Text fontSize="16px" fontWeight="700" lineHeight="1.45">
+							<Text fontSize="16px" fontWeight="700" lineHeight="text">
 								How much annual leave carries over?
 							</Text>
-						<Text mt={2} color="text.muted" fontSize="16px" lineHeight="1.6">
+						<Text mt={2} color="text.muted" fontSize="16px" lineHeight="text">
 								Up to 5 days, used by 31 March.
 							</Text>
 						</Box>
@@ -187,7 +185,7 @@ const supportingProjects = [
 		wide: true,
 	},
 	{
-		title: "UI Pack",
+		title: "UiPack",
 		href: "/uipack",
 		label: "Design system",
 		description: "The figures, motion rules and slide starters shared across my projects.",
@@ -217,10 +215,10 @@ function SupportingCard({ project, index }) {
 			<Text color="text.muted" sx={labelStyle}>
 				{project.label}
 			</Text>
-			<Heading as="h3" mt={2} fontSize={{ base: "23px", md: "26px" }} lineHeight="1.1">
+			<Heading as="h3" mt={2} fontSize={{ base: "23px", md: "26px" }} lineHeight="heading">
 				<ProjectLink href={project.href}>{project.title}</ProjectLink>
 			</Heading>
-			<Text mt={2} maxW="640px" color="text.muted" fontSize="16px" lineHeight="1.65">
+			<Text mt={2} maxW="640px" color="text.muted" fontSize="16px" lineHeight="text">
 				{project.description}
 			</Text>
 		</LinkBox>
@@ -269,9 +267,9 @@ function Elsewhere() {
 						_hover={{ color: "brand.solid", textDecoration: "none" }}>
 						<Flex align="center" justify="space-between" gap={2} fontWeight="750">
 							<Text>{item.name}</Text>
-							<OutArrow />
+							<OutArrow newTab={Boolean(item.external)} />
 						</Flex>
-						<Text mt={1} color="text.muted" fontSize="13px" lineHeight="1.5">
+						<Text mt={1} color="text.muted" fontSize="13px" lineHeight="text">
 							{item.detail}
 						</Text>
 					</Link>

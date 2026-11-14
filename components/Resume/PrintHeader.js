@@ -36,7 +36,7 @@ export default function PrintHeader() {
 				<PrintButton flexShrink={0} />
 			</Flex>
 
-			<Text fontSize="16px" lineHeight="1.75" opacity={0.92} maxW="680px" mt={6}>
+			<Text fontSize="16px" lineHeight="text" opacity={0.92} maxW="680px" mt={6}>
 				I build production agent runtimes, tool servers, and backend platforms.
 				At TikTok, my work spans the shared AI layer and the Go services beneath
 				global e-commerce operations.
@@ -58,7 +58,7 @@ export default function PrintHeader() {
 						target={link.href.startsWith("http") ? "_blank" : undefined}
 						rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}>
 						{link.label}
-						{link.href.startsWith("http") && <OutArrow ml="4px" fontSize="12px" />}
+						{link.href.startsWith("http") && <OutArrow newTab ml="4px" fontSize="12px" />}
 					</Link>
 				))}
 			</Flex>

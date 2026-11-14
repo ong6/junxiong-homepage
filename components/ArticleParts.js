@@ -23,7 +23,7 @@ export function BackLink({ href, children }) {
 	);
 }
 
-export const P = (props) => <Text mt={5} fontSize={{ base: "17px", md: "18px" }} lineHeight="1.8" {...props} />;
+export const P = (props) => <Text mt={5} fontSize={{ base: "17px", md: "18px" }} lineHeight="prose" {...props} />;
 
 export const H2 = (props) => <Heading as="h2" mt={{ base: 12, md: 16 }} fontSize={{ base: "22px", md: "24px" }} {...props} />;
 

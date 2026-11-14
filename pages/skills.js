@@ -1,4 +1,4 @@
-import { Box, Container, Heading, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Container, Heading, Text } from "@chakra-ui/react";
 import AiToolFamily from "../components/AiToolFamily";
 import DiagramFigure from "../components/DiagramFigure";
 import * as SkillsArchitecture from "../components/diagrams/SkillsArchitecture";
@@ -54,7 +54,7 @@ const links = [
 ];
 
 export default function Skills() {
-	const accent = useColorModeValue("mint.700", "mint.300");
+	const accent = "brand.solid";
 
 	return (
 		<Layout
@@ -91,8 +91,8 @@ export default function Skills() {
 						2026 · open source · claude code + codex
 					</Text>
 
-					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="1.6" fontWeight="600">
-						A skill is a markdown file that tells a coding agent when to do something and how. I had
+					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="lede" fontWeight="600">
+						A skill is a Markdown file that tells a coding agent when to do something and how. I had
 					the same eight copied into several repos, and every copy drifted. Now the ones I can share
 					live in one public repo, <Code>ong6/skills</Code>, and a small command links them into
 					every repo I work in and sends my edits back.

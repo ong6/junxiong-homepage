@@ -56,7 +56,7 @@ const cards = [
 	{
 		slug: "uipack",
 		eyebrow: "DESIGN SYSTEM / TYPESCRIPT",
-		title: "UI Pack",
+		title: "UiPack",
 		summary: "The figures, motion rules and slide starters shared across my projects.",
 	},
 ];

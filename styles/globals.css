@@ -23,7 +23,7 @@ a {
 }
 
 :focus-visible {
-	outline: 2px solid var(--chakra-colors-brand-solid, #234ea2);
+	outline: 2px solid var(--site-brand-solid);
 	outline-offset: 3px;
 }
 
@@ -42,6 +42,31 @@ a {
 	}
 }
 
+/* The site's colours as plain variables on <html> only. Chakra re-declares
+   its own tokens on every [data-theme] element, so a UiPack part that carries
+   the server's light guess as its theme (a 3D scene's still, the docs shell)
+   was a light island on a dark page until hydration. These follow the page's
+   theme wherever they are read. Values mirror lib/theme.js; e2e/basics.spec.js
+   fails if the two drift. */
+:root {
+	--site-page-bg: #F3EFE7;
+	--site-page-text: #29231F;
+	--site-text-muted: #655C55;
+	--site-surface-raised: #FBF8F2;
+	--site-border-subtle: rgba(41,35,31,.18);
+	--site-brand-solid: #234EA2;
+	--site-preview-shadow: #D9CFC3;
+}
+:root[data-theme="dark"] {
+	--site-page-bg: #151311;
+	--site-page-text: #F2ECE3;
+	--site-text-muted: #BDB3A8;
+	--site-surface-raised: #211D1A;
+	--site-border-subtle: rgba(242,236,227,.16);
+	--site-brand-solid: #9AB6FF;
+	--site-preview-shadow: #0D0C0B;
+}
+
 /* Motion. Curves follow Emil Kowalski's animate skill (strong ease-out for
    entrances, ease-in-out for things moving on screen, transform and opacity
    only); durations are UiPack's core timings (STYLE.md, Motion): hover and
@@ -55,22 +80,25 @@ a {
 	--dur-enter: 560ms;
 }
 
-@keyframes fade-up {
-	from { opacity: 0; transform: translateY(10px); }
-	to { opacity: 1; transform: none; }
+/* A page's entrance moves and never fades: nothing starts at opacity 0, so a
+   page change shows the new page whole on its first frame (STYLE.md, Motion). */
+@keyframes page-rise {
+	from { transform: translateY(10px); }
+	to { transform: none; }
 }
-.fade-up {
-	animation: fade-up var(--dur-enter) var(--ease-out) both;
+.page-rise {
+	animation: page-rise var(--dur-enter) var(--ease-out) both;
 }
 
-/* Homepage intro: a short staggered rise. The name only moves (no fade) so
-   it counts for LCP on the first frame. */
+/* Homepage intro: a short staggered rise. Nothing fades: every line is there
+   on the first frame, so the name counts for LCP and no part of the hero is
+   blank on a page change. */
 @keyframes settle {
 	from { transform: translateY(14px); }
 	to { transform: none; }
 }
 .hero-rise {
-	animation: fade-up var(--dur-enter) var(--ease-out) both;
+	animation: page-rise var(--dur-enter) var(--ease-out) both;
 	animation-delay: calc(var(--i, 0) * 70ms);
 }
 .hero-settle {
@@ -98,24 +126,25 @@ a {
 	}
 }
 
-/* Cards and panels rise into place as they enter the viewport. Scroll-driven,
+/* Cards and panels rise into place as they enter the viewport, moving and
+   never fading, like every entrance on the site. Scroll-driven,
    so it needs no script, cannot hide content from a crawler, and anything
    already on screen at load is simply finished. Unsupported browsers get the
    static page. */
 @keyframes reveal {
-	from { opacity: 0; transform: translateY(24px) scale(0.985); }
-	to { opacity: 1; transform: none; }
+	from { transform: translateY(24px) scale(0.985); }
+	to { transform: none; }
 }
 [data-panel] {
 	transition: translate var(--dur-hover) var(--ease-out), box-shadow var(--dur-hover) var(--ease-out);
 }
 @keyframes panel-press {
-	from { transform: translate(6px, 6px); box-shadow: 0 0 0 var(--chakra-colors-preview-shadow); }
+	from { transform: translate(6px, 6px); box-shadow: 0 0 0 var(--site-preview-shadow); }
 	to { transform: none; }
 }
 @keyframes stamp {
-	0%, 40% { opacity: 0; transform: scale(1.12); }
-	100% { opacity: 1; transform: none; }
+	0%, 40% { transform: scale(1.12); }
+	100% { transform: none; }
 }
 @keyframes progress {
 	from { transform: scaleX(0); }
@@ -155,7 +184,7 @@ a {
 		right: 0;
 		height: 2px;
 		z-index: 30;
-		background: var(--chakra-colors-brand-solid);
+		background: var(--site-brand-solid);
 		transform-origin: left;
 		animation: progress linear both;
 		animation-timeline: scroll(root);
@@ -171,18 +200,25 @@ a {
 	#navbar-menu { opacity: 0; transform: translateY(-6px); }
 }
 
-/* Theme icon turns in when the mode flips. */
+/* Parts with a drawing per theme (the logo's mark, the toggle's icon) carry
+   both in the HTML; the theme on <html> picks one, from the first paint. */
+:root:not([data-theme="dark"]) .theme-dark-only,
+:root[data-theme="dark"] .theme-light-only {
+	display: none !important;
+}
+
+/* Theme icon turns in when the mode flips, never on a page load. */
 @keyframes icon-turn {
 	from { opacity: 0; transform: rotate(-90deg) scale(0.8); }
 	to { opacity: 1; transform: none; }
 }
-.theme-icon {
+:root[data-theme-changed] .theme-icon {
 	animation: icon-turn var(--dur-ui) var(--ease-out) both;
 }
 
 /* Reduced motion keeps opacity, drops movement. */
 @media (prefers-reduced-motion: reduce) {
-	.fade-up,
+	.page-rise,
 	.hero-rise,
 	.hero-settle,
 	.portrait-frame,
@@ -195,46 +231,27 @@ a {
 	.scroll-progress { display: none; }
 }
 
-/* uipack figures take the site's tokens. Chakra flips the semantic colours
-   with its colour mode and sets data-theme on <html>, so the figure follows
-   the site toggle, not only the OS. The object frame and the canvas dialog
-   sit outside a figure, so they take the same tokens. Since uipack v0.2.0 the
-   --uipack-* names are aliases on .uipack for the --ui-* roles; a rule here
-   (loaded after uipack's CSS) still wins. Two things no longer follow them:
-   the figure title reads --ui-font-heading, and the canvas ground reads
-   --ui-canvas-pattern (Technical's drafting grid); `initial` brings back the
-   12px dot grid drawn in --uipack-grid. */
-.uipack,
-.uipack-object-frame,
-.uipack-canvas-dialog {
-	--uipack-fg: var(--chakra-colors-page-text);
-	--uipack-muted: var(--chakra-colors-text-muted);
-	--uipack-bg: var(--chakra-colors-page-bg);
-	--uipack-surface: var(--chakra-colors-surface-raised);
-	--uipack-border: var(--chakra-colors-border-subtle);
-	--uipack-accent: var(--chakra-colors-brand-solid);
+/* Figures take their colours, faces and dotted canvas from the site's diagram
+   theme (components/diagrams/theme.js, written to :root by _document). The
+   object frame is not a figure and reads the --uipack-* names directly, so it
+   still takes the site's tokens here. */
+.uipack-object-frame {
+	--uipack-fg: var(--site-page-text);
+	--uipack-muted: var(--site-text-muted);
+	--uipack-bg: var(--site-page-bg);
+	--uipack-surface: var(--site-surface-raised);
+	--uipack-border: var(--site-border-subtle);
+	--uipack-accent: var(--site-brand-solid);
 	--uipack-mono: var(--font-mono);
 	--uipack-sans: var(--font-sans);
-	--uipack-grid: rgba(26, 36, 32, 0.14);
-	--uipack-token-request: #3d63d9;
-	--uipack-token-response: #2fa778;
-	--uipack-token-change: #8a55d6;
-	--ui-font-heading: var(--uipack-sans);
-	--ui-canvas-pattern: initial;
 }
 /* Figure titles stay at the 700 they had before uipack v0.2.0 (now 600). */
 .uipack .uipack__title {
 	font-weight: 700;
 }
-/* Dark: only the values that are not semantic tokens. uipack v0.2.0 dropped
-   its prefers-color-scheme colour defaults, so no specificity boost is needed. */
-[data-theme="dark"] .uipack,
-[data-theme="dark"] .uipack-object-frame,
-[data-theme="dark"] .uipack-canvas-dialog {
-	--uipack-grid: rgba(230, 235, 232, 0.14);
-	--uipack-token-request: #8ea4ff;
-	--uipack-token-response: #5fd39b;
-	--uipack-token-change: #c39aff;
+/* Figure controls (Open canvas, Pause, Replay) take the site's control corner. */
+:root {
+	--uipack-ctl-radius: 4px;
 }
 /* UiPack v0.2.0 writes its roles with light-dark(). For this browserslist
    Next's CSS step lowers light-dark() to a --lightningcss-light/-dark pair that
@@ -271,30 +288,30 @@ html,
    uipack's palette into the SVG) and the canvas dialog (hard-coded colours). */
 .uipack-object,
 :root .uipack-object[data-theme] {
-	--object-ink: var(--chakra-colors-page-text);
-	--object-rule: var(--chakra-colors-border-subtle);
-	--object-accent: var(--chakra-colors-brand-solid);
+	--object-ink: var(--site-page-text);
+	--object-rule: var(--site-border-subtle);
+	--object-accent: var(--site-brand-solid);
 }
 .uipack-animation-workspace,
 :root .uipack-animation-workspace[data-theme] {
-	--gallery-ink: var(--chakra-colors-page-text);
-	--gallery-muted: var(--chakra-colors-text-muted);
-	--gallery-rule: var(--chakra-colors-border-subtle);
-	--gallery-surface: var(--chakra-colors-surface-raised);
-	--gallery-accent: var(--chakra-colors-brand-solid);
+	--gallery-ink: var(--site-page-text);
+	--gallery-muted: var(--site-text-muted);
+	--gallery-rule: var(--site-border-subtle);
+	--gallery-surface: var(--site-surface-raised);
+	--gallery-accent: var(--site-brand-solid);
 }
 .uipack-slide-starter,
 .uipack-speaker-guide,
 :root .uipack-slide-starter[data-theme],
 :root .uipack-speaker-guide[data-theme] {
-	--presentation-surface: var(--chakra-colors-surface-raised);
-	--presentation-ink: var(--chakra-colors-page-text);
-	--presentation-muted: var(--chakra-colors-text-muted);
-	--presentation-rule: var(--chakra-colors-border-subtle);
-	--presentation-accent: var(--chakra-colors-brand-solid);
+	--presentation-surface: var(--site-surface-raised);
+	--presentation-ink: var(--site-page-text);
+	--presentation-muted: var(--site-text-muted);
+	--presentation-rule: var(--site-border-subtle);
+	--presentation-accent: var(--site-brand-solid);
 }
 .uipack__ctl:focus-visible {
-	outline: 2px solid var(--chakra-colors-brand-solid);
+	outline: 2px solid var(--site-brand-solid);
 	outline-offset: 2px;
 }
 
@@ -337,8 +354,8 @@ html,
 	isolation: isolate;
 	/* Base, not hover: the fill travels across the whole card (STYLE.md, Motion). */
 	--fill-dur: var(--dur-ui);
-	--cascade-fill: var(--tone, var(--chakra-colors-brand-solid));
-	--cascade-on: var(--chakra-colors-page-bg);
+	--cascade-fill: var(--tone, var(--site-brand-solid));
+	--cascade-on: var(--site-page-bg);
 }
 /* One tone per project category (lib/tones.js). Light fills carry page-bg
    text at 5.3:1 or better, dark fills page-bg (near-black) text at 9:1+. */
@@ -381,7 +398,7 @@ html,
 [data-fill="row"]::after { inset: 0 -12px; }
 /* Preview panels keep reading as themselves; they would otherwise inherit
    the card's on-fill text colour. */
-[data-fill] [data-panel] { color: var(--chakra-colors-page-text); }
+[data-fill] [data-panel] { color: var(--site-page-text); }
 [data-fill] :not([data-panel], [data-panel] *) {
 	transition: color var(--fill-dur) var(--ease-out), transform var(--dur-hover) var(--ease-out);
 }
@@ -399,9 +416,9 @@ html,
 	}
 }
 
-/* UI Pack's side gutters (components/SideBackdrop.js) take the site accent. */
+/* UiPack's side gutters (components/SideBackdrop.js) take the site accent. */
 body {
-	--web-gutters-color: var(--chakra-colors-brand-solid);
+	--web-gutters-color: var(--site-brand-solid);
 }
 
 /* ── Focus rings inside clipping boxes ─────────────────────────────────── */
@@ -412,7 +429,7 @@ body {
 :root .uipack-docs__toc a:focus-visible,
 :root .uipack-scene-list button:focus-visible,
 :root .uipack .uipack__canvas:focus-visible {
-	outline: 2px solid var(--chakra-colors-brand-solid);
+	outline: 2px solid var(--site-brand-solid);
 	outline-offset: -2px;
 	/* No transition into focus: the ring is there on the first frame. */
 	transition: none;
@@ -450,9 +467,30 @@ body {
 /* Section heads land below the fixed nav when the contents rail jumps to them. */
 article h2[id] { scroll-margin-top: 96px; }
 
-/* Docs pages share the article h1 scale (STYLE.md, Type): 40px on phones,
-   52px from 900px, where UiPack's shell switches layout. */
-:root .uipack-docs__prose h1 { font-size: 40px; line-height: 1; letter-spacing: -0.045em; }
+/* The docs shell takes the site's leadings and label tracking (STYLE.md, Type)
+   through UiPack's hooks (v0.7.0). The /uipack sample shows UiPack's own. */
+:root {
+	--docs-leading-display: 1.2;
+	--docs-leading-label: 1.3;
+	--docs-leading-text: 1.65;
+	--docs-leading-prose: 1.8;
+	--docs-label-tracking: 0.08em;
+}
+#docs-layout {
+	--docs-leading-display: initial;
+	--docs-leading-label: initial;
+	--docs-leading-text: initial;
+	--docs-leading-prose: initial;
+	--docs-label-tracking: initial;
+}
+
+/* Docs pages share the article's title and section heading (STYLE.md, Type):
+   the h1 at 40px on phones and 52px from 900px, where UiPack's shell switches
+   layout; the h2 at 22 / 24px. Both at the site's display weight. The /uipack
+   sample (#docs-layout) starts at h3 and keeps UiPack's own sizes. */
+:root .uipack-docs__prose h1 { font-size: 40px; line-height: 1; letter-spacing: -0.045em; font-weight: 720; }
+:root .uipack-docs__prose h2 { font-size: 22px; line-height: 1.2; letter-spacing: -0.035em; font-weight: 720; }
 @media (min-width: 900px) {
 	:root .uipack-docs__prose h1 { font-size: 52px; }
+	:root .uipack-docs__prose h2 { font-size: 24px; }
 }

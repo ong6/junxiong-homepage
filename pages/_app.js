@@ -9,7 +9,7 @@ import Layout from "../components/layouts/Main";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
-import { useEffect } from "react";
+import Head from "next/head";
 import theme from "../lib/theme";
 
 const plexSans = IBM_Plex_Sans({
@@ -27,15 +27,20 @@ const plexMono = IBM_Plex_Mono({
 	variable: "--font-mono",
 });
 
-function MyApp({ Component, pageProps, router }) {
-	// Portals (the expanded diagram, menus) mount on <body>, outside the wrapper
-	// below, so the font variables also go on <html>.
-	useEffect(() => {
-		document.documentElement.classList.add(plexSans.variable, plexMono.variable);
-	}, []);
+const fontRoles = `:root{--font-sans:${plexSans.style.fontFamily};--font-mono:${plexMono.style.fontFamily}}`;
 
+function MyApp({ Component, pageProps, router }) {
 	return (
 		<div className={`site-root ${plexSans.variable} ${plexMono.variable}`}>
+			{/* The faces are named on :root in the document itself: <body> sets the
+			    font and portals mount outside the wrapper, and a class added after
+			    hydration painted every page in the fallback face first. */}
+			<Head>
+				<style
+					key="font-roles"
+					dangerouslySetInnerHTML={{ __html: fontRoles }}
+				/>
+			</Head>
 			<SiteProvider theme={theme}>
 				<Layout router={router}>
 					<Component {...pageProps} key={router.route} />

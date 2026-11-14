@@ -40,7 +40,7 @@
   "pageOnly": [
     {
       "path": "components/diagrams",
-      "reason": "Project-specific architecture data and compositions; shared figure primitives come from UI Pack. Port existing legacy drawings incrementally."
+      "reason": "Project-specific architecture data and compositions; shared figure primitives come from UiPack. Port existing legacy drawings incrementally."
     }
   ]
 }

@@ -6,7 +6,7 @@ import Layout from "../components/layouts/Articles";
 import ProjectLinks from "../components/ProjectLinks";
 import styles from "../styles/Hobbies.module.css";
 
-// Two of UI Pack's photographic looks, so the six read as one set (STYLE.md,
+// Two of UiPack's photographic looks, so the six read as one set (STYLE.md,
 // Component looks): Kinetic sculptures (2) for the instruments, Realistic
 // close-ups (4) for the things on a desk or a court.
 const chapters = [

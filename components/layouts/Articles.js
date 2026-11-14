@@ -59,7 +59,7 @@ const Layout = ({ children, title, description, schema, noindex = false, animate
 	const image = ogImageFor(canonical);
 
 	return (
-		<article ref={articleRef} className={animate ? "fade-up" : undefined} style={{ position: "relative" }}>
+		<article ref={articleRef} className={animate ? "page-rise" : undefined} style={{ position: "relative" }}>
 			{(pageTitle || description || noindex) && (
 				<Head>
 					{pageTitle && <title>{pageTitle}</title>}

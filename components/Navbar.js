@@ -10,7 +10,6 @@ import {
 	VisuallyHidden,
 	useDisclosure,
 	Stack,
-	useColorModeValue,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import ThemeToggleButton from "./ThemeToggleButton";
@@ -86,7 +85,6 @@ function LinkItem({ href, active, external, children }) {
 
 const Navbar = ({ path = "/", ...props }) => {
 	const onHome = path === "/" || path.startsWith("/#");
-	const menuBg = useColorModeValue("warm.50", "graphite.800");
 	const menu = useDisclosure();
 	const menuRef = useRef(null);
 	const toggleRef = useRef(null);
@@ -199,7 +197,7 @@ const Navbar = ({ path = "/", ...props }) => {
 							color="page.text"
 							textDecoration="none"
 							_hover={{ bg: "surface.quiet", textDecoration: "none" }}>
-							Contact me
+							Contact
 						</Link>
 
 						<Box display={{ base: "none", md: "block" }}>
@@ -211,6 +209,11 @@ const Navbar = ({ path = "/", ...props }) => {
 								ref={toggleRef}
 								icon={menu.isOpen ? <CloseIcon boxSize="12px" /> : <HamburgerIcon />}
 								variant="outline"
+								// Tokens, not the variant's mode() colours: the icon is the
+								// theme's ink on the first paint.
+								color="page.text"
+								_hover={{ bg: "surface.quiet" }}
+								_active={{ bg: "surface.quiet" }}
 								borderColor="border.subtle"
 								minW="44px"
 								h="44px"
@@ -238,7 +241,7 @@ const Navbar = ({ path = "/", ...props }) => {
 						m={0}
 						spacing={0}
 						py={2}
-						bg={menuBg}
+						bg="surface.raised"
 						border="1px solid"
 						borderColor="border.subtle"
 						borderRadius="md"

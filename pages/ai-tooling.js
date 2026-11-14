@@ -6,7 +6,6 @@ import {
 	LinkOverlay,
 	Text,
 	VisuallyHidden,
-	useColorModeValue,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import CaseStudyFooter from "../components/CaseStudyFooter";
@@ -45,7 +44,7 @@ function Layer({ tool, index }) {
 					{tool.when}
 				</Box>
 			</Text>
-			<Heading as="h2" mt={2} fontSize={{ base: "24px", md: "28px" }} lineHeight="1.1">
+			<Heading as="h2" mt={2} fontSize={{ base: "24px", md: "28px" }} lineHeight="heading">
 				<LinkOverlay
 					{...(tool.external
 						? { href: tool.href, target: "_blank", rel: "noopener noreferrer" }
@@ -59,7 +58,7 @@ function Layer({ tool, index }) {
 					<OutArrow ml={2} color="brand.solid" />
 				</LinkOverlay>
 			</Heading>
-			<Text mt={2} fontSize={{ base: "17px", md: "18px" }} lineHeight="1.75">
+			<Text mt={2} fontSize={{ base: "17px", md: "18px" }} lineHeight="prose">
 				{tool.detail}
 			</Text>
 			<Text mt={3} color="text.muted" fontFamily="var(--font-mono)" fontSize="12px">
@@ -70,7 +69,7 @@ function Layer({ tool, index }) {
 }
 
 export default function AiTooling() {
-	const accent = useColorModeValue("mint.700", "mint.300");
+	const accent = "brand.solid";
 
 	return (
 		<Layout
@@ -78,7 +77,7 @@ export default function AiTooling() {
 			description="Open-source tools for AI agents, by layer: Workbase for memory, Agent skills for context, Skillsmith for evaluation and Groundplane for runtime checks.">
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
-					<BackLink href="/#work">Selected projects</BackLink>
+					<BackLink href="/#work">Selected work</BackLink>
 
 					<Heading
 						as="h1"
@@ -100,7 +99,7 @@ export default function AiTooling() {
 						2026 · open source · {AI_TOOLING.length} tools
 					</Text>
 
-					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="1.6" fontWeight="600">
+					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="lede" fontWeight="600">
 						I use coding agents every day and build them at work, and these are the tools I ended up
 						writing around them. They&apos;re ordered by where they sit in an agent&apos;s run, from
 						what it reads before it starts to checking what it says at the end.

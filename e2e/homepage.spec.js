@@ -8,7 +8,7 @@ for (const width of [390, 1440]) {
 		}) => {
 			const errors = collectErrors(page);
 			await page.setViewportSize({ width, height: 900 });
-			await page.addInitScript((t) => localStorage.setItem("chakra-ui-color-mode", t), theme);
+			await page.addInitScript((t) => localStorage.setItem("junxiong-theme", t), theme);
 			await page.goto("/");
 			await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
 			await page.evaluate(() => document.fonts.ready);
@@ -19,7 +19,7 @@ for (const width of [390, 1440]) {
 				"AI tooling",
 				"Compoze",
 				"Trading engine",
-				"UI Pack",
+				"UiPack",
 			]);
 			await expect(page.getByRole("heading", { name: "Selected work" })).toBeVisible();
 			await expect(page.getByRole("heading", { name: "Also building" })).toBeVisible();
@@ -32,7 +32,9 @@ for (const width of [390, 1440]) {
 			);
 			// The ↗ is aria-hidden (components/OutArrow.js), so it is not part of the name.
 			for (const label of ["GitHub", "LinkedIn", "Resume"]) {
-				const target = await page.getByRole("link", { name: label, exact: true }).first().boundingBox();
+				// GitHub and LinkedIn open a new tab and say so in their name.
+				const name = label === "Resume" ? label : `${label} (opens in a new tab)`;
+				const target = await page.getByRole("link", { name, exact: true }).first().boundingBox();
 				expect(target.height).toBeGreaterThanOrEqual(43.9);
 			}
 			await expect(page.locator("#about").getByRole("link", { name: "Resume", exact: true })).toHaveAttribute("href", "/resume");
@@ -43,7 +45,7 @@ for (const width of [390, 1440]) {
 			).toHaveAttribute("href", "/compoze");
 			await expect(page.locator("#now")).toHaveCount(0);
 			for (const [name, href] of [
-				["UI Pack", "/uipack"],
+				["UiPack", "/uipack"],
 				["Trading engine", "/trading-engine"],
 				["AI tooling", "/ai-tooling"],
 			]) {

@@ -11,8 +11,9 @@ import OutArrow from "./OutArrow";
 //   active – "1.1" … "1.8"
 
 export default function VersionSwitcher({ active, ...props }) {
+	// The newest update is the current one; every other page links on to it.
 	const current = VERSIONS.find((version) => version.v === active);
-	const isPast = !current?.current;
+	const isPast = active !== CURRENT.v;
 	const row = useRef(null);
 
 	// On a phone the row scrolls; bring the version on screen into view.
@@ -37,7 +38,8 @@ export default function VersionSwitcher({ active, ...props }) {
 				m="-6px"
 				pb="10px"
 				sx={{ scrollbarWidth: "none", "&::-webkit-scrollbar": { display: "none" } }}>
-				{VERSIONS.map(({ v, href, current: isCurrent }) => {
+				{VERSIONS.map(({ v, href }) => {
+					const isCurrent = v === CURRENT.v;
 					const selected = v === active;
 					return (
 						<Link
@@ -73,7 +75,7 @@ export default function VersionSwitcher({ active, ...props }) {
 				})}
 			</Flex>
 			{current ? (
-				<Text mt={3} color="text.muted" fontFamily="var(--font-mono)" fontSize="12px" letterSpacing=".04em">
+				<Text mt={3} color="text.muted" fontFamily="var(--font-mono)" fontSize="12px" letterSpacing=".08em">
 					{current.v} · {current.when} · {current.title}
 					{isPast ? (
 						<>

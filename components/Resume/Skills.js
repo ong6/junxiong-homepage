@@ -1,4 +1,4 @@
-import { Box, Flex, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import TermHeading from "../TermHeading";
 
 const skills = [
@@ -25,7 +25,7 @@ const skills = [
 ];
 
 export default function Skills() {
-	const borderColor = useColorModeValue("rgba(65,54,45,0.2)", "whiteAlpha.200");
+	const borderColor = "border.subtle";
 
 	// Opens on the same rule and 24px inset as Experience and Education
 	// (16px here plus each row's 8px).
@@ -42,7 +42,7 @@ export default function Skills() {
 						<Text w={{ smmd: "128px" }} flexShrink={0} fontSize="15px" fontWeight="800">
 							{skill.label}
 						</Text>
-						<Text fontSize="15px" lineHeight="1.65" opacity={0.92}>
+						<Text fontSize="15px" lineHeight="text" opacity={0.92}>
 							{skill.value}
 						</Text>
 					</Flex>

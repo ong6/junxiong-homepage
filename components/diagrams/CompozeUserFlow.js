@@ -1,6 +1,6 @@
 import { Defs, Flow, Label, Line } from "./parts";
 import { Connector, Packet } from "uipack";
-import { Action, Actor, Decision, LaneRule, Outcome, Screen } from "./userflow";
+import { Action, Actor, Decision, LaneRule, Outcome, Screen } from "uipack";
 
 export const CLAIM =
 	"An admin connects sources and watches ingest until the knowledge base is ready; a user picks an agent, asks, and gets an answer with its sources attached, or a refusal when nothing clears the floor.";

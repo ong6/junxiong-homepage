@@ -12,7 +12,7 @@ export default function UipackSlides() {
 			<Heading as="h2" fontSize={{ base: "28px", md: "36px" }}>
 				Slide creation
 			</Heading>
-			<Text mt={4} maxW="680px" fontSize="17px" lineHeight="1.75" color="text.muted">
+			<Text mt={4} maxW="680px" fontSize="17px" lineHeight="text" color="text.muted">
 				Each starter includes a slide, notes on what to say, a delivery cue and a suggested transition to the next slide.
 			</Text>
 			<Flex role="group" aria-label="Slide layout" wrap="wrap" gap={2} mt={6} mb={4}>
@@ -51,7 +51,7 @@ export default function UipackSlides() {
 					</Link>
 				</Flex>
 			</Box>
-			<Text mt={8} maxW="680px" fontSize="16px" lineHeight="1.75" color="text.muted">
+			<Text mt={8} maxW="680px" fontSize="16px" lineHeight="text" color="text.muted">
 				The slide and the words stay together while you work, but only the 16:9 SVG is downloaded.
 			</Text>
 		</Box>

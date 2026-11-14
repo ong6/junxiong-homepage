@@ -34,7 +34,7 @@
 .lede {
 	max-width: 620px;
 	font-size: clamp(17px, 1.7vw, 20px);
-	line-height: 1.65;
+	line-height: 1.6;
 	color: var(--chakra-colors-text-muted);
 }
 .chapterNav { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 32px; }
@@ -75,7 +75,7 @@
 	line-height: .98;
 	letter-spacing: -.05em;
 }
-.prose { max-width: 48ch; font-size: 17px; line-height: 1.72; color: var(--chakra-colors-text-muted); }
+.prose { max-width: 48ch; font-size: 17px; line-height: 1.8; color: var(--chakra-colors-text-muted); }
 .prose a { color: var(--chakra-colors-brand-solid); }
 .visual { min-width: 0; width: 100%; height: clamp(360px, calc(100dvh - 300px), 560px); }
 .visualSticky { height: 100%; }
@@ -110,6 +110,6 @@
 	.chapterNav a { padding: 0 12px; font-size: 12px; }
 	.chapter { row-gap: 24px; padding-top: 48px; padding-bottom: 48px; scroll-margin-top: 64px; }
 	.heading { margin: 8px 0 16px; font-size: 36px; }
-	.prose { font-size: 16px; line-height: 1.68; }
+	.prose { font-size: 16px; line-height: 1.8; }
 	.visual { height: min(76vw, 320px); min-height: 260px; }
 }

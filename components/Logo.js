@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Text, useColorModeValue } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 
 const LogoBox = styled.span`
@@ -23,8 +23,8 @@ const LogoBox = styled.span`
 `;
 
 const Logo = () => {
-	const codeImg = `/images/Brackets${useColorModeValue("", "-dark")}.png`;
-
+	// Both marks are in the HTML and CSS shows the theme's, so a dark visit
+	// never paints the light one first.
 	return (
 		<Link href="/" aria-label="Ong Jun Xiong — home">
 			<LogoBox>
@@ -34,7 +34,8 @@ const Logo = () => {
 					fontWeight="bold">
 					Jun Xiong
 				</Text>
-				<Image src={codeImg} width={20} height={20} alt="" style={{ marginLeft: "8px" }} />
+				<Image className="theme-light-only" src="/images/Brackets.png" width={20} height={20} alt="" style={{ marginLeft: "8px" }} />
+				<Image className="theme-dark-only" src="/images/Brackets-dark.png" width={20} height={20} alt="" style={{ marginLeft: "8px" }} />
 			</LogoBox>
 		</Link>
 	);

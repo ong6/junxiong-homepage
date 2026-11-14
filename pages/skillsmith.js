@@ -1,4 +1,4 @@
-import { Box, Container, Heading, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Container, Heading, Text } from "@chakra-ui/react";
 import AiToolFamily from "../components/AiToolFamily";
 import CaseStudyFooter from "../components/CaseStudyFooter";
 import ProjectLinks from "../components/ProjectLinks";
@@ -27,7 +27,7 @@ const links = [
 ];
 
 export default function Skillsmith() {
-	const accent = useColorModeValue("mint.700", "mint.300");
+	const accent = "brand.solid";
 
 	return (
 		<Layout
@@ -52,7 +52,7 @@ export default function Skillsmith() {
 						2026 · open source · claude code + codex
 					</Text>
 
-					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="1.6" fontWeight="600">
+					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="lede" fontWeight="600">
 						I wanted to know whether my agent instructions actually helped. Skillsmith drafts a skill from the repo I&apos;m working in, then runs the same tasks with and without it and has judges compare the results without knowing which is which. The skill is kept only if it wins on cases it wasn&apos;t tuned on.
 					</Text>
 				</Box>

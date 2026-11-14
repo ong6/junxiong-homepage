@@ -1,4 +1,4 @@
-import { Box, Container, Heading, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Container, Heading, Text } from "@chakra-ui/react";
 import AiToolFamily from "../components/AiToolFamily";
 import DiagramFigure from "../components/DiagramFigure";
 import * as GroundplaneArchitecture from "../components/diagrams/GroundplaneArchitecture";
@@ -73,11 +73,11 @@ const checks = [
 
 const links = [
 	{ name: "Source on GitHub", detail: "Python library, MIT, install from GitHub", href: "https://github.com/ong6/groundplane", external: true },
-	{ name: "UI Pack", detail: "The figures on this page are drawn with it", href: "/uipack" },
+	{ name: "UiPack", detail: "The figures on this page are drawn with it", href: "/uipack" },
 ];
 
 export default function Groundplane() {
-	const accent = useColorModeValue("mint.700", "mint.300");
+	const accent = "brand.solid";
 
 	return (
 		<Layout
@@ -117,7 +117,7 @@ export default function Groundplane() {
 					<Text
 						mt={8}
 						fontSize={{ base: "19px", md: "21px" }}
-						lineHeight="1.6"
+						lineHeight="lede"
 						fontWeight="600">
 						Groundplane is a small Python library that checks an agent&apos;s answer against the tool results it was given. If the model reports the wrong winner or total, it raises an error showing what the data actually said.
 					</Text>

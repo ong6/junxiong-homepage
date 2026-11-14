@@ -47,7 +47,7 @@ export default function UipackDocs() {
 			<Heading as="h2" fontSize={{ base: "22px", md: "24px" }}>
 				Product docs layout
 			</Heading>
-			<Text mt={3} maxW="680px" color="text.muted" lineHeight="1.75">
+			<Text mt={3} maxW="680px" color="text.muted" lineHeight="text">
 				The shared docs renderer, responsive navigation, local contents, and prose treatment.
 			</Text>
 			<DocsLayout

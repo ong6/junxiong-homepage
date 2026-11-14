@@ -26,7 +26,7 @@ export default function TradingVersionList({ active, items = VERSIONS }) {
 						{v}
 					</Text>
 					<Box>
-						<Text fontFamily="var(--font-mono)" fontSize="12px" letterSpacing=".06em" color="text.muted" textTransform="uppercase">
+						<Text fontFamily="var(--font-mono)" fontSize="12px" letterSpacing=".08em" color="text.muted" textTransform="uppercase">
 							{when}
 							{current ? " · current" : ""}
 							{building ? " · being built" : ""}
@@ -44,7 +44,7 @@ export default function TradingVersionList({ active, items = VERSIONS }) {
 								</Link>
 							)}
 						</Text>
-						<Text mt={1} fontSize={{ base: "16px", md: "17px" }} lineHeight="1.7" color="text.muted">
+						<Text mt={1} fontSize={{ base: "16px", md: "17px" }} lineHeight="text" color="text.muted">
 							{body}
 						</Text>
 					</Box>
