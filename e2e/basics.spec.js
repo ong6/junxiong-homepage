@@ -505,3 +505,50 @@ test("figure controls take the 4px control corner and docs prose the site's lead
 	const leading = await page.locator(".uipack-docs__prose p").first().evaluate((el) => parseFloat(getComputedStyle(el).lineHeight) / parseFloat(getComputedStyle(el).fontSize));
 	expect(leading).toBeCloseTo(1.8, 2);
 });
+
+test("no entrance starts transparent: the hero and the first cards are opaque on every frame", async ({ page }) => {
+	await page.setViewportSize({ width: 1440, height: 900 });
+	await page.addInitScript(() => {
+		window.__faint = [];
+		const tick = () => {
+			for (const el of document.querySelectorAll(".hero-rise, .hero-settle, .page-rise, [data-reveal], [data-stamp], [data-panel]")) {
+				const opacity = Number(getComputedStyle(el).opacity);
+				if (opacity < 1) window.__faint.push(`${el.tagName} ${el.className} ${opacity}`);
+			}
+			requestAnimationFrame(tick);
+		};
+		document.addEventListener("DOMContentLoaded", tick);
+	});
+	for (const path of ["/", "/ai-tooling", "/compoze", "/works"]) {
+		await page.goto(path);
+		await page.waitForTimeout(700);
+		await page.mouse.wheel(0, 900);
+		await page.waitForTimeout(500);
+		expect([...new Set(await page.evaluate(() => window.__faint))], `${path}: elements that were transparent`).toEqual([]);
+	}
+});
+
+test("a vertical figure opens on its boxes at 390, not on empty canvas", async ({ browser }) => {
+	const context = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true });
+	const page = await context.newPage();
+	await page.goto("/compoze");
+	await page.locator("figure.uipack").first().waitFor();
+	await page.waitForTimeout(600);
+	// In every figure, the leftmost drawn node is inside the frame when it opens.
+	const offscreen = await page.locator("figure.uipack .uipack__canvas").evaluateAll((canvases) =>
+		canvases
+			.map((canvas, index) => {
+				const svg = canvas.querySelector("svg.uipack--wide");
+				if (!svg || canvas.scrollWidth <= canvas.clientWidth + 1) return null;
+				const frame = canvas.getBoundingClientRect();
+				const lefts = [...svg.querySelectorAll('[data-uipack="node"]')].map((node) => node.getBoundingClientRect().left);
+				if (!lefts.length) return null;
+				const first = Math.min(...lefts) - frame.left;
+				// Actors and lane labels may sit left of the first box; the defect was a 250px blank.
+				return first > 120 ? `figure ${index + 1}: first box ${Math.round(first)}px in` : null;
+			})
+			.filter(Boolean),
+	);
+	expect(offscreen).toEqual([]);
+	await context.close();
+});

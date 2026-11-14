@@ -80,28 +80,25 @@ a {
 	--dur-enter: 560ms;
 }
 
-@keyframes fade-up {
-	from { opacity: 0; transform: translateY(10px); }
-	to { opacity: 1; transform: none; }
-}
 /* A page's entrance moves and never fades: nothing starts at opacity 0, so a
    page change shows the new page whole on its first frame (STYLE.md, Motion). */
 @keyframes page-rise {
 	from { transform: translateY(10px); }
 	to { transform: none; }
 }
-.fade-up {
+.page-rise {
 	animation: page-rise var(--dur-enter) var(--ease-out) both;
 }
 
-/* Homepage intro: a short staggered rise. The name only moves (no fade) so
-   it counts for LCP on the first frame. */
+/* Homepage intro: a short staggered rise. Nothing fades: every line is there
+   on the first frame, so the name counts for LCP and no part of the hero is
+   blank on a page change. */
 @keyframes settle {
 	from { transform: translateY(14px); }
 	to { transform: none; }
 }
 .hero-rise {
-	animation: fade-up var(--dur-enter) var(--ease-out) both;
+	animation: page-rise var(--dur-enter) var(--ease-out) both;
 	animation-delay: calc(var(--i, 0) * 70ms);
 }
 .hero-settle {
@@ -129,13 +126,14 @@ a {
 	}
 }
 
-/* Cards and panels rise into place as they enter the viewport. Scroll-driven,
+/* Cards and panels rise into place as they enter the viewport, moving and
+   never fading, like every entrance on the site. Scroll-driven,
    so it needs no script, cannot hide content from a crawler, and anything
    already on screen at load is simply finished. Unsupported browsers get the
    static page. */
 @keyframes reveal {
-	from { opacity: 0; transform: translateY(24px) scale(0.985); }
-	to { opacity: 1; transform: none; }
+	from { transform: translateY(24px) scale(0.985); }
+	to { transform: none; }
 }
 [data-panel] {
 	transition: translate var(--dur-hover) var(--ease-out), box-shadow var(--dur-hover) var(--ease-out);
@@ -145,8 +143,8 @@ a {
 	to { transform: none; }
 }
 @keyframes stamp {
-	0%, 40% { opacity: 0; transform: scale(1.12); }
-	100% { opacity: 1; transform: none; }
+	0%, 40% { transform: scale(1.12); }
+	100% { transform: none; }
 }
 @keyframes progress {
 	from { transform: scaleX(0); }
@@ -220,7 +218,7 @@ a {
 
 /* Reduced motion keeps opacity, drops movement. */
 @media (prefers-reduced-motion: reduce) {
-	.fade-up,
+	.page-rise,
 	.hero-rise,
 	.hero-settle,
 	.portrait-frame,

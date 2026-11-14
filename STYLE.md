@@ -168,7 +168,7 @@ Site tokens with no contract role, kept here so a future style file can carry th
 
 One name per page: the nav label, the `<title>`, the h1 and the links to it say the same words ("Contact", "Hobbies", "UiPack", "Page not found"). Two recorded exceptions: `/works` is "Archive" everywhere and its h1 adds the years, and `/resume`'s h1 is the name on the résumé.
 
-Section heads (h2) are 22 / 24px at 720 and line-height 1.2 in articles and in the docs shell (`styles/globals.css` gives `.uipack-docs__prose h2` the article's spec, and its h1 the 720 weight) and 32 / 44px for the homepage's and résumé's section titles; Hobbies' chapter heads are 36 / 46 / 52px so they stay below its h1.
+A page's second-level landing title is 28 / 36px: Contact's "Work and writing" and the two panel titles on `/uipack`, which sit above that page's 22 / 24px sections. Section heads (h2) are 22 / 24px at 720 and line-height 1.2 in articles and in the docs shell (`styles/globals.css` gives `.uipack-docs__prose h2` the article's spec, and its h1 the 720 weight) and 32 / 44px for the homepage's and résumé's section titles; Hobbies' chapter heads are 36 / 46 / 52px so they stay below its h1.
 
 **Leading, six steps** (`lineHeights` in `lib/theme.js`; components name the step, never a number):
 
@@ -210,7 +210,7 @@ Curves are the site's own (`--ease-out` `cubic-bezier(0.23, 1, 0.32, 1)` for ent
 | `--dur-ui` | 320ms (base) | Things that travel: the ↗ fly-out, the card's category fill, the theme icon turn |
 | `--dur-enter` | 560ms (slow) | Entrances: the page's 10px rise, the hero settle, the portrait coming to rest |
 
-Exception, recorded: the ↗ fly-out and the card fill are triggered by hover but take the base 320ms rather than the 120–160ms hover range, because each travels across its element (the arrow out of its box and back, the fill across the whole card); at 160ms both read as a flicker. A page's entrance moves and never fades (2026-11-13; it faded up from opacity 0, which blanked the content for about 100ms on every page change): the new page is whole on its first frame. The homepage hero's lines under the name still fade in, staggered. Scroll-driven reveals have no duration (they follow the scroll). Reduced motion drops movement everywhere.
+Exception, recorded: the ↗ fly-out and the card fill are triggered by hover but take the base 320ms rather than the 120–160ms hover range, because each travels across its element (the arrow out of its box and back, the fill across the whole card); at 160ms both read as a flicker. A page's entrance moves and never fades (2026-11-13; it faded up from opacity 0, which blanked the content for about 100ms on every page change): the new page is whole on its first frame. The homepage hero's lines rise in a stagger the same way, without fading: no entrance on the site starts at opacity 0, the scroll-driven card reveals included (they rise 24px as they enter the viewport). The only fades left answer a click: the phone menu opening and the theme icon turning. Scroll-driven reveals have no duration (they follow the scroll). Reduced motion drops movement everywhere.
 
 ## Ornaments
 
@@ -325,9 +325,9 @@ Faces are the site's sans and mono; the canvas ground is `dots`. Figure titles s
 figure controls take the 4px control corner (`--uipack-ctl-radius`). The 3D object frame is not a
 figure and still maps `--uipack-*` to the site's `--site-*` variables in `styles/globals.css`.
 
-TODO: per-page themes (uipack's changelog suggests `compoze` and `trading`): the owner has not
-chosen their values, so every page draws `site-paper`. TODO: `components/diagrams/userflow.js` and
-`sequence.js` still hold local copies of parts uipack now exports.
+One theme for the whole site (decided 2026-11-14): no per-page themes, so a figure reads the same
+on every page. The user-flow figure imports uipack's own parts; `components/diagrams/sequence.js`
+still holds the site's sequence parts.
 
 ## Reuse
 

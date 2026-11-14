@@ -360,6 +360,21 @@ export default function DiagramFigure({ id, diagram, caption, headingLevel }) {
 	const mobile = useIsMobile();
 	const overflow = useOverflow(boxRef, mobile);
 
+	// A phone scrolls the wide drawing sideways. A drawing whose content starts
+	// well inside its canvas (a centred vertical flow) would open on empty
+	// dots with its boxes cut at the edge, so start at the content's left edge.
+	useEffect(() => {
+		if (!mobile || !overflow) return;
+		const canvas = boxRef.current && boxRef.current.querySelector(".uipack__canvas");
+		const svg = canvas && canvas.querySelector("svg.uipack--wide");
+		if (!svg || canvas.scrollLeft !== 0 || !svg.getBBox) return;
+		const view = svg.viewBox.baseVal;
+		if (!view || !view.width) return;
+		const scale = svg.getBoundingClientRect().width / view.width;
+		const left = (svg.getBBox().x - view.x) * scale;
+		if (left > 40) canvas.scrollTo({ left: Math.round(left - 16), behavior: "instant" });
+	}, [mobile, overflow]);
+
 	return (
 		// A drawing wider than the prose column breaks out to the main container's
 		// content width (1120px minus its 16px gutters), which the column's left

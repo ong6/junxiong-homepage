@@ -19,7 +19,7 @@ Pushing to `main` deploys to production on Vercel; CI (`.github/workflows/ci.yml
 ## Recipes (files to touch)
 - New case study: `pages/<slug>.js` (copy `pages/skillsmith.js`), `components/diagrams/<Name>Architecture.js`, `components/Navbar.js` (`activePaths`), `components/layouts/Main.js` (`OG_CARDS`), `lib/tones.js`, `pages/sitemap.xml.js`, `pages/llms.txt.js`, `scripts/build-og-cards.mjs` then `node scripts/build-og-cards.mjs <slug>` (writes `public/images/og/<slug>.jpg`), `e2e/figures.spec.js` (`PAGES`), README "What is here"
 - University project: an entry in `lib/works.js` + images in `public/images/works/` (sitemap and routes follow)
-- New diagram: a module in `components/diagrams/` exporting `meta`, `CLAIM`, `Wide({ id })` from uipack parts (`parts.js`, `sequence.js`, `userflow.js` or `uipack/presets`); render with `<DiagramFigure id diagram caption />`
+- New diagram: a module in `components/diagrams/` exporting `meta`, `CLAIM`, `Wide({ id })` from uipack parts (`parts.js`, `sequence.js`, uipack's user-flow parts or `uipack/presets`); render with `<DiagramFigure id diagram caption />`
 - Style edit: Chakra props in the component, tokens in `lib/theme.js`, global CSS in `styles/globals.css`. Read `STYLE.md` first for any visual change (colour, type, spacing, motion, new component or page layout)
 - New 3D or custom rendering: belongs in uipack, not here (`check:ui-ownership` fails otherwise)
 
