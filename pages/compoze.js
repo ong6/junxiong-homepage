@@ -14,6 +14,7 @@ import * as CompozeIngestFlow from "../components/diagrams/CompozeIngestFlow";
 import * as CompozeQueryFlow from "../components/diagrams/CompozeQueryFlow";
 import * as CompozeUserFlow from "../components/diagrams/CompozeUserFlow";
 import Layout from "../components/layouts/Articles";
+import { PAGE_META } from "../lib/pageMeta";
 import CaseStudyFooter from "../components/CaseStudyFooter";
 import ProjectLinks from "../components/ProjectLinks";
 import { BackLink, P, H2, ARTICLE_TITLE } from "../components/ArticleParts";
@@ -103,9 +104,8 @@ export default function Compoze() {
 	return (
 		<Layout
 			contents
-			title="Compoze"
-			schema={{ type: "TechArticle" }}
-			description="Compoze built document-grounded assistants for businesses. I ran it alone alongside a full-time job in 2025, until a client bought the company.">
+			{...PAGE_META["/compoze"]}
+			schema={{ type: "TechArticle" }}>
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
 					<BackLink href="/#work">Selected work</BackLink>

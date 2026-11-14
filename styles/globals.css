@@ -494,3 +494,8 @@ article h2[id] { scroll-margin-top: 96px; }
 	:root .uipack-docs__prose h1 { font-size: 52px; }
 	:root .uipack-docs__prose h2 { font-size: 24px; }
 }
+
+/* A modal (the ⌘K menu) locks the page and takes its scrollbar away; the body
+   keeps its width through a margin, and the fixed header through this, so
+   nothing moves while it is open. */
+body[data-scroll-locked] nav[aria-label="Site"] { right: var(--removed-body-scroll-bar-size, 0px); width: auto; }

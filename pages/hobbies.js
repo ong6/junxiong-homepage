@@ -3,6 +3,7 @@ import NextLink from "next/link";
 import { useEffect, useRef, useState } from "react";
 import HobbyScene from "../components/HobbyScene";
 import Layout from "../components/layouts/Articles";
+import { PAGE_META } from "../lib/pageMeta";
 import ProjectLinks from "../components/ProjectLinks";
 import styles from "../styles/Hobbies.module.css";
 
@@ -70,7 +71,7 @@ export default function Hobbies() {
 	}, []);
 
 	return (
-		<Layout animate={false} title="Hobbies" description="Coding and experimenting with AI are Ong Jun Xiong’s main hobbies, alongside tennis, trading, home servers, travel and reading.">
+		<Layout animate={false} {...PAGE_META["/hobbies"]}>
 			<Box ref={pageRef} className={styles.page}>
 				<Box as="header" className={styles.intro}>
 					<Box className={styles.introInner}>

@@ -11,6 +11,7 @@ import NextLink from "next/link";
 import CaseStudyFooter from "../components/CaseStudyFooter";
 import OutArrow from "../components/OutArrow";
 import Layout from "../components/layouts/Articles";
+import { PAGE_META } from "../lib/pageMeta";
 import { AI_TOOLING } from "../lib/aiTooling";
 import { BackLink, ARTICLE_TITLE } from "../components/ArticleParts";
 
@@ -73,8 +74,7 @@ export default function AiTooling() {
 
 	return (
 		<Layout
-			title="AI tooling"
-			description="Open-source tools for AI agents, by layer: Workbase for memory, Agent skills for context, Skillsmith for evaluation and Groundplane for runtime checks.">
+			{...PAGE_META["/ai-tooling"]}>
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
 					<BackLink href="/#work">Selected work</BackLink>

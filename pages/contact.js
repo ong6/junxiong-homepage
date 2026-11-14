@@ -2,6 +2,7 @@ import { Box, Flex, Grid, Heading, Link, SimpleGrid, Text } from "@chakra-ui/rea
 import NextLink from "next/link";
 import HobbyScene from "../components/HobbyScene";
 import Layout from "../components/layouts/Articles";
+import { PAGE_META } from "../lib/pageMeta";
 import OutArrow from "../components/OutArrow";
 import FilledButton from "../components/FilledButton";
 import { BackLink, Eyebrow, LANDING_TITLE } from "../components/ArticleParts";
@@ -35,8 +36,7 @@ const links = [
 export default function Contact() {
 	return (
 		<Layout
-			title="Contact"
-			description="Contact Ong Jun Xiong by email, or find his work on GitHub, LinkedIn and notes.">
+			{...PAGE_META["/contact"]}>
 			<Grid
 				templateColumns={{ base: "1fr", lg: "minmax(0, .9fr) minmax(360px, 1.1fr)" }}
 				columnGap={{ lg: 16 }}

@@ -14,6 +14,7 @@ import {
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import ThemeToggleButton from "./ThemeToggleButton";
 import OutArrow from "./OutArrow";
+import SearchButton from "./SearchButton";
 
 // Keep the bar and the main offset in sync so the fixed header never covers content.
 const NAV_HEIGHT = { base: "64px", md: "72px" };
@@ -179,6 +180,8 @@ const Navbar = ({ path = "/", ...props }) => {
 								);
 							})}
 						</Stack>
+
+						<SearchButton />
 
 						<Link
 							as={NextLink}

@@ -1,0 +1,289 @@
+/* Skin for the cmdk command menu (CommandMenu.js). Styled through cmdk's own
+   attributes; every colour is one of the roles below, mapped once onto the
+   site's variables, so the skin can move into uipack and read its roles. */
+
+.overlay,
+.content {
+	--command-surface: var(--site-surface-raised);
+	--command-ink: var(--site-page-text);
+	--command-muted: var(--site-text-muted);
+	--command-line: var(--site-border-subtle);
+	--command-accent: var(--site-brand-solid);
+	--command-on-accent: #ffffff;
+	--command-scrim: rgba(41, 35, 31, 0.32);
+	--command-shadow: 0 18px 48px rgba(0, 0, 0, 0.18);
+}
+:global(:root[data-theme="dark"]) .overlay,
+:global(:root[data-theme="dark"]) .content {
+	--command-on-accent: #151311;
+	--command-scrim: rgba(0, 0, 0, 0.56);
+	--command-shadow: 0 18px 48px rgba(0, 0, 0, 0.5);
+}
+
+.overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 1400;
+	background: var(--command-scrim);
+}
+
+.content {
+	position: fixed;
+	z-index: 1401;
+	top: 12vh;
+	left: 50%;
+	width: min(640px, calc(100vw - 32px));
+	transform: translateX(-50%);
+	color: var(--command-ink);
+	background: var(--command-surface);
+	border: 1px solid var(--command-line);
+	border-radius: 6px;
+	box-shadow: var(--command-shadow);
+	font-family: var(--font-sans), system-ui, sans-serif;
+	overflow: hidden;
+}
+.content:focus {
+	outline: none;
+}
+
+.root {
+	display: flex;
+	flex-direction: column;
+	max-height: min(560px, calc(var(--command-vh, 100dvh) - 12vh - 32px));
+}
+
+/* ── Field ─────────────────────────────────────────────────────────────── */
+.field {
+	display: flex;
+	flex: none;
+	align-items: center;
+	gap: 12px;
+	min-height: 56px;
+	padding: 0 8px 0 16px;
+	border-bottom: 1px solid var(--command-line);
+}
+.glyph {
+	flex: none;
+	color: var(--command-muted);
+}
+.input {
+	flex: 1;
+	min-width: 0;
+	height: 54px;
+	padding: 0;
+	border: 0;
+	outline: none;
+	background: transparent;
+	color: var(--command-ink);
+	/* 16px keeps iOS from zooming into the field. */
+	font: 400 16px/1.3 var(--font-sans), system-ui, sans-serif;
+}
+.input::placeholder {
+	color: var(--command-muted);
+	opacity: 1;
+}
+.input::-webkit-search-cancel-button {
+	display: none;
+}
+.close {
+	flex: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 44px;
+	min-height: 44px;
+	padding: 0 8px;
+	border: 0;
+	border-radius: 4px;
+	background: transparent;
+	color: var(--command-muted);
+	font: 400 12px/1 var(--font-mono), ui-monospace, monospace;
+	cursor: pointer;
+}
+.close:hover {
+	color: var(--command-ink);
+}
+.coarseOnly {
+	display: none;
+	font: 600 15px/1 var(--font-sans), system-ui, sans-serif;
+}
+
+/* ── List ──────────────────────────────────────────────────────────────── */
+.list {
+	flex: 1 1 auto;
+	min-height: 0;
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	scroll-padding: 8px 0 8px;
+	padding: 4px 0 8px;
+}
+.group [cmdk-group-heading] {
+	padding: 16px 16px 4px;
+	color: var(--command-muted);
+	font: 700 12px/1.3 var(--font-mono), ui-monospace, monospace;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+.group[hidden] {
+	display: none;
+}
+.item {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	min-height: 44px;
+	margin: 0 8px;
+	padding: 8px;
+	border-radius: 4px;
+	cursor: pointer;
+	user-select: none;
+}
+.item[data-selected="true"] {
+	background: var(--command-accent);
+	color: var(--command-on-accent);
+}
+.item[data-disabled="true"] {
+	cursor: default;
+}
+.text {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	gap: 2px;
+	min-width: 0;
+}
+.title {
+	font-size: 15px;
+	font-weight: 600;
+	line-height: 1.3;
+}
+.arrow {
+	margin-left: 4px;
+	font-size: 12px;
+}
+.description {
+	overflow: hidden;
+	color: var(--command-muted);
+	font-size: 13px;
+	line-height: 1.3;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.meta {
+	flex: none;
+	color: var(--command-muted);
+	font: 400 12px/1.3 var(--font-mono), ui-monospace, monospace;
+}
+.item[data-selected="true"] .description,
+.item[data-selected="true"] .meta {
+	color: var(--command-on-accent);
+}
+.empty {
+	padding: 32px 16px;
+	color: var(--command-muted);
+	font-size: 15px;
+	line-height: 1.65;
+	text-align: center;
+}
+
+/* ── Footer: key hints for a keyboard ──────────────────────────────────── */
+.footer {
+	display: flex;
+	flex: none;
+	gap: 24px;
+	padding: 12px 16px;
+	border-top: 1px solid var(--command-line);
+	color: var(--command-muted);
+	font: 400 12px/1.3 var(--font-mono), ui-monospace, monospace;
+}
+.footer kbd {
+	margin-right: 4px;
+	font: inherit;
+	color: var(--command-ink);
+}
+
+.srOnly {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+/* ── Phones: full width from the top, the list scrolling above the keyboard */
+@media (max-width: 47.99em) {
+	.meta {
+		display: none;
+	}
+	.content {
+		top: 8px;
+		left: 8px;
+		width: calc(100vw - 16px);
+		transform: none;
+	}
+	.root {
+		max-height: calc(var(--command-vh, 100dvh) - 16px);
+	}
+}
+@media (hover: none), (pointer: coarse) {
+	.fineOnly,
+	.footer {
+		display: none;
+	}
+	.coarseOnly {
+		display: inline;
+	}
+	.item {
+		min-height: 52px;
+	}
+}
+
+/* ── Motion: the site's quick duration; none under reduced motion ──────── */
+@keyframes command-fade-in {
+	from { opacity: 0; }
+}
+@keyframes command-fade-out {
+	to { opacity: 0; }
+}
+@keyframes command-in {
+	from { opacity: 0; transform: translateX(-50%) translateY(-8px); }
+}
+@keyframes command-out {
+	to { opacity: 0; transform: translateX(-50%) translateY(-4px); }
+}
+@keyframes command-in-phone {
+	from { opacity: 0; transform: translateY(-8px); }
+}
+@keyframes command-out-phone {
+	to { opacity: 0; transform: translateY(-4px); }
+}
+.overlay[data-state="open"] {
+	animation: command-fade-in var(--dur-press, 160ms) var(--ease-out);
+}
+.overlay[data-state="closed"] {
+	animation: command-fade-out var(--dur-press, 160ms) var(--ease-out);
+}
+.content[data-state="open"] {
+	animation: command-in var(--dur-press, 160ms) var(--ease-out);
+}
+.content[data-state="closed"] {
+	animation: command-out var(--dur-press, 160ms) var(--ease-out);
+}
+@media (max-width: 47.99em) {
+	.content[data-state="open"] {
+		animation-name: command-in-phone;
+	}
+	.content[data-state="closed"] {
+		animation-name: command-out-phone;
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.overlay[data-state],
+	.content[data-state] {
+		animation: none;
+	}
+}
