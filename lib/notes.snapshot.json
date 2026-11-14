@@ -1,0 +1,309 @@
+[
+	{
+		"slug": "council-skill",
+		"title": "Hill-climb any deliverable with the /council skill",
+		"description": "council puts an agent's work in front of fresh reviewers that pick their own metrics, score it out of 10 and send it back until it passes.",
+		"date": "2026-11-05",
+		"url": "https://notes.junxiong.dev/council-skill",
+		"tags": [
+			"skills",
+			"agents",
+			"evals",
+			"claude-code",
+			"code-review"
+		]
+	},
+	{
+		"slug": "latency-vs-throughput-llm-serving",
+		"title": "Latency or throughput: the one dial behind LLM serving",
+		"description": "How batching trades per-user speed for aggregate tokens, from one forward pass to a fleet, and how to choose which side to optimize.",
+		"date": "2026-11-04",
+		"url": "https://notes.junxiong.dev/latency-vs-throughput-llm-serving",
+		"tags": [
+			"inference",
+			"serving",
+			"batching",
+			"latency",
+			"kv-cache"
+		]
+	},
+	{
+		"slug": "decide-skill",
+		"title": "Make decisions with the /decide skill",
+		"description": "decide is an agent skill for hard choices like job offers: one pick, the fact that would flip it and a tripwire, plus what the model skips without it.",
+		"date": "2026-10-21",
+		"url": "https://notes.junxiong.dev/decide-skill",
+		"tags": [
+			"skills",
+			"agents",
+			"evals",
+			"decision-making",
+			"claude-code"
+		]
+	},
+	{
+		"slug": "job-prep-80-20",
+		"title": "Job prep is mostly small things, done in the right order",
+		"description": "An 80/20 plan for job prep with a CS degree. Pick the role, fix LinkedIn and the resume, rehearse the opening and close, then train each technical round.",
+		"date": "2026-10-21",
+		"url": "https://notes.junxiong.dev/job-prep-80-20",
+		"tags": [
+			"job-search",
+			"interviews",
+			"career",
+			"linkedin",
+			"system-design"
+		]
+	},
+	{
+		"slug": "job-search-numbers",
+		"title": "My job search in numbers, and where the interviews came from",
+		"description": "Thirteen weeks of my own records: 39 applications, 70 recruiter reach-outs, pass rates by interview round, and which route produced seven offers.",
+		"date": "2026-10-21",
+		"url": "https://notes.junxiong.dev/job-search-numbers",
+		"tags": [
+			"job-search",
+			"interviews",
+			"recruiting",
+			"career"
+		]
+	},
+	{
+		"slug": "anthropic-verification-layers",
+		"title": "The verification layers behind Anthropic's 30,000 merges a day",
+		"description": "Anthropic merges AI-written code at a rate no reviewer could read. How it checks that code, layer by layer, and which layers a team can copy.",
+		"date": "2026-10-20",
+		"url": "https://notes.junxiong.dev/anthropic-verification-layers",
+		"tags": [
+			"verification",
+			"code-review",
+			"agents",
+			"claude-code",
+			"ci"
+		]
+	},
+	{
+		"slug": "improving-team-efficiency-with-ai",
+		"title": "Improving team efficiency at a high level",
+		"description": "Giving everyone an AI tool makes individuals faster, not teams. Eight levels where a team's AI effort pays off, and why checking work sets the pace.",
+		"date": "2026-10-20",
+		"url": "https://notes.junxiong.dev/improving-team-efficiency-with-ai",
+		"tags": [
+			"teams",
+			"harness",
+			"agents",
+			"verification",
+			"adoption"
+		]
+	},
+	{
+		"slug": "agent-harnesses",
+		"title": "Claude Code, DeepSeek Harness and Hermes are built three different ways",
+		"description": "One closed loop, a plugin kernel and a gateway daemon. Six ways to build an agent harness, what each lets you change, and why the score follows the plugins the model sees.",
+		"date": "2026-10-13",
+		"url": "https://notes.junxiong.dev/agent-harnesses",
+		"tags": [
+			"harness",
+			"agents",
+			"architecture",
+			"claude-code",
+			"deepseek-harness",
+			"hermes"
+		]
+	},
+	{
+		"slug": "ai-stack-roadmap",
+		"title": "The AI stack, one constraint per layer",
+		"description": "A roadmap of AI from power to product, covering what each layer runs short of, what to learn there, and how image, voice and world models differ.",
+		"date": "2026-10-12",
+		"url": "https://notes.junxiong.dev/ai-stack-roadmap",
+		"tags": [
+			"roadmap",
+			"ai-stack",
+			"hardware",
+			"inference",
+			"post-training",
+			"evals",
+			"agents"
+		]
+	},
+	{
+		"slug": "who-builds-the-ai-stack",
+		"title": "Who builds the AI stack, and who is buying it",
+		"description": "158 AI companies placed on the stack and sorted by size, and why 2026's buyers were companies already on the same request path.",
+		"date": "2026-10-12",
+		"url": "https://notes.junxiong.dev/who-builds-the-ai-stack",
+		"tags": [
+			"ai-stack",
+			"landscape",
+			"inference",
+			"evals",
+			"agents",
+			"hardware"
+		]
+	},
+	{
+		"slug": "predicting-ai-stocks-with-economics",
+		"title": "Predicting the future of AI stocks with economics",
+		"description": "People adopted AI faster than the internet, but only about 2% of households pay for it. Where the money flows, and how I would position for the bull case.",
+		"date": "2026-10-07",
+		"url": "https://notes.junxiong.dev/predicting-ai-stocks-with-economics",
+		"tags": [
+			"ai-economics",
+			"investing",
+			"semiconductors",
+			"power",
+			"memory"
+		]
+	},
+	{
+		"slug": "opus-orchestrating-gpt-agents",
+		"title": "Opus orchestrated, GPT agents built, and nobody graded their own work",
+		"description": "How Claude Opus ran GPT-5.6 coding agents through a nine-hour build, and why the quality came from reviewers, not from the workers' self-scores.",
+		"date": "2026-10-03",
+		"url": "https://notes.junxiong.dev/opus-orchestrating-gpt-agents",
+		"tags": [
+			"agents",
+			"orchestration",
+			"coding-agents",
+			"code-review",
+			"multi-agent"
+		]
+	},
+	{
+		"slug": "four-predictions-for-software-teams",
+		"title": "Four predictions for how software teams will change",
+		"description": "Smaller teams but more of them, internal tools that compete with SaaS, more self-hosted models, and engineers who own product decisions.",
+		"date": "2026-09-24",
+		"url": "https://notes.junxiong.dev/four-predictions-for-software-teams",
+		"tags": [
+			"predictions",
+			"engineering-teams",
+			"saas",
+			"self-hosting",
+			"local-llm"
+		]
+	},
+	{
+		"slug": "why-my-trading-strategies-havent-earned-real-money",
+		"title": "Why My Automated Trading Strategies Haven’t Earned Real Money",
+		"description": "What my trading engine's tests actually showed, why positive returns weren't enough, and the agentic paper experiment I'm building next.",
+		"date": "2026-09-23",
+		"url": "https://notes.junxiong.dev/why-my-trading-strategies-havent-earned-real-money",
+		"tags": [
+			"trading",
+			"backtesting",
+			"agents",
+			"systematic-trading"
+		]
+	},
+	{
+		"slug": "linkedin-optimization",
+		"title": "Why I optimize LinkedIn once a year",
+		"description": "What changed after I updated my LinkedIn profile, which fields I focus on, and why I leave it alone between annual reviews.",
+		"date": "2026-09-20",
+		"url": "https://notes.junxiong.dev/linkedin-optimization",
+		"tags": [
+			"linkedin",
+			"job-search",
+			"career",
+			"recruiting"
+		]
+	},
+	{
+		"slug": "accessible-performant-3d-on-the-web",
+		"title": "How I build 3D that still behaves like a web page",
+		"description": "How junxiong.dev uses Three.js with native scroll, one active canvas, reduced motion and a readable fallback.",
+		"date": "2026-09-19",
+		"url": "https://notes.junxiong.dev/accessible-performant-3d-on-the-web",
+		"tags": [
+			"threejs",
+			"webgl",
+			"accessibility",
+			"performance",
+			"frontend"
+		]
+	},
+	{
+		"slug": "agent-integrations-in-large-orgs",
+		"title": "How agent integrations get built inside large organisations",
+		"description": "Registries, auth brokering, generated tool schemas and the org failure modes that stall internal agent platforms — grounded in public specs.",
+		"date": "2026-09-02",
+		"url": "https://notes.junxiong.dev/agent-integrations-in-large-orgs",
+		"tags": [
+			"agents",
+			"mcp",
+			"integrations",
+			"platform-engineering",
+			"auth"
+		]
+	},
+	{
+		"slug": "context-engineering-for-coding-agents",
+		"title": "Where your tokens actually go in a coding agent",
+		"description": "How files and tool output fill a coding agent's context, what long-context studies show, and how I would keep a session focused.",
+		"date": "2026-09-01",
+		"url": "https://notes.junxiong.dev/context-engineering-for-coding-agents",
+		"tags": [
+			"agents",
+			"context",
+			"coding-agents",
+			"cost",
+			"productivity"
+		]
+	},
+	{
+		"slug": "local-inference-hardware",
+		"title": "How I think about hardware for local models",
+		"description": "Bandwidth, capacity, KV cache and MoE active parameters — the four numbers that decide local inference hardware, with sources.",
+		"date": "2026-08-31",
+		"url": "https://notes.junxiong.dev/local-inference-hardware",
+		"tags": [
+			"hardware",
+			"local-llm",
+			"apple-silicon",
+			"gpu",
+			"memory-bandwidth"
+		]
+	},
+	{
+		"slug": "prefill-vs-decode",
+		"title": "Prefill and decode want different machines",
+		"description": "LLM inference has two phases with opposite bottlenecks. Which one you care about decides what hardware to buy.",
+		"date": "2026-08-30",
+		"url": "https://notes.junxiong.dev/prefill-vs-decode",
+		"tags": [
+			"inference",
+			"gpu",
+			"memory-bandwidth",
+			"serving",
+			"kv-cache"
+		]
+	},
+	{
+		"slug": "prompt-caching-across-harnesses",
+		"title": "Why the same prompt can cost more on the next request",
+		"description": "How prefix caching actually bills, what silently breaks it, and a worked cost example across Claude Code, Codex, Cursor and the raw API.",
+		"date": "2026-08-29",
+		"url": "https://notes.junxiong.dev/prompt-caching-across-harnesses",
+		"tags": [
+			"prompt-caching",
+			"cost",
+			"agents",
+			"inference"
+		]
+	},
+	{
+		"slug": "quantization-what-it-costs",
+		"title": "What changes when you quantize a model",
+		"description": "How quantization changes model size, speed and answers, and why weight memory and KV-cache memory need separate budgets.",
+		"date": "2026-08-28",
+		"url": "https://notes.junxiong.dev/quantization-what-it-costs",
+		"tags": [
+			"quantization",
+			"open-weights",
+			"local-llm",
+			"inference"
+		]
+	}
+]

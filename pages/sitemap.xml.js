@@ -1,52 +1,47 @@
 import { workSlugs } from "../lib/works";
 import { getTradingDocRoutes } from "../lib/tradingDocs";
 import { VERSIONS } from "../lib/tradingVersions";
+import { modifiedFor } from "../lib/pageDates";
 
 const SITE = "https://junxiong.dev";
 
-// Top-level routes, in priority order. `lastmod` is the date the page's
-// content last changed, kept by hand: bump it when you edit the page. Work
-// detail pages are appended from lib/works.js so the sitemap can never drift
-// from the actual routes.
+// Top-level routes, in priority order. `lastmod` comes from lib/pageDates.js
+// (bump the date there when you edit a page). Work detail pages are appended
+// from lib/works.js so the sitemap can never drift from the actual routes.
 const topRoutes = [
-	{ path: "/", lastmod: "2026-10-22", changefreq: "weekly", priority: "1.0" },
-	{ path: "/contact", lastmod: "2026-10-22", changefreq: "monthly", priority: "0.7" },
-	{ path: "/resume", lastmod: "2026-09-25", changefreq: "weekly", priority: "0.9" },
-	{ path: "/ai-tooling", lastmod: "2026-10-22", changefreq: "monthly", priority: "0.8" },
-	{ path: "/compoze", lastmod: "2026-10-22", changefreq: "yearly", priority: "0.8" },
-	{ path: "/groundplane", lastmod: "2026-10-22", changefreq: "yearly", priority: "0.8" },
-	{ path: "/trading-engine", lastmod: "2026-10-20", changefreq: "yearly", priority: "0.8" },
+	{ path: "/", changefreq: "weekly", priority: "1.0" },
+	{ path: "/contact", changefreq: "monthly", priority: "0.7" },
+	{ path: "/resume", changefreq: "weekly", priority: "0.9" },
+	{ path: "/ai-tooling", changefreq: "monthly", priority: "0.8" },
+	{ path: "/compoze", changefreq: "yearly", priority: "0.8" },
+	{ path: "/groundplane", changefreq: "yearly", priority: "0.8" },
+	{ path: "/trading-engine", changefreq: "yearly", priority: "0.8" },
 	...getTradingDocRoutes().map((path) => ({
 		path,
-		lastmod: "2026-10-02",
 		changefreq: "monthly",
 		priority: path === "/trading-engine/docs" ? "0.7" : "0.6",
 	})),
-	{ path: "/trading-engine/v2", lastmod: "2026-11-13", changefreq: "weekly", priority: "0.6" },
+	{ path: "/trading-engine/v2", changefreq: "weekly", priority: "0.6" },
 	...VERSIONS.map(({ href }) => ({
 		path: href,
-		lastmod: "2026-10-13",
 		changefreq: "yearly",
 		priority: "0.4",
 	})),
-	{ path: "/skills", lastmod: "2026-10-22", changefreq: "yearly", priority: "0.8" },
-	{ path: "/skillsmith", lastmod: "2026-10-22", changefreq: "yearly", priority: "0.8" },
-	{ path: "/uipack", lastmod: "2026-11-11", changefreq: "monthly", priority: "0.6" },
-	{ path: "/works", lastmod: "2026-09-01", changefreq: "monthly", priority: "0.7" },
-	{ path: "/hobbies", lastmod: "2026-10-22", changefreq: "monthly", priority: "0.5" },
+	{ path: "/skills", changefreq: "yearly", priority: "0.8" },
+	{ path: "/skillsmith", changefreq: "yearly", priority: "0.8" },
+	{ path: "/uipack", changefreq: "monthly", priority: "0.6" },
+	{ path: "/works", changefreq: "monthly", priority: "0.7" },
+	{ path: "/hobbies", changefreq: "monthly", priority: "0.5" },
 ];
-
-const WORKS_LASTMOD = "2026-08-28";
 
 const urls = [
 	...topRoutes,
 	...workSlugs.map((slug) => ({
 		path: `/works/${slug}`,
-		lastmod: WORKS_LASTMOD,
 		changefreq: "yearly",
 		priority: "0.3",
 	})),
-];
+].map((url) => ({ ...url, lastmod: modifiedFor(url.path) }));
 
 const SITEMAP = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
