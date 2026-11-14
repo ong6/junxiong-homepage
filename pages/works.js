@@ -1,8 +1,10 @@
 import { Box, Flex, Heading, Link, Text } from "@chakra-ui/react";
-import Image from "next/image";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
+import { useCallback, useEffect, useState } from "react";
 import Layout from "../components/layouts/Articles";
 import Section from "../components/Section";
+import ArchiveEntry from "../components/ArchiveEntry";
 import works, { workSlugs } from "../lib/works";
 import { ARTICLE_TITLE } from "../components/ArticleParts";
 
@@ -10,83 +12,53 @@ import { ARTICLE_TITLE } from "../components/ArticleParts";
 // under the year it started, in the order the entries are declared there.
 const ledger = [];
 for (const id of workSlugs) {
-	const { year, title, note, summary, thumbnail } = works[id];
+	const { year } = works[id];
 	let group = ledger.find((g) => g.year === year);
 	if (!group) {
-		group = { year, entries: [] };
+		group = { year, ids: [] };
 		ledger.push(group);
 	}
-	group.entries.push({ id, title, note, description: summary, thumbnail });
+	group.ids.push(id);
 }
 ledger.sort((a, b) => b.year.localeCompare(a.year));
 
-const Row = ({ entry }) => (
-	<Flex
-		as={NextLink}
-		href={`/works/${entry.id}`}
-		align="flex-start"
-		gap={4}
-		py={4}
-		borderTopWidth="1px"
-		borderColor="border.subtle"
-		data-group
-		_hover={{ bg: "surface.raised" }}
-		transitionProperty="background-color"
-		transitionDuration="140ms">
-		{/* A 16:9 frame (64×36, 80×45) to match the screenshots, which fill it;
-		    logos with their own background stay contained. Framed, and dimmed
-		    in dark mode like the other product screenshots. */}
-		<Box
-			position="relative"
-			flexShrink={0}
-			w={{ base: "64px", md: "80px" }}
-			aspectRatio="16 / 9"
-			rounded="md"
-			overflow="hidden"
-			border="1px solid"
-			borderColor="border.subtle"
-			bg={entry.thumbnail.background || "surface.quiet"}
-			_dark={{ filter: "brightness(.86) contrast(1.04)" }}>
-			<Image
-				src={entry.thumbnail.src}
-				alt=""
-				fill
-				sizes="80px"
-				style={{
-					objectFit: entry.thumbnail.background ? "contain" : "cover",
-					padding: entry.thumbnail.padding || "0",
-				}}
-			/>
-		</Box>
-		<Box minW={0}>
-			<Flex align="baseline" wrap="wrap" columnGap={3} rowGap={0}>
-				<Text
-					as="h3"
-					fontSize={{ base: "16px", md: "17px" }}
-					fontWeight="700"
-					_groupHover={{ textDecoration: "underline" }}
-					textUnderlineOffset="3px">
-					{entry.title}
-				</Text>
-				{entry.note && (
-					<Text
-						fontFamily="var(--font-mono)"
-						fontSize="12px"
-						color="text.muted"
-						whiteSpace="nowrap">
-						{entry.note}
-					</Text>
-				)}
-			</Flex>
-			<Text fontSize="15px" lineHeight="text" color="text.muted" mt={1}>
-				{entry.description}
-			</Text>
-		</Box>
-	</Flex>
-);
+// /works#<slug> opens that entry and brings it under the fixed header: on
+// load, on a hash change and on an in-app link to a hash. The old
+// /works/<slug> pages redirect here (next.config.js).
+const slugFromHash = () => {
+	const slug = decodeURIComponent(window.location.hash.slice(1));
+	return Object.hasOwn(works, slug) ? slug : null;
+};
 
 const Works = () => {
-	const yearColor = "brand.solid";
+	const router = useRouter();
+	const [open, setOpen] = useState({});
+
+	const toggle = useCallback((id, isOpen) => {
+		setOpen((current) => (Boolean(current[id]) === isOpen ? current : { ...current, [id]: isOpen }));
+	}, []);
+
+	useEffect(() => {
+		// A jump opens the row at once (data-instant skips the slide), so the
+		// page is already long enough to scroll it to the top.
+		const openFromHash = () => {
+			const slug = slugFromHash();
+			const row = slug && document.getElementById(slug);
+			if (!row) return;
+			row.setAttribute("data-instant", "");
+			row.open = true;
+			toggle(slug, true);
+			row.scrollIntoView({ block: "start" });
+			requestAnimationFrame(() => requestAnimationFrame(() => row.removeAttribute("data-instant")));
+		};
+		openFromHash();
+		window.addEventListener("hashchange", openFromHash);
+		router.events.on("hashChangeComplete", openFromHash);
+		return () => {
+			window.removeEventListener("hashchange", openFromHash);
+			router.events.off("hashChangeComplete", openFromHash);
+		};
+	}, [router.events, toggle]);
 
 	return (
 		<Layout
@@ -112,26 +84,22 @@ const Works = () => {
 				<Box mt={{ base: 8, md: 12 }}>
 					{ledger.map((group, i) => (
 						<Section key={group.year} delay={0.05 * (i + 1)}>
-							<Flex
-								direction={{ base: "column", md: "row" }}
-								align="flex-start"
-								gap={{ base: 2, md: 6 }}
-								mb={{ base: 8, md: 10 }}>
+							<Flex direction={{ base: "column", md: "row" }} align="flex-start" gap={{ base: 2, md: 6 }} mb={{ base: 8, md: 10 }}>
 								<Text
 									as="h2"
 									fontFamily="var(--font-mono)"
 									fontSize={{ base: "13px", md: "14px" }}
 									fontWeight="700"
 									letterSpacing=".08em"
-									color={yearColor}
+									color="brand.solid"
 									w={{ md: "72px" }}
 									flexShrink={0}
 									pt={{ md: 4 }}>
 									{group.year}
 								</Text>
 								<Box flex="1" minW={0} w="100%">
-									{group.entries.map((entry) => (
-										<Row key={entry.id} entry={entry} />
+									{group.ids.map((id) => (
+										<ArchiveEntry key={id} id={id} entry={works[id]} open={Boolean(open[id])} onToggle={toggle} />
 									))}
 								</Box>
 							</Flex>

@@ -12,7 +12,7 @@ const LONG_CACHE = "public, max-age=86400, stale-while-revalidate=604800";
 //   img-src      next/image, data: for blur placeholders
 //   font-src     next/font self-hosts Google Fonts
 //   connect-src  Analytics and Speed Insights beacons
-//   frame-src    YouTube and Figma embeds on /works/*
+//   frame-src    YouTube and Figma embeds in Archive entries (/works)
 const CSP = [
 	"default-src 'self'",
 	"script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://va.vercel-scripts.com",
@@ -45,6 +45,8 @@ module.exports = {
 			},
 			{ source: "/skill-eval-pack", destination: "/skillsmith", permanent: true },
 			{ source: "/skillpack", destination: "/skills", permanent: true },
+			// Archive entries open in place on /works; their old pages land on the row.
+			{ source: "/works/:slug", destination: "/works#:slug", permanent: true },
 			// The old v3–v7 pages are now Engine v1 updates 1.3–1.7; /v2 is the Engine v2 page and
 			// Engine v1 has no index of its own: the overview lists its updates.
 			{ source: "/trading-engine/v1", destination: "/trading-engine/v1/1.8", permanent: true },

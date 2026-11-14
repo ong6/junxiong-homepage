@@ -1,0 +1,64 @@
+/* The Archive's rows (components/ArchiveEntry.js) are native disclosures.
+   Opening and closing slide the panel on the base duration with the settle
+   curve, in CSS only; browsers without ::details-content or interpolate-size
+   open instantly, and so does reduced motion. */
+.entry {
+	interpolate-size: allow-keywords;
+}
+.entry::details-content {
+	block-size: 0;
+	overflow-y: clip;
+	transition:
+		block-size var(--dur-ui) var(--ease-out),
+		content-visibility var(--dur-ui) allow-discrete;
+}
+.entry[open]::details-content {
+	block-size: auto;
+}
+
+/* The row's own marker replaces the browser triangle: a plus that turns into
+   a cross as the row opens. */
+.summary {
+	list-style: none;
+}
+.summary::-webkit-details-marker {
+	display: none;
+}
+.marker {
+	position: relative;
+	display: block;
+	width: 12px;
+	height: 12px;
+	transition: transform var(--dur-ui) var(--ease-out);
+}
+.marker::before,
+.marker::after {
+	content: "";
+	position: absolute;
+	background: currentColor;
+	inset: 5.25px 0;
+}
+.marker::after {
+	inset: 0 5.25px;
+}
+.entry[open] .marker {
+	transform: rotate(45deg);
+}
+
+/* A deep link (/works#<slug>) opens its row at once: pages/works.js sets
+   data-instant for the jump. */
+.entry[data-instant]::details-content {
+	transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+	.entry::details-content {
+		transition: none;
+	}
+}
+
+@media print {
+	.entry::details-content {
+		content-visibility: visible;
+		block-size: auto;
+	}
+}
