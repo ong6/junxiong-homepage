@@ -1,12 +1,12 @@
 import { Box, Container, Heading, Text } from "@chakra-ui/react";
 import AiToolFamily from "../components/AiToolFamily";
 import CaseStudyFooter from "../components/CaseStudyFooter";
-import ProjectLinks from "../components/ProjectLinks";
 import DiagramFigure from "../components/DiagramFigure";
 import * as WorkbaseArchitecture from "../components/diagrams/WorkbaseArchitecture";
 import Layout from "../components/layouts/Articles";
-import FactList from "../components/FactList";
-import { BackLink, P, H2, Code, ARTICLE_TITLE } from "../components/ArticleParts";
+import FactList, { pickFacts } from "../components/FactList";
+import { BackLink, MetaLine, P, H2, Code, ARTICLE_TITLE } from "../components/ArticleParts";
+import { withNotes } from "../lib/notes";
 
 // Every fact below is checkable in github.com/ong6/workbase: README.md,
 // DESIGN.md, template/AGENTS.md, template/.gitignore, bin/new-workbase and
@@ -21,16 +21,18 @@ const facts = [
 	["status", "MIT · github.com/ong6/workbase"],
 ];
 
-const links = [
+const railFacts = pickFacts(facts, ["manual", "setup flags", "runtime", "status"]);
+
+const links = withNotes("/workbase", [
 	{ name: "Source on GitHub", detail: "MIT: the template, setup script and eval kit", href: "https://github.com/ong6/workbase", external: true },
-];
+]);
 
 export default function Workbase() {
-	const accent = "brand.solid";
-
 	return (
 		<Layout
 			contents
+			facts={railFacts}
+			links={links}
 			title="Workbase"
 			schema={{
 				type: "SoftwareSourceCode",
@@ -47,16 +49,12 @@ export default function Workbase() {
 						Workbase
 					</Heading>
 
-					<Text mt={4} color={accent} fontFamily="var(--font-mono)" fontSize="12px" fontWeight="700" letterSpacing=".08em" textTransform="uppercase">
-						2026 · open source · claude code + codex
-					</Text>
+					<MetaLine>2026 · open source · claude code + codex</MetaLine>
 
 					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="lede" fontWeight="600">
 						Workbase is a notes folder for one job that my coding agent keeps up to date. I clone the company&apos;s repos inside it, and every agent session started below it reads the same manual, which says where each kind of fact goes and where to look before answering.
 					</Text>
 				</Box>
-
-				<ProjectLinks links={links} mt={{ base: 8, md: 10 }} />
 
 				<DiagramFigure
 					id="workbase-lookups"

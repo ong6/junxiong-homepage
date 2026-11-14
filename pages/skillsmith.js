@@ -1,12 +1,12 @@
 import { Box, Container, Heading, Text } from "@chakra-ui/react";
 import AiToolFamily from "../components/AiToolFamily";
 import CaseStudyFooter from "../components/CaseStudyFooter";
-import ProjectLinks from "../components/ProjectLinks";
 import DiagramFigure from "../components/DiagramFigure";
 import * as SkillsmithArchitecture from "../components/diagrams/SkillsmithArchitecture";
 import Layout from "../components/layouts/Articles";
-import FactList from "../components/FactList";
-import { BackLink, P, H2, Code, ARTICLE_TITLE } from "../components/ArticleParts";
+import FactList, { pickFacts } from "../components/FactList";
+import { BackLink, MetaLine, P, H2, Code, ARTICLE_TITLE } from "../components/ArticleParts";
+import { withNotes } from "../lib/notes";
 
 
 
@@ -22,16 +22,18 @@ const facts = [
 	["status", "MIT · a skill in github.com/ong6/skills"],
 ];
 
-const links = [
+const railFacts = pickFacts(facts, ["steps", "clients", "runtime", "status"]);
+
+const links = withNotes("/skillsmith", [
 	{ name: "Source on GitHub", detail: "MIT, part of my public skills repo", href: "https://github.com/ong6/skills/tree/main/skills/skillsmith", external: true },
-];
+]);
 
 export default function Skillsmith() {
-	const accent = "brand.solid";
-
 	return (
 		<Layout
 			contents
+			facts={railFacts}
+			links={links}
 			title="Skillsmith"
 			schema={{
 				type: "SoftwareSourceCode",
@@ -48,16 +50,12 @@ export default function Skillsmith() {
 						Skillsmith
 					</Heading>
 
-					<Text mt={4} color={accent} fontFamily="var(--font-mono)" fontSize="12px" fontWeight="700" letterSpacing=".08em" textTransform="uppercase">
-						2026 · open source · claude code + codex
-					</Text>
+					<MetaLine>2026 · open source · claude code + codex</MetaLine>
 
 					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="lede" fontWeight="600">
 						I wanted to know whether my agent instructions actually helped. Skillsmith drafts a skill from the repo I&apos;m working in, then runs the same tasks with and without it and has judges compare the results without knowing which is which. The skill is kept only if it wins on cases it wasn&apos;t tuned on.
 					</Text>
 				</Box>
-
-				<ProjectLinks links={links} mt={{ base: 8, md: 10 }} />
 
 				<DiagramFigure
 					id="skillsmith-lifecycle"

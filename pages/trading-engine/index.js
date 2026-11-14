@@ -3,10 +3,10 @@ import CaseStudyFooter from "../../components/CaseStudyFooter";
 import DiagramFigure from "../../components/DiagramFigure";
 import * as Engine2 from "../../components/diagrams/trading/Engine2";
 import Layout from "../../components/layouts/Articles";
-import ProjectLinks from "../../components/ProjectLinks";
 import TradingVersionList from "../../components/TradingVersionList";
 import { ERAS } from "../../lib/tradingVersions";
-import { BackLink, P, H2, ARTICLE_TITLE } from "../../components/ArticleParts";
+import { BackLink, MetaLine, P, H2, ARTICLE_TITLE } from "../../components/ArticleParts";
+import { withNotes } from "../../lib/notes";
 
 // Overview of the trading engine: what it is, the engine running now, and the
 // two engine eras. Each era has its own page (/trading-engine/v1, /v2) and each
@@ -15,17 +15,25 @@ import { BackLink, P, H2, ARTICLE_TITLE } from "../../components/ArticleParts";
 
 
 
-const links = [
+const links = withNotes("/trading-engine", [
 	{ name: "Product docs", detail: "How it works, research and operations", href: "/trading-engine/docs" },
 	{ name: "Source on GitHub", detail: "Python, MIT", href: "https://github.com/ong6/trading-engine", external: true },
+]);
+
+// The page has no fact table; these rows repeat its meta line, lede and links.
+const railFacts = [
+	["building since", "July 2026"],
+	["engine now", "Engine v2 · live on paper since 18 Oct"],
+	["language", "Python"],
+	["licence", "MIT"],
 ];
 
 export default function TradingEngine() {
-	const accent = "brand.solid";
-
 	return (
 		<Layout
 			contents
+			facts={railFacts}
+			links={links}
 			title="Trading engine"
 			schema={{
 				type: "SoftwareSourceCode",
@@ -47,16 +55,7 @@ export default function TradingEngine() {
 						Trading engine
 					</Heading>
 
-					<Text
-						mt={4}
-						color={accent}
-						fontFamily="var(--font-mono)"
-						fontSize="12px"
-						fontWeight="700"
-						letterSpacing=".08em"
-						textTransform="uppercase">
-						2026 · open source · Python
-					</Text>
+					<MetaLine>2026 · open source · Python</MetaLine>
 
 					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="lede" fontWeight="600">
 						A paper-trading engine I&apos;ve been building since July 2026, to find out whether a
@@ -65,8 +64,6 @@ export default function TradingEngine() {
 						portfolio. Nothing has beaten its frozen control yet.
 					</Text>
 				</Box>
-
-				<ProjectLinks links={links} mt={{ base: 8, md: 10 }} />
 
 				<DiagramFigure
 					id="te-now"
