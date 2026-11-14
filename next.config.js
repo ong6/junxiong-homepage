@@ -45,14 +45,18 @@ module.exports = {
 			},
 			{ source: "/skill-eval-pack", destination: "/skillsmith", permanent: true },
 			{ source: "/skillpack", destination: "/skills", permanent: true },
-			// The old v3–v7 pages are now Engine v1 updates 1.3–1.7; /v2 is the Engine v2 page and
-			// Engine v1 has no index of its own: the overview lists its updates.
-			{ source: "/trading-engine/v1", destination: "/trading-engine/v1/1.8", permanent: true },
-			{ source: "/trading-engine/v3", destination: "/trading-engine/v1/1.3", permanent: true },
-			{ source: "/trading-engine/v4", destination: "/trading-engine/v1/1.4", permanent: true },
-			{ source: "/trading-engine/v5", destination: "/trading-engine/v1/1.5", permanent: true },
-			{ source: "/trading-engine/v6", destination: "/trading-engine/v1/1.6", permanent: true },
-			{ source: "/trading-engine/v7", destination: "/trading-engine/v1/1.7", permanent: true },
+			// Engine v1 is one page with a section per update (ids 1-1 … 1-8). The update pages
+			// /v1/1.N and the older v3–v7 pages redirect to their section; /v2 is the Engine v2 page.
+			...[1, 2, 3, 4, 5, 6, 7, 8].map((n) => ({
+				source: `/trading-engine/v1/1.${n}`,
+				destination: `/trading-engine/v1#1-${n}`,
+				permanent: true,
+			})),
+			...[3, 4, 5, 6, 7].map((n) => ({
+				source: `/trading-engine/v${n}`,
+				destination: `/trading-engine/v1#1-${n}`,
+				permanent: true,
+			})),
 			// The asset browser moved to the uipack docs site.
 			{ source: "/assets", destination: "https://ui.junxiong.dev/gallery", permanent: true },
 			{

@@ -92,8 +92,8 @@ export default function TradingEngine() {
 				<H2>Engine v1 updates</H2>
 
 				<P>
-					Each update has its own page with the diagram as the engine stood then. Update 1.8 added
-					the shared backtest core, which Engine v2 still uses for research.
+					All eight updates are on one page, each with the diagram as the engine stood then. Update
+					1.8 added the shared backtest core, which Engine v2 still uses for research.
 				</P>
 
 				<TradingVersionList />

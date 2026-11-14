@@ -13,7 +13,7 @@ const PAGES = [
 	"/compoze",
 	"/trading-engine",
 	"/trading-engine/v2",
-	"/trading-engine/v1/1.8",
+	"/trading-engine/v1",
 	"/trading-engine/docs",
 	"/trading-engine/docs/data",
 	"/uipack",
@@ -458,11 +458,11 @@ test("dark mode paints no blue or green ground", async ({ browser }) => {
 });
 
 // ── 8. From the independent review (2026-11-13) ──────────────────────────
-test("only the newest engine update is current; older ones link on to it", async ({ page }) => {
-	await page.goto("/trading-engine/v1/1.8");
-	await expect(page.locator('main a[href="/trading-engine/v1/1.8"]', { hasText: "latest update" })).toHaveCount(0);
-	await page.goto("/trading-engine/v1/1.7");
-	await expect(page.locator('main a[href="/trading-engine/v1/1.8"]', { hasText: "latest update" })).toHaveCount(1);
+test("Engine v1 has no update switcher; its sections are the page's own headings", async ({ page }) => {
+	await page.goto("/trading-engine/v1");
+	await expect(page.locator('nav[aria-label="Engine v1 updates"]')).toHaveCount(0);
+	await expect(page.locator("main a", { hasText: "latest update" })).toHaveCount(0);
+	await expect(page.locator("article h2[id]")).toHaveCount(8);
 });
 
 test("back links name the homepage section they return to", async ({ page }) => {

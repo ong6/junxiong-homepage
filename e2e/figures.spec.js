@@ -1,7 +1,7 @@
 const { expect, test } = require("@playwright/test");
 const { SEL, packetCentre, dist, collectErrors } = require("./helpers");
 
-const VERSION_PAGES = [1, 2, 3, 4, 5, 6, 7, 8].map((n) => `/trading-engine/v1/1.${n}`);
+const VERSION_PAGES = ["/trading-engine/v1"];
 const PAGES = ["/compoze", "/groundplane", "/skills", "/skillsmith", "/trading-engine", "/trading-engine/v2", "/uipack", ...VERSION_PAGES];
 
 for (const path of PAGES) {
@@ -115,23 +115,52 @@ test("/trading-engine: selecting a box shows its note beside it, and site figure
 	await expect(note).toHaveCount(0);
 });
 
-test("engine pages link onward: 1.7 reaches 1.8, 1.8 reaches Engine v2, and the overview lists both engines", async ({ page }) => {
-	await page.goto("/trading-engine/v1/1.7");
-	await expect(page.getByRole("heading", { level: 1 })).toHaveText("Scoring every candidate");
-	await expect(page.getByRole("link", { name: /see 1.8, the latest update/ })).toHaveAttribute("href", "/trading-engine/v1/1.8");
-	await page.goto("/trading-engine/v1/1.8");
-	await expect(page.getByRole("link", { name: /Executor and ledger/ })).toHaveAttribute("href", "/trading-engine/v2");
+test("engine pages link onward: the overview lists every v1 section and Engine v2, and v1 ends on Engine v2", async ({ page }) => {
 	await page.goto("/trading-engine");
 	const updates = page.locator("ol").filter({ hasText: "One shared backtest core" });
-	await expect(updates.getByRole("link", { name: /Scoring every candidate/ })).toHaveAttribute("href", "/trading-engine/v1/1.7");
+	await expect(updates.getByRole("link", { name: /Scoring every candidate/ })).toHaveAttribute("href", "/trading-engine/v1#1-7");
 	const eras = page.locator("ol").filter({ hasText: "Executor and ledger" });
 	await expect(eras.getByRole("link", { name: /Executor and ledger/ })).toHaveAttribute("href", "/trading-engine/v2");
+	await updates.getByRole("link", { name: /Scoring every candidate/ }).click();
+	await expect(page).toHaveURL(/\/trading-engine\/v1#1-7$/);
+	await expect.poll(() => page.locator('[id="1-7"]').evaluate((h) => Math.round(h.getBoundingClientRect().top))).toBeLessThan(200);
+	await expect(page.getByRole("link", { name: /Executor and ledger/ })).toHaveAttribute("href", "/trading-engine/v2");
 });
 
-test("old version routes redirect to Engine v1 updates", async ({ page }) => {
-	await page.goto("/trading-engine/v5");
-	await expect(page).toHaveURL(/\/trading-engine\/v1\/1\.5$/);
+test("Engine v1 is one page: eight dated sections, each with its diagram and a closed fact disclosure", async ({ page }) => {
 	await page.goto("/trading-engine/v1");
-	await expect(page).toHaveURL(/\/trading-engine\/v1\/1\.8$/);
+	await expect(page.getByRole("heading", { level: 1 })).toHaveText("A research simulator");
+	const heads = page.locator("article h2[id^='1-']");
+	await expect(heads).toHaveCount(8);
+	expect(await heads.evaluateAll((els) => els.map((h) => h.id))).toEqual(["1-1", "1-2", "1-3", "1-4", "1-5", "1-6", "1-7", "1-8"]);
+	await expect(page.locator('[id="1-8"]')).toHaveText("1.8 One shared backtest core");
+	await expect(page.locator("article details")).toHaveCount(8);
+	expect(await page.locator("article details[open]").count()).toBe(0);
+	// Figures mount as they come near (components/LazyMount.js); the first is there at load.
+	await expect(page.locator("figure.uipack")).toHaveCount(1);
+	for (const n of [2, 3, 4, 5, 6, 7, 8]) {
+		await page.locator(`[id="1-${n}"]`).scrollIntoViewIfNeeded();
+		await expect(page.locator(`#te-1-${n}-figure`)).toHaveCount(1);
+	}
+	await expect(page.locator("figure.uipack")).toHaveCount(8);
 });
 
+test("old version routes redirect to their Engine v1 section", async ({ page }) => {
+	for (const [from, to] of [
+		["/trading-engine/v1/1.3", "1-3"],
+		["/trading-engine/v1/1.8", "1-8"],
+		["/trading-engine/v5", "1-5"],
+	]) {
+		await page.goto(from);
+		await expect(page).toHaveURL(new RegExp(`/trading-engine/v1#${to}$`));
+		// The page scrolls (smoothly) to the section, which lands under the sticky nav
+		// and stays there while the figures it passed mount.
+		const top = () => page.locator(`[id="${to}"]`).evaluate((h) => Math.round(h.getBoundingClientRect().top));
+		await expect.poll(top, { timeout: 5_000 }).toBeLessThan(160);
+		await page.waitForTimeout(500);
+		expect(await top()).toBeGreaterThan(40);
+		expect(await top()).toBeLessThan(160);
+	}
+	const res = await page.request.get("/trading-engine/v1", { maxRedirects: 0 });
+	expect(res.status()).toBe(200);
+});

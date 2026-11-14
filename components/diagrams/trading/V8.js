@@ -5,7 +5,7 @@ export const CLAIM =
 	"Every public or private strategy is reduced to a short specification, then follows one shared backtest core and one evidence path before a paper portfolio can observe it. The core enforces point-in-time reads, versioned costs against a gross benchmark, trial-deflated Sharpe, a sealed holdout, a shared in-memory price panel and a hashed run manifest.";
 
 export const meta = {
-	number: "Figure 01",
+	number: "Figure 08",
 	eyebrow: "One evidence path · 1.8",
 	title: "Every strategy goes through the same core",
 	caption:
