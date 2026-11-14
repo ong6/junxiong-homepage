@@ -13,17 +13,6 @@ import NextLink from "next/link";
 import { Fragment } from "react";
 import OutArrow from "./OutArrow";
 import { AI_TOOLING } from "../lib/aiTooling";
-import { toneFor } from "../lib/tones";
-
-// Lift on a real pointer only; touch fires a sticky hover on tap.
-const liftOnHover = (shadow) => ({
-	"@media (hover: hover) and (pointer: fine)": {
-		"&:hover": { transform: "translateY(-3px)", boxShadow: shadow },
-		// `translate`, not `transform`: the panel's scroll-in animation owns transform.
-		"&:hover [data-panel]": { translate: "-2px -2px", boxShadow: "6px 6px 0 var(--chakra-colors-preview-shadow)" },
-	},
-	"@media (prefers-reduced-motion: reduce)": { "&:hover": { transform: "none" } },
-});
 
 const labelStyle = {
 	fontFamily: "var(--font-mono)",
@@ -42,7 +31,7 @@ function ProjectLink({ href, children }) {
 	);
 }
 
-function FeaturedCard({ span, index = 0, href, children }) {
+function FeaturedCard({ span, index = 0, children }) {
 	return (
 		<LinkBox
 			as="article"
@@ -59,13 +48,8 @@ function FeaturedCard({ span, index = 0, href, children }) {
 			display="flex"
 			flexDirection="column"
 			data-reveal="lead"
-			data-fill
-			data-tone={toneFor(href)}
-			style={{ "--i": index }}
-			transition="transform var(--dur-hover) var(--ease-out), box-shadow var(--dur-hover) var(--ease-out), border-color var(--dur-hover) ease"
-			_hover={{ borderColor: "border.strong" }}
-			_active={{ transform: "scale(0.99)" }}
-			sx={liftOnHover("0 18px 42px -34px rgba(39,32,27,.65)")}>
+			data-hover="card"
+			style={{ "--i": index }}>
 			{children}
 		</LinkBox>
 	);
@@ -104,7 +88,7 @@ function CardCopy({ eyebrow, title, href, description }) {
 
 function AiToolingCard() {
 	return (
-		<FeaturedCard span={7} href="/ai-tooling">
+		<FeaturedCard span={7}>
 			<CardCopy
 				eyebrow="Open source · 2026"
 				title="AI tooling"
@@ -147,7 +131,7 @@ function AiToolingCard() {
 
 function CompozeCard() {
 	return (
-		<FeaturedCard span={5} index={1} href="/compoze">
+		<FeaturedCard span={5} index={1}>
 			<CardCopy
 				eyebrow="Company · 2025"
 				title="Compoze"
@@ -205,13 +189,8 @@ function SupportingCard({ project, index }) {
 			p={{ base: 6, md: 8 }}
 			gridColumn={{ md: project.wide ? "span 2" : undefined }}
 			data-reveal
-			data-fill
-			data-tone={toneFor(project.href)}
-			style={{ "--i": index % 2 }}
-			transition="border-color var(--dur-hover) ease, transform var(--dur-hover) var(--ease-out), box-shadow var(--dur-hover) var(--ease-out)"
-			_hover={{ borderColor: "border.strong" }}
-			_active={{ transform: "scale(0.99)" }}
-			sx={liftOnHover("0 16px 36px -30px rgba(39,32,27,.55)")}>
+			data-hover="card"
+			style={{ "--i": index % 2 }}>
 			<Text color="text.muted" sx={labelStyle}>
 				{project.label}
 			</Text>
@@ -254,8 +233,7 @@ function Elsewhere() {
 						rel={item.external ? "noopener noreferrer" : undefined}
 						data-reveal
 						data-group
-						data-fill="row"
-						data-tone="site"
+						data-hover="row"
 						style={{ "--i": index }}
 						display="block"
 						minH="92px"

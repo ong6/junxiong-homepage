@@ -145,7 +145,6 @@ Site tokens with no contract role, kept here so a future style file can carry th
 | `preview.canvas` | `#F6F2EA` | `#191716` | The dotted canvas behind homepage previews |
 | `preview.shadow` | `#D9CFC3` | `#0D0C0B` | The 4px offset shadow under a preview panel |
 | `accent.terracotta` / `accent.soft` | `#963D25` / `#F8DDD1` | `#EEBBA7` / `#56271F` | Product evidence (the Compoze preview's header strip) |
-| `--tone-agents` … `--tone-site` | `#234ea2` `#a3452b` `#2f6a4a` `#6a3f86` `#8a5410` `#29231f` | `#9ab6ff` `#f2a184` `#8fd3a8` `#d2b0f0` `#f0c274` `#f2ece3` | Card hover fill per project category (`lib/tones.js`); page-bg text on each at 4.5:1 or better |
 | `preview.dot` | `rgba(36,87,197,.17)` | `rgba(142,174,255,.18)` | The dots of the dotted canvas |
 | `scroll.shadow` | `rgba(41,35,31,.16)` | `rgba(0,0,0,.55)` | The edge shadow of a code panel that scrolls sideways (the panel's ground is `preview.canvas`) |
 | `brand.onSolid`, `brand.hover`, `brand.active` | `#FFFFFF`, `#203F7E`, `#1D3566` | `#151311`, `#BFCFFF`, `#7194ED` | The filled button's label, hover and press |
@@ -206,11 +205,15 @@ Curves are the site's own (`--ease-out` `cubic-bezier(0.23, 1, 0.32, 1)` for ent
 
 | Token | Value | Used for |
 | --- | --- | --- |
-| `--dur-hover`, `--dur-press` | 160ms | Hover and press feedback: colour, border, the 3px card lift, the preview panel's nudge, the logo turn, the mobile menu, the arrow's return |
-| `--dur-ui` | 320ms (base) | Things that travel: the ↗ fly-out, the card's category fill, the theme icon turn, an Archive row opening and closing |
-| `--dur-enter` | 560ms (slow) | Entrances: the page's 10px rise, the hero settle, the portrait coming to rest |
+| `--dur-hover`, `--dur-press` | 160ms | Hover and press feedback: colour, border, the card's sheet lift and press, the preview panel's nudge, the logo turn, the mobile menu, the arrow's return |
+| `--dur-ui` | 320ms (base) | Things that travel: the ↗ fly-out, a row's accent rule drawing across, the theme icon turn, an Archive row opening and closing |
+| `--dur-enter` | 560ms (slow) | Entrances (the page's 10px rise, the hero settle, the portrait coming to rest) and the halftone theme change |
 
-Exception, recorded: the ↗ fly-out and the card fill are triggered by hover but take the base 320ms rather than the 120–160ms hover range, because each travels across its element (the arrow out of its box and back, the fill across the whole card); at 160ms both read as a flicker. A page's entrance moves and never fades (2026-11-13; it faded up from opacity 0, which blanked the content for about 100ms on every page change): the new page is whole on its first frame. The homepage hero's lines rise in a stagger the same way, without fading: no entrance on the site starts at opacity 0, the scroll-driven card reveals included (they rise 24px as they enter the viewport). The only fades left answer a click or a key: the phone menu opening, the command menu opening and closing, and the theme icon turning. Scroll-driven reveals have no duration (they follow the scroll). Reduced motion drops movement everywhere.
+Exception, recorded: the ↗ fly-out and a row's rule are triggered by hover but take the base 320ms rather than the 120–160ms hover range, because each travels across its element (the arrow out of its box and back, the rule across the row); at 160ms both read as a flicker. A page's entrance moves and never fades (2026-11-13; it faded up from opacity 0, which blanked the content for about 100ms on every page change): the new page is whole on its first frame. The homepage hero's lines rise in a stagger the same way, without fading: no entrance on the site starts at opacity 0, the scroll-driven card reveals included (they rise 24px as they enter the viewport). The only fades left answer a click: the phone menu opening and the theme icon turning. Scroll-driven reveals have no duration (they follow the scroll). Reduced motion drops movement everywhere.
+
+**Card hover: sheet lift** (2026-11-15, replacing the category-colour fill of 2026-09-28; the owner asked for new options; the agent's pick of six, pending the owner's review, compared in `.local-reviews/motion-2026-11-15/`, which is outside the repo). One block in `styles/globals.css`, keyed off two hooks: `data-hover="card"` on a framed card (the homepage project cards, the `// NEXT` card, the AI-tooling family cards on each tool page) and `data-hover="row"` on a ruled row (Around the site, Links out, the layers on `/ai-tooling`). A card rises 4px up and left off a second 1px-framed sheet that marks the slot it left (`box-shadow` in `surface.raised` and `border.subtle`), its border steps to `border.strong`, and its preview panel lifts 2px further, onto a 6px shadow; a press puts it back in its slot at 0.99. A row's rule redraws in the accent from the left. No text changes colour in either, so contrast in the hovered state is the resting contrast. It moves with `translate` and `scale`, never `transform`, which the scroll-driven reveal owns. Hover is gated to `(hover: hover) and (pointer: fine)`; keyboard focus (`:has(:focus-visible)`) gets the same state beside the 2px brand ring; touch gets only the press; reduced motion keeps the border and sheet and drops the movement. Category colours are gone (`lib/tones.js` and the pointer-origin script were removed with the fill). Swapping the hover is replacing that one CSS block; the comparison page writes every option against the same hooks.
+
+**Theme change: halftone** (2026-11-15, replacing UiPack's paint pour; the agent's pick of five, same comparison and review). `lib/themeTransition.js` sets `data-theme-transition` on `<html>` for the length of a view transition (uipack's `withViewTransition`), and one block in `styles/globals.css` gives the new snapshot three mask layers: a solid sheet, the 12px dot screen and a band running 22% ahead of the sheet that fades out, composited as (dots ∩ band) ∪ sheet. A fringe of dots, growing from 1px to 6px, leads a straight edge down the page over 560ms on `--ease-in-out`; no CSS transition runs inside the snapshot meanwhile. Instant under reduced motion and without view-transition support. The toggle's icon still turns in. Swapping the theme change is replacing that block (and the attribute's value). The `/uipack` gallery still demonstrates UiPack's own paint pour as a catalogue piece.
 
 ## Ornaments
 
@@ -222,13 +225,13 @@ Exception, recorded: the ↗ fly-out and the card fill are triggered by hover bu
 | `--ui-canvas-pattern` | A 12px cobalt dot grid on the homepage's technical previews only (`DottedCanvas`) |
 | Eyebrow marker | One mono label everywhere (`Eyebrow` in `components/ArticleParts.js`): a `//` prefix in mono caps, 12px, 700, tracked 0.08em, in the accent (`// PROJECTS`, `// ELSEWHERE`, `// NEXT`, `// ROLES`). The résumé's diamond markers were replaced in 2026-11 |
 | `--ui-section-rule` | None; ruled lists (Links out, Around the site, fact tables) carry 1px rules |
-| `--ui-frame-border`, `--ui-frame-shadow`, `--ui-card-shadow` | 1px border.subtle, flat. Hover on a fine pointer lifts a card 3px with a soft shadow and spreads its category fill from the pointer |
+| `--ui-frame-border`, `--ui-frame-shadow`, `--ui-card-shadow` | 1px border.subtle, flat. Hover on a fine pointer (and keyboard focus) lifts a card 4px off a second 1px-framed sheet, no blur and no fill (Motion, Card hover) |
 | Preview panel | A 1px framed panel with a 4px offset hard shadow (`preview.shadow`) that "presses" onto its canvas as it scrolls in |
 | `--ui-nav-fill`, `--ui-nav-blur` | Paper at 90% with a 14px blur, 1px bottom rule |
 | `--ui-grain`, `--ui-glow` | 0 |
 | `--ui-cta-*` | One filled button style (`components/FilledButton.js`): Chakra's solid button on the accent, white label in light and ink label in dark, the 4px control radius, 44px tall, a darker accent on hover. Used for Email me (Contact), Download PDF (résumé) and the theme-pour demo button in the `/uipack` gallery. Every other action is a link or a 1px-outlined 4px-radius control |
 | Link arrow | One ↗ on every link that goes somewhere, flying out of the top-right and back in on hover and focus (`components/OutArrow.js`) |
-| Theme change | Paint drizzles down the page (UiPack's `withPaintTransition`); instant under reduced motion |
+| Theme change | The new theme prints in through the 12px dot screen behind a straight edge (Motion, Theme change); instant under reduced motion |
 | Reading progress | A 2px accent bar at the top of case studies (scroll-driven) |
 
 **Treatments**
