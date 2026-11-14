@@ -326,6 +326,29 @@ def scene_skills():
     sphere(0.16, (1.1, -0.85, 0.2), "tennis", rough=0.9)
 
 
+def scene_workbase():
+    plinth(3.4, 3.2)
+    # An open file box of tabbed cards (the notes), two repo crates in front
+    # of it and the manual standing beside it.
+    rbox((1.9, 1.3, 0.1), (-0.35, 0.15, 0.12), m="wood", bevel=0.03)
+    for dy in (-0.6, 0.6):
+        rbox((1.9, 0.08, 0.55), (-0.35, 0.15 + dy, 0.4), m="wood", bevel=0.03)
+    for dx in (-0.95, 0.95):
+        rbox((0.08, 1.3, 0.55), (-0.35 + dx, 0.15, 0.4), m="wood", bevel=0.03)
+    cards = (("cream", "terracotta", -0.75), ("paper", "cobalt", -0.25), ("cream", "sage_dark", 0.25), ("paper", "cobalt_light", 0.6))
+    for i, (c, tab, tx) in enumerate(cards):
+        y = 0.45 - i * 0.2
+        rbox((1.7, 0.04, 0.85), (-0.35, y, 0.6), (-6, 0, 0), c, 0.02)
+        rbox((0.36, 0.05, 0.16), (-0.35 + tx, y - 0.01, 1.08), (-6, 0, 0), tab, 0.03)
+    for i, c in enumerate(("steel", "terracotta")):
+        rbox((0.34, 0.34, 0.3), (-0.95 + i * 0.46, -0.95, 0.21), (0, 0, 6 - i * 10), c, 0.05)
+    # The manual: a standing book with lines on its cover.
+    rbox((0.62, 0.16, 0.86), (1.05, -0.2, 0.43), (0, 0, -18), "cobalt", 0.05)
+    for i, w in enumerate((0.38, 0.28, 0.33)):
+        rbox((w, 0.02, 0.05), (1.03, -0.29, 0.66 - i * 0.12), (0, 0, -18), "paper", 0.01)
+    tree(1.3, 1.05, 0.9)
+
+
 def scene_uipack():
     plinth(3.4, 3.2)
     # Stacked interface panels and a colour swatch fan.
@@ -349,6 +372,7 @@ SCENES = {
     "skillsmith": scene_skillsmith,
     "skills": scene_skills,
     "uipack": scene_uipack,
+    "workbase": scene_workbase,
 }
 
 

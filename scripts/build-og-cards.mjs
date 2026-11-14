@@ -54,6 +54,12 @@ const cards = [
 		summary: "The agent skills I use in every repo, kept in one public repo and linked into place.",
 	},
 	{
+		slug: "workbase",
+		eyebrow: "AGENT MEMORY / CLAUDE + CODEX",
+		title: "Workbase",
+		summary: "A notes folder for one job, with a manual that tells the agent where each fact goes.",
+	},
+	{
 		slug: "uipack",
 		eyebrow: "DESIGN SYSTEM / TYPESCRIPT",
 		title: "UiPack",
