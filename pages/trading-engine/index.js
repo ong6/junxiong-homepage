@@ -7,13 +7,11 @@ import TradingVersionList from "../../components/TradingVersionList";
 import { ERAS } from "../../lib/tradingVersions";
 import { BackLink, MetaLine, P, H2, ARTICLE_TITLE } from "../../components/ArticleParts";
 import { withNotes } from "../../lib/notes";
+import { PAGE_META } from "../../lib/pageMeta";
 
 // Overview of the trading engine: what it is, the engine running now, and the
-// two engine eras. Each era has its own page (/trading-engine/v1, /v2) and each
-// v1 update its own write-up (/trading-engine/v1/1.N).
-
-
-
+// two engine eras. Each era has its own page (/trading-engine/v1, /v2); the v1
+// page carries a section per update (#1-1 … #1-8).
 
 const links = withNotes("/trading-engine", [
 	{ name: "Product docs", detail: "How it works, research and operations", href: "/trading-engine/docs" },
@@ -34,14 +32,14 @@ export default function TradingEngine() {
 			contents
 			facts={railFacts}
 			links={links}
-			title="Trading engine"
+			title={PAGE_META["/trading-engine"].title}
 			schema={{
 				type: "SoftwareSourceCode",
 				codeRepository: "https://github.com/ong6/trading-engine",
 				programmingLanguage: "Python",
 				license: "https://opensource.org/licenses/MIT",
 			}}
-			description="A paper-trading research engine where every strategy runs through one shared backtest core and one evidence path.">
+			description={PAGE_META["/trading-engine"].description}>
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
 					<BackLink href="/#work">Selected work</BackLink>
