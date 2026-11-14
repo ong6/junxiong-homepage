@@ -164,7 +164,7 @@ Site tokens with no contract role, kept here so a future style file can carry th
 | Home (landing) | `/`, `/contact`, `/hobbies` | 46 / 58 / 74px (below 500, from 500, from 960), line-height 0.98, −0.06em |
 | Article / case study | Case studies, `/ai-tooling`, `/uipack`, trading era and update pages, `/resume`, `/404` | 40 / 52px (below 768, from 768), line-height 1, −0.045em |
 | Docs | `/trading-engine/docs/*` | 40 / 52px (below 900, from 900, UiPack's shell switch), the article size |
-| Archive | `/works` and its entries | 40 / 52px, the article size: the ledger is an article page |
+| Archive | `/works` | 40 / 52px, the article size: the ledger is an article page |
 
 One name per page: the nav label, the `<title>`, the h1 and the links to it say the same words ("Contact", "Hobbies", "UiPack", "Page not found"). Two recorded exceptions: `/works` is "Archive" everywhere and its h1 adds the years, and `/resume`'s h1 is the name on the résumé.
 
@@ -207,7 +207,7 @@ Curves are the site's own (`--ease-out` `cubic-bezier(0.23, 1, 0.32, 1)` for ent
 | Token | Value | Used for |
 | --- | --- | --- |
 | `--dur-hover`, `--dur-press` | 160ms | Hover and press feedback: colour, border, the 3px card lift, the preview panel's nudge, the logo turn, the mobile menu, the arrow's return |
-| `--dur-ui` | 320ms (base) | Things that travel: the ↗ fly-out, the card's category fill, the theme icon turn |
+| `--dur-ui` | 320ms (base) | Things that travel: the ↗ fly-out, the card's category fill, the theme icon turn, an Archive row opening and closing |
 | `--dur-enter` | 560ms (slow) | Entrances: the page's 10px rise, the hero settle, the portrait coming to rest |
 
 Exception, recorded: the ↗ fly-out and the card fill are triggered by hover but take the base 320ms rather than the 120–160ms hover range, because each travels across its element (the arrow out of its box and back, the fill across the whole card); at 160ms both read as a flicker. A page's entrance moves and never fades (2026-11-13; it faded up from opacity 0, which blanked the content for about 100ms on every page change): the new page is whole on its first frame. The homepage hero's lines rise in a stagger the same way, without fading: no entrance on the site starts at opacity 0, the scroll-driven card reveals included (they rise 24px as they enter the viewport). The only fades left answer a click: the phone menu opening and the theme icon turning. Scroll-driven reveals have no duration (they follow the scroll). Reduced motion drops movement everywhere.
@@ -270,7 +270,7 @@ chapters, text beside a 3D object, stacking on narrow screens).
 ### Article
 
 Case studies (`/compoze`, `/groundplane`, `/skills`, `/skillsmith`, `/trading-engine` and its
-version and era pages), the hub (`/ai-tooling`), `/uipack`, `/works` and its entries, `/resume`
+version and era pages), the hub (`/ai-tooling`), `/uipack`, `/works`, `/resume`
 and `/404`. They do not use UiPack's `LayerSection` parts, so the layout is custom.
 
 | Setting | This site |

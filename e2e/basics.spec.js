@@ -18,7 +18,7 @@ const PAGES = [
 	"/trading-engine/docs/data",
 	"/uipack",
 	"/works",
-	"/works/codeparty",
+	"/works#codeparty",
 	"/resume",
 	"/no-such-page",
 ];
@@ -477,7 +477,7 @@ test("back links name the homepage section they return to", async ({ page }) => 
 });
 
 test("every link that opens a new tab says so", async ({ page }) => {
-	for (const path of ["/", "/contact", "/works/codeparty", "/resume", "/compoze"]) {
+	for (const path of ["/", "/contact", "/works#squeezy", "/resume", "/compoze"]) {
 		await page.goto(path);
 		const silent = await page.locator('a[target="_blank"]').evaluateAll((links) =>
 			links.filter((link) => !/opens in a new tab/.test(link.textContent + (link.getAttribute("aria-label") || ""))).map((link) => link.textContent.trim().slice(0, 30)),
@@ -486,12 +486,15 @@ test("every link that opens a new tab says so", async ({ page }) => {
 	}
 });
 
-test("an archive entry is an article: a 680px column, and the ledger has headings", async ({ page }) => {
+test("an archive entry opens in the 680px measure, and the ledger has headings", async ({ page }) => {
 	await page.setViewportSize({ width: 1440, height: 900 });
-	await page.goto("/works/codeparty");
-	expect((await page.locator("main article p").first().boundingBox()).width).toBeLessThanOrEqual(680);
-	await expect(page.locator("main h1")).toContainText("Aug 2023 – Nov 2023");
-	await page.goto("/works");
+	await page.goto("/works#codeparty");
+	const entry = page.locator("details#codeparty");
+	await expect(entry).toHaveAttribute("open", "");
+	for (const part of [entry.locator(":scope > div > p"), entry.locator("dl"), entry.locator("img").last()]) {
+		expect((await part.boundingBox()).width).toBeLessThanOrEqual(680);
+	}
+	await expect(entry.locator("dl")).toContainText("Aug 2023 – Nov 2023");
 	expect(await page.locator("main h2").count()).toBeGreaterThan(2);
 	expect(await page.locator("main h3").count()).toBeGreaterThan(10);
 });

@@ -22,7 +22,8 @@ engineering through a restrained terminal-inspired interface.
 - A Contact page with email, LinkedIn, GitHub, résumé and notes around a shared UiPack 3D scene
 - A Hobbies page with procedural Three.js scenes, native scroll and readable fallbacks; 3D loads
   when a chapter reaches the centre of the viewport and unloads when you return to the introduction
-- An archive of university projects
+- The Archive (`/works`), university projects whose entries open in place (`/works#<slug>`; the
+  old `/works/<slug>` pages redirect there)
 - Light and dark themes with reduced-motion support
 - Search and social metadata, a sitemap, and structured `Person` data
 

@@ -1,4 +1,3 @@
-import { workSlugs } from "../lib/works";
 import { getTradingDocRoutes } from "../lib/tradingDocs";
 import { VERSIONS } from "../lib/tradingVersions";
 import { modifiedFor } from "../lib/pageDates";
@@ -6,8 +5,7 @@ import { modifiedFor } from "../lib/pageDates";
 const SITE = "https://junxiong.dev";
 
 // Top-level routes, in priority order. `lastmod` comes from lib/pageDates.js
-// (bump the date there when you edit a page). Work detail pages are appended
-// from lib/works.js so the sitemap can never drift from the actual routes.
+// (bump the date there when you edit a page).
 const topRoutes = [
 	{ path: "/", changefreq: "weekly", priority: "1.0" },
 	{ path: "/contact", changefreq: "monthly", priority: "0.7" },
@@ -34,14 +32,7 @@ const topRoutes = [
 	{ path: "/hobbies", changefreq: "monthly", priority: "0.5" },
 ];
 
-const urls = [
-	...topRoutes,
-	...workSlugs.map((slug) => ({
-		path: `/works/${slug}`,
-		changefreq: "yearly",
-		priority: "0.3",
-	})),
-].map((url) => ({ ...url, lastmod: modifiedFor(url.path) }));
+const urls = topRoutes.map((url) => ({ ...url, lastmod: modifiedFor(url.path) }));
 
 const SITEMAP = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
