@@ -29,6 +29,7 @@ const topRoutes = [
 	})),
 	{ path: "/skills", changefreq: "yearly", priority: "0.8" },
 	{ path: "/skillsmith", changefreq: "yearly", priority: "0.8" },
+	{ path: "/workbase", changefreq: "yearly", priority: "0.8" },
 	{ path: "/uipack", changefreq: "monthly", priority: "0.6" },
 	{ path: "/works", changefreq: "monthly", priority: "0.7" },
 	{ path: "/hobbies", changefreq: "monthly", priority: "0.5" },

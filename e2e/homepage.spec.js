@@ -123,14 +123,14 @@ test("/ai-tooling lists the tools by layer and each tool links back", async ({ p
 	await expect(page.locator("h1")).toHaveText("AI tooling");
 	const layers = page.getByRole("region", { name: "Tools by layer" });
 	for (const [name, href] of [
-		["Workbase (opens in a new tab)", "https://github.com/ong6/workbase"],
+		["Workbase", "/workbase"],
 		["Agent skills", "/skills"],
 		["Skillsmith", "/skillsmith"],
 		["Groundplane", "/groundplane"],
 	]) {
 		await expect(layers.getByRole("link", { name, exact: true })).toHaveAttribute("href", href);
 	}
-	for (const route of ["/skills", "/skillsmith", "/groundplane"]) {
+	for (const route of ["/workbase", "/skills", "/skillsmith", "/groundplane"]) {
 		await page.goto(route);
 		await expect(page.getByRole("link", { name: "← AI tooling" })).toHaveAttribute("href", "/ai-tooling");
 	}
