@@ -94,6 +94,19 @@ export default function TradingEngine() {
 
 				<TradingVersionList />
 
+				{/* Placeholder (2026-11-15): the owner asked for a looking-back line to
+				    be written for now. Every fact in it is from his note "Why my
+				    trading strategies haven't earned real money" (in Links out);
+				    replace it with his own words when he sends them. */}
+				<H2>Looking back</H2>
+				<P>
+					I started by turning ideas from trading books and YouTube into rules I could run. Some of
+					the backtests made money, and none kept a reliable advantage over its control, so no
+					strategy here has earned the right to trade real money. That changed what I build next:
+					an agent that makes one bounded decision inside the process, while plain code keeps risk
+					and execution.
+				</P>
+
 				<CaseStudyFooter links={links} next={{ name: "Agent skills", href: "/skills", detail: "One home for coding-agent skills, linked into every repo" }} />
 			</Container>
 		</Layout>
