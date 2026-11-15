@@ -4,7 +4,7 @@ site: junxiong.dev (Ong Jun Xiong's personal site)
 extends: core
 pages: [landing, article, documentation]
 layouts: { landing: custom, article: custom, documentation: docs-shell }
-components: { diagrams: blueprint, 3d: [kinetic, realistic, cartoon] }
+components: { diagrams: blueprint, 3d: ink }
 diagram-themes: { default: site-paper }
 status: draft
 uipack: v0.7.0
@@ -264,7 +264,7 @@ The homepage (`/`). Contact and Hobbies are single-surface pages that follow the
 their own hero (Contact: copy beside a 3D scene; Hobbies: six full-viewport native-scroll
 chapters, text beside a 3D object, stacking on narrow screens; one scene plays, the one nearest the
 centre of the screen, and the chapters before and after it hold theirs built and still
-(`preload`, uipack 0.7.2), so a scene is already drawn when its chapter arrives and at most three
+(`preload`, since uipack 0.7.2), so a scene is already drawn when its chapter arrives and at most three
 exist at a time).
 
 | Setting | This site |
@@ -317,7 +317,7 @@ as Markdown" or "Edit on GitHub" links.
 | Component | junxiong.dev picks | Why |
 | --- | --- | --- |
 | Diagrams | `blueprint` | The site draws case-study figures with UiPack (framed figure, lanes, nodes, packets, hints). See the open decision below |
-| 3D object scenes | `kinetic`, `realistic`, `cartoon` | Hobbies pins two photographic looks so the six chapters read as one set: Kinetic sculptures (variant 2) for Travel (armillary globe), Coding & AI (neural orrery) and Trading (market balance), and Realistic close-ups (4) for Tennis (match point), Reading (quiet chapter) and Home servers (hot swap). Chosen 2026-11-08 from renders of every look each subject offers, light and dark, 1280 and 390: Studio's folded atlas (Travel's first-listed look) was the only scene whose dark room took the palette's blue-grey and the only third framing, so Travel takes the Kinetic globe, which shares the orrery's and the balance's brass and plinth. Kinetic and Realistic are `fixed` looks, so `hobbyScenePalettes` (`lib/theme.js`) no longer changes Hobbies. Contact pins Cartoon. `/uipack` shows one object, Coding & AI's neural orrery in the same Kinetic look as Hobbies; every look is in UiPack's catalogue on ui.junxiong.dev, not on this site |
+| 3D object scenes | `ink` | One 3D style for the whole site (owner, 2026-11-15: "lets have one style that we stick to and refine"): UiPack's ink line art. One clean object per subject floats on the page: page-toned faces, ink outlines and crease lines, one cobalt part. Colours are the site's own (`--object-paper`, `--object-ink`, `--object-accent` on `.uipack-object` in `styles/globals.css`), so a scene follows the theme with no palette prop. Hobbies: Travel (folded atlas), Coding & AI (a laptop running an agent session), Tennis (racket, can and balls), Reading (an open book, a page turning), Home servers (inference hardware), Trading (market abacus). Contact: the inbox. `/uipack` shows the Coding & AI laptop. No look or variant is chosen anywhere; UiPack 0.8.0 removed the other art directions |
 
 **Diagram theme: `site-paper`** (`components/diagrams/theme.js`, written to `:root` by
 `pages/_document.js`). Blueprint has been a `flex` look since uipack v0.3.0: its grammar is the
@@ -348,8 +348,8 @@ Extends `core`. No site reuses this spec yet; notes.junxiong.dev has its own loo
 rust accent, serif and sans) and would write its own spec or say `extends: junxiong-dev` if the
 owner wants the two to match. Registry row to add in UiPack's `siteRegistry`
 (`playground/docs-manifest.ts`): site junxiong.dev, repo `ong6/junxiong-homepage`, spec
-`junxiong-homepage:STYLE.md`, looks `diagrams: blueprint, 3d: kinetic, realistic, cartoon`, pins
-`v0.7.0`.
+`junxiong-homepage:STYLE.md`, looks `diagrams: blueprint, 3d: ink`, pins
+`v0.8.0`.
 
 ## Open TODOs
 

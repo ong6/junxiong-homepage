@@ -66,7 +66,7 @@ export default function Contact() {
 				</Box>
 
 				<Box h={{ base: "340px", md: "440px" }} minW={0}>
-					<HobbyScene kind="contact" label="Contact signals" variant={3} active />
+					<HobbyScene kind="contact" label="Contact signals" active />
 				</Box>
 			</Grid>
 

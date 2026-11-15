@@ -8,16 +8,15 @@ import ProjectLinks from "../components/ProjectLinks";
 import { noteLink, notesFor } from "../lib/notes";
 import styles from "../styles/Hobbies.module.css";
 
-// Two of UiPack's photographic looks, so the six read as one set (STYLE.md,
-// Component looks): Kinetic sculptures (2) for the instruments, Realistic
-// close-ups (4) for the things on a desk or a court.
+// Every chapter's object is drawn in UiPack's one 3D style, ink line art
+// (STYLE.md, Component looks).
 const chapters = [
-	{ id: "travel", index: "01", label: "Travel", kind: "travel", variant: 2 },
-	{ id: "coding-ai", index: "02", label: "Coding & AI", kind: "ai", variant: 2 },
-	{ id: "tennis", index: "03", label: "Tennis", kind: "tennis", variant: 4 },
-	{ id: "reading", index: "04", label: "Reading", kind: "reading", variant: 4 },
-	{ id: "home-servers", index: "05", label: "Home servers", kind: "server", variant: 4 },
-	{ id: "trading", index: "06", label: "Trading", kind: "trading", variant: 2 },
+	{ id: "travel", index: "01", label: "Travel", kind: "travel" },
+	{ id: "coding-ai", index: "02", label: "Coding & AI", kind: "ai" },
+	{ id: "tennis", index: "03", label: "Tennis", kind: "tennis" },
+	{ id: "reading", index: "04", label: "Reading", kind: "reading" },
+	{ id: "home-servers", index: "05", label: "Home servers", kind: "server" },
+	{ id: "trading", index: "06", label: "Trading", kind: "trading" },
 ];
 
 // Notes paired with a chapter (or the page) in lib/notes.js, in the same
@@ -28,7 +27,7 @@ function NotesBlock({ path, heading = "Notes from this hobby", ...props }) {
 	return <ProjectLinks heading={heading} compact mt={6} maxW="64ch" links={notes.map(noteLink)} {...props} />;
 }
 
-function Chapter({ id, index, label, kind, active, preload, variant, after, children }) {
+function Chapter({ id, index, label, kind, active, preload, after, children }) {
 	return (
 		<Box as="section" id={id} className={styles.chapter} data-chapter={kind}>
 			<Box className={styles.copy}>
@@ -43,7 +42,7 @@ function Chapter({ id, index, label, kind, active, preload, variant, after, chil
 				data-hobby-visual
 				data-chapter-id={id}>
 				<Box className={styles.visualSticky}>
-					<HobbyScene kind={kind} label={label} active={active} preload={preload} variant={variant} />
+					<HobbyScene kind={kind} label={label} active={active} preload={preload} />
 				</Box>
 			</Box>
 		</Box>
