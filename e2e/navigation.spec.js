@@ -52,6 +52,8 @@ test("header has deliberate vertical room at desktop and mobile widths", async (
 });
 
 test("hobbies content shares the header's left edge at every width", async ({ page }) => {
+	// Each load builds its 3D scenes on software WebGL here; four workers share the machine.
+	test.setTimeout(90_000);
 	for (const width of [390, 768, 960, 1440]) {
 		await page.setViewportSize({ width, height: 900 });
 		await page.goto("/hobbies");

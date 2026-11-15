@@ -10,19 +10,28 @@ async function settleLayout(page) {
 	);
 }
 
+// One scene plays, the one nearest the centre of the screen. The chapters
+// before and after it hold theirs built and still (preload), so a scene is
+// ready when its chapter arrives; no other chapter holds one.
 async function expectOnlyVisibleArtwork(page) {
-  await expect(page.locator('#coding-ai canvas')).toHaveCount(0);
-  await expect.poll(async () => page.locator('[data-hobby-visual]:has(canvas)').evaluateAll(nodes =>
-    nodes.length <= 1 && nodes.every(node => {
+  await expect.poll(async () => page.locator('[data-hobby-visual]').evaluateAll(nodes => {
+    const playing = nodes.findIndex(node => node.querySelector('.uipack-object[data-active="true"]'));
+    const held = nodes.map((node, index) => node.querySelector('canvas') ? index : -1).filter(index => index >= 0);
+    const onScreen = node => {
       const rect = node.getBoundingClientRect();
-      return rect.top < innerHeight * .9 && rect.bottom > innerHeight * .1;
-    }),
-  )).toBe(true);
+      return rect.top < innerHeight && rect.bottom > 0;
+    };
+    if (nodes.filter(node => node.querySelector('.uipack-object[data-active="true"]')).length > 1) return false;
+    if (playing < 0) return held.length === 0;
+    return onScreen(nodes[playing]) && held.length <= 3 && held.every(index => Math.abs(index - playing) <= 1);
+  })).toBe(true);
 }
 
 for (const width of [390, 1440]) {
 	for (const theme of ["light", "dark"]) {
 		test(`hobbies chapters at ${width} in ${theme} preserve reading order and native scroll`, async ({ page }) => {
+			// Up to three scene builds under software WebGL, beside three other workers.
+			test.setTimeout(60_000);
 			const errors = collectErrors(page);
 			await page.setViewportSize({ width, height: 900 });
 			await page.addInitScript((t) => localStorage.setItem("junxiong-theme", t), theme);
@@ -38,9 +47,11 @@ for (const width of [390, 1440]) {
 			const targets = await page.locator('main nav a, main button').evaluateAll((nodes) => nodes.map((node) => ({ w: node.getBoundingClientRect().width, h: node.getBoundingClientRect().height })));
 			expect(targets.every(({ w, h }) => w >= 44 && h >= 44)).toBe(true);
 			await page.locator("#tennis").scrollIntoViewIfNeeded();
-			await expect(page.locator('#tennis canvas[data-renderer="webgl"]')).toBeVisible();
-			expect(await page.locator("main canvas").count()).toBe(1);
-			await expect(page.locator("#tennis").getByRole("button", { name: "Pause motion" })).toBeVisible();
+			// Scenes build one at a time, so under software WebGL this one can wait for a neighbour's build.
+			await expect(page.locator('#tennis canvas[data-renderer="webgl"]')).toBeVisible({ timeout: 15_000 });
+			await expect(page.locator('main .uipack-object[data-active="true"]')).toHaveCount(1);
+			await expect(page.getByRole("button", { name: "Pause motion" })).toHaveCount(1, { timeout: 15_000 });
+			await expect(page.locator("#tennis").getByRole("button", { name: "Pause motion" })).toBeVisible({ timeout: 15_000 });
 			await expect(page.locator("#tennis").getByRole("button", { name: "Open canvas" })).toHaveCount(0);
 			await expect(page.locator("#tennis").getByRole("button", { name: "Another look" })).toHaveCount(0);
 			await expect(page.locator('#tennis [role="img"]')).toHaveAttribute("aria-label", "Tennis illustration");
@@ -69,9 +80,16 @@ test("hobbies pauses motion explicitly and while a chapter is offscreen", async 
 	await page.waitForTimeout(250);
 	expect(await scene.getAttribute("data-frames")).toBe(pausedAt);
 	await page.locator("#coding-ai").getByRole("button", { name: "Resume motion" }).click();
+	// A held scene does not play: coding-ai's neighbour is built and still.
+	const neighbour = page.locator('#tennis canvas[data-renderer="webgl"]');
+	await neighbour.waitFor();
+	await expect(page.locator("#tennis .uipack-object")).toHaveAttribute("data-active", "false");
+	await page.waitForTimeout(250);
+	expect(await neighbour.getAttribute("data-frames")).toBeNull();
+	// Four chapters away, coding-ai's scene is released.
 	await page.locator("#trading").scrollIntoViewIfNeeded();
 	await expect(scene).toHaveCount(0);
-	expect(await page.locator("main canvas").count()).toBeLessThanOrEqual(1);
+	await expectOnlyVisibleArtwork(page);
 });
 
 test("hobby artwork starts when its visual enters the viewport", async ({ page }) => {
@@ -125,7 +143,7 @@ test("hobbies returns to the labelled fallback when a WebGL context is lost", as
 
 test("trading uses the shared journal", async ({ page }) => {
  await page.goto("/hobbies#trading");
- await expect(page.locator('#trading canvas')).toHaveAttribute('data-renderer','webgl');
+ await expect(page.locator('#trading canvas')).toHaveAttribute('data-renderer','webgl',{timeout:15_000});
  await expect(page.locator('#trading .uipack-object')).toHaveAttribute('data-kind','trading');
 });
 
@@ -148,7 +166,7 @@ for (const width of [390, 1440]) for (const theme of ['light', 'dark']) {
       await expect(object).toHaveCSS('border-top-color','rgba(0, 0, 0, 0)');
       await expect(object.locator('canvas')).toHaveAttribute('data-renderer','webgl');
       await expect(object.locator('canvas')).toHaveCSS('opacity','1');
-      await expect(page.locator('main canvas')).toHaveCount(1);
+      await expect(page.locator('main .uipack-object[data-active="true"]')).toHaveCount(1);
       await page.screenshot({path:info.outputPath(`${kind}.png`)});
     }
     expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBe(width);

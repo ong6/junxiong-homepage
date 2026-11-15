@@ -28,7 +28,7 @@ function NotesBlock({ path, heading = "Notes from this hobby", ...props }) {
 	return <ProjectLinks heading={heading} compact mt={6} maxW="64ch" links={notes.map(noteLink)} {...props} />;
 }
 
-function Chapter({ id, index, label, kind, active, variant, after, children }) {
+function Chapter({ id, index, label, kind, active, preload, variant, after, children }) {
 	return (
 		<Box as="section" id={id} className={styles.chapter} data-chapter={kind}>
 			<Box className={styles.copy}>
@@ -43,7 +43,7 @@ function Chapter({ id, index, label, kind, active, variant, after, children }) {
 				data-hobby-visual
 				data-chapter-id={id}>
 				<Box className={styles.visualSticky}>
-					<HobbyScene kind={kind} label={label} active={active} variant={variant} />
+					<HobbyScene kind={kind} label={label} active={active} preload={preload} variant={variant} />
 				</Box>
 			</Box>
 		</Box>
@@ -79,6 +79,12 @@ export default function Hobbies() {
 		};
 	}, []);
 
+	// The chapters before and after the one playing hold their scenes built and
+	// still, so a scene is already drawn when its chapter arrives. Three exist
+	// at most: under software WebGL a fourth cost the oldest its context.
+	const playing = chapters.findIndex((chapter) => chapter.id === active);
+	const isNear = (id) => playing >= 0 && Math.abs(chapters.findIndex((chapter) => chapter.id === id) - playing) === 1;
+
 	return (
 		<Layout animate={false} {...PAGE_META["/hobbies"]}>
 			<Box ref={pageRef} className={styles.page}>
@@ -101,13 +107,13 @@ export default function Hobbies() {
 				</Box>
 
 
-				<Chapter {...chapters[0]} active={active === chapters[0].id}>
+				<Chapter {...chapters[0]} active={active === chapters[0].id} preload={isNear(chapters[0].id)}>
 					I spent six months in Munich on NUS Overseas Colleges. I like having enough time in a place to get familiar with it, so I tend to plan fewer stops and stay longer in each.
 				</Chapter>
 
 				<Chapter
 					{...chapters[1]}
-					active={active === chapters[1].id}
+					active={active === chapters[1].id} preload={isNear(chapters[1].id)}
 					after={
 						<ProjectLinks
 							heading="Built from this hobby"
@@ -123,21 +129,21 @@ export default function Hobbies() {
 					This is my main hobby. I like trying models, building little tools, and seeing what I can get an agent to do. That is how I end up with <Link as={NextLink} href="/groundplane">Groundplane</Link>, a Python library that checks declared output fields against recorded tool results; the <Link as={NextLink} href="/skills">agent skills</Link> that Claude Code and Codex load in every repo I work in; my notes and life admin kept as a markdown repo that an AI agent tends for me; and a <Link href="https://github.com/ong6/sg-property-analysis" target="_blank" rel="noopener noreferrer">Singapore property data-analysis project</Link>. Most of it starts with something I want to try or a problem I want to fix for myself.
 				</Chapter>
 
-				<Chapter {...chapters[2]} active={active === chapters[2].id}>
+				<Chapter {...chapters[2]} active={active === chapters[2].id} preload={isNear(chapters[2].id)}>
 					Tennis is my main sport. I play with two forehands, swapping my Wilson Blade between hands instead of hitting a backhand. Most sessions are long rallies with one other person. It gives me a break from software.
 				</Chapter>
 
-				<Chapter {...chapters[3]} active={active === chapters[3].id}>
+				<Chapter {...chapters[3]} active={active === chapters[3].id} preload={isNear(chapters[3].id)}>
 					Non-fiction, usually tied to whatever I am building or trading at the time. Fiction in between to reset.
 				</Chapter>
 
-				<Chapter {...chapters[4]} active={active === chapters[4].id} after={<NotesBlock path="/hobbies#home-servers" />}>
+				<Chapter {...chapters[4]} active={active === chapters[4].id} preload={isNear(chapters[4].id)} after={<NotesBlock path="/hobbies#home-servers" />}>
 					I am speccing an always-on inference box that serves models to my own tools. So far, I&apos;m mostly comparing models, memory requirements and what the hardware would cost. I <Link href="https://notes.junxiong.dev" target="_blank" rel="noopener noreferrer">write up what I learn as I go</Link>.
 				</Chapter>
 
 				<Chapter
 					{...chapters[5]}
-					active={active === chapters[5].id}
+					active={active === chapters[5].id} preload={isNear(chapters[5].id)}
 					after={
 						<>
 							<ProjectLinks

@@ -262,7 +262,10 @@ The reader's last choice, then the system's. Only the toggle stores a choice (`l
 
 The homepage (`/`). Contact and Hobbies are single-surface pages that follow the same grid with
 their own hero (Contact: copy beside a 3D scene; Hobbies: six full-viewport native-scroll
-chapters, text beside a 3D object, stacking on narrow screens).
+chapters, text beside a 3D object, stacking on narrow screens; one scene plays, the one nearest the
+centre of the screen, and the chapters before and after it hold theirs built and still
+(`preload`, uipack 0.7.2), so a scene is already drawn when its chapter arrives and at most three
+exist at a time).
 
 | Setting | This site |
 | --- | --- |
