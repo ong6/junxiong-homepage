@@ -12,6 +12,8 @@ import {
 import NextLink from "next/link";
 import { Fragment } from "react";
 import OutArrow from "./OutArrow";
+import RecentWriting from "./RecentWriting";
+import { TradingPreview, UipackPreview } from "./SupportingPreviews";
 import { AI_TOOLING } from "../lib/aiTooling";
 import { toneFor } from "../lib/tones";
 
@@ -183,6 +185,7 @@ const supportingProjects = [
 		label: "Research system",
 		description: "Tests trading ideas overnight, with the rules fixed before the results come in.",
 		wide: true,
+		Preview: TradingPreview,
 	},
 	{
 		title: "UiPack",
@@ -190,6 +193,7 @@ const supportingProjects = [
 		label: "Design system",
 		description: "The figures, motion rules and slide starters shared across my projects.",
 		wide: true,
+		Preview: UipackPreview,
 	},
 ];
 
@@ -212,22 +216,31 @@ function SupportingCard({ project, index }) {
 			_hover={{ borderColor: "border.strong" }}
 			_active={{ transform: "scale(0.99)" }}
 			sx={liftOnHover("0 16px 36px -30px rgba(39,32,27,.55)")}>
-			<Text color="text.muted" sx={labelStyle}>
-				{project.label}
-			</Text>
-			<Heading as="h3" mt={2} fontSize={{ base: "23px", md: "26px" }} lineHeight="heading">
-				<ProjectLink href={project.href}>{project.title}</ProjectLink>
-			</Heading>
-			<Text mt={2} maxW="640px" color="text.muted" fontSize="16px" lineHeight="text">
-				{project.description}
-			</Text>
+			{/* Copy beside its preview from lg, the preview under the copy below. */}
+			<Grid templateColumns={{ base: "minmax(0, 1fr)", lg: "minmax(0, 1fr) minmax(0, 528px)" }} columnGap={12} rowGap={6} alignItems="center">
+				<Box>
+					<Text color="text.muted" sx={labelStyle}>
+						{project.label}
+					</Text>
+					<Heading as="h3" mt={2} fontSize={{ base: "23px", md: "26px" }} lineHeight="heading">
+						<ProjectLink href={project.href}>{project.title}</ProjectLink>
+					</Heading>
+					<Text mt={2} maxW="640px" color="text.muted" fontSize="16px" lineHeight="text">
+						{project.description}
+					</Text>
+				</Box>
+				{project.Preview ? (
+					<DottedCanvas>
+						<project.Preview />
+					</DottedCanvas>
+				) : null}
+			</Grid>
 		</LinkBox>
 	);
 }
 
 const elsewhereLinks = [
 	{ name: "Hobbies", href: "/hobbies", detail: "What I do away from the editor" },
-	{ name: "Notes", href: "https://notes.junxiong.dev", detail: "Longer working notes", external: true },
 	{ name: "Archive", href: "/works", detail: "University-era projects" },
 	{ name: "Resume", href: "/resume", detail: "Work history and experience" },
 ];
@@ -242,8 +255,9 @@ function Elsewhere() {
 				Around the site
 			</Heading>
 			{/* Links out grammar: the arrow ends each row flush with its rule;
-			    columns sit 24px apart instead of padding the rows. */}
-			<SimpleGrid columns={{ base: 1, smmd: 2, lg: 4 }} columnGap={6} mt={6} borderTop="1px solid" borderColor="border.subtle">
+			    columns sit 24px apart instead of padding the rows. Notes moved to
+			    Recent writing above, so three rows fill three columns. */}
+			<SimpleGrid columns={{ base: 1, md: 3 }} columnGap={6} mt={6} borderTop="1px solid" borderColor="border.subtle">
 				{elsewhereLinks.map((item, index) => (
 					<Link
 						key={item.name}
@@ -311,6 +325,7 @@ export default function SelectedWork() {
 				</Box>
 			</Box>
 
+			<RecentWriting />
 			<Elsewhere />
 		</>
 	);
