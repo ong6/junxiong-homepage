@@ -48,13 +48,20 @@ test.describe("/groundplane hover", () => {
 	});
 });
 
-// ── Card hover: sheet lift (STYLE.md, Motion; styles/globals.css) ─────────
-// A card rises 4px up and left off a 1px-framed sheet and its border steps to
-// the accent line; a ruled row redraws its rule in the accent. No text changes
-// colour, so every word keeps 4.5:1 in the hovered state. Fine pointers and
-// keyboard focus only; reduced motion keeps the state and drops the movement.
+// ── Card hover: tone edge (STYLE.md, Motion; styles/globals.css) ──────────
+// A card draws a 3px rule in its category colour along its top edge from the
+// side the pointer came in, its mono label takes that colour and the card
+// rises 3px; a ruled row draws a 2px ink rule. Every word keeps 4.5:1 in the
+// hovered state. Fine pointers and keyboard focus only; reduced motion keeps
+// the state and drops the movement.
 const THEME_KEY = "junxiong-theme";
-const ACCENT_LINE = { light: "rgb(35, 78, 162)", dark: "rgb(154, 182, 255)" };
+// The first three homepage cards: AI tooling (agents), Compoze (company),
+// Trading engine (research); rows draw in ink (styles/globals.css, --tone-*).
+const TONES = {
+	light: ["rgb(35, 78, 162)", "rgb(163, 69, 43)", "rgb(47, 106, 74)"],
+	dark: ["rgb(154, 182, 255)", "rgb(242, 161, 132)", "rgb(143, 211, 168)"],
+};
+const INK = { light: "rgb(41, 35, 31)", dark: "rgb(242, 236, 227)" };
 
 // Text in `root` whose colour is under 4.5:1 on the ground behind it.
 const lowContrast = (root) => {
@@ -101,46 +108,73 @@ const centre = async (page, locator) => {
 
 const cardState = (el) => {
 	const style = getComputedStyle(el);
-	const panel = el.querySelector("[data-panel]");
-	return { translate: style.translate, shadow: style.boxShadow, border: style.borderTopColor, panel: panel ? getComputedStyle(panel).translate : null };
+	const edge = getComputedStyle(el, "::after");
+	const label = el.querySelector("[data-tone-label]");
+	return {
+		translate: style.translate,
+		shadow: style.boxShadow,
+		edge: edge.transform,
+		edgeColour: edge.backgroundColor,
+		edgeOrigin: parseFloat(edge.transformOrigin),
+		width: el.getBoundingClientRect().width,
+		label: label ? getComputedStyle(label).color : null,
+	};
 };
+const DRAWN_IN = "matrix(0, 0, 0, 1, 0, 0)";
 
 test.describe("card hover", () => {
 	for (const theme of ["light", "dark"]) {
-		test(`a project card lifts off its sheet in ${theme} and every word keeps 4.5:1`, async ({ browser }) => {
+		test(`a project card draws its category rule in ${theme} and every word keeps 4.5:1`, async ({ browser }) => {
 			const { context, page } = await openHome(browser, theme);
 			for (const index of [0, 1, 2]) {
 				const card = page.locator('#work [data-hover="card"]').nth(index);
 				await centre(page, card);
-				expect(await card.evaluate(cardState)).toMatchObject({ translate: "none", shadow: "none" });
+				expect(await card.evaluate(cardState)).toMatchObject({ translate: "none", shadow: "none", edge: DRAWN_IN });
 				await card.hover({ position: { x: 24, y: 24 } });
-				await page.waitForTimeout(400);
+				await page.waitForTimeout(450);
 				const state = await card.evaluate(cardState);
-				expect(state.translate).toBe("-4px -4px");
-				expect(state.shadow).toContain("4px 4px 0px");
-				expect(state.border).toContain(ACCENT_LINE[theme].slice(4, -1));
-				if (state.panel !== null) expect(state.panel).toBe("-2px -2px");
+				expect(state.translate).toBe("0px -3px");
+				expect(state.edge).toBe("none");
+				expect(state.edgeColour).toBe(TONES[theme][index]);
+				expect(state.label, "the label takes the card's tone").toBe(TONES[theme][index]);
 				expect(await card.evaluate(lowContrast), `card ${index} in ${theme}`).toEqual([]);
 				await page.mouse.move(2, 450);
 			}
 			await context.close();
 		});
 
-		test(`an Around-the-site row redraws its rule in the accent in ${theme} and keeps 4.5:1`, async ({ browser }) => {
+		test(`an Around-the-site row draws an ink rule in ${theme} and keeps 4.5:1`, async ({ browser }) => {
 			const { context, page } = await openHome(browser, theme);
 			const row = page.getByRole("region", { name: "Around the site" }).locator('[data-hover="row"]').nth(1);
 			await centre(page, row);
-			const rule = () => row.evaluate((el) => ({ transform: getComputedStyle(el, "::after").transform, colour: getComputedStyle(el, "::after").backgroundColor }));
-			expect((await rule()).transform).toBe("matrix(0, 0, 0, 1, 0, 0)");
+			const rule = () => row.evaluate((el) => ({ transform: getComputedStyle(el, "::after").transform, colour: getComputedStyle(el, "::after").backgroundColor, height: getComputedStyle(el, "::after").height }));
+			expect((await rule()).transform).toBe(DRAWN_IN);
 			await row.hover();
 			await page.waitForTimeout(450);
-			expect(await rule()).toEqual({ transform: "none", colour: ACCENT_LINE[theme] });
+			expect(await rule()).toEqual({ transform: "none", colour: INK[theme], height: "2px" });
 			expect(await row.evaluate(lowContrast)).toEqual([]);
 			await context.close();
 		});
 	}
 
-	test("keyboard focus gives a card the same lift as hover", async ({ browser }) => {
+	test("the rule draws from the side the pointer came in", async ({ browser }) => {
+		const { context, page } = await openHome(browser, "light");
+		const card = page.locator('#work [data-hover="card"]').first();
+		await centre(page, card);
+		const box = await card.boundingBox();
+		// In from the right edge, then (after leaving) in from the left.
+		await page.mouse.move(box.x + box.width + 40, box.y + 40);
+		await page.mouse.move(box.x + box.width - 6, box.y + 40, { steps: 4 });
+		let state = await card.evaluate(cardState);
+		expect(state.edgeOrigin).toBeGreaterThan(state.width * 0.9);
+		await page.mouse.move(box.x - 40, box.y + 40, { steps: 4 });
+		await page.mouse.move(box.x + 6, box.y + 40, { steps: 4 });
+		state = await card.evaluate(cardState);
+		expect(state.edgeOrigin).toBeLessThan(state.width * 0.1);
+		await context.close();
+	});
+
+	test("keyboard focus gives a card the same state as hover", async ({ browser }) => {
 		const { context, page } = await openHome(browser, "light");
 		const card = page.locator('#work [data-hover="card"]').first();
 		await centre(page, card);
@@ -151,8 +185,8 @@ test.describe("card hover", () => {
 		});
 		await page.keyboard.press("Tab");
 		expect(await card.evaluate((el) => el.contains(document.activeElement) && document.activeElement.matches(":focus-visible"))).toBe(true);
-		await page.waitForTimeout(400);
-		expect(await card.evaluate(cardState)).toMatchObject({ translate: "-4px -4px" });
+		await page.waitForTimeout(450);
+		expect(await card.evaluate(cardState)).toMatchObject({ translate: "0px -3px", edge: "none" });
 		// The 2px brand ring stays on the link.
 		expect(await page.evaluate(() => getComputedStyle(document.activeElement).outlineWidth)).toBe("2px");
 		await context.close();
@@ -164,9 +198,7 @@ test.describe("card hover", () => {
 		await centre(page, card);
 		await card.hover({ position: { x: 24, y: 24 } });
 		await page.waitForTimeout(100);
-		const state = await card.evaluate(cardState);
-		expect(state).toMatchObject({ translate: "none", panel: "none" });
-		expect(state.border).toContain(ACCENT_LINE.light.slice(4, -1));
+		expect(await card.evaluate(cardState)).toMatchObject({ translate: "none", edge: "none", edgeColour: TONES.light[0] });
 		await context.close();
 	});
 
@@ -176,7 +208,7 @@ test.describe("card hover", () => {
 		await centre(page, card);
 		await card.hover({ position: { x: 24, y: 24 } });
 		await page.waitForTimeout(400);
-		expect(await card.evaluate(cardState)).toMatchObject({ translate: "none", shadow: "none" });
+		expect(await card.evaluate(cardState)).toMatchObject({ translate: "none", shadow: "none", edge: DRAWN_IN });
 		await context.close();
 	});
 });

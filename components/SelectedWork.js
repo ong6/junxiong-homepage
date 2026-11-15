@@ -15,6 +15,7 @@ import OutArrow from "./OutArrow";
 import RecentWriting from "./RecentWriting";
 import { TradingPreview, UipackPreview } from "./SupportingPreviews";
 import { AI_TOOLING } from "../lib/aiTooling";
+import { toneFor } from "../lib/tones";
 
 const labelStyle = {
 	fontFamily: "var(--font-mono)",
@@ -33,7 +34,7 @@ function ProjectLink({ href, children }) {
 	);
 }
 
-function FeaturedCard({ span, index = 0, children }) {
+function FeaturedCard({ span, index = 0, tone, children }) {
 	return (
 		<LinkBox
 			as="article"
@@ -51,6 +52,7 @@ function FeaturedCard({ span, index = 0, children }) {
 			flexDirection="column"
 			data-reveal="lead"
 			data-hover="card"
+			data-tone={tone}
 			style={{ "--i": index }}>
 			{children}
 		</LinkBox>
@@ -75,7 +77,7 @@ function DottedCanvas({ children }) {
 function CardCopy({ eyebrow, title, href, description }) {
 	return (
 		<Box p={{ base: 6, md: 8 }} pb={{ base: 4, md: 6 }}>
-			<Text sx={labelStyle} color="brand.solid">
+			<Text data-tone-label sx={labelStyle} color="brand.solid">
 				{eyebrow}
 			</Text>
 			<Heading as="h3" mt={2} fontSize={{ base: "30px", md: "38px" }} lineHeight="heading">
@@ -90,7 +92,7 @@ function CardCopy({ eyebrow, title, href, description }) {
 
 function AiToolingCard() {
 	return (
-		<FeaturedCard span={7}>
+		<FeaturedCard span={7} tone={toneFor("/ai-tooling")}>
 			<CardCopy
 				eyebrow="Open source · 2026"
 				title="AI tooling"
@@ -133,7 +135,7 @@ function AiToolingCard() {
 
 function CompozeCard() {
 	return (
-		<FeaturedCard span={5} index={1}>
+		<FeaturedCard span={5} index={1} tone={toneFor("/compoze")}>
 			<CardCopy
 				eyebrow="Company · 2025"
 				title="Compoze"
@@ -194,11 +196,12 @@ function SupportingCard({ project, index }) {
 			gridColumn={{ md: project.wide ? "span 2" : undefined }}
 			data-reveal
 			data-hover="card"
+			data-tone={toneFor(project.href)}
 			style={{ "--i": index % 2 }}>
 			{/* Copy beside its preview from lg, the preview under the copy below. */}
 			<Grid templateColumns={{ base: "minmax(0, 1fr)", lg: "minmax(0, 1fr) minmax(0, 528px)" }} columnGap={12} rowGap={6} alignItems="center">
 				<Box>
-					<Text color="text.muted" sx={labelStyle}>
+					<Text data-tone-label color="text.muted" sx={labelStyle}>
 						{project.label}
 					</Text>
 					<Heading as="h3" mt={2} fontSize={{ base: "23px", md: "26px" }} lineHeight="heading">

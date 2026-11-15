@@ -344,43 +344,85 @@ html,
 	:is(a, [data-group]):hover [data-out-arrow] > span { animation: arrow-fly var(--dur-ui) both; }
 }
 
-/* ── Card hover: sheet lift ────────────────────────────────────────────── */
+/* ── Card hover: tone edge ─────────────────────────────────────────────── */
 /* One block per behaviour (STYLE.md, Motion); swapping the hover is replacing
    this block. Hooks: data-hover="card" on a framed card, data-hover="row" on a
-   ruled row, data-panel on a preview panel inside a card.
-   A card rises 4px up and left off a second 1px-framed sheet that marks the
-   slot it left, the way the preview panels sit on their offset shadow; its
-   border steps to the accent line and its preview panel lifts with it. No
-   text changes colour. `translate` and `scale`, not `transform`: the
-   scroll-driven reveal owns transform. Keyboard focus gets the same state. */
+   ruled row, data-tone on either for its category (lib/tones.js),
+   data-tone-label on the card's mono label.
+   A card draws a 3px rule in its category colour along its top edge, from the
+   side the pointer came in (--ox, lib/hoverOrigin.js); its label takes the
+   same colour and the card rises 3px on a soft shadow. `translate` and
+   `scale`, not `transform`: the scroll-driven reveal owns transform.
+   Keyboard focus gets the same state. */
+/* One tone per project category. Each reads at 4.5:1 or better on the page
+   and card grounds in its theme. */
+:root {
+	--tone-agents: #234ea2;
+	--tone-company: #a3452b;
+	--tone-research: #2f6a4a;
+	--tone-design: #6a3f86;
+	--tone-site: #29231f;
+}
+[data-theme="dark"] {
+	--tone-agents: #9ab6ff;
+	--tone-company: #f2a184;
+	--tone-research: #8fd3a8;
+	--tone-design: #d2b0f0;
+	--tone-site: #f2ece3;
+}
+[data-tone="agents"] { --tone: var(--tone-agents); }
+[data-tone="company"] { --tone: var(--tone-company); }
+[data-tone="research"] { --tone: var(--tone-research); }
+[data-tone="design"] { --tone: var(--tone-design); }
+[data-tone="site"] { --tone: var(--tone-site); }
+
 [data-hover="card"] {
+	position: relative;
 	transition: translate var(--dur-hover) var(--ease-out), scale var(--dur-press) var(--ease-out),
-		box-shadow var(--dur-hover) var(--ease-out), border-color var(--dur-hover) ease;
+		box-shadow var(--dur-hover) var(--ease-out);
+}
+[data-hover="card"]::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 3px;
+	z-index: 2;
+	/* Follows the card's 6px corner inside its 1px border. */
+	border-radius: 5px 5px 0 0;
+	background: var(--tone, var(--tone-site));
+	pointer-events: none;
+	transform: scaleX(0);
+	transform-origin: var(--ox, 0%) 50%;
+	transition: transform var(--dur-ui) var(--ease-out);
+}
+[data-hover="card"] [data-tone-label] {
+	transition: color var(--dur-hover) ease;
 }
 @media (hover: hover) and (pointer: fine) {
 	[data-hover="card"]:hover {
-		translate: -4px -4px;
-		box-shadow: 4px 4px 0 -1px var(--chakra-colors-surface-raised), 4px 4px 0 0 var(--chakra-colors-border-subtle);
-		border-color: var(--chakra-colors-border-strong);
+		translate: 0 -3px;
+		box-shadow: 0 18px 42px -34px rgba(39, 32, 27, 0.65);
 	}
-	[data-hover="card"]:hover [data-panel] {
-		translate: -2px -2px;
-		box-shadow: 6px 6px 0 var(--chakra-colors-preview-shadow);
-	}
+	[data-hover="card"]:hover::after { transform: none; }
+	[data-hover="card"]:hover [data-tone-label] { color: var(--tone, var(--tone-site)); }
 }
 [data-hover="card"]:has(:focus-visible) {
-	translate: -4px -4px;
-	box-shadow: 4px 4px 0 -1px var(--chakra-colors-surface-raised), 4px 4px 0 0 var(--chakra-colors-border-subtle);
-	border-color: var(--chakra-colors-border-strong);
+	translate: 0 -3px;
+	box-shadow: 0 18px 42px -34px rgba(39, 32, 27, 0.65);
 }
-/* Press: the card goes back into its slot (on touch, the only state). */
+[data-hover="card"]:has(:focus-visible)::after { transform: none; }
+[data-hover="card"]:has(:focus-visible) [data-tone-label] { color: var(--tone, var(--tone-site)); }
+/* Press: the card settles back (on touch, the only state). */
 [data-hover="card"]:active {
 	translate: none;
 	scale: 0.99;
 	box-shadow: none;
 }
-/* Rows: the rule under the row redraws in the accent from the left. It
-   travels the row's width, so it takes the base duration (STYLE.md, Motion). */
+/* Rows: a 2px rule in the row's tone (ink unless it names one) draws under
+   the row from the entry side. It travels the row's width, so it takes the
+   base duration (STYLE.md, Motion). */
 [data-hover="row"] {
 	position: relative;
 }
@@ -390,11 +432,11 @@ html,
 	left: 0;
 	right: 0;
 	bottom: -1px;
-	height: 1px;
-	background: var(--site-brand-solid);
+	height: 2px;
+	background: var(--tone, var(--tone-site));
 	pointer-events: none;
 	transform: scaleX(0);
-	transform-origin: left center;
+	transform-origin: var(--ox, 0%) 50%;
 	transition: transform var(--dur-ui) var(--ease-out);
 }
 @media (hover: hover) and (pointer: fine) {
@@ -402,8 +444,7 @@ html,
 }
 [data-hover="row"]:is(:focus-visible, :has(:focus-visible))::after { transform: none; }
 @media (prefers-reduced-motion: reduce) {
-	[data-hover="card"],
-	[data-hover="card"] [data-panel] {
+	[data-hover="card"] {
 		translate: none !important;
 		scale: none !important;
 	}
