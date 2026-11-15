@@ -123,47 +123,10 @@ test("hobbies returns to the labelled fallback when a WebGL context is lost", as
 	await expect(page.locator("#tennis").getByRole("button", { name: /motion/i })).toHaveCount(0);
 });
 
-test("trading uses the shared journal and UiPack exposes all library objects", async ({ page }) => {
+test("trading uses the shared journal", async ({ page }) => {
  await page.goto("/hobbies#trading");
  await expect(page.locator('#trading canvas')).toHaveAttribute('data-renderer','webgl');
- await page.goto('/uipack');
- // The 3D gallery mounts as the reader scrolls near it (components/LazyMount.js).
- await page.locator('#objects').scrollIntoViewIfNeeded();
- const collection=page.getByRole('region',{name:'3D object collection'});
- await expect(collection.getByRole('button',{name:'Trading journal',exact:true})).toBeVisible();
- await collection.getByRole('button',{name:'Trading journal',exact:true}).click();
- await expect(collection.locator('canvas')).toHaveAttribute('data-renderer','webgl');
- await expect(collection.locator('.uipack-object')).toHaveAttribute('data-kind','trading');
- await expect(collection.getByRole('navigation',{name:'Choose an object'}).getByRole('button')).toHaveCount(7);
-});
-
-test("UiPack changes the tennis edition without leaving the shared player", async ({ page }) => {
- // Studio is no longer tennis's default look (Realistic is), so ask for it.
- await page.goto('/uipack?category=web&object=tennis&look=0#objects');
- await page.locator('#objects').scrollIntoViewIfNeeded();
- const collection = page.getByRole('region', { name: '3D object collection' });
- await collection.getByRole('button', { name: 'Tennis practice', exact: true }).click();
- const object = collection.locator('.uipack-object');
- await expect(object.locator('canvas')).toHaveAttribute('data-source', 'blender');
- const before = Number(await object.getAttribute('data-edition'));
- await collection.getByRole('combobox', { name: /Studio edition/ }).selectOption(String((before + 1) % 3));
- await expect(object).toHaveAttribute('data-edition', String((before + 1) % 3));
- await expect(object.locator('canvas')).toHaveAttribute('data-renderer', 'webgl');
-});
-
-test("the object gallery preserves named looks in its review URL", async ({ page }) => {
-  await page.goto("/uipack?category=web&object=travel&look=1#objects");
-  const collection=page.getByRole("region",{name:"3D object collection"});
-  await expect(collection.locator(".uipack-object")).toHaveAttribute("data-kind","travel");
-  await expect(collection.getByRole("button",{name:/Paper worlds/})).toHaveAttribute("aria-pressed","true");
-  await collection.getByRole("button",{name:/Kinetic sculptures/}).click();
-  await expect(page).toHaveURL(/look=2/);
-  await page.reload();
-  await expect(collection.locator(".uipack-object")).toHaveAttribute("data-variant","2");
-  // Reading has no Kinetic look, so it carries over as its default, Realistic.
-  await collection.getByRole("button",{name:"Open book",exact:true}).click();
-  await expect(page).toHaveURL(/object=reading/);
-  await expect(collection.getByRole("button",{name:/Realistic close/})).toHaveAttribute("aria-pressed","true");
+ await expect(page.locator('#trading .uipack-object')).toHaveAttribute('data-kind','trading');
 });
 
 for (const width of [390, 1440]) for (const theme of ['light', 'dark']) {

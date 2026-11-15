@@ -4,7 +4,7 @@ const { expect, test } = require("@playwright/test");
 // after the lede, the dated meta line and structured data, paired notes, the
 // wide-screen side rail and the "On this page" bar below 1200px.
 
-const CASE_STUDIES = ["/compoze", "/groundplane", "/skills", "/skillsmith", "/ai-tooling", "/trading-engine", "/trading-engine/v2"];
+const CASE_STUDIES = ["/compoze", "/groundplane", "/skills", "/skillsmith", "/ai-tooling", "/trading-engine", "/trading-engine/v2", "/uipack"];
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const human = (iso) => {
 	const [y, m, d] = iso.split("-").map(Number);
