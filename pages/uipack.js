@@ -162,6 +162,17 @@ export default function Uipack() {
 					</Box>
 				</Grid>
 
+				{/* Placeholder (2026-11-15): the owner asked for a looking-back line to
+				    be written for now. Both facts are checkable (the notes repo pins
+				    uipack and draws its figures from it); replace it with his own
+				    words when he sends them. */}
+				<Box maxW="680px">
+					<P>
+						This site and my notes site both draw their figures from UiPack now, so a fix to how a
+						figure looks is made once instead of in each repo.
+					</P>
+				</Box>
+
 				<CaseStudyFooter links={links} next={{ name: "Trading engine", href: "/trading-engine", detail: "A paper-trading engine that tests ideas against rules set in advance" }} />
 			</Container>
 		</Layout>
