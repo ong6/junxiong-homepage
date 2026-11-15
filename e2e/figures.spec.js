@@ -10,7 +10,7 @@ for (const path of PAGES) {
 			await page.goto(path);
 			await page.locator(SEL).first().waitFor();
 			await page.locator("figure.uipack").first().scrollIntoViewIfNeeded();
-			// Scrolling past /uipack's 3D gallery mounts it (components/LazyMount.js);
+			// Scrolling can mount a page's lazy parts (components/LazyMount.js);
 			// let that load settle so packets are sampled on a free main thread.
 			await page.waitForLoadState("networkidle");
 			await page.waitForTimeout(300);
@@ -67,7 +67,7 @@ for (const path of PAGES) {
 			await expect.poll(() => page.locator("figure.uipack").first().evaluate((el) => getComputedStyle(el).backgroundColor)).toBe(expectedBg);
 			const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
 			expect(overflow).toBe(0);
-			if (path === "/uipack") expect(await page.locator("figure.uipack").count()).toBe(6);
+			if (path === "/uipack") expect(await page.locator("figure.uipack").count()).toBe(1);
 			expect(errors).toEqual([]);
 		});
 	}
