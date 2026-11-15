@@ -3,6 +3,7 @@ import OutArrow from "./OutArrow";
 import NextLink from "next/link";
 import ProjectLinks from "./ProjectLinks";
 import { Eyebrow } from "./ArticleParts";
+import { toneFor } from "../lib/tones";
 
 // The deliberate end of a case study: the links out (the only copy in the
 // reading order; the wide-screen rail repeats them for the eye), then one
@@ -24,6 +25,7 @@ export default function CaseStudyFooter({ links, next }) {
 					data-group
 					data-reveal
 					data-hover="card"
+					data-tone={toneFor(next.href)}
 					mt={{ base: 4, md: 5 }}
 					bg="surface.raised"
 					border="1px solid"
@@ -31,7 +33,7 @@ export default function CaseStudyFooter({ links, next }) {
 					borderRadius="6px"
 					px={5}
 					py={5}>
-					<Eyebrow>NEXT</Eyebrow>
+					<Eyebrow data-tone-label>NEXT</Eyebrow>
 					<Heading as="h2" mt={3} fontSize="24px" lineHeight="heading">
 						<LinkOverlay
 							as={NextLink}

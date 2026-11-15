@@ -10,7 +10,7 @@ for (const path of PAGES) {
 			await page.goto(path);
 			await page.locator(SEL).first().waitFor();
 			await page.locator("figure.uipack").first().scrollIntoViewIfNeeded();
-			// Scrolling past /uipack's 3D gallery mounts it (components/LazyMount.js);
+			// Scrolling can mount a page's lazy parts (components/LazyMount.js);
 			// let that load settle so packets are sampled on a free main thread.
 			await page.waitForLoadState("networkidle");
 			await page.waitForTimeout(300);
@@ -67,7 +67,7 @@ for (const path of PAGES) {
 			await expect.poll(() => page.locator("figure.uipack").first().evaluate((el) => getComputedStyle(el).backgroundColor)).toBe(expectedBg);
 			const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
 			expect(overflow).toBe(0);
-			if (path === "/uipack") expect(await page.locator("figure.uipack").count()).toBe(6);
+			if (path === "/uipack") expect(await page.locator("figure.uipack").count()).toBe(1);
 			expect(errors).toEqual([]);
 		});
 	}
@@ -119,6 +119,9 @@ test("engine pages link onward: the overview lists every v1 section and Engine v
 	await page.goto("/trading-engine");
 	const updates = page.locator("ol").filter({ hasText: "One shared backtest core" });
 	await expect(updates.getByRole("link", { name: /Scoring every candidate/ })).toHaveAttribute("href", "/trading-engine/v1#1-7");
+	// Newest first, the order of the v1 page.
+	await expect(updates.getByRole("link").first()).toHaveAttribute("href", "/trading-engine/v1#1-8");
+	await expect(updates.getByRole("link").last()).toHaveAttribute("href", "/trading-engine/v1#1-1");
 	const eras = page.locator("ol").filter({ hasText: "Executor and ledger" });
 	await expect(eras.getByRole("link", { name: /Executor and ledger/ })).toHaveAttribute("href", "/trading-engine/v2");
 	await updates.getByRole("link", { name: /Scoring every candidate/ }).click();
@@ -127,28 +130,35 @@ test("engine pages link onward: the overview lists every v1 section and Engine v
 	await expect(page.getByRole("link", { name: /Executor and ledger/ })).toHaveAttribute("href", "/trading-engine/v2");
 });
 
-test("Engine v1 is one page: eight dated sections, each with its diagram and a closed fact disclosure", async ({ page }) => {
+test("Engine v1 is one page: eight dated sections, newest first, each with its diagram and a closed fact disclosure", async ({ page }) => {
 	await page.goto("/trading-engine/v1");
 	await expect(page.getByRole("heading", { level: 1 })).toHaveText("A research simulator");
 	const heads = page.locator("article h2[id^='1-']");
 	await expect(heads).toHaveCount(8);
-	expect(await heads.evaluateAll((els) => els.map((h) => h.id))).toEqual(["1-1", "1-2", "1-3", "1-4", "1-5", "1-6", "1-7", "1-8"]);
+	expect(await heads.evaluateAll((els) => els.map((h) => h.id))).toEqual(["1-8", "1-7", "1-6", "1-5", "1-4", "1-3", "1-2", "1-1"]);
 	await expect(page.locator('[id="1-8"]')).toHaveText("1.8 One shared backtest core");
 	await expect(page.locator("article details")).toHaveCount(8);
 	expect(await page.locator("article details[open]").count()).toBe(0);
-	// Figures mount as they come near (components/LazyMount.js); the first is there at load.
+	// Figures mount as they come near (components/LazyMount.js); the first, 1.8, is there at load.
 	await expect(page.locator("figure.uipack")).toHaveCount(1);
-	for (const n of [2, 3, 4, 5, 6, 7, 8]) {
+	await expect(page.locator("#te-1-8-figure")).toHaveCount(1);
+	for (const n of [7, 6, 5, 4, 3, 2, 1]) {
 		await page.locator(`[id="1-${n}"]`).scrollIntoViewIfNeeded();
 		await expect(page.locator(`#te-1-${n}-figure`)).toHaveCount(1);
 	}
 	await expect(page.locator("figure.uipack")).toHaveCount(8);
+	// Figure numbers follow reading order: fig. 1 is 1.8 at the top, fig. 8 is 1.1 at the bottom.
+	const order = ["1", "2", "3", "4", "5", "6", "7", "8"];
+	expect(await page.locator("figure.uipack").evaluateAll((els) => els.map((el) => el.textContent.match(/Figure 0(\d)/i)?.[1]))).toEqual(order);
+	expect(await page.locator("figcaption[id^='te-1-']").evaluateAll((els) => els.map((el) => el.textContent.match(/^fig\. (\d) —/)?.[1]))).toEqual(order);
 });
 
 test("old version routes redirect to their Engine v1 section", async ({ page }) => {
 	for (const [from, to] of [
+		["/trading-engine/v1/1.1", "1-1"],
 		["/trading-engine/v1/1.3", "1-3"],
 		["/trading-engine/v1/1.8", "1-8"],
+		["/trading-engine/v4", "1-4"],
 		["/trading-engine/v5", "1-5"],
 	]) {
 		await page.goto(from);

@@ -11,7 +11,7 @@ import { PAGE_META } from "../../lib/pageMeta";
 
 // Overview of the trading engine: what it is, the engine running now, and the
 // two engine eras. Each era has its own page (/trading-engine/v1, /v2); the v1
-// page carries a section per update (#1-1 … #1-8).
+// page carries a section per update, newest first (#1-8 … #1-1).
 
 const links = withNotes("/trading-engine", [
 	{ name: "Product docs", detail: "How it works, research and operations", href: "/trading-engine/docs" },
@@ -87,11 +87,25 @@ export default function TradingEngine() {
 				<H2>Engine v1 updates</H2>
 
 				<P>
-					All eight updates are on one page, each with the diagram as the engine stood then. Update
-					1.8 added the shared backtest core, which Engine v2 still uses for research.
+					All eight updates are on one page, newest first, each with the diagram as the engine
+					stood then. Update 1.8 added the shared backtest core, which Engine v2 still uses for
+					research.
 				</P>
 
 				<TradingVersionList />
+
+				{/* Placeholder (2026-11-15): the owner asked for a looking-back line to
+				    be written for now. Every fact in it is from his note "Why my
+				    trading strategies haven't earned real money" (in Links out);
+				    replace it with his own words when he sends them. */}
+				<H2>Looking back</H2>
+				<P>
+					I started by turning ideas from trading books and YouTube into rules I could run. Some of
+					the backtests made money, and none kept a reliable advantage over its control, so no
+					strategy here has earned the right to trade real money. That changed what I build next:
+					an agent that makes one bounded decision inside the process, while plain code keeps risk
+					and execution.
+				</P>
 
 				<CaseStudyFooter links={links} next={{ name: "Agent skills", href: "/skills", detail: "One home for coding-agent skills, linked into every repo" }} />
 			</Container>

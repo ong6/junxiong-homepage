@@ -131,7 +131,7 @@ test("section heading is one spec in case studies, era pages and docs", async ({
 });
 
 // Everything the site sets itself (UiPack's parts keep their own type).
-const OWN = ".uipack, .uipack-docs, .uipack-object, .uipack-object-frame, .uipack-animation-workspace, .uipack-slide-starter, .uipack-speaker-guide, [class*='uipack-web'], svg";
+const OWN = ".uipack, .uipack-docs, .uipack-object, .uipack-object-frame, .uipack-slide-starter, .uipack-speaker-guide, [class*='uipack-web'], svg";
 
 test("text uses the site's six leadings and one label tracking", async ({ page }) => {
 	test.setTimeout(60_000);

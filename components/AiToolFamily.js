@@ -39,6 +39,7 @@ export default function AiToolFamily({ current }) {
 							key={tool.href}
 							as="article"
 							data-hover="card"
+							data-tone="agents"
 							p={4}
 							minH="152px"
 							border="1px solid"
@@ -46,6 +47,7 @@ export default function AiToolFamily({ current }) {
 							borderRadius="6px"
 							bg={active ? "accent.soft" : "surface.raised"}>
 							<Text
+								data-tone-label
 								color="text.muted"
 								fontFamily="var(--font-mono)"
 								fontSize="12px"

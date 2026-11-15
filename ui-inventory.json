@@ -3,38 +3,32 @@
     {
       "component": "components/HobbyScene.js",
       "packageExport": "uipack/objects",
-      "gallery": "components/UipackObjects.js",
-      "description": "Shared 3D objects for Hobbies and Contact, including geometry, playback and fallback"
+      "gallery": "components/HobbyScene.js",
+      "description": "Shared 3D objects for Hobbies, Contact and the one object on /uipack, including geometry, playback and fallback; the full object gallery is ui.junxiong.dev/components/objects"
     },
     {
-      "component": "components/UipackWebGallery.js",
+      "component": "components/UipackFigure.js",
       "packageExport": "uipack/presets",
-      "gallery": "components/UipackWebGallery.js",
-      "description": "Reusable technical figures and motion, including the AI toolchain pipeline"
+      "gallery": "components/UipackFigure.js",
+      "description": "The live figure on /uipack (the agent-loop preset); every preset is on ui.junxiong.dev/components/diagrams"
     },
     {
-      "component": "components/UipackSlides.js",
+      "component": "components/UipackSlide.js",
       "packageExport": "uipack/presentations",
-      "gallery": "components/UipackSlides.js",
-      "description": "Slide starters with speaker guidance"
-    },
-    {
-      "component": "components/UipackObjects.js",
-      "packageExport": "uipack/objects",
-      "gallery": "components/UipackObjects.js",
-      "description": "Shared ObjectGallery scene library, art-direction inspector and original Studio editions"
+      "gallery": "components/UipackSlide.js",
+      "description": "The opening slide starter with its speaker guide on /uipack; every starter is on ui.junxiong.dev/presentations"
     },
     {
       "component": "components/SideBackdrop.js",
       "packageExport": "uipack/web",
-      "gallery": "components/UipackWebMotion.js",
-      "description": "Drifting gutter grid on article pages; the gallery also demonstrates UiPack's paint theme change"
+      "gallery": "components/SideBackdrop.js",
+      "description": "Drifting gutter grid on article pages; UiPack's other page motion is on ui.junxiong.dev"
     },
     {
       "component": "components/TradingDocsPage.js",
       "packageExport": "uipack/docs",
-      "gallery": "components/UipackDocs.js",
-      "description": "Product documentation shell, Markdown renderer, responsive navigation, contents, anchors, and adjacent-page links"
+      "gallery": "components/TradingDocsPage.js",
+      "description": "Product documentation shell, Markdown renderer, responsive navigation, contents, anchors, and adjacent-page links; live on /trading-engine/docs and ui.junxiong.dev/docs"
     }
   ],
   "pageOnly": [

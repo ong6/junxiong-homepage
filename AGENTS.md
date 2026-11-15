@@ -13,7 +13,7 @@ Pushing to `main` deploys to production on Vercel; CI (`.github/workflows/ci.yml
 ## Layout
 - `pages/`: routes; `works.js` (the Archive: rows open in place, `/works#<slug>`) and `trading-engine/docs/[slug].js` are data-driven; `sitemap.xml.js`, `llms.txt.js` are generated routes
 - `components/`: layout, nav, article parts, `DiagramFigure.js`; `components/diagrams/`: figure modules (`trading/` for engine versions); `components/Resume/`: résumé page and its LaTeX PDF source
-- `lib/`: `theme.js` (Chakra theme), `works.js` (university projects), `tradingDocs.js`, `tradingVersions.js`, `themeTransition.js` (the theme change), uipack gallery data
+- `lib/`: `theme.js` (Chakra theme), `works.js` (university projects), `tradingDocs.js`, `tradingVersions.js`, `themeTransition.js` (the theme change)
 - `content/trading-docs/`: synced docs Markdown · `scripts/`: build and sync scripts · `e2e/`: Playwright specs · `styles/`: `globals.css`, `print.css`, `Hobbies.module.css`
 
 ## Recipes (files to touch)
@@ -25,7 +25,6 @@ Pushing to `main` deploys to production on Vercel; CI (`.github/workflows/ci.yml
 
 ## Generated: never hand-edit (and skip reading)
 - `content/trading-docs/`: `npm run sync:trading-docs` from the engine repo's `docs/site`; needs the gitignored `scripts/.forbidden-terms.local`
-- `public/uipack-slides/`: from `lib/uipackSlides.mjs` via `node scripts/build-uipack-slides.mjs`
 - `package-lock.json`: change only through npm · `docs/ui-review-2026-11.md`: a dated review, history only
 - `AGENTS.md` stays hand-written: `agentRules: false` in `next.config.js` stops `next dev` appending its block
 
