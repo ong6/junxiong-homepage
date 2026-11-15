@@ -63,7 +63,7 @@ export default function HomeLab() {
 
 				<H2>The pieces</H2>
 				<P>
-					A network gateway and switch will split the house into zones. A storage box will only store. One small, low-power server will stay on all the time and run virtual machines.
+					A network gateway and switch will split the home network into zones. A storage box will only store. One small, low-power server will stay on all the time and run virtual machines.
 				</P>
 				<P>
 					A Mac Studio on my desk will run local models and the agent. A power backup unit will keep things up through short outages and shut the server down cleanly in long ones.
@@ -80,7 +80,7 @@ export default function HomeLab() {
 					These are the rules I set for it. The storage box stores and runs no apps. The family apps sit in their own zone and can reach only what they serve. The AI machine can reach only the shares and ports it needs, and the agent cannot reach the family&apos;s devices.
 				</P>
 				<P>
-					Local models come first, with a cloud model as the fallback. Only photos and files are treated as durable. Downloaded media is not backed up. There is no off-site backup. That is my choice, and I know the risk.
+					Local models come first, with a cloud model as the fallback. Only photos and files are treated as durable. Films and shows are not backed up. There is no off-site backup. That is my choice, and I know the risk.
 				</P>
 
 				<H2>Where it stands</H2>
