@@ -84,7 +84,7 @@ export default function SearchButton() {
 				gap={2}
 				minW="44px"
 				minH="44px"
-				px={{ base: 0, md: 3 }}
+				px={{ base: 0, lg: 3 }}
 				border="1px solid"
 				borderColor="border.subtle"
 				borderRadius="4px"
@@ -94,8 +94,12 @@ export default function SearchButton() {
 				transition="background-color var(--dur-hover) ease, color var(--dur-hover) ease"
 				_hover={{ bg: "surface.quiet", color: "page.text" }}>
 				<SearchIcon boxSize="14px" />
+				{/* From 992px it reads as a search field: label, then the shortcut. */}
+				<Box as="span" aria-hidden="true" display={{ base: "none", lg: "inline" }} fontSize="13px" fontWeight="600" lineHeight="1">
+					Search
+				</Box>
 				{/* Fixed width, so the ⌘K / Ctrl K swap after load moves nothing. */}
-				<Box as="span" aria-hidden="true" display={{ base: "none", md: "inline" }} w="6ch" fontFamily="mono" fontSize="12px" lineHeight="1" textAlign="right">
+				<Box as="span" aria-hidden="true" display={{ base: "none", lg: "inline" }} w="6ch" fontFamily="mono" fontSize="12px" lineHeight="1" textAlign="right">
 					{shortcut}
 				</Box>
 			</Box>

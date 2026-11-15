@@ -87,13 +87,15 @@ test("hobbies pairs the 3D note with the page and the hardware notes with Home s
 test("the side rail repeats the page's own facts, links and sections at 1440", async ({ page }) => {
 	await page.setViewportSize({ width: 1440, height: 900 });
 	await page.goto("/compoze");
-	const rail = page.locator("[data-rail]");
-	await expect(rail).toBeVisible();
+	// The facts sit beside the lede; the links and sections follow the reader.
+	await expect(page.locator("[data-rail-facts]")).toBeVisible();
+	await scrollToHead(page, 1);
+	await expect(page.locator("[data-rail]")).toBeVisible();
 	const found = await page.evaluate(() => {
-		const rail = document.querySelector("[data-rail]");
+		const rail = document.querySelector("[data-article-contents]");
 		const pageFacts = new Set(
 			[...document.querySelectorAll("main dl")]
-				.filter((dl) => !dl.closest("[data-rail]"))
+				.filter((dl) => !dl.closest("[data-article-contents]"))
 				.flatMap((dl) => [...dl.querySelectorAll("dt")].map((dt) => `${dt.textContent}=${dt.nextElementSibling.textContent}`)),
 		);
 		const railFacts = [...rail.querySelectorAll("dt")].map((dt) => `${dt.textContent}=${dt.nextElementSibling.textContent}`);

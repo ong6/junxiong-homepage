@@ -7,12 +7,13 @@ import OutArrow from "./OutArrow";
 // The orientation parts of a long article (STYLE.md, Layout: Article).
 //
 // ArticleContents, from 1200px: the 680px prose column leaves ~400px empty on
-// its right, and this side rail fills it, sticky below the nav: a few of the
-// page's own facts, its links out and the list of its sections, the one being
-// read marked. Every word in it is already on the page. Figures that break
-// out to the full width carry an opaque ground and sit above the rail; only
-// while one overlaps the rail's own box does the rail fade out (160ms,
-// instant under reduced motion), so it is never seen half covered.
+// its right, and this side rail fills it: a few of the page's own facts
+// beside the title and the lede, then a panel that sticks below the nav with
+// the page's links out and the list of its sections, the one being read
+// marked. Every word in it is already on the page. Figures that break out to
+// the full width carry an opaque ground and sit above the rail; only while
+// one overlaps the panel's own box does the panel fade out (160ms, instant
+// under reduced motion), so it is never seen half covered.
 //
 // The facts and links repeat the meta line, the fact table and the closing
 // Links out block, so the rail hides them from screen readers and the tab
@@ -195,62 +196,87 @@ function SectionList({ items, active, rowH, onPick }) {
 
 export default function ArticleContents({ containerRef, contents = false, facts, links }) {
 	const { items, active } = useSections(containerRef);
-	const [covered, setCovered] = useState(false);
+	// Hidden until the first measure, so it is never painted half covered.
+	const [covered, setCovered] = useState(true);
+	const [factsFit, setFactsFit] = useState(true);
+	const slotRef = useRef(null);
+	const factsRef = useRef(null);
 	const panelRef = useRef(null);
 	const sections = contents ? items : [];
 	const hasFacts = Boolean(facts && facts.length);
 	const hasLinks = Boolean(links && links.length);
 	const shown = hasFacts || hasLinks || sections.length > 0;
 
-	// Hide the rail only while a full-width element overlaps the rail's own box.
-	// One IntersectionObserver watches the elements wider than the prose column
-	// that reach into the rail's column, with its root shrunk to the rail's
-	// vertical band (rootMargin), so plain text beside the rail never hides it.
-	// The observer is rebuilt when the rail's height or the viewport changes.
+	// The facts sit beside the title and the lede and scroll away with them, so
+	// the right side is filled at first view; the links and the section list
+	// follow the reader. If the facts would run into the first full-width
+	// figure they join the sticky panel instead.
+	// The panel hides only while a full-width figure overlaps its own box:
+	// figures wider than the prose column that reach into the rail's column are
+	// measured against the panel once per frame while scrolling, so plain text
+	// beside the rail never hides it.
 	useEffect(() => {
 		const root = containerRef.current;
+		const slot = slotRef.current;
 		const panel = panelRef.current;
-		if (!root || !panel || typeof IntersectionObserver === "undefined") return undefined;
-		let observer = null;
-		const crossing = new Set();
-		const build = () => {
-			if (observer) observer.disconnect();
-			crossing.clear();
+		if (!root || !slot || !panel) return undefined;
+		let wide = [];
+		let frame = 0;
+		const check = () => {
+			frame = 0;
 			const r = panel.getBoundingClientRect();
 			if (!r.width) return;
-			// The band the rail occupies once it sticks (it sticks 96px from the
-			// top before any wide figure reaches it).
-			const top = STICKY_TOP;
-			const bottom = Math.max(0, Math.round(window.innerHeight - STICKY_TOP - panel.offsetHeight));
-			observer = new IntersectionObserver(
-				(entries) => {
-					entries.forEach((e) => (e.isIntersecting ? crossing.add(e.target) : crossing.delete(e.target)));
-					setCovered(crossing.size > 0);
-				},
-				{ rootMargin: `-${top}px 0px -${bottom}px 0px` },
+			setCovered(
+				wide.some((f) => {
+					const b = f.getBoundingClientRect();
+					return b.top < r.bottom + 8 && b.bottom > r.top - 8;
+				}),
 			);
-			// Wide = it reaches into the rail's column (a full-width figure, not a
-			// prose-width screenshot).
-			root.querySelectorAll("figure").forEach((f) => {
-				if (f.parentElement && f.parentElement.closest("figure")) return;
-				if (f.getBoundingClientRect().right > r.left) observer.observe(f);
-			});
+		};
+		const queue = () => {
+			if (!frame) frame = requestAnimationFrame(check);
+		};
+		const build = () => {
+			const s = slot.getBoundingClientRect();
+			if (!s.width) return;
+			wide = [...root.querySelectorAll("figure")].filter((f) => !(f.parentElement && f.parentElement.closest("figure")) && f.getBoundingClientRect().right > s.left);
+			const factsEl = factsRef.current;
+			if (factsEl) {
+				const end = s.top + factsEl.offsetHeight + 24;
+				setFactsFit(!wide.some((f) => {
+					const b = f.getBoundingClientRect();
+					return b.top < end && b.bottom > s.top;
+				}));
+			}
+			queue();
 		};
 		build();
 		const ro = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(build);
-		if (ro) ro.observe(panel);
+		if (ro) {
+			ro.observe(panel);
+			ro.observe(root);
+		}
 		window.addEventListener("resize", build);
+		window.addEventListener("scroll", queue, { passive: true });
 		return () => {
-			if (observer) observer.disconnect();
+			if (frame) cancelAnimationFrame(frame);
 			if (ro) ro.disconnect();
 			window.removeEventListener("resize", build);
+			window.removeEventListener("scroll", queue);
 		};
 	}, [containerRef, shown, sections.length]);
 
 	if (!shown) return null;
 
+	const factsBlock = hasFacts ? (
+		<Box ref={factsRef}>
+			<RailFacts facts={facts} />
+		</Box>
+	) : null;
+
 	return (
 		<Box
+			ref={slotRef}
 			data-article-contents
 			position="absolute"
 			top={{ base: 10, md: 16 }}
@@ -259,6 +285,7 @@ export default function ArticleContents({ containerRef, contents = false, facts,
 			w="224px"
 			zIndex={0}
 			display={{ base: "none", xl: "block" }}>
+			{factsFit && factsBlock && <Box mb={8}>{factsBlock}</Box>}
 			<Box
 				ref={panelRef}
 				data-rail
@@ -278,7 +305,7 @@ export default function ArticleContents({ containerRef, contents = false, facts,
 					"& a:focus-visible": { outlineOffset: "-2px", transition: "none" },
 					"@media (prefers-reduced-motion: reduce)": { transition: "none" },
 				}}>
-				{hasFacts && <RailFacts facts={facts} />}
+				{!factsFit && factsBlock}
 				{hasLinks && <RailLinks links={links} />}
 				{sections.length > 0 && (
 					<Box as="nav" aria-label="On this page">
