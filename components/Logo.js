@@ -20,6 +20,14 @@ const LogoBox = styled.span`
 			transform: rotate(20deg);
 		}
 	}
+
+	/* Below 360px the header's search, Contact and menu controls need the
+	   room: the mark goes and the name stays. */
+	@media (max-width: 359px) {
+		img {
+			display: none !important;
+		}
+	}
 `;
 
 const Logo = () => {

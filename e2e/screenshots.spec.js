@@ -14,6 +14,7 @@ for (const path of [
 	"/uipack",
 	"/groundplane",
 	"/hobbies",
+	"/home-lab",
 ]) {
 	for (const theme of ["light", "dark"]) {
 		for (const [w, h] of [

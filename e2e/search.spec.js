@@ -150,3 +150,16 @@ test("on a phone the header button opens a full-width menu whose list scrolls in
 	expect(errors).toEqual([]);
 	await context.close();
 });
+
+test("typing home lab finds the Home lab page and opens it", async ({ page }) => {
+	const errors = collectErrors(page);
+	await page.setViewportSize({ width: 1440, height: 900 });
+	await page.goto("/groundplane");
+	await page.keyboard.press("ControlOrMeta+k");
+	await dialog(page).getByRole("combobox").fill("home lab");
+	await expect(dialog(page).getByRole("option").first()).toHaveAccessibleName("Home lab");
+	await page.keyboard.press("Enter");
+	await expect(page).toHaveURL(/\/home-lab$/);
+	await expect(page.locator("main h1")).toHaveText("Home lab");
+	expect(errors).toEqual([]);
+});

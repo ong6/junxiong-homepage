@@ -51,6 +51,22 @@ test("header has deliberate vertical room at desktop and mobile widths", async (
 	}
 });
 
+test("the header's controls fit on the narrowest phones", async ({ page }) => {
+	for (const width of [320, 360, 390, 430]) {
+		await page.setViewportSize({ width, height: 800 });
+		await page.goto("/");
+		const fits = await page.locator('nav[aria-label="Site"]').evaluate((nav) => {
+			const vw = document.documentElement.clientWidth;
+			return [...nav.querySelectorAll("a, button")]
+				.map((el) => el.getBoundingClientRect())
+				.filter((box) => box.width > 0)
+				.every((box) => box.left >= 0 && box.right <= vw);
+		});
+		expect(fits, `header controls inside the window at ${width}`).toBe(true);
+		await expect(page.getByRole("button", { name: "Open navigation menu" })).toBeVisible();
+	}
+});
+
 test("hobbies content shares the header's left edge at every width", async ({ page }) => {
 	// Each load builds its 3D scenes on software WebGL here; four workers share the machine.
 	test.setTimeout(90_000);

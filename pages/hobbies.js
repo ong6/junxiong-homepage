@@ -15,7 +15,8 @@ const chapters = [
 	{ id: "coding-ai", index: "02", label: "Coding & AI", kind: "ai" },
 	{ id: "tennis", index: "03", label: "Tennis", kind: "tennis" },
 	{ id: "reading", index: "04", label: "Reading", kind: "reading" },
-	{ id: "home-servers", index: "05", label: "Home servers", kind: "server" },
+	// `alias` keeps the chapter's old anchor (/hobbies#home-servers) working.
+	{ id: "home-lab", alias: "home-servers", index: "05", label: "Home lab", kind: "server" },
 	{ id: "trading", index: "06", label: "Trading", kind: "trading" },
 ];
 
@@ -27,9 +28,10 @@ function NotesBlock({ path, heading = "Notes from this hobby", ...props }) {
 	return <ProjectLinks heading={heading} compact mt={6} maxW="64ch" links={notes.map(noteLink)} {...props} />;
 }
 
-function Chapter({ id, index, label, kind, active, preload, after, children }) {
+function Chapter({ id, alias, index, label, kind, active, preload, after, children }) {
 	return (
 		<Box as="section" id={id} className={styles.chapter} data-chapter={kind}>
+			{alias ? <span id={alias} className={styles.anchorAlias} aria-hidden="true" /> : null}
 			<Box className={styles.copy}>
 				<Text className={styles.number}>{index} / 06</Text>
 				<Text as="h2" className={styles.heading}>{label}</Text>
@@ -136,8 +138,22 @@ export default function Hobbies() {
 					Non-fiction, usually tied to whatever I am building or trading at the time. Fiction in between to reset.
 				</Chapter>
 
-				<Chapter {...chapters[4]} active={active === chapters[4].id} preload={isNear(chapters[4].id)} after={<NotesBlock path="/hobbies#home-servers" />}>
-					I am speccing an always-on inference box that serves models to my own tools. So far, I&apos;m mostly comparing models, memory requirements and what the hardware would cost. I <Link href="https://notes.junxiong.dev" target="_blank" rel="noopener noreferrer">write up what I learn as I go</Link>.
+				<Chapter
+					{...chapters[4]}
+					active={active === chapters[4].id} preload={isNear(chapters[4].id)}
+					after={
+						<>
+							<ProjectLinks
+								heading="More on this hobby"
+								compact
+								mt={6}
+								maxW="64ch"
+								links={[{ name: "Home lab", detail: "What I plan to run at home and where it stands", href: "/home-lab" }]}
+							/>
+							<NotesBlock path="/hobbies#home-lab" mt={4} />
+						</>
+					}>
+					I am planning a <Link as={NextLink} href="/home-lab">home lab</Link>: one place for the storage, photos, streaming, home automation and local AI my household runs for itself. Most of it is still a plan. Today an agent runs on a laptop, and my devices share a private network. I <Link href="https://notes.junxiong.dev" target="_blank" rel="noopener noreferrer">write up what I learn as I go</Link>.
 				</Chapter>
 
 				<Chapter

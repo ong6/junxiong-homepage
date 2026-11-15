@@ -67,6 +67,17 @@
 	padding: 64px var(--page-edge);
 	scroll-margin-top: 88px;
 	border-bottom: 1px solid var(--chakra-colors-border-subtle);
+	position: relative;
+}
+/* A chapter's old anchor: an empty mark on the chapter's top edge that scrolls
+   like the chapter itself (Home lab keeps #home-servers). */
+.anchorAlias {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 1px;
+	height: 1px;
+	scroll-margin-top: inherit;
 }
 .copy { min-width: 0; max-width: 480px; }
 /* After the six chapters: the notes about the page itself, on the page edge. */

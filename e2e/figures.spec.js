@@ -2,7 +2,7 @@ const { expect, test } = require("@playwright/test");
 const { SEL, packetCentre, dist, collectErrors } = require("./helpers");
 
 const VERSION_PAGES = ["/trading-engine/v1"];
-const PAGES = ["/compoze", "/groundplane", "/skills", "/skillsmith", "/workbase", "/trading-engine", "/trading-engine/v2", "/uipack", ...VERSION_PAGES];
+const PAGES = ["/compoze", "/groundplane", "/skills", "/skillsmith", "/workbase", "/home-lab", "/trading-engine", "/trading-engine/v2", "/uipack", ...VERSION_PAGES];
 
 for (const path of PAGES) {
 	test.describe(`${path} figures`, () => {
@@ -83,7 +83,7 @@ test("/groundplane expand opens the wide drawing full-screen and Esc closes it",
 	await expect(dialog).toHaveCount(0);
 });
 
-for (const path of ["/uipack", "/compoze", "/groundplane", "/skills", "/skillsmith", "/workbase", "/trading-engine", "/trading-engine/v2", ...VERSION_PAGES]) {
+for (const path of ["/uipack", "/compoze", "/groundplane", "/skills", "/skillsmith", "/workbase", "/home-lab", "/trading-engine", "/trading-engine/v2", ...VERSION_PAGES]) {
 	test(`${path} at 390 has no horizontal overflow`, async ({ page }) => {
 		await page.setViewportSize({ width: 390, height: 844 });
 		await page.goto(path);

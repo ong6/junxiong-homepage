@@ -26,6 +26,7 @@ const topRoutes = [
 	{ path: "/uipack", changefreq: "monthly", priority: "0.6" },
 	{ path: "/works", changefreq: "monthly", priority: "0.7" },
 	{ path: "/hobbies", changefreq: "monthly", priority: "0.5" },
+	{ path: "/home-lab", changefreq: "monthly", priority: "0.5" },
 ];
 
 const urls = topRoutes.map((url) => ({ ...url, lastmod: modifiedFor(url.path) }));

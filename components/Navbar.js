@@ -27,7 +27,7 @@ const navigationLinks = [
 		activePaths: ["/ai-tooling", "/compoze", "/groundplane", "/skills", "/skillsmith", "/trading-engine", "/uipack", "/workbase"],
 	},
 	{ href: "/resume", name: "Resume" },
-	{ href: "/hobbies", name: "Hobbies" },
+	{ href: "/hobbies", name: "Hobbies", activePaths: ["/hobbies", "/home-lab"] },
 	{ href: "https://notes.junxiong.dev", name: "Notes", external: true },
 ];
 
@@ -149,7 +149,7 @@ const Navbar = ({ path = "/", ...props }) => {
 			zIndex={20}
 			{...props}>
 			<Container maxW="1120px" px={4} h="100%">
-				<Flex h="100%" align="center" justify="space-between" gap={4}>
+				<Flex h="100%" align="center" justify="space-between" gap={{ base: 2, sm: 4 }}>
 					<Box
 						flexShrink={0}
 						display="flex"

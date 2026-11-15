@@ -1,7 +1,7 @@
 const { expect, test } = require("@playwright/test");
 const { collectErrors } = require("./helpers");
 
-const labels = ["Travel", "Coding & AI", "Tennis", "Reading", "Home servers", "Trading"];
+const labels = ["Travel", "Coding & AI", "Tennis", "Reading", "Home lab", "Trading"];
 
 async function settleLayout(page) {
 	await page.evaluate(() => document.fonts.ready);
