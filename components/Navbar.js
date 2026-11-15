@@ -149,7 +149,7 @@ const Navbar = ({ path = "/", ...props }) => {
 			zIndex={20}
 			{...props}>
 			<Container maxW="1120px" px={4} h="100%">
-				<Flex h="100%" align="center" justify="space-between" gap={4}>
+				<Flex h="100%" align="center" justify="space-between" gap={{ base: 2, sm: 4 }}>
 					<Box
 						flexShrink={0}
 						display="flex"

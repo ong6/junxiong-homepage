@@ -265,8 +265,8 @@ their own hero (Contact: copy beside a 3D scene; Hobbies: six full-viewport nati
 chapters, text beside a 3D object, stacking on narrow screens; one scene plays, the one nearest the
 centre of the screen, and the chapters before and after it hold theirs built and still
 (`preload`, since uipack 0.7.2), so a scene is already drawn when its chapter arrives and at most three
-exist at a time). No placeholder picture stands in while a scene loads: UiPack's 2D drawing is
-hidden unless WebGL cannot draw the scene (`styles/globals.css`).
+exist at a time). No placeholder picture stands in while a scene loads: UiPack's 2D drawing shows
+only when WebGL cannot draw the scene (`placeholder="none"`, UiPack's default since 0.9.0).
 
 | Setting | This site |
 | --- | --- |
@@ -354,7 +354,7 @@ rust accent, serif and sans) and would write its own spec or say `extends: junxi
 owner wants the two to match. Registry row to add in UiPack's `siteRegistry`
 (`playground/docs-manifest.ts`): site junxiong.dev, repo `ong6/junxiong-homepage`, spec
 `junxiong-homepage:STYLE.md`, looks `diagrams: blueprint, 3d: ink`, pins
-`v0.8.0`.
+`v0.9.0`.
 
 ## Open TODOs
 

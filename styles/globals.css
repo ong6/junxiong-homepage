@@ -293,16 +293,6 @@ html,
 	--object-rule: var(--site-border-subtle);
 	--object-accent: var(--site-brand-solid);
 }
-/* The 2D drawing under a 3D scene is only for when WebGL cannot draw it (no
-   WebGL, a lost context): then the canvas reports data-renderer="fallback".
-   It is not shown while a scene loads or before its chapter is near, so no
-   placeholder picture is swapped for the scene (owner, 2026-11-15); the scene
-   fades in on its own. It stays in the page for screen readers, and shows
-   when scripting is off, since no scene will come. */
-@media (scripting: enabled) {
-	.uipack-object .uipack-object__fallback { opacity: 0; }
-	.uipack-object:has(canvas[data-renderer="fallback"]) .uipack-object__fallback { opacity: 1; }
-}
 .uipack-slide-starter,
 .uipack-speaker-guide,
 :root .uipack-slide-starter[data-theme],
