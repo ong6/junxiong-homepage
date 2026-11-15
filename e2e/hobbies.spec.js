@@ -153,10 +153,11 @@ for (const width of [390, 1440]) for (const theme of ['light', 'dark']) {
     test.setTimeout(90_000);
     await page.setViewportSize({width, height:900});
     await page.addInitScript(mode => localStorage.setItem('junxiong-theme', mode), theme);
+    // An old preview URL: the page has one 3D style and ignores it.
     await page.goto('/hobbies?style=abstract');
     await expect(page.getByRole('button',{name:'My picks',exact:true})).toHaveCount(0);
     await expect(page.getByRole('group',{name:'3D art direction'})).toHaveCount(0);
-    for (const [kind,direction] of [['travel','kinetic'],['ai','kinetic'],['tennis','realistic'],['reading','realistic'],['server','realistic'],['trading','kinetic']]) {
+    for (const [kind,direction] of ['travel','ai','tennis','reading','server','trading'].map(kind => [kind,'ink'])) {
       const chapter=page.locator(`[data-chapter="${kind}"]`);
       const object=chapter.locator('.uipack-object');
       await chapter.locator('[data-hobby-visual]').evaluate(node => node.scrollIntoView({block:'center',behavior:'instant'}));
@@ -173,9 +174,9 @@ for (const width of [390, 1440]) for (const theme of ['light', 'dark']) {
   });
 }
 
-test('contact keeps the chosen cartoon world even with an old preview URL',async({page})=>{
+test('contact draws the one ink style even with an old preview URL',async({page})=>{
   await page.goto('/contact?style=kinetic');
   await expect(page.locator('.uipack-object canvas')).toHaveAttribute('data-renderer','webgl');
-  await expect(page.locator('.uipack-object')).toHaveAttribute('data-art-direction','cartoon');
+  await expect(page.locator('.uipack-object')).toHaveAttribute('data-art-direction','ink');
   await expect(page.getByRole('link',{name:'Email me',exact:true})).toHaveAttribute('href','mailto:junxiongong2@gmail.com');
 });

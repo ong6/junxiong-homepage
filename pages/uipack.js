@@ -97,12 +97,12 @@ export default function Uipack() {
 
 				<Box as="section" aria-labelledby="objects">
 					<H2 id="objects">3D objects</H2>
-					{/* The WebGL scene mounts as the reader nears it (Kinetic, the look
-					    Hobbies gives this object); the placeholder holds its height. */}
+					{/* The WebGL scene mounts as the reader nears it; the placeholder
+					    holds its height. */}
 					<Box mt={6}>
 						<LazyMount minH={OBJECT_H} rootMargin="400px">
 							<Box h={OBJECT_H} minW={0}>
-								<HobbyScene kind="ai" label="Agent session" variant={2} />
+								<HobbyScene kind="ai" label="Agent session" />
 							</Box>
 						</LazyMount>
 					</Box>

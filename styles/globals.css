@@ -288,6 +288,7 @@ html,
    uipack's palette into the SVG) and the canvas dialog (hard-coded colours). */
 .uipack-object,
 :root .uipack-object[data-theme] {
+	--object-paper: var(--site-page-bg);
 	--object-ink: var(--site-page-text);
 	--object-rule: var(--site-border-subtle);
 	--object-accent: var(--site-brand-solid);

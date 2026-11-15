@@ -26,7 +26,7 @@ for (const width of [390, 1440]) {
 			expect(short).toEqual([]);
 			await expect(page.locator('main canvas')).toHaveAttribute('data-renderer', 'webgl');
 			await expect(page.locator('main canvas')).toHaveCSS('opacity', '1');
-			await expect(page.locator('.uipack-object')).toHaveAttribute('data-art-direction', 'cartoon');
+			await expect(page.locator('.uipack-object')).toHaveAttribute('data-art-direction', 'ink');
 			await expect(page.locator('.uipack-object')).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
 			await expect(page.locator('.uipack-object')).toHaveCSS('background-image', 'none');
 			await page.screenshot({ path: info.outputPath('contact-locked.png'), fullPage: true });
