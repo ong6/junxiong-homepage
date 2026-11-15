@@ -157,7 +157,8 @@ test("below 1200px the On this page bar opens, jumps to a section and closes on 
 	await expect(button).toHaveText(/2 \/ \d+.*One codebase for every customer/);
 	expect(await page.evaluate(() => document.documentElement.scrollHeight), "no layout shift").toBe(height);
 	const box = await button.boundingBox();
-	expect(box.height).toBeGreaterThanOrEqual(44);
+	// Rounded: a fractional scroll offset reports 43.999996 for a 44px bar.
+	expect(Math.round(box.height)).toBeGreaterThanOrEqual(44);
 
 	// Open: the list, focus on the current section.
 	await button.click();
