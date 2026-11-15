@@ -237,6 +237,16 @@ export default function Compoze() {
 					caption="fig. 9 — if the reader closes the tab mid-answer, the job moves to QStash and finishes in the background, picking up from the last step that completed."
 				/>
 
+				{/* Placeholder (2026-11-15): the owner asked for a looking-back line to
+				    be written for now. Every fact in it is from this page; replace it
+				    with his own words when he sends them. */}
+				<H2>Looking back</H2>
+				<P>
+					The code was not the slow part. Organising the knowledge base took the longest, and only
+					the customer could decide which documents belonged in it. If I started again I would plan
+					each engagement around that step, not around the build.
+				</P>
+
 				<Details title="Implementation details">
 					<FactList facts={facts} mt={3} />
 

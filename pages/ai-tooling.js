@@ -13,7 +13,7 @@ import OutArrow from "../components/OutArrow";
 import Layout from "../components/layouts/Articles";
 import { PAGE_META } from "../lib/pageMeta";
 import { AI_TOOLING } from "../lib/aiTooling";
-import { BackLink, MetaLine, ARTICLE_TITLE } from "../components/ArticleParts";
+import { BackLink, MetaLine, P, ARTICLE_TITLE } from "../components/ArticleParts";
 
 const mono = {
 	fontFamily: "var(--font-mono)",
@@ -111,6 +111,16 @@ export default function AiTooling() {
 						<Layer key={tool.href} tool={tool} index={index} />
 					))}
 				</Box>
+
+				{/* Placeholder (2026-11-15): the owner asked for a looking-back line to
+				    be written for now. Every fact in it is from the four tool pages;
+				    replace it with his own words when he sends them. */}
+				<P mt={{ base: 10, md: 12 }}>
+					Most of these came from taking something away. Workbase is what was left of a 27-skill
+					setup at work once I kept only the parts I used. The skills repo replaced eight copies
+					that had drifted apart. Groundplane moves a ranking out of the model and into code, and
+					Skillsmith is how I decide whether a skill stays.
+				</P>
 
 				<CaseStudyFooter
 					next={{

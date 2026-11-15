@@ -206,7 +206,7 @@ Curves are the site's own (`--ease-out` `cubic-bezier(0.23, 1, 0.32, 1)` for ent
 | Token | Value | Used for |
 | --- | --- | --- |
 | `--dur-hover`, `--dur-press` | 160ms | Hover and press feedback: colour, border, the card's lift and press, a label taking its tone, the logo turn, the mobile menu, the arrow's return |
-| `--dur-ui` | 320ms (base) | Things that travel: the ↗ fly-out, a row's accent rule drawing across, the theme icon turn, an Archive row opening and closing |
+| `--dur-ui` | 320ms (base) | Things that travel: the ↗ fly-out, a card's or row's rule drawing across, the theme icon turn, an Archive row opening and closing |
 | `--dur-enter` | 560ms (slow) | Entrances (the page's 10px rise, the hero settle, the portrait coming to rest) and the halftone theme change |
 
 Exception, recorded: the ↗ fly-out and a row's rule are triggered by hover but take the base 320ms rather than the 120–160ms hover range, because each travels across its element (the arrow out of its box and back, the rule across the row); at 160ms both read as a flicker. A page's entrance moves and never fades (2026-11-13; it faded up from opacity 0, which blanked the content for about 100ms on every page change): the new page is whole on its first frame. The homepage hero's lines rise in a stagger the same way, without fading: no entrance on the site starts at opacity 0, the scroll-driven card reveals included (they rise 24px as they enter the viewport). The only fades left answer a click: the phone menu opening and the theme icon turning. Scroll-driven reveals have no duration (they follow the scroll). Reduced motion drops movement everywhere.
