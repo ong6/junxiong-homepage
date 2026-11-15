@@ -41,6 +41,10 @@ for (const width of [390, 1440]) {
 			await expect(page.locator("main h2")).toHaveText(labels);
 			await settleLayout(page);
 			await expectOnlyVisibleArtwork(page);
+			// No placeholder picture: the 2D drawing stays hidden where a scene has not been built
+			// (a far chapter) and where one has (the first chapter).
+			await expect(page.locator("#trading .uipack-object__fallback")).toHaveCSS("opacity", "0");
+			await expect(page.locator("#travel .uipack-object__fallback")).toHaveCSS("opacity", "0");
 			expect(await page.locator("[data-chapter]").count()).toBe(6);
 			expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
 			expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollSnapType)).toBe("none");
@@ -128,6 +132,8 @@ test("hobbies keeps the labelled fallback when WebGL is unavailable", async ({ p
 	await page.goto("/hobbies#tennis");
 	await expect(page.locator('#tennis canvas[data-renderer="fallback"]')).toHaveCount(1);
 	await expect(page.locator('#tennis [role="img"]')).toHaveAttribute("aria-label", "Tennis illustration");
+	// Only now is the drawing shown: WebGL cannot draw the scene.
+	await expect(page.locator("#tennis .uipack-object__fallback")).toHaveCSS("opacity", "1");
 	await expect(page.locator("#tennis").getByRole("button", { name: /motion/i })).toHaveCount(0);
 });
 

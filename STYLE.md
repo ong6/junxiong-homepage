@@ -265,7 +265,8 @@ their own hero (Contact: copy beside a 3D scene; Hobbies: six full-viewport nati
 chapters, text beside a 3D object, stacking on narrow screens; one scene plays, the one nearest the
 centre of the screen, and the chapters before and after it hold theirs built and still
 (`preload`, since uipack 0.7.2), so a scene is already drawn when its chapter arrives and at most three
-exist at a time).
+exist at a time). No placeholder picture stands in while a scene loads: UiPack's 2D drawing is
+hidden unless WebGL cannot draw the scene (`styles/globals.css`).
 
 | Setting | This site |
 | --- | --- |
