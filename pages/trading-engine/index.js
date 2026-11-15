@@ -11,7 +11,7 @@ import { PAGE_META } from "../../lib/pageMeta";
 
 // Overview of the trading engine: what it is, the engine running now, and the
 // two engine eras. Each era has its own page (/trading-engine/v1, /v2); the v1
-// page carries a section per update (#1-1 … #1-8).
+// page carries a section per update, newest first (#1-8 … #1-1).
 
 const links = withNotes("/trading-engine", [
 	{ name: "Product docs", detail: "How it works, research and operations", href: "/trading-engine/docs" },
@@ -87,8 +87,9 @@ export default function TradingEngine() {
 				<H2>Engine v1 updates</H2>
 
 				<P>
-					All eight updates are on one page, each with the diagram as the engine stood then. Update
-					1.8 added the shared backtest core, which Engine v2 still uses for research.
+					All eight updates are on one page, newest first, each with the diagram as the engine
+					stood then. Update 1.8 added the shared backtest core, which Engine v2 still uses for
+					research.
 				</P>
 
 				<TradingVersionList />

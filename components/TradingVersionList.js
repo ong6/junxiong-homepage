@@ -3,8 +3,9 @@ import NextLink from "next/link";
 import { VERSIONS } from "../lib/tradingVersions";
 import OutArrow from "./OutArrow";
 
-// Engine versions in order: the v1 updates by default, or the engine eras on
-// the overview. The version on screen is plain text; every other one links out.
+// Engine versions in the order given: the v1 updates (newest first) by
+// default, or the engine eras on the overview. The version on screen is plain
+// text; every other one links out.
 //
 //   active – "1.7" | "v2" …
 //   items  – VERSIONS (default) or ERAS
