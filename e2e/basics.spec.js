@@ -13,12 +13,12 @@ const PAGES = [
 	"/compoze",
 	"/trading-engine",
 	"/trading-engine/v2",
-	"/trading-engine/v1/1.8",
+	"/trading-engine/v1",
 	"/trading-engine/docs",
 	"/trading-engine/docs/data",
 	"/uipack",
 	"/works",
-	"/works/codeparty",
+	"/works#codeparty",
 	"/resume",
 	"/no-such-page",
 ];
@@ -396,6 +396,59 @@ test("the toggle's choice is kept across pages, reloads and system changes", asy
 	await context.close();
 });
 
+// The toggle's theme change (STYLE.md, Motion): a view transition that prints
+// the new theme in through the dot screen, keyed off data-theme-transition;
+// instant under reduced motion and without view transitions.
+const recordTransitions = () => {
+	window.__transitions = [];
+	const start = Document.prototype.startViewTransition;
+	if (!start) return;
+	Document.prototype.startViewTransition = function (update) {
+		const entry = { attr: document.documentElement.dataset.themeTransition, names: [] };
+		window.__transitions.push(entry);
+		const transition = start.call(this, update);
+		transition.ready.then(() => {
+			entry.names = document.getAnimations().filter((a) => a.effect?.pseudoElement).map((a) => `${a.effect.pseudoElement} ${a.animationName}`);
+		});
+		return transition;
+	};
+};
+
+test("the toggle prints the new theme in through the halftone view transition", async ({ browser }) => {
+	const context = await browser.newContext({ colorScheme: "light" });
+	await context.addInitScript(recordTransitions);
+	const page = await context.newPage();
+	await page.goto("/");
+	await page.getByRole("button", { name: "Use dark theme" }).click();
+	await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+	await expect.poll(() => page.evaluate(() => window.__transitions[0]?.names.length || 0)).toBeGreaterThan(0);
+	const [entry] = await page.evaluate(() => window.__transitions);
+	expect(entry.attr).toBe("halftone");
+	expect(entry.names).toContain("::view-transition-new(root) theme-halftone");
+	// The attribute only lasts as long as the transition.
+	await expect(page.locator("html")).not.toHaveAttribute("data-theme-transition", /.*/);
+	await context.close();
+});
+
+test("under reduced motion, or without view transitions, the theme changes at once", async ({ browser }) => {
+	for (const options of [{ reducedMotion: "reduce" }, { noTransitions: true }]) {
+		const context = await browser.newContext({ colorScheme: "light", reducedMotion: options.reducedMotion });
+		if (options.noTransitions) await context.addInitScript(() => delete Document.prototype.startViewTransition);
+		await context.addInitScript(recordTransitions);
+		const page = await context.newPage();
+		const errors = [];
+		page.on("pageerror", (error) => errors.push(error.message));
+		await page.goto("/");
+		await page.getByRole("button", { name: "Use dark theme" }).click();
+		await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+		expect(await themeOf(page)).toEqual({ theme: "dark", stored: "dark", ground: GROUND.dark });
+		expect(await page.evaluate(() => window.__transitions.length)).toBe(0);
+		await expect(page.locator("html")).not.toHaveAttribute("data-theme-transition", /.*/);
+		expect(errors).toEqual([]);
+		await context.close();
+	}
+});
+
 // ── 6. A phone: 44px targets, no sideways scroll ─────────────────────────
 test("every control is a 44px target at 390 and no page scrolls sideways", async ({ browser }) => {
 	test.setTimeout(90_000);
@@ -458,11 +511,11 @@ test("dark mode paints no blue or green ground", async ({ browser }) => {
 });
 
 // ── 8. From the independent review (2026-11-13) ──────────────────────────
-test("only the newest engine update is current; older ones link on to it", async ({ page }) => {
-	await page.goto("/trading-engine/v1/1.8");
-	await expect(page.locator('main a[href="/trading-engine/v1/1.8"]', { hasText: "latest update" })).toHaveCount(0);
-	await page.goto("/trading-engine/v1/1.7");
-	await expect(page.locator('main a[href="/trading-engine/v1/1.8"]', { hasText: "latest update" })).toHaveCount(1);
+test("Engine v1 has no update switcher; its sections are the page's own headings", async ({ page }) => {
+	await page.goto("/trading-engine/v1");
+	await expect(page.locator('nav[aria-label="Engine v1 updates"]')).toHaveCount(0);
+	await expect(page.locator("main a", { hasText: "latest update" })).toHaveCount(0);
+	await expect(page.locator("article h2[id]")).toHaveCount(8);
 });
 
 test("back links name the homepage section they return to", async ({ page }) => {
@@ -477,7 +530,7 @@ test("back links name the homepage section they return to", async ({ page }) => 
 });
 
 test("every link that opens a new tab says so", async ({ page }) => {
-	for (const path of ["/", "/contact", "/works/codeparty", "/resume", "/compoze"]) {
+	for (const path of ["/", "/contact", "/works#squeezy", "/resume", "/compoze"]) {
 		await page.goto(path);
 		const silent = await page.locator('a[target="_blank"]').evaluateAll((links) =>
 			links.filter((link) => !/opens in a new tab/.test(link.textContent + (link.getAttribute("aria-label") || ""))).map((link) => link.textContent.trim().slice(0, 30)),
@@ -486,12 +539,15 @@ test("every link that opens a new tab says so", async ({ page }) => {
 	}
 });
 
-test("an archive entry is an article: a 680px column, and the ledger has headings", async ({ page }) => {
+test("an archive entry opens in the 680px measure, and the ledger has headings", async ({ page }) => {
 	await page.setViewportSize({ width: 1440, height: 900 });
-	await page.goto("/works/codeparty");
-	expect((await page.locator("main article p").first().boundingBox()).width).toBeLessThanOrEqual(680);
-	await expect(page.locator("main h1")).toContainText("Aug 2023 – Nov 2023");
-	await page.goto("/works");
+	await page.goto("/works#codeparty");
+	const entry = page.locator("details#codeparty");
+	await expect(entry).toHaveAttribute("open", "");
+	for (const part of [entry.locator(":scope > div > p"), entry.locator("dl"), entry.locator("img").last()]) {
+		expect((await part.boundingBox()).width).toBeLessThanOrEqual(680);
+	}
+	await expect(entry.locator("dl")).toContainText("Aug 2023 – Nov 2023");
 	expect(await page.locator("main h2").count()).toBeGreaterThan(2);
 	expect(await page.locator("main h3").count()).toBeGreaterThan(10);
 });

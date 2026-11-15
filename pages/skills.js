@@ -5,9 +5,9 @@ import * as SkillsArchitecture from "../components/diagrams/SkillsArchitecture";
 import { CodeBlock, CodeFigure } from "../components/CodeBlock";
 import Layout from "../components/layouts/Articles";
 import CaseStudyFooter from "../components/CaseStudyFooter";
-import ProjectLinks from "../components/ProjectLinks";
-import FactList from "../components/FactList";
-import { BackLink, P, H2, Code, ARTICLE_TITLE } from "../components/ArticleParts";
+import FactList, { pickFacts } from "../components/FactList";
+import { BackLink, MetaLine, P, H2, Code, ARTICLE_TITLE } from "../components/ArticleParts";
+import { withNotes } from "../lib/notes";
 
 // Case study in the same shape as /groundplane: one ~680px column of prose,
 // the link-and-publish figure, a terminal figure, and a single mono fact table.
@@ -49,16 +49,18 @@ const facts = [
 	["status", "MIT · github.com/ong6/skills"],
 ];
 
-const links = [
+const railFacts = pickFacts(facts, ["skills", "agents", "install paths", "status"]);
+
+const links = withNotes("/skills", [
 	{ name: "Source on GitHub", detail: "MIT, Claude Code and Codex", href: "https://github.com/ong6/skills", external: true },
-];
+]);
 
 export default function Skills() {
-	const accent = "brand.solid";
-
 	return (
 		<Layout
 			contents
+			facts={railFacts}
+			links={links}
 			title="Agent skills"
 			schema={{
 				type: "SoftwareSourceCode",
@@ -80,16 +82,7 @@ export default function Skills() {
 						Agent skills
 					</Heading>
 
-					<Text
-						mt={4}
-						color={accent}
-						fontFamily="var(--font-mono)"
-						fontSize="12px"
-						fontWeight="700"
-						letterSpacing=".08em"
-						textTransform="uppercase">
-						2026 · open source · claude code + codex
-					</Text>
+					<MetaLine>2026 · open source · claude code + codex</MetaLine>
 
 					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="lede" fontWeight="600">
 						A skill is a Markdown file that tells a coding agent when to do something and how. I had
@@ -98,8 +91,6 @@ export default function Skills() {
 					every repo I work in and sends my edits back.
 				</Text>
 				</Box>
-
-				<ProjectLinks links={links} mt={{ base: 8, md: 10 }} />
 
 				<DiagramFigure
 					id="sparch"

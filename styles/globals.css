@@ -344,71 +344,109 @@ html,
 	:is(a, [data-group]):hover [data-out-arrow] > span { animation: arrow-fly var(--dur-ui) both; }
 }
 
-/* ── Card hover fill ───────────────────────────────────────────────────── */
-/* The card's category colour spreads from where the pointer entered
-   (lib/fillOrigin.js sets --x/--y). The fill sits at z-index -1 inside an
-   isolated card: over its background, under its content and link overlay.
-   Text changes colour on the same duration and curve as the fill. */
-[data-fill] {
-	position: relative;
-	isolation: isolate;
-	/* Base, not hover: the fill travels across the whole card (STYLE.md, Motion). */
-	--fill-dur: var(--dur-ui);
-	--cascade-fill: var(--tone, var(--site-brand-solid));
-	--cascade-on: var(--site-page-bg);
-}
-/* One tone per project category (lib/tones.js). Light fills carry page-bg
-   text at 5.3:1 or better, dark fills page-bg (near-black) text at 9:1+. */
-:root {
-	--tone-agents: #234ea2;
-	--tone-company: #a3452b;
-	--tone-research: #2f6a4a;
-	--tone-design: #6a3f86;
-	--tone-practice: #8a5410;
-	--tone-site: #29231f;
-}
-[data-theme="dark"] {
-	--tone-agents: #9ab6ff;
-	--tone-company: #f2a184;
-	--tone-research: #8fd3a8;
-	--tone-design: #d2b0f0;
-	--tone-practice: #f0c274;
-	--tone-site: #f2ece3;
-}
-[data-tone="agents"] { --tone: var(--tone-agents); }
-[data-tone="company"] { --tone: var(--tone-company); }
-[data-tone="research"] { --tone: var(--tone-research); }
-[data-tone="design"] { --tone: var(--tone-design); }
-[data-tone="practice"] { --tone: var(--tone-practice); }
-[data-tone="site"] { --tone: var(--tone-site); }
-[data-fill]::after {
-	content: "";
-	position: absolute;
-	inset: -1px;
-	z-index: -1;
-	border-radius: inherit;
-	background: var(--cascade-fill);
-	pointer-events: none;
-	clip-path: circle(0% at var(--x, 50%) var(--y, 50%));
-	transition: clip-path var(--fill-dur) var(--ease-out);
-}
-/* Borderless rows ("Around the site") bleed the fill 12px into the gutters on
-   both sides, so neither the name nor the flush-right arrow sits on its edge.
-   Columns are 24px apart, so neighbouring fills never overlap. */
-[data-fill="row"]::after { inset: 0 -12px; }
-/* Preview panels keep reading as themselves; they would otherwise inherit
-   the card's on-fill text colour. */
-[data-fill] [data-panel] { color: var(--site-page-text); }
-[data-fill] :not([data-panel], [data-panel] *) {
-	transition: color var(--fill-dur) var(--ease-out), transform var(--dur-hover) var(--ease-out);
+/* ── Card hover: sheet lift ────────────────────────────────────────────── */
+/* One block per behaviour (STYLE.md, Motion); swapping the hover is replacing
+   this block. Hooks: data-hover="card" on a framed card, data-hover="row" on a
+   ruled row, data-panel on a preview panel inside a card.
+   A card rises 4px up and left off a second 1px-framed sheet that marks the
+   slot it left, the way the preview panels sit on their offset shadow; its
+   border steps to the accent line and its preview panel lifts with it. No
+   text changes colour. `translate` and `scale`, not `transform`: the
+   scroll-driven reveal owns transform. Keyboard focus gets the same state. */
+[data-hover="card"] {
+	transition: translate var(--dur-hover) var(--ease-out), scale var(--dur-press) var(--ease-out),
+		box-shadow var(--dur-hover) var(--ease-out), border-color var(--dur-hover) ease;
 }
 @media (hover: hover) and (pointer: fine) {
-	[data-fill]:hover::after { clip-path: circle(150% at var(--x, 50%) var(--y, 50%)); }
-	[data-fill]:hover { border-color: var(--cascade-fill) !important; }
-	[data-fill]:hover :not([data-panel], [data-panel] *) { color: var(--cascade-on) !important; }
+	[data-hover="card"]:hover {
+		translate: -4px -4px;
+		box-shadow: 4px 4px 0 -1px var(--chakra-colors-surface-raised), 4px 4px 0 0 var(--chakra-colors-border-subtle);
+		border-color: var(--chakra-colors-border-strong);
+	}
+	[data-hover="card"]:hover [data-panel] {
+		translate: -2px -2px;
+		box-shadow: 6px 6px 0 var(--chakra-colors-preview-shadow);
+	}
 }
-[data-fill]:focus-within::after { clip-path: circle(150% at 50% 50%); }
-[data-fill]:focus-within :not([data-panel], [data-panel] *) { color: var(--cascade-on) !important; }
+[data-hover="card"]:has(:focus-visible) {
+	translate: -4px -4px;
+	box-shadow: 4px 4px 0 -1px var(--chakra-colors-surface-raised), 4px 4px 0 0 var(--chakra-colors-border-subtle);
+	border-color: var(--chakra-colors-border-strong);
+}
+/* Press: the card goes back into its slot (on touch, the only state). */
+[data-hover="card"]:active {
+	translate: none;
+	scale: 0.99;
+	box-shadow: none;
+}
+/* Rows: the rule under the row redraws in the accent from the left. It
+   travels the row's width, so it takes the base duration (STYLE.md, Motion). */
+[data-hover="row"] {
+	position: relative;
+}
+[data-hover="row"]::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: -1px;
+	height: 1px;
+	background: var(--site-brand-solid);
+	pointer-events: none;
+	transform: scaleX(0);
+	transform-origin: left center;
+	transition: transform var(--dur-ui) var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+	[data-hover="row"]:hover::after { transform: none; }
+}
+[data-hover="row"]:is(:focus-visible, :has(:focus-visible))::after { transform: none; }
+@media (prefers-reduced-motion: reduce) {
+	[data-hover="card"],
+	[data-hover="card"] [data-panel] {
+		translate: none !important;
+		scale: none !important;
+	}
+}
+
+/* ── Theme change: halftone ────────────────────────────────────────────── */
+/* One block per behaviour; lib/themeTransition.js sets data-theme-transition
+   for the length of the view transition. The new theme prints in through the
+   site's 12px dot screen: three mask layers on the new snapshot, a solid
+   sheet on top, the dot screen, and a band running 22% ahead of the sheet
+   that fades out, composited as (dots ∩ band) ∪ sheet, so a fringe of
+   growing dots leads a straight edge down the page. Instant under reduced
+   motion and without view transitions (the script never starts one); a
+   browser without unprefixed masks shows the new theme at once. */
+@property --halftone-r {
+	syntax: "<length>";
+	inherits: false;
+	initial-value: 0px;
+}
+/* No colour transitions run inside the live snapshot while it prints. */
+html[data-theme-transition] *,
+html[data-theme-transition] *::before,
+html[data-theme-transition] *::after {
+	transition: none !important;
+}
+html[data-theme-transition]::view-transition-old(root),
+html[data-theme-transition]::view-transition-new(root) {
+	animation: none;
+	mix-blend-mode: normal;
+}
+html[data-theme-transition]::view-transition-new(root) {
+	mask-image: linear-gradient(#000, #000),
+		radial-gradient(circle at 6px 6px, #000 var(--halftone-r), transparent calc(var(--halftone-r) + 0.5px)),
+		linear-gradient(#000 45%, transparent);
+	mask-size: 100% 0%, 12px 12px, 100% 22%;
+	mask-repeat: no-repeat, repeat, no-repeat;
+	mask-composite: add, intersect, add;
+	animation: theme-halftone var(--dur-enter) var(--ease-in-out) both;
+}
+@keyframes theme-halftone {
+	from { --halftone-r: 1px; mask-size: 100% 0%, 12px 12px, 100% 22%; }
+	to { --halftone-r: 6px; mask-size: 100% 100%, 12px 12px, 100% 122%; }
+}
 
 @media (prefers-reduced-motion: reduce) {
 	[data-out-arrow] > span {
@@ -464,8 +502,12 @@ body {
 	#docs-layout .uipack-docs__prose h4 { font-size: 23px; margin-top: 44px; }
 }
 
-/* Section heads land below the fixed nav when the contents rail jumps to them. */
-article h2[id] { scroll-margin-top: 96px; }
+/* Section heads (and the closing Links out) land below the fixed nav when the
+   contents list jumps to them; below 1200px also below the "On this page" bar. */
+article h2[id], #links-out { scroll-margin-top: 124px; }
+@media (min-width: 1200px) {
+	article h2[id], #links-out { scroll-margin-top: 96px; }
+}
 
 /* The docs shell takes the site's leadings and label tracking (STYLE.md, Type)
    through UiPack's hooks (v0.7.0). The /uipack sample shows UiPack's own. */
@@ -494,3 +536,8 @@ article h2[id] { scroll-margin-top: 96px; }
 	:root .uipack-docs__prose h1 { font-size: 52px; }
 	:root .uipack-docs__prose h2 { font-size: 24px; }
 }
+
+/* A modal (the ⌘K menu) locks the page and takes its scrollbar away; the body
+   keeps its width through a margin, and the fixed header through this, so
+   nothing moves while it is open. */
+body[data-scroll-locked] nav[aria-label="Site"] { right: var(--removed-body-scroll-bar-size, 0px); width: auto; }

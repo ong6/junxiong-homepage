@@ -1,9 +1,8 @@
 import { Box, Container, Link } from "@chakra-ui/react";
-import { useEffect } from "react";
 import Head from "next/head";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
-import { trackFillOrigin } from "../../lib/fillOrigin";
+import { modifiedFor } from "../../lib/pageDates";
 
 export const SITE_URL = "https://junxiong.dev";
 
@@ -14,9 +13,9 @@ export const DEFAULT_DESCRIPTION =
 export const OG_IMAGE = `${SITE_URL}/images/og/home.jpg`;
 
 // Routes with their own card from scripts/build-og-cards.mjs; the rest share the home card.
-const OG_CARDS = new Set(["/ai-tooling", "/compoze", "/groundplane", "/skills", "/skillsmith", "/trading-engine", "/uipack"]);
+const OG_CARDS = new Set(["/ai-tooling", "/compoze", "/groundplane", "/skills", "/skillsmith", "/trading-engine", "/uipack", "/workbase"]);
 export const ogImageFor = (canonical) => {
-	// Version pages (/trading-engine/v1, /trading-engine/v1/1.3) share their project's card.
+	// Version pages (/trading-engine/v1, /trading-engine/v2) share their project's card.
 	const path = canonical.slice(SITE_URL.length).replace(/\/v\d+(\/\d+\.\d+)?$/, "");
 	return OG_CARDS.has(path) ? `${SITE_URL}/images/og${path}.jpg` : OG_IMAGE;
 };
@@ -85,7 +84,7 @@ const profileSchema = {
 			url: `${SITE_URL}/`,
 			name: DEFAULT_TITLE,
 			description: DEFAULT_DESCRIPTION,
-			dateModified: BUILD_DATE,
+			dateModified: modifiedFor("/") || BUILD_DATE,
 			isPartOf: { "@id": `${SITE_URL}/#website` },
 			mainEntity: { "@id": `${SITE_URL}/#person` },
 		},
@@ -104,13 +103,12 @@ const webPageSchema = (canonical) => ({
 	"@id": canonical,
 	url: canonical,
 	isPartOf: { "@id": `${SITE_URL}/#website` },
-	dateModified: BUILD_DATE,
+	dateModified: modifiedFor(canonical.slice(SITE_URL.length) || "/") || BUILD_DATE,
 	about: { "@id": `${SITE_URL}/#person` },
 	primaryImageOfPage: OG_IMAGE,
 });
 
 const Main = ({ children, router }) => {
-	useEffect(trackFillOrigin, []);
 	const canonical = canonicalFor(router?.asPath);
 	const isHome = canonical === `${SITE_URL}/`;
 	// The 404 page answers on any URL, so it gets no canonical and no index.

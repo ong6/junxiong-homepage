@@ -3,7 +3,8 @@ import { useRouter } from "next/router";
 import { BUILD_DATE, SITE_URL, canonicalFor, ogImageFor } from "./Main";
 import { useRef } from "react";
 import SideBackdrop from "../SideBackdrop";
-import ArticleContents from "../ArticleContents";
+import ArticleContents, { SectionMenu } from "../ArticleContents";
+import { modifiedFor } from "../../lib/pageDates";
 
 // Page-level metadata for every route except the homepage.
 //
@@ -15,16 +16,25 @@ import ArticleContents from "../ArticleContents";
 //                  Setting it also switches og:type to `article`. Without it
 //                  the page is a plain WebPage.
 //   noindex      – keep the page out of search engines (404, drafts)
-//   contents     – show the wide-screen "On this page" rail (long articles)
+//   headline     – the page's h1 text for the JSON-LD headline, when it is
+//                  not the same as `title` (defaults to `title`)
+//   contents     – a long article: the page's h2s become the contents list in
+//                  the wide-screen side rail and the "On this page" control
+//                  below 1200px (each needs three sections or more)
+//   facts        – [label, value] rows for the side rail, picked from the
+//                  page's own fact table or meta line (never new facts)
+//   links        – the page's links out (with its paired notes, see
+//                  withNotes in lib/notes.js) for the side rail; the page
+//                  repeats them at its end through CaseStudyFooter
 //
 // The homepage renders without any of these and keeps the defaults from Main.
 // Overrides work by `key`: next/head dedupes tags that share one, and this
 // layout's <Head> renders after Main's, so its entries win.
 
-const PERSON = { "@id": `${SITE_URL}/#person` };
+const PERSON = { "@type": "Person", "@id": `${SITE_URL}/#person`, name: "Ong Jun Xiong", url: `${SITE_URL}/` };
 const WEBSITE = { "@id": `${SITE_URL}/#website` };
 
-const pageSchema = ({ canonical, name, description, schema, image }) => {
+const pageSchema = ({ canonical, name, headline, description, schema, image }) => {
 	const base = {
 		"@context": "https://schema.org",
 		"@type": "WebPage",
@@ -33,7 +43,7 @@ const pageSchema = ({ canonical, name, description, schema, image }) => {
 		name,
 		description,
 		isPartOf: WEBSITE,
-		dateModified: BUILD_DATE,
+		dateModified: modifiedFor(canonical.slice(SITE_URL.length) || "/") || BUILD_DATE,
 	};
 
 	if (!schema) return { ...base, about: PERSON, primaryImageOfPage: image };
@@ -42,7 +52,7 @@ const pageSchema = ({ canonical, name, description, schema, image }) => {
 	return {
 		...base,
 		"@type": type,
-		headline: name,
+		headline,
 		image,
 		author: PERSON,
 		publisher: PERSON,
@@ -51,7 +61,7 @@ const pageSchema = ({ canonical, name, description, schema, image }) => {
 	};
 };
 
-const Layout = ({ children, title, description, schema, noindex = false, animate = true, contents = false }) => {
+const Layout = ({ children, title, headline, description, schema, noindex = false, animate = true, contents = false, facts, links }) => {
 	const router = useRouter();
 	const articleRef = useRef(null);
 	const pageTitle = title ? `${title} — Ong Jun Xiong` : null;
@@ -80,7 +90,7 @@ const Layout = ({ children, title, description, schema, noindex = false, animate
 							type="application/ld+json"
 							dangerouslySetInnerHTML={{
 								__html: JSON.stringify(
-									pageSchema({ canonical, name: pageTitle, description, schema, image }),
+									pageSchema({ canonical, name: pageTitle, headline: headline || title, description, schema, image }),
 								),
 							}}
 						/>
@@ -90,8 +100,9 @@ const Layout = ({ children, title, description, schema, noindex = false, animate
 			{schema && <div className="scroll-progress" aria-hidden="true" />}
 			{/* Home and Hobbies (animate={false}) carry their own motion. */}
 			{animate && <SideBackdrop />}
+			{contents && <SectionMenu containerRef={articleRef} />}
 			{children}
-			{contents && <ArticleContents containerRef={articleRef} />}
+			{(contents || facts || links) && <ArticleContents containerRef={articleRef} contents={contents} facts={facts} links={links} />}
 		</article>
 	);
 };

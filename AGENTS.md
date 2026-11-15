@@ -11,14 +11,14 @@ Pushing to `main` deploys to production on Vercel; CI (`.github/workflows/ci.yml
 - Screenshot specs run only with `SHOTS=1`
 
 ## Layout
-- `pages/`: routes; `works/[slug].js` and `trading-engine/docs/[slug].js` are data-driven; `sitemap.xml.js`, `llms.txt.js` are generated routes
+- `pages/`: routes; `works.js` (the Archive: rows open in place, `/works#<slug>`) and `trading-engine/docs/[slug].js` are data-driven; `sitemap.xml.js`, `llms.txt.js` are generated routes
 - `components/`: layout, nav, article parts, `DiagramFigure.js`; `components/diagrams/`: figure modules (`trading/` for engine versions); `components/Resume/`: résumé page and its LaTeX PDF source
-- `lib/`: `theme.js` (Chakra theme), `works.js` (university projects), `tradingDocs.js`, `tradingVersions.js`, `tones.js`, uipack gallery data
+- `lib/`: `theme.js` (Chakra theme), `works.js` (university projects), `tradingDocs.js`, `tradingVersions.js`, `themeTransition.js` (the theme change), uipack gallery data
 - `content/trading-docs/`: synced docs Markdown · `scripts/`: build and sync scripts · `e2e/`: Playwright specs · `styles/`: `globals.css`, `print.css`, `Hobbies.module.css`
 
 ## Recipes (files to touch)
-- New case study: `pages/<slug>.js` (copy `pages/skillsmith.js`), `components/diagrams/<Name>Architecture.js`, `components/Navbar.js` (`activePaths`), `components/layouts/Main.js` (`OG_CARDS`), `lib/tones.js`, `pages/sitemap.xml.js`, `pages/llms.txt.js`, `scripts/build-og-cards.mjs` then `node scripts/build-og-cards.mjs <slug>` (writes `public/images/og/<slug>.jpg`), `e2e/figures.spec.js` (`PAGES`), README "What is here"
-- University project: an entry in `lib/works.js` + images in `public/images/works/` (sitemap and routes follow)
+- New case study: `pages/<slug>.js` (copy `pages/skillsmith.js`), `components/diagrams/<Name>Architecture.js`, `components/Navbar.js` (`activePaths`), `components/layouts/Main.js` (`OG_CARDS`), `pages/sitemap.xml.js`, `pages/llms.txt.js`, `scripts/build-og-cards.mjs` then `node scripts/build-og-cards.mjs <slug>` (writes `public/images/og/<slug>.jpg`), `e2e/figures.spec.js` (`PAGES`), README "What is here"
+- University project: an entry in `lib/works.js` + images in `public/images/works/` (its row on `/works` follows)
 - New diagram: a module in `components/diagrams/` exporting `meta`, `CLAIM`, `Wide({ id })` from uipack parts (`parts.js`, `sequence.js`, uipack's user-flow parts or `uipack/presets`); render with `<DiagramFigure id diagram caption />`
 - Style edit: Chakra props in the component, tokens in `lib/theme.js`, global CSS in `styles/globals.css`. Read `STYLE.md` first for any visual change (colour, type, spacing, motion, new component or page layout)
 - New 3D or custom rendering: belongs in uipack, not here (`check:ui-ownership` fails otherwise)

@@ -1,5 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import Layout from "../components/layouts/Articles";
+import { PAGE_META } from "../lib/pageMeta";
 import Education from "../components/Resume/Education";
 import PrintHeader from "../components/Resume/PrintHeader";
 import Skills from "../components/Resume/Skills";
@@ -8,8 +9,7 @@ import Section from "../components/Section";
 
 const Resume = () => (
 	<Layout
-		title="Resume"
-		description="Résumé of Ong Jun Xiong, AI infrastructure and backend engineer at TikTok in Singapore: agent platforms, e-commerce systems and founding Compoze.">
+		{...PAGE_META["/resume"]}>
 		<Box pt={{ base: 10, md: 16 }}>
 			<PrintHeader />
 			<Section delay={0.05}>

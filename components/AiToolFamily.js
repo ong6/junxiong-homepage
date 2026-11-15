@@ -38,6 +38,7 @@ export default function AiToolFamily({ current }) {
 						<LinkBox
 							key={tool.href}
 							as="article"
+							data-hover="card"
 							p={4}
 							minH="152px"
 							border="1px solid"

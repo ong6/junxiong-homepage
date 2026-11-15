@@ -11,8 +11,9 @@ import NextLink from "next/link";
 import CaseStudyFooter from "../components/CaseStudyFooter";
 import OutArrow from "../components/OutArrow";
 import Layout from "../components/layouts/Articles";
+import { PAGE_META } from "../lib/pageMeta";
 import { AI_TOOLING } from "../lib/aiTooling";
-import { BackLink, ARTICLE_TITLE } from "../components/ArticleParts";
+import { BackLink, MetaLine, ARTICLE_TITLE } from "../components/ArticleParts";
 
 const mono = {
 	fontFamily: "var(--font-mono)",
@@ -30,8 +31,7 @@ function Layer({ tool, index }) {
 			as="article"
 			data-group
 			data-reveal
-			data-fill
-			data-tone="agents"
+			data-hover="row"
 			style={{ "--i": index }}
 			borderTop={index ? "1px solid" : undefined}
 			borderColor="border.subtle"
@@ -44,7 +44,7 @@ function Layer({ tool, index }) {
 					{tool.when}
 				</Box>
 			</Text>
-			<Heading as="h2" mt={2} fontSize={{ base: "24px", md: "28px" }} lineHeight="heading">
+			<Heading as="h2" data-contents-title={tool.name} mt={2} fontSize={{ base: "24px", md: "28px" }} lineHeight="heading">
 				<LinkOverlay
 					{...(tool.external
 						? { href: tool.href, target: "_blank", rel: "noopener noreferrer" }
@@ -69,12 +69,10 @@ function Layer({ tool, index }) {
 }
 
 export default function AiTooling() {
-	const accent = "brand.solid";
-
 	return (
 		<Layout
-			title="AI tooling"
-			description="Open-source tools for AI agents, by layer: Workbase for memory, Agent skills for context, Skillsmith for evaluation and Groundplane for runtime checks.">
+			contents
+			{...PAGE_META["/ai-tooling"]}>
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
 					<BackLink href="/#work">Selected work</BackLink>
@@ -88,16 +86,7 @@ export default function AiTooling() {
 						AI tooling
 					</Heading>
 
-					<Text
-						mt={4}
-						color={accent}
-						fontFamily="var(--font-mono)"
-						fontSize="12px"
-						fontWeight="700"
-						letterSpacing=".08em"
-						textTransform="uppercase">
-						2026 · open source · {AI_TOOLING.length} tools
-					</Text>
+					<MetaLine>2026 · open source · {AI_TOOLING.length} tools</MetaLine>
 
 					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="lede" fontWeight="600">
 						I use coding agents every day and build them at work, and these are the tools I ended up
@@ -114,7 +103,10 @@ export default function AiTooling() {
 					border="1px solid"
 					borderColor="border.subtle"
 					borderRadius="6px"
-					overflow="clip">
+					overflow="clip"
+					// Room for the last layer's hover rule on the frame's bottom border
+					// (styles/globals.css, Card hover); Chrome snaps the clip 1px in.
+					sx={{ overflowClipMargin: "2px" }}>
 					{AI_TOOLING.map((tool, index) => (
 						<Layer key={tool.href} tool={tool} index={index} />
 					))}

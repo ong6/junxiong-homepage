@@ -3,37 +3,43 @@ import CaseStudyFooter from "../../components/CaseStudyFooter";
 import DiagramFigure from "../../components/DiagramFigure";
 import * as Engine2 from "../../components/diagrams/trading/Engine2";
 import Layout from "../../components/layouts/Articles";
-import ProjectLinks from "../../components/ProjectLinks";
 import TradingVersionList from "../../components/TradingVersionList";
 import { ERAS } from "../../lib/tradingVersions";
-import { BackLink, P, H2, ARTICLE_TITLE } from "../../components/ArticleParts";
+import { BackLink, MetaLine, P, H2, ARTICLE_TITLE } from "../../components/ArticleParts";
+import { withNotes } from "../../lib/notes";
+import { PAGE_META } from "../../lib/pageMeta";
 
 // Overview of the trading engine: what it is, the engine running now, and the
-// two engine eras. Each era has its own page (/trading-engine/v1, /v2) and each
-// v1 update its own write-up (/trading-engine/v1/1.N).
+// two engine eras. Each era has its own page (/trading-engine/v1, /v2); the v1
+// page carries a section per update (#1-1 … #1-8).
 
-
-
-
-const links = [
+const links = withNotes("/trading-engine", [
 	{ name: "Product docs", detail: "How it works, research and operations", href: "/trading-engine/docs" },
 	{ name: "Source on GitHub", detail: "Python, MIT", href: "https://github.com/ong6/trading-engine", external: true },
+]);
+
+// The page has no fact table; these rows repeat its meta line, lede and links.
+const railFacts = [
+	["building since", "July 2026"],
+	["engine now", "Engine v2 · live on paper since 18 Oct"],
+	["language", "Python"],
+	["licence", "MIT"],
 ];
 
 export default function TradingEngine() {
-	const accent = "brand.solid";
-
 	return (
 		<Layout
 			contents
-			title="Trading engine"
+			facts={railFacts}
+			links={links}
+			title={PAGE_META["/trading-engine"].title}
 			schema={{
 				type: "SoftwareSourceCode",
 				codeRepository: "https://github.com/ong6/trading-engine",
 				programmingLanguage: "Python",
 				license: "https://opensource.org/licenses/MIT",
 			}}
-			description="A paper-trading research engine where every strategy runs through one shared backtest core and one evidence path.">
+			description={PAGE_META["/trading-engine"].description}>
 			<Container maxW="680px" px={0} ml={0}>
 				<Box pt={{ base: 10, md: 16 }}>
 					<BackLink href="/#work">Selected work</BackLink>
@@ -47,16 +53,7 @@ export default function TradingEngine() {
 						Trading engine
 					</Heading>
 
-					<Text
-						mt={4}
-						color={accent}
-						fontFamily="var(--font-mono)"
-						fontSize="12px"
-						fontWeight="700"
-						letterSpacing=".08em"
-						textTransform="uppercase">
-						2026 · open source · Python
-					</Text>
+					<MetaLine>2026 · open source · Python</MetaLine>
 
 					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="lede" fontWeight="600">
 						A paper-trading engine I&apos;ve been building since July 2026, to find out whether a
@@ -65,8 +62,6 @@ export default function TradingEngine() {
 						portfolio. Nothing has beaten its frozen control yet.
 					</Text>
 				</Box>
-
-				<ProjectLinks links={links} mt={{ base: 8, md: 10 }} />
 
 				<DiagramFigure
 					id="te-now"
@@ -92,8 +87,8 @@ export default function TradingEngine() {
 				<H2>Engine v1 updates</H2>
 
 				<P>
-					Each update has its own page with the diagram as the engine stood then. Update 1.8 added
-					the shared backtest core, which Engine v2 still uses for research.
+					All eight updates are on one page, each with the diagram as the engine stood then. Update
+					1.8 added the shared backtest core, which Engine v2 still uses for research.
 				</P>
 
 				<TradingVersionList />

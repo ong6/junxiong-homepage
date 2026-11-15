@@ -12,18 +12,9 @@ import {
 import NextLink from "next/link";
 import { Fragment } from "react";
 import OutArrow from "./OutArrow";
+import RecentWriting from "./RecentWriting";
+import { TradingPreview, UipackPreview } from "./SupportingPreviews";
 import { AI_TOOLING } from "../lib/aiTooling";
-import { toneFor } from "../lib/tones";
-
-// Lift on a real pointer only; touch fires a sticky hover on tap.
-const liftOnHover = (shadow) => ({
-	"@media (hover: hover) and (pointer: fine)": {
-		"&:hover": { transform: "translateY(-3px)", boxShadow: shadow },
-		// `translate`, not `transform`: the panel's scroll-in animation owns transform.
-		"&:hover [data-panel]": { translate: "-2px -2px", boxShadow: "6px 6px 0 var(--chakra-colors-preview-shadow)" },
-	},
-	"@media (prefers-reduced-motion: reduce)": { "&:hover": { transform: "none" } },
-});
 
 const labelStyle = {
 	fontFamily: "var(--font-mono)",
@@ -42,7 +33,7 @@ function ProjectLink({ href, children }) {
 	);
 }
 
-function FeaturedCard({ span, index = 0, href, children }) {
+function FeaturedCard({ span, index = 0, children }) {
 	return (
 		<LinkBox
 			as="article"
@@ -59,13 +50,8 @@ function FeaturedCard({ span, index = 0, href, children }) {
 			display="flex"
 			flexDirection="column"
 			data-reveal="lead"
-			data-fill
-			data-tone={toneFor(href)}
-			style={{ "--i": index }}
-			transition="transform var(--dur-hover) var(--ease-out), box-shadow var(--dur-hover) var(--ease-out), border-color var(--dur-hover) ease"
-			_hover={{ borderColor: "border.strong" }}
-			_active={{ transform: "scale(0.99)" }}
-			sx={liftOnHover("0 18px 42px -34px rgba(39,32,27,.65)")}>
+			data-hover="card"
+			style={{ "--i": index }}>
 			{children}
 		</LinkBox>
 	);
@@ -104,7 +90,7 @@ function CardCopy({ eyebrow, title, href, description }) {
 
 function AiToolingCard() {
 	return (
-		<FeaturedCard span={7} href="/ai-tooling">
+		<FeaturedCard span={7}>
 			<CardCopy
 				eyebrow="Open source · 2026"
 				title="AI tooling"
@@ -147,7 +133,7 @@ function AiToolingCard() {
 
 function CompozeCard() {
 	return (
-		<FeaturedCard span={5} index={1} href="/compoze">
+		<FeaturedCard span={5} index={1}>
 			<CardCopy
 				eyebrow="Company · 2025"
 				title="Compoze"
@@ -183,6 +169,7 @@ const supportingProjects = [
 		label: "Research system",
 		description: "Tests trading ideas overnight, with the rules fixed before the results come in.",
 		wide: true,
+		Preview: TradingPreview,
 	},
 	{
 		title: "UiPack",
@@ -190,6 +177,7 @@ const supportingProjects = [
 		label: "Design system",
 		description: "The figures, motion rules and slide starters shared across my projects.",
 		wide: true,
+		Preview: UipackPreview,
 	},
 ];
 
@@ -205,29 +193,33 @@ function SupportingCard({ project, index }) {
 			p={{ base: 6, md: 8 }}
 			gridColumn={{ md: project.wide ? "span 2" : undefined }}
 			data-reveal
-			data-fill
-			data-tone={toneFor(project.href)}
-			style={{ "--i": index % 2 }}
-			transition="border-color var(--dur-hover) ease, transform var(--dur-hover) var(--ease-out), box-shadow var(--dur-hover) var(--ease-out)"
-			_hover={{ borderColor: "border.strong" }}
-			_active={{ transform: "scale(0.99)" }}
-			sx={liftOnHover("0 16px 36px -30px rgba(39,32,27,.55)")}>
-			<Text color="text.muted" sx={labelStyle}>
-				{project.label}
-			</Text>
-			<Heading as="h3" mt={2} fontSize={{ base: "23px", md: "26px" }} lineHeight="heading">
-				<ProjectLink href={project.href}>{project.title}</ProjectLink>
-			</Heading>
-			<Text mt={2} maxW="640px" color="text.muted" fontSize="16px" lineHeight="text">
-				{project.description}
-			</Text>
+			data-hover="card"
+			style={{ "--i": index % 2 }}>
+			{/* Copy beside its preview from lg, the preview under the copy below. */}
+			<Grid templateColumns={{ base: "minmax(0, 1fr)", lg: "minmax(0, 1fr) minmax(0, 528px)" }} columnGap={12} rowGap={6} alignItems="center">
+				<Box>
+					<Text color="text.muted" sx={labelStyle}>
+						{project.label}
+					</Text>
+					<Heading as="h3" mt={2} fontSize={{ base: "23px", md: "26px" }} lineHeight="heading">
+						<ProjectLink href={project.href}>{project.title}</ProjectLink>
+					</Heading>
+					<Text mt={2} maxW="640px" color="text.muted" fontSize="16px" lineHeight="text">
+						{project.description}
+					</Text>
+				</Box>
+				{project.Preview ? (
+					<DottedCanvas>
+						<project.Preview />
+					</DottedCanvas>
+				) : null}
+			</Grid>
 		</LinkBox>
 	);
 }
 
 const elsewhereLinks = [
 	{ name: "Hobbies", href: "/hobbies", detail: "What I do away from the editor" },
-	{ name: "Notes", href: "https://notes.junxiong.dev", detail: "Longer working notes", external: true },
 	{ name: "Archive", href: "/works", detail: "University-era projects" },
 	{ name: "Resume", href: "/resume", detail: "Work history and experience" },
 ];
@@ -242,8 +234,9 @@ function Elsewhere() {
 				Around the site
 			</Heading>
 			{/* Links out grammar: the arrow ends each row flush with its rule;
-			    columns sit 24px apart instead of padding the rows. */}
-			<SimpleGrid columns={{ base: 1, smmd: 2, lg: 4 }} columnGap={6} mt={6} borderTop="1px solid" borderColor="border.subtle">
+			    columns sit 24px apart instead of padding the rows. Notes moved to
+			    Recent writing above, so three rows fill three columns. */}
+			<SimpleGrid columns={{ base: 1, md: 3 }} columnGap={6} mt={6} borderTop="1px solid" borderColor="border.subtle">
 				{elsewhereLinks.map((item, index) => (
 					<Link
 						key={item.name}
@@ -254,8 +247,7 @@ function Elsewhere() {
 						rel={item.external ? "noopener noreferrer" : undefined}
 						data-reveal
 						data-group
-						data-fill="row"
-						data-tone="site"
+						data-hover="row"
 						style={{ "--i": index }}
 						display="block"
 						minH="92px"
@@ -311,6 +303,7 @@ export default function SelectedWork() {
 				</Box>
 			</Box>
 
+			<RecentWriting />
 			<Elsewhere />
 		</>
 	);

@@ -3,7 +3,9 @@ import NextLink from "next/link";
 import { useEffect, useRef, useState } from "react";
 import HobbyScene from "../components/HobbyScene";
 import Layout from "../components/layouts/Articles";
+import { PAGE_META } from "../lib/pageMeta";
 import ProjectLinks from "../components/ProjectLinks";
+import { noteLink, notesFor } from "../lib/notes";
 import styles from "../styles/Hobbies.module.css";
 
 // Two of UiPack's photographic looks, so the six read as one set (STYLE.md,
@@ -17,6 +19,14 @@ const chapters = [
 	{ id: "home-servers", index: "05", label: "Home servers", kind: "server", variant: 4 },
 	{ id: "trading", index: "06", label: "Trading", kind: "trading", variant: 2 },
 ];
+
+// Notes paired with a chapter (or the page) in lib/notes.js, in the same
+// compact block as "Built from this hobby".
+function NotesBlock({ path, heading = "Notes from this hobby", ...props }) {
+	const notes = notesFor(path);
+	if (!notes.length) return null;
+	return <ProjectLinks heading={heading} compact mt={6} maxW="64ch" links={notes.map(noteLink)} {...props} />;
+}
 
 function Chapter({ id, index, label, kind, active, variant, after, children }) {
 	return (
@@ -70,7 +80,7 @@ export default function Hobbies() {
 	}, []);
 
 	return (
-		<Layout animate={false} title="Hobbies" description="Coding and experimenting with AI are Ong Jun Xiong’s main hobbies, alongside tennis, trading, home servers, travel and reading.">
+		<Layout animate={false} {...PAGE_META["/hobbies"]}>
 			<Box ref={pageRef} className={styles.page}>
 				<Box as="header" className={styles.intro}>
 					<Box className={styles.introInner}>
@@ -121,7 +131,7 @@ export default function Hobbies() {
 					Non-fiction, usually tied to whatever I am building or trading at the time. Fiction in between to reset.
 				</Chapter>
 
-				<Chapter {...chapters[4]} active={active === chapters[4].id}>
+				<Chapter {...chapters[4]} active={active === chapters[4].id} after={<NotesBlock path="/hobbies#home-servers" />}>
 					I am speccing an always-on inference box that serves models to my own tools. So far, I&apos;m mostly comparing models, memory requirements and what the hardware would cost. I <Link href="https://notes.junxiong.dev" target="_blank" rel="noopener noreferrer">write up what I learn as I go</Link>.
 				</Chapter>
 
@@ -129,18 +139,25 @@ export default function Hobbies() {
 					{...chapters[5]}
 					active={active === chapters[5].id}
 					after={
-						<ProjectLinks
-							heading="Built from this hobby"
-							compact
-							mt={6}
-							maxW="64ch"
-							links={[
-								{ name: "Trading engine", detail: "Tests trading ideas overnight, with rules set before the results come in", href: "/trading-engine" },
-							]}
-						/>
+						<>
+							<ProjectLinks
+								heading="Built from this hobby"
+								compact
+								mt={6}
+								maxW="64ch"
+								links={[
+									{ name: "Trading engine", detail: "Tests trading ideas overnight, with rules set before the results come in", href: "/trading-engine" },
+								]}
+							/>
+							<NotesBlock path="/hobbies#trading" mt={4} />
+						</>
 					}>
 					I trade stocks against a written playbook. A setup needs entry, exit and invalidation rules before I touch it; the journal records each trade in R so one repeating mistake is visible at review time. The visual beside this is an illustrative study, not my account.
 				</Chapter>
+
+				<Box className={styles.outro}>
+					<NotesBlock path="/hobbies" heading="Notes on this page" mt={0} />
+				</Box>
 			</Box>
 		</Layout>
 	);

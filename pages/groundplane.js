@@ -5,10 +5,10 @@ import * as GroundplaneArchitecture from "../components/diagrams/GroundplaneArch
 import { CodeBlock, CodeFigure } from "../components/CodeBlock";
 import Layout from "../components/layouts/Articles";
 import CaseStudyFooter from "../components/CaseStudyFooter";
-import ProjectLinks from "../components/ProjectLinks";
 import Details from "../components/Details";
-import FactList from "../components/FactList";
-import { BackLink, P, H2, ARTICLE_TITLE } from "../components/ArticleParts";
+import FactList, { pickFacts } from "../components/FactList";
+import { BackLink, MetaLine, P, H2, ARTICLE_TITLE } from "../components/ArticleParts";
+import { withNotes } from "../lib/notes";
 
 // A written case study in the same shape as /compoze: one ~680px column of
 // prose, the architecture figure, a code figure, and a single mono fact table.
@@ -71,17 +71,19 @@ const checks = [
 	["comparison", "\u201cA beat B by 12%\u201d is recomputed; when it\u2019s wrong, the error says which convention it does match"],
 ];
 
-const links = [
+const railFacts = pickFacts(facts, ["check families", "tests", "runtime dependencies", "status"]);
+
+const links = withNotes("/groundplane", [
 	{ name: "Source on GitHub", detail: "Python library, MIT, install from GitHub", href: "https://github.com/ong6/groundplane", external: true },
 	{ name: "UiPack", detail: "The figures on this page are drawn with it", href: "/uipack" },
-];
+]);
 
 export default function Groundplane() {
-	const accent = "brand.solid";
-
 	return (
 		<Layout
 			contents
+			facts={railFacts}
+			links={links}
 			title="Groundplane"
 			schema={{
 				type: "SoftwareSourceCode",
@@ -103,16 +105,7 @@ export default function Groundplane() {
 						Groundplane
 					</Heading>
 
-					<Text
-						mt={4}
-						color={accent}
-						fontFamily="var(--font-mono)"
-						fontSize="12px"
-						fontWeight="700"
-						letterSpacing=".08em"
-						textTransform="uppercase">
-						2026 · open source · python
-					</Text>
+					<MetaLine>2026 · open source · python</MetaLine>
 
 					<Text
 						mt={8}
@@ -123,19 +116,17 @@ export default function Groundplane() {
 					</Text>
 				</Box>
 
-				<ProjectLinks links={links} mt={{ base: 8, md: 10 }} />
+				<CodeFigure caption="fig. 1 — before, the model&apos;s answer is trusted as is. After, the ranking is recorded with where it came from, the model fills a winner field, and Groundplane rejects it. The error is the library&apos;s real output for this input.">
+					<CodeBlock title="before" lines={BEFORE} />
+					<CodeBlock title="after" lines={AFTER} />
+					<CodeBlock title="raised" lines={ERROR} />
+				</CodeFigure>
 
 				<H2>Where it came from</H2>
 
 				<P>
 					I first built this inside an AI platform at TikTok. Some of our summaries had to rank a table of numbers, and a senior stakeholder pointed out that naming the wrong winner wasn&apos;t acceptable, even if the model usually got it right. So I moved the ranking into code: code worked out the winner and the model only described it. Groundplane is that idea pulled out into a library, extended beyond picking a winner, and published under MIT.
 				</P>
-
-				<CodeFigure caption="fig. 1 — before, the model&apos;s answer is trusted as is. After, the ranking is recorded with where it came from, the model fills a winner field, and Groundplane rejects it. The error is the library&apos;s real output for this input.">
-					<CodeBlock title="before" lines={BEFORE} />
-					<CodeBlock title="after" lines={AFTER} />
-					<CodeBlock title="raised" lines={ERROR} />
-				</CodeFigure>
 
 				<H2>What it checks, and what it doesn&apos;t</H2>
 

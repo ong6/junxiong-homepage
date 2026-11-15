@@ -54,3 +54,7 @@ export default function FactList({ facts, ...props }) {
 		</Box>
 	);
 }
+
+// Rows of a page's fact table by label, for the wide-screen side rail
+// (layouts/Articles.js `facts`), so the rail repeats the table's own words.
+export const pickFacts = (facts, labels) => labels.map((name) => facts.find(([label]) => label === name)).filter(Boolean);

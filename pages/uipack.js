@@ -17,6 +17,7 @@ import { useRouter } from "next/router";
 import { useSyncExternalStore } from "react";
 import UipackSlides from "../components/UipackSlides";
 import Layout from "../components/layouts/Articles";
+import { PAGE_META } from "../lib/pageMeta";
 import CaseStudyFooter from "../components/CaseStudyFooter";
 import ProjectLinks from "../components/ProjectLinks";
 import LazyMount from "../components/LazyMount";
@@ -64,14 +65,13 @@ export default function Uipack() {
 
 	return (
 		<Layout
-			title="UiPack"
+			{...PAGE_META["/uipack"]}
 			schema={{
 				type: "SoftwareSourceCode",
 				codeRepository: "https://github.com/ong6/uipack",
 				programmingLanguage: "TypeScript",
 				license: "https://opensource.org/licenses/MIT",
-			}}
-			description="UiPack brings reusable web design, animation and presentation systems into one place, including slide layouts and the words used to present them.">
+			}}>
 			<Container maxW="1088px" px={0} ml={0}>
 				<Box maxW="680px" pt={{ base: 10, md: 16 }}>
 					<BackLink href="/#work">Selected work</BackLink>

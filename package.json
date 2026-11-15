@@ -32,6 +32,7 @@
 		"lint": "eslint .",
 		"verify": "npm run lint && npm run check:ui-ownership",
 		"sync:trading-docs": "node scripts/sync-trading-docs.mjs",
+		"sync:notes": "node scripts/sync-notes.mjs",
 		"test:e2e": "playwright test",
 		"check:ui-ownership": "node scripts/check-ui-ownership.mjs"
 	},
@@ -43,6 +44,7 @@
 		"@emotion/styled": "^11.14.1",
 		"@vercel/analytics": "^2.0.1",
 		"@vercel/speed-insights": "^2.0.0",
+		"cmdk": "1.1.1",
 		"next": "^16.3.4",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
