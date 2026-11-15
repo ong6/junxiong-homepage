@@ -42,7 +42,8 @@ ${tradingDocs}
 
 ## Optional
 
-- [Hobbies](${SITE_URL}/hobbies): coding and AI, tennis, trading, home servers, travel, reading
+- [Hobbies](${SITE_URL}/hobbies): coding and AI, tennis, trading, home lab, travel, reading
+- [Home lab](${SITE_URL}/home-lab): a plan for one place for the household's storage, photos, streaming, home automation, private git, small apps and local AI; mostly not set up yet
 - [Archive](${SITE_URL}/works): university-era projects, 2020 to 2023
 `;
 

@@ -4,7 +4,7 @@ const { expect, test } = require("@playwright/test");
 // after the lede, the dated meta line and structured data, paired notes, the
 // wide-screen side rail and the "On this page" bar below 1200px.
 
-const CASE_STUDIES = ["/compoze", "/groundplane", "/skills", "/skillsmith", "/ai-tooling", "/trading-engine", "/trading-engine/v2", "/uipack"];
+const CASE_STUDIES = ["/compoze", "/groundplane", "/skills", "/skillsmith", "/home-lab", "/ai-tooling", "/trading-engine", "/trading-engine/v2", "/uipack"];
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const human = (iso) => {
 	const [y, m, d] = iso.split("-").map(Number);
@@ -70,13 +70,16 @@ test("paired notes appear by title; a page with none keeps the generic Notes row
 	await expect(page.locator("#links-out").getByRole("link", { name: /^Notes/ })).toHaveAttribute("href", "https://notes.junxiong.dev");
 });
 
-test("hobbies pairs the 3D note with the page and the hardware notes with Home servers", async ({ page }) => {
+const HARDWARE_NOTES = ["How I think about hardware for local models", "Prefill and decode want different machines", "What changes when you quantize a model"];
+
+test("hobbies pairs the 3D note with the page and the hardware notes with Home lab", async ({ page }) => {
 	await page.goto("/hobbies");
-	const servers = page.locator("#home-servers");
-	await expect(servers.getByText("Notes from this hobby")).toBeVisible();
-	for (const title of ["How I think about hardware for local models", "Prefill and decode want different machines", "What changes when you quantize a model"]) {
-		await expect(servers.getByRole("link", { name: new RegExp(title) })).toHaveAttribute("target", "_blank");
+	const lab = page.locator("#home-lab");
+	await expect(lab.getByText("Notes from this hobby")).toBeVisible();
+	for (const title of HARDWARE_NOTES) {
+		await expect(lab.getByRole("link", { name: new RegExp(title) })).toHaveAttribute("target", "_blank");
 	}
+	await expect(lab.getByRole("link", { name: /^Home lab/ }).last()).toHaveAttribute("href", "/home-lab");
 	await expect(page.locator("#trading").getByRole("link", { name: /Why My Automated Trading Strategies/ })).toBeVisible();
 	await expect(page.getByRole("link", { name: /How I build 3D that still behaves like a web page/ })).toHaveAttribute(
 		"href",
@@ -240,4 +243,22 @@ test("the bar appears only on pages with three sections or more", async ({ page 
 		);
 		await expect(page.locator("[data-section-menu]"), path).toHaveCount(sections >= 3 ? 1 : 0);
 	}
+});
+
+test("the home lab page returns to its Hobbies chapter, closes on the hardware notes and the old chapter anchor still lands", async ({ page }) => {
+	await page.goto("/home-lab");
+	await expect(page.locator("main h1")).toHaveText("Home lab");
+	await expect(page.getByRole("link", { name: "← Hobbies" })).toHaveAttribute("href", "/hobbies#home-lab");
+	const closing = page.locator("#links-out");
+	await expect(closing.getByRole("link", { name: /^Hobbies/ })).toHaveAttribute("href", "/hobbies#home-lab");
+	for (const title of HARDWARE_NOTES) {
+		await expect(closing.getByRole("link", { name: new RegExp(title) })).toHaveAttribute("target", "_blank");
+	}
+	// Not promoted to the homepage cards until it runs.
+	await page.goto("/");
+	await expect(page.locator('main a[href="/home-lab"]')).toHaveCount(0);
+	// The chapter's old anchor scrolls to the renamed chapter.
+	await page.goto("/hobbies#home-servers");
+	await expect.poll(() => page.locator("#home-lab").evaluate((el) => Math.round(el.getBoundingClientRect().top)), { timeout: 5_000 }).toBeLessThan(120);
+	expect(await page.locator("#home-lab").evaluate((el) => el.getBoundingClientRect().top)).toBeGreaterThanOrEqual(0);
 });

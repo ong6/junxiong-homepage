@@ -3,7 +3,7 @@ const { expect, test } = require("@playwright/test");
 // Regressions from the 2026-09-16 QA pass: labels that ran past their node,
 // a narrow drawing that ran off its canvas, a 36px copy button, a focus ring
 // on the wrong token, and /uipack captions copied from the case studies.
-const FIGURE_PAGES = ["/uipack", "/groundplane", "/skills", "/workbase", "/compoze", "/trading-engine"];
+const FIGURE_PAGES = ["/uipack", "/groundplane", "/skills", "/workbase", "/home-lab", "/compoze", "/trading-engine"];
 
 const visibleTexts = (svgSel) => {
 	const out = [];

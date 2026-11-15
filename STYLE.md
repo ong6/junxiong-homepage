@@ -277,13 +277,17 @@ hidden unless WebGL cannot draw the scene (`styles/globals.css`).
 
 ### Article
 
-Case studies (`/compoze`, `/groundplane`, `/skills`, `/skillsmith`, `/trading-engine` and its
-version and era pages), the hub (`/ai-tooling`), `/uipack`, `/works`, `/resume`
+Case studies (`/compoze`, `/groundplane`, `/skills`, `/skillsmith`, `/workbase`, `/trading-engine` and its
+version and era pages), the hub (`/ai-tooling`), `/home-lab`, `/uipack`, `/works`, `/resume`
 and `/404`. They do not use UiPack's `LayerSection` parts, so the layout is custom.
 `/uipack` is a short showcase on the same shell (since 2026-11-15; the catalogue moved to
 ui.junxiong.dev): three h2 sections, each one example (the live Groundplane figure, the Coding & AI
 object in a compact player, the opening slide starter with its speaker guide) followed by links to
 its page on the docs site, then the palette strip.
+`/home-lab` (since 2026-11-16) is a hobby page on the case-study shell: back link "← Hobbies" to
+`/hobbies#home-lab`, one figure, a fact table, Links out and the `// NEXT` card. It is mostly a plan,
+so it is linked from its Hobbies chapter and not promoted to the homepage's project cards, which
+list a project only once it runs.
 
 | Setting | This site |
 | --- | --- |
@@ -318,7 +322,7 @@ as Markdown" or "Edit on GitHub" links.
 | Component | junxiong.dev picks | Why |
 | --- | --- | --- |
 | Diagrams | `blueprint` | The site draws case-study figures with UiPack (framed figure, lanes, nodes, packets, hints). See the open decision below |
-| 3D object scenes | `ink` | One 3D style for the whole site (owner, 2026-11-15: "lets have one style that we stick to and refine"): UiPack's ink line art. One clean object per subject floats on the page: page-toned faces, ink outlines and crease lines, one cobalt part. Colours are the site's own (`--object-paper`, `--object-ink`, `--object-accent` on `.uipack-object` in `styles/globals.css`), so a scene follows the theme with no palette prop. Hobbies: Travel (folded atlas), Coding & AI (a laptop running an agent session), Tennis (racket, can and balls), Reading (an open book, a page turning), Home servers (inference hardware), Trading (market abacus). Contact: the inbox. `/uipack` shows the Coding & AI laptop. No look or variant is chosen anywhere; UiPack 0.8.0 removed the other art directions |
+| 3D object scenes | `ink` | One 3D style for the whole site (owner, 2026-11-15: "lets have one style that we stick to and refine"): UiPack's ink line art. One clean object per subject floats on the page: page-toned faces, ink outlines and crease lines, one cobalt part. Colours are the site's own (`--object-paper`, `--object-ink`, `--object-accent` on `.uipack-object` in `styles/globals.css`), so a scene follows the theme with no palette prop. Hobbies: Travel (folded atlas), Coding & AI (a laptop running an agent session), Tennis (racket, can and balls), Reading (an open book, a page turning), Home lab (inference hardware; `#home-servers` still scrolls to it), Trading (market abacus). Contact: the inbox. `/uipack` shows the Coding & AI laptop. No look or variant is chosen anywhere; UiPack 0.8.0 removed the other art directions |
 
 **Diagram theme: `site-paper`** (`components/diagrams/theme.js`, written to `:root` by
 `pages/_document.js`). Blueprint has been a `flex` look since uipack v0.3.0: its grammar is the
