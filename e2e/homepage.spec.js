@@ -1,5 +1,6 @@
 const { test, expect } = require("@playwright/test");
 const { collectErrors } = require("./helpers");
+const notes = require("../lib/notes.snapshot.json");
 
 for (const width of [390, 1440]) {
 	for (const theme of ["light", "dark"]) {
@@ -51,9 +52,63 @@ for (const width of [390, 1440]) {
 			]) {
 				await expect(page.locator("#work").getByRole("link", { name, exact: true })).toHaveAttribute("href", href);
 			}
-			for (const name of ["Hobbies", "Notes", "Archive", "Resume"]) {
-				await expect(page.getByRole("region", { name: "Around the site" }).getByRole("link", { name: new RegExp(`^${name}`) })).toBeVisible();
+			// Notes moved up into Recent writing; three rows fill the grid.
+			const elsewhere = page.getByRole("region", { name: "Around the site" });
+			await expect(elsewhere.getByRole("link")).toHaveCount(3);
+			for (const name of ["Hobbies", "Archive", "Resume"]) {
+				await expect(elsewhere.getByRole("link", { name: new RegExp(`^${name}`) })).toBeVisible();
 			}
+
+			// Recent writing: the four newest notes as links out, then all notes,
+			// between Also building and Around the site.
+			const writing = page.getByRole("region", { name: "Recent writing" });
+			const rows = writing.getByRole("listitem");
+			await expect(rows).toHaveCount(4);
+			for (const [index, note] of notes.slice(0, 4).entries()) {
+				const row = rows.nth(index).getByRole("link");
+				await row.scrollIntoViewIfNeeded();
+				await expect(row).toHaveAttribute("href", note.url);
+				await expect(row).toHaveAttribute("target", "_blank");
+				await expect(row).toContainText(note.title);
+				await expect(row.locator("time")).toHaveAttribute("datetime", note.date);
+				expect((await row.boundingBox()).height).toBeGreaterThanOrEqual(44);
+			}
+			const allNotes = writing.getByRole("link", { name: "All notes (opens in a new tab)", exact: true });
+			await expect(allNotes).toHaveAttribute("href", "https://notes.junxiong.dev");
+			expect((await allNotes.boundingBox()).height).toBeGreaterThanOrEqual(43.9);
+			const order = await page.evaluate(() =>
+				["Also building", "Recent writing", "Around the site"].map((name) =>
+					[...document.querySelectorAll("h2")].find((h) => h.textContent.trim() === name).getBoundingClientRect().top,
+				),
+			);
+			expect(order[0]).toBeLessThan(order[1]);
+			expect(order[1]).toBeLessThan(order[2]);
+
+			// The supporting cards carry a framed static preview like the leads,
+			// with nothing under 12px.
+			for (const name of ["Trading engine", "UiPack"]) {
+				const card = page.locator("#work article").filter({ has: page.getByRole("heading", { name }) });
+				const panel = card.locator("[data-panel]");
+				await expect(panel).toHaveCount(1);
+				await panel.scrollIntoViewIfNeeded();
+				await expect(panel).toBeVisible();
+				// SVG text renders at its font size times the drawing's scale.
+				const smallest = await panel.evaluate((el) => {
+					const sizes = [];
+					for (const node of el.querySelectorAll("*")) {
+						if (!node.getClientRects().length) continue;
+						if (![...node.childNodes].some((c) => c.nodeType === 3 && c.textContent.trim())) continue;
+						const svg = node.closest("svg");
+						const scale = svg ? svg.getBoundingClientRect().width / svg.viewBox.baseVal.width : 1;
+						sizes.push(parseFloat(getComputedStyle(node).fontSize) * scale);
+					}
+					return Math.min(...sizes);
+				});
+				expect(smallest, `${name} preview text`).toBeGreaterThanOrEqual(11.5);
+			}
+			await expect(page.locator("#work").getByText("$1.56", { exact: true })).toBeVisible();
+			await expect(page.locator("#work canvas")).toHaveCount(0);
+			expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
 			expect(errors).toEqual([]);
 		});
 	}
