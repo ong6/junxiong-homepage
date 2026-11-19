@@ -1,0 +1,334 @@
+.section {
+	scroll-margin-top: 96px;
+	margin-top: 2rem;
+}
+@media screen and (min-width: 768px) {
+	.section {
+		margin-top: 6rem;
+	}
+}
+.muted {
+	color: var(--site-text-muted);
+}
+.workHeading {
+	margin-top: 0.5rem;
+	font-size: 32px;
+}
+@media screen and (min-width: 768px) {
+	.workHeading {
+		font-size: 44px;
+	}
+}
+.leadGrid {
+	display: grid;
+	gap: 1rem;
+	grid-template-columns: 1fr;
+	margin-top: 1.5rem;
+}
+@media screen and (min-width: 768px) {
+	.leadGrid {
+		gap: 1.5rem;
+		margin-top: 2rem;
+	}
+}
+@media screen and (min-width: 960px) {
+	.leadGrid {
+		grid-template-columns: repeat(12, minmax(0, 1fr));
+	}
+}
+
+.card {
+	grid-column: 1 / -1;
+	min-width: 0;
+	background: var(--site-surface-raised);
+	border: 1px solid;
+	border-color: var(--site-border-subtle);
+	border-radius: 6px;
+	/* clip, not hidden: hidden makes the card a scroll container, which
+	   would pin the preview's scroll-driven animation to the card. */
+	overflow: clip;
+	display: flex;
+	flex-direction: column;
+}
+@media screen and (min-width: 960px) {
+	.card {
+		grid-column: span var(--span);
+	}
+}
+
+.copy {
+	padding: 1.5rem;
+	padding-bottom: 1rem;
+}
+@media screen and (min-width: 768px) {
+	.copy {
+		padding: 2rem;
+		padding-bottom: 1.5rem;
+	}
+}
+.cardTitle {
+	margin-top: 0.5rem;
+	font-size: 30px;
+	line-height: 1.2;
+}
+@media screen and (min-width: 768px) {
+	.cardTitle {
+		font-size: 38px;
+	}
+}
+.overlay {
+	color: inherit;
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+}
+.arrow {
+	margin-left: 0.5rem;
+	color: var(--site-brand-solid);
+}
+.description {
+	margin-top: 1rem;
+	max-width: 610px;
+	color: var(--site-text-muted);
+	font-size: 16px;
+	line-height: 1.65;
+}
+.preview {
+	margin-top: auto;
+	padding-inline-start: 1.5rem;
+	padding-inline-end: 1.5rem;
+	padding-bottom: 1.5rem;
+}
+@media screen and (min-width: 768px) {
+	.preview {
+		padding-inline-start: 2rem;
+		padding-inline-end: 2rem;
+		padding-bottom: 2rem;
+	}
+}
+.canvas {
+	border: 1px solid;
+	border-color: var(--site-border-subtle);
+	border-radius: 4px;
+	background: var(--site-preview-canvas);
+	background-image: radial-gradient(var(--site-preview-dot) 1px, transparent 1px);
+	background-size: 12px 12px;
+	padding: 1rem;
+}
+@media screen and (min-width: 768px) {
+	.canvas {
+		padding: 1.5rem;
+	}
+}
+
+.panel {
+	max-width: 480px;
+	background: var(--site-preview-panel);
+	border: 1px solid;
+	border-color: var(--site-border-subtle);
+	border-radius: 4px;
+	box-shadow: 4px 4px 0 var(--site-preview-shadow);
+	padding: 1rem;
+}
+.panelClip {
+	background: var(--site-preview-panel);
+	border: 1px solid;
+	border-color: var(--site-border-subtle);
+	border-radius: 4px;
+	overflow: hidden;
+}
+.head {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+	color: var(--site-text-muted);
+	font-family: var(--font-mono);
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+.headSoft {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+	padding-inline-start: 1rem;
+	padding-inline-end: 1rem;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	background: var(--site-accent-soft);
+	color: var(--site-accent-terracotta);
+	font-family: var(--font-mono);
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+.tools {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	margin-top: 0.75rem;
+	font-size: 16px;
+}
+.layer {
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	border-top: 1px solid;
+	border-color: var(--site-border-subtle);
+	color: var(--site-text-muted);
+}
+.tool {
+	margin: 0;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	border-top: 1px solid;
+	border-color: var(--site-border-subtle);
+	font-weight: 700;
+	text-align: right;
+}
+.question {
+	padding: 1rem;
+}
+.ask {
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 1.65;
+}
+.answer {
+	margin-top: 0.5rem;
+	color: var(--site-text-muted);
+	font-size: 16px;
+	line-height: 1.65;
+}
+
+.also {
+	margin-top: 2rem;
+}
+@media screen and (min-width: 768px) {
+	.also {
+		margin-top: 3rem;
+	}
+}
+.alsoHeading {
+	font-size: 22px;
+}
+@media screen and (min-width: 768px) {
+	.alsoHeading {
+		font-size: 25px;
+	}
+}
+.alsoGrid {
+	display: grid;
+	gap: 1rem;
+	grid-template-columns: repeat(1, minmax(0, 1fr));
+	margin-top: 1rem;
+}
+@media screen and (min-width: 768px) {
+	.alsoGrid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+.support {
+	background: var(--site-surface-raised);
+	border: 1px solid;
+	border-color: var(--site-border-subtle);
+	border-radius: 6px;
+	padding: 1.5rem;
+}
+@media screen and (min-width: 768px) {
+	.support {
+		padding: 2rem;
+	}
+	.wide {
+		grid-column: span 2;
+	}
+}
+.supportGrid {
+	display: grid;
+	row-gap: 1.5rem;
+	column-gap: 3rem;
+	grid-template-columns: minmax(0, 1fr);
+	align-items: center;
+}
+@media screen and (min-width: 960px) {
+	.supportGrid {
+		grid-template-columns: minmax(0, 1fr) minmax(0, 528px);
+	}
+}
+.supportTitle {
+	margin-top: 0.5rem;
+	font-size: 23px;
+	line-height: 1.2;
+}
+@media screen and (min-width: 768px) {
+	.supportTitle {
+		font-size: 26px;
+	}
+}
+.supportDescription {
+	margin-top: 0.5rem;
+	max-width: 640px;
+	color: var(--site-text-muted);
+	font-size: 16px;
+	line-height: 1.65;
+}
+
+.elsewhere {
+	margin-top: 4rem;
+}
+@media screen and (min-width: 768px) {
+	.elsewhere {
+		margin-top: 6rem;
+	}
+}
+.elsewhereHeading {
+	margin-top: 0.5rem;
+	font-size: 25px;
+}
+@media screen and (min-width: 768px) {
+	.elsewhereHeading {
+		font-size: 30px;
+	}
+}
+.elsewhereGrid {
+	display: grid;
+	column-gap: 1.5rem;
+	grid-template-columns: repeat(1, minmax(0, 1fr));
+	margin-top: 1.5rem;
+	border-top: 1px solid;
+	border-color: var(--site-border-subtle);
+}
+@media screen and (min-width: 768px) {
+	.elsewhereGrid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+}
+.elsewhereRow {
+	display: block;
+	min-height: 92px;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	border-bottom: 1px solid;
+	border-color: var(--site-border-subtle);
+	color: var(--site-page-text);
+	text-decoration: none;
+}
+/* data-hover="row" is on every row, so this hover look is also the resting look. */
+.elsewhereRow:hover,
+.elsewhereRow[data-hover] {
+	color: var(--site-brand-solid);
+	text-decoration: none;
+}
+.elsewhereLine {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.5rem;
+	font-weight: 750;
+}
+.elsewhereDetail {
+	margin-top: 0.25rem;
+	color: var(--site-text-muted);
+	font-size: 13px;
+	line-height: 1.65;
+}

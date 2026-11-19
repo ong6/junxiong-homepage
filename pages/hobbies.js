@@ -1,4 +1,3 @@
-import { Box, Link, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useEffect, useRef, useState } from "react";
 import HobbyScene from "../components/HobbyScene";
@@ -22,32 +21,32 @@ const chapters = [
 
 // Notes paired with a chapter (or the page) in lib/notes.js, in the same
 // compact block as "Built from this hobby".
-function NotesBlock({ path, heading = "Notes from this hobby", ...props }) {
+function NotesBlock({ path, heading = "Notes from this hobby", className = styles.links }) {
 	const notes = notesFor(path);
 	if (!notes.length) return null;
-	return <ProjectLinks heading={heading} compact mt={6} maxW="64ch" links={notes.map(noteLink)} {...props} />;
+	return <ProjectLinks heading={heading} compact className={className} links={notes.map(noteLink)} />;
 }
 
 function Chapter({ id, alias, index, label, kind, active, preload, after, children }) {
 	return (
-		<Box as="section" id={id} className={styles.chapter} data-chapter={kind}>
+		<section id={id} className={styles.chapter} data-chapter={kind}>
 			{alias ? <span id={alias} className={styles.anchorAlias} aria-hidden="true" /> : null}
-			<Box className={styles.copy}>
-				<Text className={styles.number}>{index} / 06</Text>
-				<Text as="h2" className={styles.heading}>{label}</Text>
-				<Text className={styles.prose}>{children}</Text>
+			<div className={styles.copy}>
+				<p className={styles.number}>{index} / 06</p>
+				<h2 className={styles.heading}>{label}</h2>
+				<p className={styles.prose}>{children}</p>
 				{after}
-			</Box>
-			<Box
+			</div>
+			<div
 				className={styles.visual}
 				aria-label={`${label} visual`}
 				data-hobby-visual
 				data-chapter-id={id}>
-				<Box className={styles.visualSticky}>
+				<div className={styles.visualSticky}>
 					<HobbyScene kind={kind} label={label} active={active} preload={preload} />
-				</Box>
-			</Box>
-		</Box>
+				</div>
+			</div>
+		</section>
 	);
 }
 
@@ -88,24 +87,25 @@ export default function Hobbies() {
 
 	return (
 		<Layout animate={false} {...PAGE_META["/hobbies"]}>
-			<Box ref={pageRef} className={styles.page}>
-				<Box as="header" className={styles.intro}>
-					<Box className={styles.introInner}>
-						<Text className={styles.eyebrow}>{"// OFF THE CLOCK"}</Text>
-						<Text as="h1" className={styles.title}>Hobbies</Text>
-						<Text className={styles.lede}>I spend a lot of my free time coding and trying out AI tools. I also play tennis, trade, plan trips and read.</Text>
-						<Box as="nav" aria-label="Hobby chapters" className={styles.chapterNav}>
+			<div ref={pageRef} className={styles.page}>
+				<header className={styles.intro}>
+					<div className={styles.introInner}>
+						<p className={styles.eyebrow}>{"// OFF THE CLOCK"}</p>
+						<h1 className={styles.title}>Hobbies</h1>
+						<p className={styles.lede}>I spend a lot of my free time coding and trying out AI tools. I also play tennis, trade, plan trips and read.</p>
+						<nav aria-label="Hobby chapters" className={styles.chapterNav}>
 							{chapters.map((chapter) => (
-								<Link
+								<a
 									key={chapter.id}
+									className="ui-link"
 									href={`#${chapter.id}`}
 									aria-current={active === chapter.id ? "location" : undefined}>
 									{chapter.index} {chapter.label}
-								</Link>
+								</a>
 							))}
-						</Box>
-					</Box>
-				</Box>
+						</nav>
+					</div>
+				</header>
 
 
 				<Chapter {...chapters[0]} active={active === chapters[0].id} preload={isNear(chapters[0].id)}>
@@ -119,15 +119,14 @@ export default function Hobbies() {
 						<ProjectLinks
 							heading="Built from this hobby"
 							compact
-							mt={6}
-							maxW="64ch"
+							className={styles.links}
 							links={[
 								{ name: "Groundplane", detail: "Checks declared fields against recorded tool results", href: "/groundplane" },
 								{ name: "Agent skills", detail: "The instructions my coding agents load in every repo", href: "/skills" },
 							]}
 						/>
 					}>
-					This is my main hobby. I like trying models, building little tools, and seeing what I can get an agent to do. That is how I end up with <Link as={NextLink} href="/groundplane">Groundplane</Link>, a Python library that checks declared output fields against recorded tool results; the <Link as={NextLink} href="/skills">agent skills</Link> that Claude Code and Codex load in every repo I work in; my notes and life admin kept as a markdown repo that an AI agent tends for me; and a <Link href="https://github.com/ong6/sg-property-analysis" target="_blank" rel="noopener noreferrer">Singapore property data-analysis project</Link>. Most of it starts with something I want to try or a problem I want to fix for myself.
+					This is my main hobby. I like trying models, building little tools, and seeing what I can get an agent to do. That is how I end up with <NextLink className="ui-link" href="/groundplane">Groundplane</NextLink>, a Python library that checks declared output fields against recorded tool results; the <NextLink className="ui-link" href="/skills">agent skills</NextLink> that Claude Code and Codex load in every repo I work in; my notes and life admin kept as a markdown repo that an AI agent tends for me; and a <a className="ui-link" href="https://github.com/ong6/sg-property-analysis" target="_blank" rel="noopener noreferrer">Singapore property data-analysis project</a>. Most of it starts with something I want to try or a problem I want to fix for myself.
 				</Chapter>
 
 				<Chapter {...chapters[2]} active={active === chapters[2].id} preload={isNear(chapters[2].id)}>
@@ -146,14 +145,13 @@ export default function Hobbies() {
 							<ProjectLinks
 								heading="More on this hobby"
 								compact
-								mt={6}
-								maxW="64ch"
+								className={styles.links}
 								links={[{ name: "Home lab", detail: "What I plan to run at home and where it stands", href: "/home-lab" }]}
 							/>
-							<NotesBlock path="/hobbies#home-lab" mt={4} />
+							<NotesBlock path="/hobbies#home-lab" className={styles.linksTight} />
 						</>
 					}>
-					I am planning a <Link as={NextLink} href="/home-lab">home lab</Link>: one place for the storage, photos, streaming, home automation and local AI my household runs for itself. Most of it is still a plan. Today an agent runs on a laptop, and my devices share a private network. I <Link href="https://notes.junxiong.dev" target="_blank" rel="noopener noreferrer">write up what I learn as I go</Link>.
+					I am planning a <NextLink className="ui-link" href="/home-lab">home lab</NextLink>: one place for the storage, photos, streaming, home automation and local AI my household runs for itself. Most of it is still a plan. Today an agent runs on a laptop, and my devices share a private network. I <a className="ui-link" href="https://notes.junxiong.dev" target="_blank" rel="noopener noreferrer">write up what I learn as I go</a>.
 				</Chapter>
 
 				<Chapter
@@ -164,22 +162,21 @@ export default function Hobbies() {
 							<ProjectLinks
 								heading="Built from this hobby"
 								compact
-								mt={6}
-								maxW="64ch"
+								className={styles.links}
 								links={[
 									{ name: "Trading engine", detail: "Tests trading ideas overnight, with rules set before the results come in", href: "/trading-engine" },
 								]}
 							/>
-							<NotesBlock path="/hobbies#trading" mt={4} />
+							<NotesBlock path="/hobbies#trading" className={styles.linksTight} />
 						</>
 					}>
 					I trade stocks against a written playbook. A setup needs entry, exit and invalidation rules before I touch it; the journal records each trade in R so one repeating mistake is visible at review time. The visual beside this is an illustrative study, not my account.
 				</Chapter>
 
-				<Box className={styles.outro}>
-					<NotesBlock path="/hobbies" heading="Notes on this page" mt={0} />
-				</Box>
-			</Box>
+				<div className={styles.outro}>
+					<NotesBlock path="/hobbies" heading="Notes on this page" className={styles.linksFlush} />
+				</div>
+			</div>
 		</Layout>
 	);
 }

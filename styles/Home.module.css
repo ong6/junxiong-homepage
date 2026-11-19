@@ -1,0 +1,132 @@
+.intro {
+	scroll-margin-top: 96px;
+	padding-top: 1.5rem;
+}
+@media screen and (min-width: 768px) {
+	.intro {
+		padding-top: 5rem;
+	}
+}
+
+.hero {
+	display: grid;
+	row-gap: 1.5rem;
+	column-gap: 1.5rem;
+	grid-template-columns: 144px minmax(0, 1fr);
+	grid-template-areas: "copy copy" "portrait links";
+	align-items: center;
+	margin-top: 1rem;
+}
+@media screen and (min-width: 768px) {
+	.hero {
+		column-gap: 3.5rem;
+		grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.65fr);
+		grid-template-areas: "copy portrait" "links portrait";
+	}
+}
+@media screen and (min-width: 960px) {
+	.hero {
+		column-gap: 5rem;
+	}
+}
+
+.copy {
+	grid-area: copy;
+	max-width: 720px;
+}
+.h1 {
+	line-height: 0.98;
+	letter-spacing: -0.06em;
+}
+.lede {
+	margin-top: 1.5rem;
+	font-size: 19px;
+	line-height: 1.6;
+}
+@media screen and (min-width: 768px) {
+	.lede {
+		font-size: 23px;
+	}
+}
+.nowrap {
+	white-space: nowrap;
+}
+.body {
+	margin-top: 1rem;
+	max-width: 640px;
+	font-size: 16px;
+	line-height: 1.65;
+	color: var(--site-text-muted);
+}
+
+.portrait {
+	grid-area: portrait;
+	width: 100%;
+	max-width: 144px;
+}
+@media screen and (min-width: 768px) {
+	.portrait {
+		justify-self: end;
+		max-width: 310px;
+	}
+}
+.frame {
+	border: 1px solid;
+	border-color: var(--site-border-subtle);
+	background: var(--site-surface-raised);
+	padding: 0.5rem;
+}
+@media screen and (min-width: 768px) {
+	.frame {
+		padding: 1rem;
+	}
+}
+.caption {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 0.5rem;
+	color: var(--site-text-muted);
+	font-family: var(--font-mono);
+	font-size: 12px;
+}
+@media screen and (min-width: 768px) {
+	.caption {
+		margin-top: 1rem;
+	}
+}
+.place {
+	display: none;
+}
+@media screen and (min-width: 768px) {
+	.place {
+		display: block;
+	}
+}
+
+.links {
+	display: grid;
+	row-gap: 0.25rem;
+	column-gap: 0.5rem;
+	grid-template-columns: minmax(0, 1fr);
+	grid-area: links;
+}
+@media screen and (min-width: 768px) {
+	.links {
+		column-gap: 1.5rem;
+		grid-template-columns: repeat(3, max-content);
+	}
+}
+.utility {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	font-family: var(--font-mono);
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-decoration: underline;
+	text-underline-offset: 4px;
+}
+.arrow {
+	margin-left: 4px;
+}

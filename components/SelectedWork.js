@@ -1,14 +1,3 @@
-import {
-	Box,
-	Flex,
-	Grid,
-	Heading,
-	Link,
-	LinkBox,
-	LinkOverlay,
-	SimpleGrid,
-	Text,
-} from "@chakra-ui/react";
 import NextLink from "next/link";
 import { Fragment } from "react";
 import OutArrow from "./OutArrow";
@@ -16,77 +5,46 @@ import RecentWriting from "./RecentWriting";
 import { TradingPreview, UipackPreview } from "./SupportingPreviews";
 import { AI_TOOLING } from "../lib/aiTooling";
 import { toneFor } from "../lib/tones";
-
-const labelStyle = {
-	fontFamily: "var(--font-mono)",
-	fontSize: "12px",
-	fontWeight: "700",
-	letterSpacing: ".08em",
-	textTransform: "uppercase",
-};
+import styles from "./SelectedWork.module.css";
 
 function ProjectLink({ href, children }) {
 	return (
-		<LinkOverlay as={NextLink} href={href} prefetch={false} color="inherit" display="inline-flex" alignItems="center" minH="44px">
+		<NextLink href={href} prefetch={false} className={`ui-linkoverlay ${styles.overlay}`}>
 			{children}
-			<OutArrow ml={2} color="brand.solid" />
-		</LinkOverlay>
+			<OutArrow className={styles.arrow} />
+		</NextLink>
 	);
 }
 
 function FeaturedCard({ span, index = 0, tone, children }) {
 	return (
-		<LinkBox
-			as="article"
+		<article
 			data-group
-			gridColumn={{ base: "1 / -1", lg: `span ${span}` }}
-			minW={0}
-			bg="surface.raised"
-			border="1px solid"
-			borderColor="border.subtle"
-			borderRadius="6px"
-			// clip, not hidden: hidden makes the card a scroll container, which
-			// would pin the preview's scroll-driven animation to the card.
-			overflow="clip"
-			display="flex"
-			flexDirection="column"
 			data-reveal="lead"
 			data-hover="card"
 			data-tone={tone}
-			style={{ "--i": index }}>
+			className={`ui-linkbox ${styles.card}`}
+			style={{ "--i": index, "--span": span }}>
 			{children}
-		</LinkBox>
+		</article>
 	);
 }
 
 function DottedCanvas({ children }) {
-	return (
-		<Box
-			border="1px solid"
-			borderColor="border.subtle"
-			borderRadius="4px"
-			bg="preview.canvas"
-			backgroundImage="radial-gradient(var(--chakra-colors-preview-dot) 1px, transparent 1px)"
-			backgroundSize="12px 12px"
-			p={{ base: 4, md: 6 }}>
-			{children}
-		</Box>
-	);
+	return <div className={styles.canvas}>{children}</div>;
 }
 
 function CardCopy({ eyebrow, title, href, description }) {
 	return (
-		<Box p={{ base: 6, md: 8 }} pb={{ base: 4, md: 6 }}>
-			<Text data-tone-label sx={labelStyle} color="brand.solid">
+		<div className={styles.copy}>
+			<p data-tone-label className="eyebrow">
 				{eyebrow}
-			</Text>
-			<Heading as="h3" mt={2} fontSize={{ base: "30px", md: "38px" }} lineHeight="heading">
+			</p>
+			<h3 className={`ui-heading ${styles.cardTitle}`}>
 				<ProjectLink href={href}>{title}</ProjectLink>
-			</Heading>
-			<Text mt={4} maxW="610px" color="text.muted" fontSize="16px" lineHeight="text">
-				{description}
-			</Text>
-		</Box>
+			</h3>
+			<p className={styles.description}>{description}</p>
+		</div>
 	);
 }
 
@@ -99,36 +57,24 @@ function AiToolingCard() {
 				href="/ai-tooling"
 				description="Open-source tools I wrote for working with AI agents, sorted by where each one sits in the stack."
 			/>
-			<Box mt="auto" px={{ base: 6, md: 8 }} pb={{ base: 6, md: 8 }}>
+			<div className={styles.preview}>
 				<DottedCanvas>
-					<Box
-						maxW="480px"
-						bg="preview.panel"
-						border="1px solid"
-						borderColor="border.subtle"
-						borderRadius="4px"
-						boxShadow="4px 4px 0 var(--chakra-colors-preview-shadow)"
-						data-panel
-						p={4}>
-						<Flex justify="space-between" gap={4} color="text.muted" sx={labelStyle}>
-							<Text>Layer</Text>
-							<Text>Tool</Text>
-						</Flex>
-						<Grid as="dl" mt={3} templateColumns="minmax(0, 1fr) auto" fontSize="16px">
+					<div data-panel className={styles.panel}>
+						<div className={styles.head}>
+							<p>Layer</p>
+							<p>Tool</p>
+						</div>
+						<dl className={styles.tools}>
 							{AI_TOOLING.map((tool) => (
 								<Fragment key={tool.href}>
-									<Text as="dt" py={2} borderTop="1px solid" borderColor="border.subtle" color="text.muted">
-										{tool.layer}
-									</Text>
-									<Text as="dd" m={0} py={2} borderTop="1px solid" borderColor="border.subtle" fontWeight="700" textAlign="right">
-										{tool.name}
-									</Text>
+									<dt className={styles.layer}>{tool.layer}</dt>
+									<dd className={styles.tool}>{tool.name}</dd>
 								</Fragment>
 							))}
-						</Grid>
-					</Box>
+						</dl>
+					</div>
 				</DottedCanvas>
-			</Box>
+			</div>
 		</FeaturedCard>
 	);
 }
@@ -142,24 +88,20 @@ function CompozeCard() {
 				href="/compoze"
 				description="Assistants that answer questions from a company's own documents. A side business next to TikTok, where I did the sales, the building and the customer training."
 			/>
-			<Box mt="auto" px={{ base: 6, md: 8 }} pb={{ base: 6, md: 8 }}>
+			<div className={styles.preview}>
 				<DottedCanvas>
-					<Box data-panel bg="preview.panel" border="1px solid" borderColor="border.subtle" borderRadius="4px" overflow="hidden">
-						<Flex justify="space-between" gap={4} px={4} py={2} bg="accent.soft" color="accent.terracotta" sx={labelStyle}>
-							<Text>Policy search</Text>
-							<Text>3 sources</Text>
-						</Flex>
-						<Box p={4}>
-							<Text fontSize="16px" fontWeight="700" lineHeight="text">
-								How much annual leave carries over?
-							</Text>
-						<Text mt={2} color="text.muted" fontSize="16px" lineHeight="text">
-								Up to 5 days, used by 31 March.
-							</Text>
-						</Box>
-					</Box>
+					<div data-panel className={styles.panelClip}>
+						<div className={styles.headSoft}>
+							<p>Policy search</p>
+							<p>3 sources</p>
+						</div>
+						<div className={styles.question}>
+							<p className={styles.ask}>How much annual leave carries over?</p>
+							<p className={styles.answer}>Up to 5 days, used by 31 March.</p>
+						</div>
+					</div>
 				</DottedCanvas>
-			</Box>
+			</div>
 		</FeaturedCard>
 	);
 }
@@ -185,39 +127,31 @@ const supportingProjects = [
 
 function SupportingCard({ project, index }) {
 	return (
-		<LinkBox
-			as="article"
+		<article
 			data-group
-			bg="surface.raised"
-			border="1px solid"
-			borderColor="border.subtle"
-			borderRadius="6px"
-			p={{ base: 6, md: 8 }}
-			gridColumn={{ md: project.wide ? "span 2" : undefined }}
 			data-reveal
 			data-hover="card"
 			data-tone={toneFor(project.href)}
+			className={`ui-linkbox ${styles.support} ${project.wide ? styles.wide : ""}`}
 			style={{ "--i": index % 2 }}>
 			{/* Copy beside its preview from lg, the preview under the copy below. */}
-			<Grid templateColumns={{ base: "minmax(0, 1fr)", lg: "minmax(0, 1fr) minmax(0, 528px)" }} columnGap={12} rowGap={6} alignItems="center">
-				<Box>
-					<Text data-tone-label color="text.muted" sx={labelStyle}>
+			<div className={styles.supportGrid}>
+				<div>
+					<p data-tone-label className={`eyebrow ${styles.muted}`}>
 						{project.label}
-					</Text>
-					<Heading as="h3" mt={2} fontSize={{ base: "23px", md: "26px" }} lineHeight="heading">
+					</p>
+					<h3 className={`ui-heading ${styles.supportTitle}`}>
 						<ProjectLink href={project.href}>{project.title}</ProjectLink>
-					</Heading>
-					<Text mt={2} maxW="640px" color="text.muted" fontSize="16px" lineHeight="text">
-						{project.description}
-					</Text>
-				</Box>
+					</h3>
+					<p className={styles.supportDescription}>{project.description}</p>
+				</div>
 				{project.Preview ? (
 					<DottedCanvas>
 						<project.Preview />
 					</DottedCanvas>
 				) : null}
-			</Grid>
-		</LinkBox>
+			</div>
+		</article>
 	);
 }
 
@@ -229,82 +163,64 @@ const elsewhereLinks = [
 
 function Elsewhere() {
 	return (
-		<Box as="section" aria-labelledby="elsewhere-heading" mt={{ base: 16, md: 24 }}>
-			<Text sx={labelStyle} color="brand.solid">
-				{"// ELSEWHERE"}
-			</Text>
-			<Heading id="elsewhere-heading" as="h2" mt={2} fontSize={{ base: "25px", md: "30px" }}>
+		<section aria-labelledby="elsewhere-heading" className={styles.elsewhere}>
+			<p className="eyebrow">{"// ELSEWHERE"}</p>
+			<h2 id="elsewhere-heading" className={`ui-heading ${styles.elsewhereHeading}`}>
 				Around the site
-			</Heading>
+			</h2>
 			{/* Links out grammar: the arrow ends each row flush with its rule;
 			    columns sit 24px apart instead of padding the rows. Notes moved to
 			    Recent writing above, so three rows fill three columns. */}
-			<SimpleGrid columns={{ base: 1, md: 3 }} columnGap={6} mt={6} borderTop="1px solid" borderColor="border.subtle">
-				{elsewhereLinks.map((item, index) => (
-					<Link
-						key={item.name}
-						as={item.external ? undefined : NextLink}
-						href={item.href}
-						prefetch={item.external ? undefined : false}
-						target={item.external ? "_blank" : undefined}
-						rel={item.external ? "noopener noreferrer" : undefined}
-						data-reveal
-						data-group
-						data-hover="row"
-						style={{ "--i": index }}
-						display="block"
-						minH="92px"
-						py={4}
-						borderBottom="1px solid"
-						borderColor="border.subtle"
-						color="page.text"
-						textDecoration="none"
-						_hover={{ color: "brand.solid", textDecoration: "none" }}>
-						<Flex align="center" justify="space-between" gap={2} fontWeight="750">
-							<Text>{item.name}</Text>
-							<OutArrow newTab={Boolean(item.external)} />
-						</Flex>
-						<Text mt={1} color="text.muted" fontSize="13px" lineHeight="text">
-							{item.detail}
-						</Text>
-					</Link>
-				))}
-			</SimpleGrid>
-		</Box>
+			<div className={styles.elsewhereGrid}>
+				{elsewhereLinks.map((item, index) => {
+					const Anchor = item.external ? "a" : NextLink;
+					return (
+						<Anchor
+							key={item.name}
+							href={item.href}
+							prefetch={item.external ? undefined : false}
+							target={item.external ? "_blank" : undefined}
+							rel={item.external ? "noopener noreferrer" : undefined}
+							data-reveal
+							data-group
+							data-hover="row"
+							style={{ "--i": index }}
+							className={`ui-link ${styles.elsewhereRow}`}>
+							<div className={styles.elsewhereLine}>
+								<p>{item.name}</p>
+								<OutArrow newTab={Boolean(item.external)} />
+							</div>
+							<p className={styles.elsewhereDetail}>{item.detail}</p>
+						</Anchor>
+					);
+				})}
+			</div>
+		</section>
 	);
 }
 
 export default function SelectedWork() {
 	return (
 		<>
-			<Box
-				as="section"
-				id="work"
-				aria-labelledby="work-heading"
-				scrollMarginTop="96px"
-				mt={{ base: 8, md: 24 }}>
-				<Text sx={labelStyle} color="brand.solid">
-					{"// PROJECTS"}
-				</Text>
-				<Heading id="work-heading" as="h2" mt={2} fontSize={{ base: "32px", md: "44px" }}>
+			<section id="work" aria-labelledby="work-heading" className={styles.section}>
+				<p className="eyebrow">{"// PROJECTS"}</p>
+				<h2 id="work-heading" className={`ui-heading ${styles.workHeading}`}>
 					Selected work
-				</Heading>
-				<Grid mt={{ base: 6, md: 8 }} templateColumns={{ base: "1fr", lg: "repeat(12, minmax(0, 1fr))" }} gap={{ base: 4, md: 6 }}>
+				</h2>
+				<div className={styles.leadGrid}>
 					<AiToolingCard />
 					<CompozeCard />
-				</Grid>
+				</div>
 
-				<Box mt={{ base: 8, md: 12 }}>
-					<Heading as="h2" fontSize={{ base: "22px", md: "25px" }}>
-						Also building
-					</Heading>
-					<SimpleGrid columns={{ base: 1, md: 2 }} mt={4} gap={4}>
+				<div className={styles.also}>
+					<h2 className={`ui-heading ${styles.alsoHeading}`}>Also building</h2>
+					<div className={styles.alsoGrid}>
 						{supportingProjects.map((project, index) => (
 							<SupportingCard key={project.title} project={project} index={index} />
 						))}
-					</SimpleGrid>
-				</Box>
-			</Box>
+					</div>
+				</div>
+			</section>
 
 			<RecentWriting />
 			<Elsewhere />

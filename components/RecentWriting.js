@@ -1,7 +1,7 @@
-import { Box, Flex, Heading, Link, Text } from "@chakra-ui/react";
 import OutArrow from "./OutArrow";
 import { Eyebrow } from "./ArticleParts";
 import { NOTES_URL, latestNotes } from "../lib/notes";
+import styles from "./RecentWriting.module.css";
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -18,15 +18,15 @@ const formatDate = (iso) => {
 export default function RecentWriting() {
 	const notes = latestNotes(4);
 	return (
-		<Box as="section" id="writing" aria-labelledby="writing-heading" scrollMarginTop="96px" mt={{ base: 16, md: 24 }}>
+		<section id="writing" aria-labelledby="writing-heading" className={styles.section}>
 			<Eyebrow>Notes</Eyebrow>
-			<Heading id="writing-heading" as="h2" mt={2} fontSize={{ base: "25px", md: "30px" }}>
+			<h2 id="writing-heading" className={`ui-heading ${styles.heading}`}>
 				Recent writing
-			</Heading>
-			<Box as="ul" listStyleType="none" m={0} mt={6} p={0} borderTop="1px solid" borderColor="border.subtle">
+			</h2>
+			<ul className={styles.list}>
 				{notes.map((note, index) => (
-					<Box as="li" key={note.slug}>
-						<Link
+					<li key={note.slug}>
+						<a
 							href={note.url}
 							target="_blank"
 							rel="noopener noreferrer"
@@ -34,59 +34,22 @@ export default function RecentWriting() {
 							data-group
 							data-hover="row"
 							style={{ "--i": index }}
-							display="grid"
-							gridTemplateColumns={{ base: "minmax(0, 1fr) auto", md: "136px minmax(0, 1fr) auto" }}
-							gridTemplateAreas={{ base: '"date arrow" "title title" "detail detail"', md: '"date title arrow" ". detail ."' }}
-							columnGap={{ base: 4, md: 6 }}
-							alignItems="baseline"
-							minH="44px"
-							py={4}
-							borderBottom="1px solid"
-							borderColor="border.subtle"
-							color="page.text"
-							textDecoration="none"
-							_hover={{ color: "brand.solid", textDecoration: "none" }}>
-							<Text
-								as="time"
-								dateTime={note.date}
-								gridArea="date"
-								fontFamily="var(--font-mono)"
-								fontSize="12px"
-								lineHeight="text"
-								color="text.muted">
+							className={`ui-link ${styles.row}`}>
+							<time dateTime={note.date} className={styles.date}>
 								{formatDate(note.date)}
-							</Text>
-							<Text gridArea="title" mt={{ base: 1, md: 0 }} fontSize={{ base: "16px", md: "18px" }} fontWeight="750" lineHeight="heading">
-								{note.title}
-							</Text>
-							<Flex gridArea="arrow" alignSelf="start" justify="flex-end">
+							</time>
+							<p className={styles.title}>{note.title}</p>
+							<div className={styles.arrowBox}>
 								<OutArrow newTab />
-							</Flex>
-							{note.description ? (
-								<Text gridArea="detail" mt={1} maxW="680px" color="text.muted" fontSize="14px" lineHeight="text">
-									{note.description}
-								</Text>
-							) : null}
-						</Link>
-					</Box>
+							</div>
+							{note.description ? <p className={styles.detail}>{note.description}</p> : null}
+						</a>
+					</li>
 				))}
-			</Box>
-			<Link
-				href={NOTES_URL}
-				target="_blank"
-				rel="noopener noreferrer"
-				display="inline-flex"
-				alignItems="center"
-				minH="44px"
-				mt={2}
-				fontFamily="var(--font-mono)"
-				fontSize="12px"
-				fontWeight="700"
-				letterSpacing=".04em"
-				textDecoration="underline"
-				textUnderlineOffset="4px">
-				All notes <OutArrow newTab ml="4px" />
-			</Link>
-		</Box>
+			</ul>
+			<a href={NOTES_URL} target="_blank" rel="noopener noreferrer" className={`ui-link ${styles.all}`}>
+				All notes <OutArrow newTab className={styles.allArrow} />
+			</a>
+		</section>
 	);
 }
