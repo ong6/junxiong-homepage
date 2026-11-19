@@ -3,12 +3,13 @@ const LONG_CACHE = "public, max-age=86400, stale-while-revalidate=604800";
 // Enforced on every route. Checked with a production build in Playwright across
 // every route type (embeds, 3D scenes, docs, résumé) with zero violations.
 //
-//   script-src   Next's inline runtime and Chakra's colour-mode script; Vercel
+//   script-src   Next's inline runtime and the theme script in <head>; Vercel
 //                Analytics and Speed Insights (same-origin /_vercel/* on Vercel,
 //                va.vercel-scripts.com in dev); 'wasm-unsafe-eval' for three's
 //                meshopt decoder, which uipack's tennis model needs (WebAssembly
 //                only; it does not allow eval())
-//   style-src    Emotion injects styles inline
+//   style-src    inline <style> blocks (font roles, the ground, the diagram
+//                theme) and style attributes
 //   img-src      next/image, data: for blur placeholders
 //   font-src     next/font self-hosts Google Fonts
 //   connect-src  Analytics and Speed Insights beacons

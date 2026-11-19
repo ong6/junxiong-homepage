@@ -38,11 +38,6 @@
 	},
 	"dependencies": {
 		"@base-ui/react": "^1.9.0",
-		"@chakra-ui/icons": "^2.2.4",
-		"@chakra-ui/react": "^2.10.9",
-		"@chakra-ui/theme-tools": "^2.2.10",
-		"@emotion/react": "^11.14.0",
-		"@emotion/styled": "^11.14.1",
 		"@vercel/analytics": "^2.0.1",
 		"@vercel/speed-insights": "^2.0.0",
 		"cmdk": "1.1.1",

@@ -303,7 +303,7 @@ a {
 }
 /* UiPack v0.2.0 writes its roles with light-dark(). For this browserslist
    Next's CSS step lowers light-dark() to a --lightningcss-light/-dark pair that
-   only a color-scheme declaration in compiled CSS switches; Chakra sets
+   only a color-scheme declaration in compiled CSS switches; the theme sets
    color-scheme at runtime, which the polyfill never sees, so without these
    every light-dark() role (the docs palette, for one) resolves to nothing. */
 :root {

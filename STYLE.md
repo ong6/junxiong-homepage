@@ -14,12 +14,13 @@ values: none
 # junxiong.dev: style spec
 
 This spec describes junxiong.dev as it is on `main` (commit `195cb1e`, 2026-10-22), written from
-UiPack's template. The values come from `lib/theme.js`, `styles/globals.css`, `pages/_app.js` and
+UiPack's template. The values come from `styles/globals.css`, `styles/parts.css`, `pages/_app.js` and
 the page components; a value the code does not set is a `TODO:` line naming what would decide it.
 The owner's standing brief (goals, hard rules, closed decisions) lives in the personal data store
 at `life/career/personal-site/design.md`; where this spec and that brief disagree, the brief wins
 and this file is updated. UiPack does not render this look (`values: none`): the site paints it
-with a Chakra UI v2 theme and maps UiPack's `--uipack-*` variables onto Chakra's semantic tokens.
+with its own CSS (`--site-*` tokens in `styles/globals.css`, base classes in `styles/parts.css`, CSS
+modules) and maps UiPack's `--uipack-*` variables onto the `--site-*` tokens.
 
 ## Identity
 
@@ -34,8 +35,8 @@ résumé (except `/resume`), and not glassy or gradient-lit.
 
 ## Role values
 
-Every role in the role contract, light and dark. Values are the site's actual tokens (Chakra
-semantic token or CSS variable named in the note where useful). Translucent lines are kept as the
+Every role in the role contract, light and dark. Values are the site's actual tokens (the
+`--site-*` variable named in the note where useful). Translucent lines are kept as the
 `rgba()` the theme writes.
 
 <!-- generated:contract-roles -->
@@ -169,7 +170,7 @@ One name per page: the nav label, the `<title>`, the h1 and the links to it say 
 
 A page's second-level landing title is 28 / 36px: Contact's "Work and writing". Section heads (h2) are 22 / 24px at 720 and line-height 1.2 in articles and in the docs shell (`styles/globals.css` gives `.uipack-docs__prose h2` the article's spec, and its h1 the 720 weight) and 32 / 44px for the homepage's and résumé's section titles; Hobbies' chapter heads are 36 / 46 / 52px so they stay below its h1.
 
-**Leading, six steps** (`lineHeights` in `lib/theme.js`; components name the step, never a number):
+**Leading, six steps** (every `line-height` in the CSS is one of these values, never another):
 
 | Step | Value | Used for |
 | --- | --- | --- |
@@ -185,7 +186,7 @@ Mono caps labels (eyebrows, meta lines, kickers) share one tracking, 0.08em. `e2
 Both faces load through `next/font/google` in `pages/_app.js` (latin subset, `display: swap`,
 self-hosted at build time): IBM Plex Sans as the variable font, IBM Plex Mono at 400 and 700
 only. `next/font` generates the metric-matched fallback faces and exposes the stacks as
-`--font-sans` and `--font-mono`, which the Chakra theme's `heading`, `body` and `mono` fonts read.
+`--font-sans` and `--font-mono`, which `styles/base.css` (body) and `styles/parts.css` (headings) read.
 `_app.js` also writes the two stacks onto `:root` in the document's `<head>`, so `<body>` and portals have the faces on the first paint (a class added after hydration painted every page in the fallback face first). `next/font` preloads both. Figures read the same faces through `--uipack-sans` and `--uipack-mono`;
 UiPack's other parts (docs shell, object player) read the `--ui-font-*` roles, which
 `styles/globals.css` points at the same two faces.
@@ -229,7 +230,7 @@ Exception, recorded: the ↗ fly-out and a row's rule are triggered by hover but
 | Preview panel | A 1px framed panel with a 4px offset hard shadow (`preview.shadow`) that "presses" onto its canvas as it scrolls in |
 | `--ui-nav-fill`, `--ui-nav-blur` | Paper at 90% with a 14px blur, 1px bottom rule |
 | `--ui-grain`, `--ui-glow` | 0 |
-| `--ui-cta-*` | One filled button style (`components/FilledButton.js`): Chakra's solid button on the accent, white label in light and ink label in dark, the 4px control radius, 44px tall, a darker accent on hover. Used for Email me (Contact) and Download PDF (résumé). Every other action is a link or a 1px-outlined 4px-radius control |
+| `--ui-cta-*` | One filled button style (`components/FilledButton.js`, `.filled-button` in `styles/parts.css`): a solid button on the accent, white label in light and ink label in dark, the 4px control radius, 44px tall, a darker accent on hover. Used for Email me (Contact) and Download PDF (résumé). Every other action is a link or a 1px-outlined 4px-radius control |
 | Link arrow | One ↗ on every link that goes somewhere, flying out of the top-right and back in on hover and focus (`components/OutArrow.js`) |
 | Theme change | The new theme prints in through the 12px dot screen behind a straight edge (Motion, Theme change); instant under reduced motion |
 | Reading progress | A 2px accent bar at the top of case studies (scroll-driven) |
@@ -256,7 +257,7 @@ keeps the floors.
 
 ### Theme
 
-The reader's last choice, then the system's. Only the toggle stores a choice (`localStorage`, key `junxiong-theme`, `lib/themeChoice.js`); with none stored the page follows `prefers-color-scheme`, live. A script first in `<head>` sets `data-theme` before any stylesheet, and an inline rule beside it paints the ground, so the first byte is in the right theme. Nothing is drawn for the other theme before hydration: colours are semantic tokens keyed off `data-theme` (never `useColorModeValue` or `mode()`, which bake the server's light guess into the HTML), the logo's mark and the toggle's icon are both in the HTML with CSS showing the theme's, and UiPack's parts read the `--site-*` variables on `<html>`. Dark grounds are warm neutrals: only the accent's own fill is blue.
+The reader's last choice, then the system's. Only the toggle stores a choice (`localStorage`, key `junxiong-theme`, `lib/themeChoice.js`); with none stored the page follows `prefers-color-scheme`, live. A script first in `<head>` sets `data-theme` before any stylesheet, and an inline rule beside it paints the ground, so the first byte is in the right theme. Nothing is drawn for the other theme before hydration: colours are `--site-*` tokens keyed off `data-theme` (never a colour chosen in JavaScript from the theme, which bakes the server's light guess into the HTML), the logo's mark and the toggle's icon are both in the HTML with CSS showing the theme's, and UiPack's parts read the `--site-*` variables on `<html>`. Dark grounds are warm neutrals: only the accent's own fill is blue.
 
 ### Landing
 
