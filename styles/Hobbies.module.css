@@ -10,7 +10,7 @@
 	align-items: flex-end;
 	min-height: clamp(430px, 64dvh, 620px);
 	padding: clamp(80px, 10vw, 128px) var(--page-edge) 64px;
-	border-bottom: 1px solid var(--chakra-colors-border-subtle);
+	border-bottom: 1px solid var(--site-border-subtle);
 }
 
 .introInner { max-width: 780px; }
@@ -20,7 +20,7 @@
 	font-size: 12px;
 	font-weight: 700;
 	letter-spacing: .08em;
-	color: var(--chakra-colors-brand-solid);
+	color: var(--site-brand-solid);
 }
 .title {
 	margin: 16px 0 24px;
@@ -35,7 +35,7 @@
 	max-width: 620px;
 	font-size: clamp(17px, 1.7vw, 20px);
 	line-height: 1.6;
-	color: var(--chakra-colors-text-muted);
+	color: var(--site-text-muted);
 }
 .chapterNav { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 32px; }
 .chapterNav a {
@@ -43,7 +43,7 @@
 	align-items: center;
 	min-height: 44px;
 	padding: 0 16px;
-	border: 1px solid var(--chakra-colors-border-subtle);
+	border: 1px solid var(--site-border-subtle);
 	border-radius: 999px;
 	font-family: var(--font-mono);
 	font-size: 12px;
@@ -52,8 +52,8 @@
 }
 .chapterNav a:hover,
 .chapterNav a[aria-current="location"] {
-	border-color: var(--chakra-colors-brand-solid);
-	background: var(--chakra-colors-surface-quiet);
+	border-color: var(--site-brand-solid);
+	background: var(--site-surface-quiet);
 }
 
 .chapter {
@@ -66,7 +66,7 @@
 	min-height: min(780px, 82dvh);
 	padding: 64px var(--page-edge);
 	scroll-margin-top: 88px;
-	border-bottom: 1px solid var(--chakra-colors-border-subtle);
+	border-bottom: 1px solid var(--site-border-subtle);
 	position: relative;
 }
 /* A chapter's old anchor: an empty mark on the chapter's top edge that scrolls
@@ -88,8 +88,8 @@
 	line-height: .98;
 	letter-spacing: -.05em;
 }
-.prose { max-width: 48ch; font-size: 17px; line-height: 1.8; color: var(--chakra-colors-text-muted); }
-.prose a { color: var(--chakra-colors-brand-solid); }
+.prose { max-width: 48ch; font-size: 17px; line-height: 1.8; color: var(--site-text-muted); }
+.prose a { color: var(--site-brand-solid); }
 .visual { min-width: 0; width: 100%; height: clamp(360px, calc(100dvh - 300px), 560px); }
 .visualSticky { height: 100%; }
 .visual :global(.uipack-object-edition),
@@ -127,3 +127,8 @@
 	.prose { font-size: 16px; line-height: 1.8; }
 	.visual { height: min(76vw, 320px); min-height: 260px; }
 }
+
+/* The notes and "built from this hobby" blocks under a chapter's prose. */
+.links { margin-top: 24px; max-width: 64ch; }
+.linksTight { margin-top: 16px; max-width: 64ch; }
+.linksFlush { margin-top: 0; max-width: 64ch; }

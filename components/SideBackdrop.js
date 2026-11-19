@@ -1,6 +1,6 @@
-import { Portal } from "@chakra-ui/react";
 import { DriftingGutters } from "uipack/web";
 import "uipack/web-gutters.css";
+import Portal from "./Portal";
 
 // UiPack's drifting grid in the side gutters of article pages. Portalled to
 // <body> so the page's entrance transform can't become its containing block;

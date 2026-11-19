@@ -1,11 +1,13 @@
-import { Box } from "@chakra-ui/react";
 import { Fragment } from "react";
+import styles from "./FactList.module.css";
 
 // The mono fact table under a case study: labels in a fixed column, values
 // left-aligned in their own column so a long value wraps under itself instead
 // of pushing against the label. Stacks on phones.
 //
-//   facts – [label, value] pairs
+//   facts     – [label, value] pairs
+//   className – the caller's spacing or width (the table's own look is the
+//               global .fact-list in styles/parts.css, so this always wins)
 //
 // A value made of " · " items wraps between items on wider screens, never
 // inside one, as long as each item is short enough to fit the column.
@@ -15,43 +17,24 @@ function Value({ value }) {
 	if (items.length < 2 || items.some((item) => item.length > 40)) return value;
 	return items.map((item, i) => (
 		<Fragment key={i}>
-			{i ? "\u00a0· " : ""}
-			<Box as="span" whiteSpace={{ md: "nowrap" }}>
-				{item}
-			</Box>
+			{i ? " · " : ""}
+			<span className={styles.item}>{item}</span>
 		</Fragment>
 	));
 }
 
-export default function FactList({ facts, ...props }) {
+export default function FactList({ facts, className, style }) {
 	return (
-		<Box
-			as="dl"
-			mt={{ base: 12, md: 16 }}
-			borderTop="1px solid"
-			borderColor="border.subtle"
-			fontFamily="var(--font-mono)"
-			fontSize="12px"
-			{...props}>
+		<dl className={className ? `fact-list ${className}` : "fact-list"} style={style}>
 			{facts.map(([label, value]) => (
-				<Box
-					key={label}
-					display="grid"
-					gridTemplateColumns={{ base: "1fr", md: "13rem 1fr" }}
-					columnGap={6}
-					rowGap={1}
-					py={{ base: 3, md: 2.5 }}
-					borderBottom="1px solid"
-					borderColor="border.subtle">
-					<Box as="dt" color="text.muted">
-						{label}
-					</Box>
-					<Box as="dd" ml={0} lineHeight="text" sx={{ textWrap: "pretty" }}>
+				<div key={label} className={styles.row}>
+					<dt className={styles.label}>{label}</dt>
+					<dd className={styles.value}>
 						<Value value={value} />
-					</Box>
-				</Box>
+					</dd>
+				</div>
 			))}
-		</Box>
+		</dl>
 	);
 }
 

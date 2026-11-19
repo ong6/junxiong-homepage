@@ -1,0 +1,301 @@
+/* The site's base looks for links, headings, containers, buttons and icons.
+   An element takes one of these classes plus its own CSS-module class for
+   what it changes. Global, and imported in pages/_app.js before any
+   component, so a module class that sets the same property always wins. */
+
+/* Link: accent ink, a 1px underline 3px below, the brand focus ring. */
+.ui-link {
+	transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+	transition-duration: 150ms;
+	transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+	cursor: pointer;
+	text-decoration: underline;
+	outline: 2px solid transparent;
+	outline-offset: 2px;
+	color: var(--site-brand-solid);
+	text-decoration-thickness: 1px;
+	text-underline-offset: 3px;
+}
+.ui-link:hover,
+.ui-link[data-hover] {
+	text-decoration: underline;
+}
+.ui-link:focus-visible,
+.ui-link[data-focus-visible] {
+	box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.6);
+	outline: 2px solid;
+	outline-color: var(--site-brand-solid);
+	outline-offset: 3px;
+	border-radius: 2px;
+}
+
+/* Heading: the display face at 720, tracked in. The size here is only a
+   fallback; every heading sets its own (STYLE.md, Type). */
+.ui-heading {
+	font-family: var(--font-sans);
+	font-weight: 720;
+	letter-spacing: -0.035em;
+	font-size: 1.875rem;
+	line-height: 1.33;
+}
+@media screen and (min-width: 320px) {
+	.ui-heading {
+		font-size: 2.25rem;
+		line-height: 1.2;
+	}
+}
+
+/* Container: a centred column with 16px sides. */
+.ui-container {
+	width: 100%;
+	margin-inline-start: auto;
+	margin-inline-end: auto;
+	max-width: 60ch;
+	padding-inline-start: 1rem;
+	padding-inline-end: 1rem;
+}
+
+/* Button: the 4px control corner, bold label, press scale, brand ring. */
+.ui-button {
+	display: inline-flex;
+	appearance: none;
+	align-items: center;
+	justify-content: center;
+	user-select: none;
+	position: relative;
+	white-space: nowrap;
+	vertical-align: middle;
+	outline: 2px solid transparent;
+	outline-offset: 2px;
+	line-height: 1.2;
+	border-radius: 4px;
+	font-weight: 700;
+	transition-property: transform, background-color, border-color, color, box-shadow;
+	transition-duration: 160ms;
+	letter-spacing: -0.01em;
+	height: 2.5rem;
+	min-width: 2.5rem;
+	font-size: 1rem;
+	padding-inline-start: 1rem;
+	padding-inline-end: 1rem;
+}
+.ui-button:focus-visible,
+.ui-button[data-focus-visible] {
+	box-shadow: none;
+	outline: 2px solid;
+	outline-color: var(--site-brand-solid);
+	outline-offset: 2px;
+}
+.ui-button:disabled,
+.ui-button[disabled],
+.ui-button[aria-disabled="true"],
+.ui-button[data-disabled] {
+	opacity: 0.4;
+	cursor: not-allowed;
+	box-shadow: none;
+}
+.ui-button:active,
+.ui-button[data-active] {
+	transform: scale(0.97);
+}
+
+/* Icon: an inline SVG the size of the text around it. */
+.ui-icon {
+	width: 1em;
+	height: 1em;
+	display: inline-block;
+	line-height: 1em;
+	flex-shrink: 0;
+	color: currentColor;
+	vertical-align: middle;
+}
+
+/* A card that one link opens: the link's ::before covers the card, and any
+   other link inside stays clickable above it. */
+.ui-linkbox {
+	position: relative;
+}
+.ui-linkbox a[href]:not(.ui-linkoverlay),
+.ui-linkbox abbr[title] {
+	position: relative;
+	z-index: 1;
+}
+.ui-linkoverlay {
+	position: static;
+}
+.ui-linkoverlay::before {
+	content: "";
+	cursor: inherit;
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 0;
+	width: 100%;
+	height: 100%;
+}
+
+/* ── Article parts (components/ArticleParts.js) ───────────────────────── */
+/* A 44px back link whose negative margin keeps the old 20px line. */
+.article-back {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	margin-top: -0.75rem;
+	margin-bottom: -0.75rem;
+	font-size: 13px;
+	font-weight: 700;
+}
+/* Reading prose, 17 / 18px at the prose leading. */
+.article-p {
+	margin-top: 1.25rem;
+	font-size: 17px;
+	line-height: 1.8;
+}
+@media screen and (min-width: 768px) {
+	.article-p {
+		font-size: 18px;
+	}
+}
+/* Section head, 22 / 24px (with .ui-heading). */
+.article-h2 {
+	margin-top: 3rem;
+	font-size: 22px;
+}
+@media screen and (min-width: 768px) {
+	.article-h2 {
+		margin-top: 4rem;
+		font-size: 24px;
+	}
+}
+.article-code {
+	font-family: var(--font-mono);
+	font-size: 0.9em;
+}
+/* The mono meta line under an h1; the date takes its own line on phones. */
+.article-meta {
+	margin-top: 1rem;
+	color: var(--site-brand-solid);
+	font-family: var(--font-mono);
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+.article-meta-dot {
+	display: none;
+}
+.article-meta-date {
+	display: block;
+	margin-top: 0.25rem;
+	color: var(--site-text-muted);
+	white-space: nowrap;
+}
+@media screen and (min-width: 768px) {
+	.article-meta-dot {
+		display: inline;
+	}
+	.article-meta-date {
+		display: inline;
+		margin-top: 0;
+	}
+}
+/* The site's one mono label: `// LABEL` in the accent. */
+.eyebrow {
+	font-family: var(--font-mono);
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--site-brand-solid);
+}
+
+/* The h1 scale, one size per page type (STYLE.md, Type): LANDING_TITLE and
+   ARTICLE_TITLE in components/ArticleParts.js name these. */
+.title-landing {
+	font-size: 46px;
+}
+@media screen and (min-width: 500px) {
+	.title-landing {
+		font-size: 58px;
+	}
+}
+@media screen and (min-width: 960px) {
+	.title-landing {
+		font-size: 74px;
+	}
+}
+.title-article {
+	font-size: 40px;
+}
+@media screen and (min-width: 768px) {
+	.title-article {
+		font-size: 52px;
+	}
+}
+
+/* The fact table under a case study (components/FactList.js); global so a
+   caller's module class can change its spacing. */
+.fact-list {
+	margin-top: 3rem;
+	border-top: 1px solid;
+	border-color: var(--site-border-subtle);
+	font-family: var(--font-mono);
+	font-size: 12px;
+}
+@media screen and (min-width: 768px) {
+	.fact-list {
+		margin-top: 4rem;
+	}
+}
+
+/* The framed links-out block (components/ProjectLinks.js); global so a
+   caller's module class can change its spacing and width. */
+.project-links {
+	background: var(--site-surface-raised);
+	border: 1px solid;
+	border-color: var(--site-border-subtle);
+	border-radius: 6px;
+	padding: 1.5rem 1.5rem 0.75rem;
+}
+@media screen and (min-width: 768px) {
+	.project-links {
+		padding-inline-start: 2rem;
+		padding-inline-end: 2rem;
+	}
+}
+
+/* The live figure on /uipack (components/UipackFigure.js): breaks out of the
+   prose column like DiagramFigure. Global so the page can set its spacing. */
+.uipack-figure {
+	margin-inline-start: 0;
+	margin-inline-end: 0;
+	width: min(100vw - 32px, 1088px);
+	max-width: none;
+	position: relative;
+	z-index: 1;
+	background: var(--site-page-bg);
+}
+
+/* The site's one filled button (components/FilledButton.js), with
+   .ui-button: accent fill, paper or ink label, 44px tall. */
+.filled-button {
+	background: var(--site-brand-solid);
+	color: var(--site-brand-on-solid);
+	min-height: 44px;
+	padding-inline-start: 1.25rem;
+	padding-inline-end: 1.25rem;
+	font-size: 15px;
+}
+.filled-button:hover,
+.filled-button[data-hover] {
+	background: var(--site-brand-hover);
+}
+.filled-button:hover:is(:disabled, [disabled], [aria-disabled="true"], [data-disabled]),
+.filled-button[data-hover]:is(:disabled, [disabled], [aria-disabled="true"], [data-disabled]) {
+	background: var(--site-brand-solid);
+}
+.filled-button:active,
+.filled-button[data-active] {
+	background: var(--site-brand-active);
+}

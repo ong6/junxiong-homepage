@@ -1,50 +1,17 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Text } from "@chakra-ui/react";
-import styled from "@emotion/styled";
-
-const LogoBox = styled.span`
-	font-weight: bold;
-	font-size: 22px;
-	display: inline-flex;
-	align-items: center;
-	height: 32px;
-	line-height: 20px;
-
-	img {
-		transition: transform var(--dur-hover) var(--ease-out);
-	}
-
-	@media (hover: hover) and (pointer: fine) {
-		&:hover img {
-			transform: rotate(20deg);
-		}
-	}
-
-	/* Below 360px the header's search, Contact and menu controls need the
-	   room: the mark goes and the name stays. */
-	@media (max-width: 359px) {
-		img {
-			display: none !important;
-		}
-	}
-`;
+import styles from "./Logo.module.css";
 
 const Logo = () => {
 	// Both marks are in the HTML and CSS shows the theme's, so a dark visit
 	// never paints the light one first.
 	return (
 		<Link href="/" aria-label="Ong Jun Xiong — home">
-			<LogoBox>
-				<Text
-					color="page.text"
-					fontFamily="var(--font-sans)"
-					fontWeight="bold">
-					Jun Xiong
-				</Text>
+			<span className={styles.logo}>
+				<p className={styles.name}>Jun Xiong</p>
 				<Image className="theme-light-only" src="/images/Brackets.png" width={20} height={20} alt="" style={{ marginLeft: "8px" }} />
 				<Image className="theme-dark-only" src="/images/Brackets-dark.png" width={20} height={20} alt="" style={{ marginLeft: "8px" }} />
-			</LogoBox>
+			</span>
 		</Link>
 	);
 };

@@ -1,0 +1,30 @@
+.row {
+	display: grid;
+	grid-template-columns: 1fr;
+	column-gap: 1.5rem;
+	row-gap: 0.25rem;
+	padding-top: 0.75rem;
+	padding-bottom: 0.75rem;
+	border-bottom: 1px solid;
+	border-color: var(--site-border-subtle);
+}
+@media screen and (min-width: 768px) {
+	.row {
+		grid-template-columns: 13rem 1fr;
+		padding-top: 0.625rem;
+		padding-bottom: 0.625rem;
+	}
+}
+.label {
+	color: var(--site-text-muted);
+}
+.value {
+	margin-left: 0;
+	line-height: 1.65;
+	text-wrap: pretty;
+}
+@media screen and (min-width: 768px) {
+	.item {
+		white-space: nowrap;
+	}
+}

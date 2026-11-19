@@ -1,0 +1,44 @@
+/* Offscreen until focused; the first Tab brings it down. */
+.skip {
+	position: fixed;
+	top: 0.75rem;
+	left: 0.75rem;
+	z-index: 2000;
+	padding: 0.625rem 1rem;
+	border-radius: 0.375rem;
+	background: var(--site-page-text);
+	color: var(--site-page-bg);
+	font-weight: 700;
+	transform: translateY(-160%);
+	transition: transform var(--dur-press) ease;
+}
+.skip:focus,
+.skip[data-focus] {
+	transform: translateY(0);
+	outline: 2px solid;
+	outline-color: var(--site-brand-solid);
+	outline-offset: 2px;
+}
+
+.column {
+	padding-bottom: 2rem;
+	overflow-x: clip;
+	display: flex;
+	flex-direction: column;
+	min-height: 100dvh;
+}
+
+.main {
+	max-width: 1120px;
+	flex: 1 0 auto;
+	padding-top: 64px;
+}
+@media screen and (min-width: 768px) {
+	.main {
+		padding-top: 72px;
+	}
+}
+
+.footer {
+	max-width: 1120px;
+}

@@ -1,0 +1,132 @@
+.hero {
+	display: grid;
+	row-gap: 2.5rem;
+	grid-template-columns: 1fr;
+	align-items: center;
+	padding-top: 2.5rem;
+}
+@media screen and (min-width: 768px) {
+	.hero {
+		padding-top: 4rem;
+	}
+}
+@media screen and (min-width: 960px) {
+	.hero {
+		column-gap: 4rem;
+		grid-template-columns: minmax(0, 0.9fr) minmax(360px, 1.1fr);
+	}
+}
+
+.eyebrow {
+	margin-top: 2rem;
+}
+@media screen and (min-width: 768px) {
+	.eyebrow {
+		margin-top: 2.5rem;
+	}
+}
+
+.h1 {
+	margin-top: 1rem;
+	line-height: 0.98;
+	letter-spacing: -0.06em;
+}
+
+.lede {
+	margin-top: 1.5rem;
+	max-width: 560px;
+	font-size: 19px;
+	line-height: 1.6;
+	font-weight: 600;
+}
+@media screen and (min-width: 768px) {
+	.lede {
+		font-size: 22px;
+	}
+}
+
+.email {
+	margin-top: 2rem;
+}
+.arrow {
+	margin-left: 0.5rem;
+}
+.address {
+	margin-top: 1rem;
+	font-family: var(--font-mono);
+	font-size: 14px;
+	color: var(--site-text-muted);
+	user-select: all;
+}
+
+.scene {
+	height: 340px;
+	min-width: 0;
+}
+@media screen and (min-width: 768px) {
+	.scene {
+		height: 440px;
+	}
+}
+
+.elsewhere {
+	margin-top: 2.5rem;
+}
+@media screen and (min-width: 768px) {
+	.elsewhere {
+		margin-top: 3rem;
+	}
+}
+.h2 {
+	margin-top: 0.5rem;
+	font-size: 28px;
+}
+@media screen and (min-width: 768px) {
+	.h2 {
+		font-size: 36px;
+	}
+}
+
+.rows {
+	display: grid;
+	column-gap: 1.5rem;
+	grid-template-columns: repeat(1, minmax(0, 1fr));
+	margin-top: 1.5rem;
+	border-top: 1px solid;
+	border-color: var(--site-border-subtle);
+}
+@media screen and (min-width: 768px) {
+	.rows {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+.row {
+	display: block;
+	min-height: 112px;
+	padding-top: 1.5rem;
+	padding-bottom: 1.5rem;
+	border-bottom: 1px solid;
+	border-color: var(--site-border-subtle);
+	color: var(--site-page-text);
+	text-decoration: none;
+}
+.row:hover,
+.row[data-hover] {
+	color: var(--site-brand-solid);
+	text-decoration: none;
+}
+.line {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.75rem;
+	font-size: 19px;
+	font-weight: 750;
+}
+.detail {
+	margin-top: 0.5rem;
+	max-width: 420px;
+	color: var(--site-text-muted);
+	font-size: 15px;
+	line-height: 1.6;
+}

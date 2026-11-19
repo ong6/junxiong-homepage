@@ -1,4 +1,3 @@
-import { Box, Flex, Grid, Heading, Link, SimpleGrid, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 import HobbyScene from "../components/HobbyScene";
 import Layout from "../components/layouts/Articles";
@@ -6,6 +5,7 @@ import { PAGE_META } from "../lib/pageMeta";
 import OutArrow from "../components/OutArrow";
 import FilledButton from "../components/FilledButton";
 import { BackLink, Eyebrow, LANDING_TITLE } from "../components/ArticleParts";
+import styles from "../styles/Contact.module.css";
 
 const links = [
 	{
@@ -37,73 +37,51 @@ export default function Contact() {
 	return (
 		<Layout
 			{...PAGE_META["/contact"]}>
-			<Grid
-				templateColumns={{ base: "1fr", lg: "minmax(0, .9fr) minmax(360px, 1.1fr)" }}
-				columnGap={{ lg: 16 }}
-				rowGap={10}
-				alignItems="center"
-				pt={{ base: 10, md: 16 }}>
-				<Box>
+			<div className={styles.hero}>
+				<div>
 					<BackLink href="/">Home</BackLink>
-					<Eyebrow mt={{ base: 8, md: 10 }}>CONTACT / SINGAPORE</Eyebrow>
-					<Heading
-						as="h1"
-						mt={4}
-						fontSize={LANDING_TITLE}
-						lineHeight=".98"
-						letterSpacing="-.06em">
-						Contact
-					</Heading>
-					<Text mt={6} maxW="560px" fontSize={{ base: "19px", md: "22px" }} lineHeight="lede" fontWeight="600">
-						Email is the easiest way to reach me.
-					</Text>
-					<FilledButton href="mailto:junxiongong2@gmail.com" mt={8} data-group>
-						Email me <OutArrow ml={2} />
+					<Eyebrow className={styles.eyebrow}>CONTACT / SINGAPORE</Eyebrow>
+					<h1 className={`ui-heading ${LANDING_TITLE} ${styles.h1}`}>Contact</h1>
+					<p className={styles.lede}>Email is the easiest way to reach me.</p>
+					<FilledButton href="mailto:junxiongong2@gmail.com" className={styles.email} data-group>
+						Email me <OutArrow className={styles.arrow} />
 					</FilledButton>
-					<Text mt={4} fontFamily="var(--font-mono)" fontSize="14px" color="text.muted" userSelect="all">
-						junxiongong2@gmail.com
-					</Text>
-				</Box>
+					<p className={styles.address}>junxiongong2@gmail.com</p>
+				</div>
 
-				<Box h={{ base: "340px", md: "440px" }} minW={0}>
+				<div className={styles.scene}>
 					<HobbyScene kind="contact" label="Contact signals" active />
-				</Box>
-			</Grid>
+				</div>
+			</div>
 
-			<Box as="section" aria-labelledby="contact-links" mt={{ base: 10, md: 12 }}>
+			<section aria-labelledby="contact-links" className={styles.elsewhere}>
 				<Eyebrow>ELSEWHERE</Eyebrow>
-				<Heading id="contact-links" as="h2" mt={2} fontSize={{ base: "28px", md: "36px" }}>
+				<h2 id="contact-links" className={`ui-heading ${styles.h2}`}>
 					Work and writing
-				</Heading>
+				</h2>
 				{/* Same row grammar as the Links out block: name, arrow pinned to the
 				    row's right edge, detail below. Columns sit 24px apart. */}
-				<SimpleGrid columns={{ base: 1, md: 2 }} columnGap={6} mt={6} borderTop="1px solid" borderColor="border.subtle">
-					{links.map((item) => (
-						<Link
-							key={item.label}
-							as={item.external ? undefined : NextLink}
-							href={item.href}
-							target={item.external && item.href.startsWith("http") ? "_blank" : undefined}
-							rel={item.external && item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-							display="block"
-							minH="112px"
-							py={6}
-							borderBottom="1px solid"
-							borderColor="border.subtle"
-							color="page.text"
-							textDecoration="none"
-							_hover={{ color: "brand.solid", textDecoration: "none" }}>
-							<Flex align="center" justify="space-between" gap={3} fontSize="19px" fontWeight="750">
-								<Text as="span">{item.label}</Text>
-								<OutArrow newTab={Boolean(item.external && item.href.startsWith("http"))} />
-							</Flex>
-							<Text mt={2} maxW="420px" color="text.muted" fontSize="15px" lineHeight="lede">
-								{item.detail}
-							</Text>
-						</Link>
-					))}
-				</SimpleGrid>
-			</Box>
+				<div className={styles.rows}>
+					{links.map((item) => {
+						const newTab = Boolean(item.external && item.href.startsWith("http"));
+						const Anchor = item.external ? "a" : NextLink;
+						return (
+							<Anchor
+								key={item.label}
+								href={item.href}
+								target={newTab ? "_blank" : undefined}
+								rel={newTab ? "noopener noreferrer" : undefined}
+								className={`ui-link ${styles.row}`}>
+								<div className={styles.line}>
+									<span>{item.label}</span>
+									<OutArrow newTab={newTab} />
+								</div>
+								<p className={styles.detail}>{item.detail}</p>
+							</Anchor>
+						);
+					})}
+				</div>
+			</section>
 		</Layout>
 	);
 }

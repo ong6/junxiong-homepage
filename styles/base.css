@@ -1,0 +1,236 @@
+/* The reset and page globals the site was built on (they came with Chakra UI
+   until 2026-11, which wrote them after every stylesheet). Imported last in
+   pages/_app.js and kept unlayered, so they still win ties against UiPack's
+   CSS and styles/globals.css, as they always have. */
+
+html {
+	line-height: 1.5;
+	-webkit-text-size-adjust: 100%;
+	font-family: system-ui, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+	-moz-osx-font-smoothing: grayscale;
+	touch-action: manipulation;
+}
+body {
+	position: relative;
+	min-height: 100%;
+	margin: 0;
+	font-feature-settings: "kern";
+}
+:where(*, *::before, *::after) {
+	border-width: 0;
+	border-style: solid;
+	box-sizing: border-box;
+	word-wrap: break-word;
+}
+main {
+	display: block;
+}
+hr {
+	border-top-width: 1px;
+	box-sizing: content-box;
+	height: 0;
+	overflow: visible;
+}
+:where(pre, code, kbd, samp) {
+	font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+	font-size: 1em;
+}
+a {
+	background-color: transparent;
+	color: inherit;
+	text-decoration: inherit;
+}
+abbr[title] {
+	border-bottom: none;
+	text-decoration: underline dotted;
+}
+:where(b, strong) {
+	font-weight: bold;
+}
+small {
+	font-size: 80%;
+}
+:where(sub, sup) {
+	font-size: 75%;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+sub {
+	bottom: -0.25em;
+}
+sup {
+	top: -0.5em;
+}
+img {
+	border-style: none;
+}
+:where(button, input, optgroup, select, textarea) {
+	font-family: inherit;
+	font-size: 100%;
+	line-height: 1.15;
+	margin: 0;
+}
+:where(button, input) {
+	overflow: visible;
+}
+:where(button, select) {
+	text-transform: none;
+}
+fieldset {
+	padding: 0.35em 0.75em 0.625em;
+}
+legend {
+	box-sizing: border-box;
+	color: inherit;
+	display: table;
+	max-width: 100%;
+	padding: 0;
+	white-space: normal;
+}
+progress {
+	vertical-align: baseline;
+}
+textarea {
+	overflow: auto;
+}
+:where([type="checkbox"], [type="radio"]) {
+	box-sizing: border-box;
+	padding: 0;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+	-webkit-appearance: none !important;
+}
+input[type="number"] {
+	-moz-appearance: textfield;
+}
+input[type="search"] {
+	-webkit-appearance: textfield;
+	outline-offset: -2px;
+}
+input[type="search"]::-webkit-search-decoration {
+	-webkit-appearance: none !important;
+}
+::-webkit-file-upload-button {
+	-webkit-appearance: button;
+	font: inherit;
+}
+details {
+	display: block;
+}
+summary {
+	display: list-item;
+}
+template {
+	display: none;
+}
+[hidden] {
+	display: none !important;
+}
+:where(blockquote, dl, dd, h1, h2, h3, h4, h5, h6, hr, figure, p, pre) {
+	margin: 0;
+}
+button {
+	background: transparent;
+	padding: 0;
+}
+fieldset {
+	margin: 0;
+	padding: 0;
+}
+:where(ol, ul) {
+	margin: 0;
+	padding: 0;
+}
+textarea {
+	resize: vertical;
+}
+:where(button, [role="button"]) {
+	cursor: pointer;
+}
+button::-moz-focus-inner {
+	border: 0 !important;
+}
+table {
+	border-collapse: collapse;
+}
+:where(h1, h2, h3, h4, h5, h6) {
+	font-size: inherit;
+	font-weight: inherit;
+}
+:where(button, input, optgroup, select, textarea) {
+	padding: 0;
+	line-height: inherit;
+	color: inherit;
+}
+:where(img, svg, video, canvas, audio, iframe, embed, object) {
+	display: block;
+}
+:where(img, video) {
+	max-width: 100%;
+	height: auto;
+}
+
+/* Page globals: the ground, ink, faces and leading (STYLE.md, Type). Keyed
+   off data-theme, which the theme script writes before first paint. */
+body {
+	font-family: var(--font-sans);
+	color: #29231F;
+	background: #F3EFE7;
+	transition-property: background-color;
+	transition-duration: 200ms;
+	line-height: 1.65;
+	font-size: 16px;
+}
+*::placeholder {
+	color: var(--site-placeholder);
+}
+*,
+*::before,
+*::after {
+	border-color: var(--site-border-default);
+}
+:root {
+	-webkit-print-color-scheme: light;
+	color-scheme: light;
+}
+:root[data-theme="dark"] {
+	-webkit-print-color-scheme: dark;
+	color-scheme: dark;
+}
+html {
+	scroll-behavior: smooth;
+	background: #F3EFE7;
+	overscroll-behavior-y: none;
+}
+html[data-theme="dark"] {
+	background: #151311;
+}
+html[data-theme="dark"] body {
+	background: #151311;
+	color: #F2ECE3;
+}
+::selection {
+	background: #BFCFFF;
+	color: #151311;
+}
+html[data-theme="dark"] ::selection {
+	background: #315DB6;
+	color: #FBF8F2;
+}
+
+/* Text for screen readers only. */
+.visually-hidden {
+	border: 0;
+	clip: rect(0, 0, 0, 0);
+	height: 1px;
+	width: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	white-space: nowrap;
+	position: absolute;
+}

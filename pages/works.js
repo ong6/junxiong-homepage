@@ -1,4 +1,3 @@
-import { Box, Flex, Heading, Link, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
@@ -8,6 +7,7 @@ import Section from "../components/Section";
 import ArchiveEntry from "../components/ArchiveEntry";
 import works, { workSlugs } from "../lib/works";
 import { ARTICLE_TITLE } from "../components/ArticleParts";
+import styles from "../styles/Works.module.css";
 
 // A dated ledger, newest year first, derived from lib/works.js. An entry sits
 // under the year it started, in the order the entries are declared there.
@@ -63,49 +63,34 @@ const Works = () => {
 
 	return (
 		<Layout {...PAGE_META["/works"]}>
-			<Box pt={{ base: 10, md: 14 }}>
-				<Flex align="baseline" justify="space-between" wrap="wrap" gap={2}>
-					<Heading as="h1" fontSize={ARTICLE_TITLE} lineHeight="1" letterSpacing="-.045em">
-						Archive, 2020&ndash;2023
-					</Heading>
-					<Text fontFamily="var(--font-mono)" fontSize="12px" color="text.muted">
-						{workSlugs.length} entries
-					</Text>
-				</Flex>
-				<Text mt={3} maxW="620px" fontSize="15px" lineHeight="text" color="text.muted">
+			<div className={styles.page}>
+				<div className={styles.head}>
+					<h1 className={`ui-heading ${ARTICLE_TITLE} ${styles.title}`}>Archive, 2020&ndash;2023</h1>
+					<p className={styles.count}>{workSlugs.length} entries</p>
+				</div>
+				<p className={styles.intro}>
 					Projects from my NUS years, including coursework, hackathons and open-source contributions. Current projects are on the{" "}
-					<Link as={NextLink} href="/#work">
+					<NextLink href="/#work" className="ui-link">
 						homepage
-					</Link>
+					</NextLink>
 					.
-				</Text>
+				</p>
 
-				<Box mt={{ base: 8, md: 12 }}>
+				<div className={styles.ledger}>
 					{ledger.map((group, i) => (
 						<Section key={group.year} delay={0.05 * (i + 1)}>
-							<Flex direction={{ base: "column", md: "row" }} align="flex-start" gap={{ base: 2, md: 6 }} mb={{ base: 8, md: 10 }}>
-								<Text
-									as="h2"
-									fontFamily="var(--font-mono)"
-									fontSize={{ base: "13px", md: "14px" }}
-									fontWeight="700"
-									letterSpacing=".08em"
-									color="brand.solid"
-									w={{ md: "72px" }}
-									flexShrink={0}
-									pt={{ md: 4 }}>
-									{group.year}
-								</Text>
-								<Box flex="1" minW={0} w="100%">
+							<div className={styles.group}>
+								<h2 className={styles.year}>{group.year}</h2>
+								<div className={styles.entries}>
 									{group.ids.map((id) => (
 										<ArchiveEntry key={id} id={id} entry={works[id]} open={Boolean(open[id])} onToggle={toggle} />
 									))}
-								</Box>
-							</Flex>
+								</div>
+							</div>
 						</Section>
 					))}
-				</Box>
-			</Box>
+				</div>
+			</div>
 		</Layout>
 	);
 };

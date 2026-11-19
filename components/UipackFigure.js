@@ -1,8 +1,7 @@
-import { Box } from "@chakra-ui/react";
 import { useRef } from "react";
 import { Figure } from "uipack";
 import { agentLoopParts } from "uipack/presets";
-import { MOBILE_MIN_FONT, SwipeHint, mobileScrollSx, useIsMobile, useOverflow, viewBoxWidth } from "./figureMobile";
+import { MOBILE_MIN_FONT, SwipeHint, mobileScrollProps, useIsMobile, useOverflow, viewBoxWidth } from "./figureMobile";
 
 // The one live figure on /uipack: uipack's agent-loop preset fed with
 // Groundplane. Every fact here is read from github.com/ong6/groundplane;
@@ -33,27 +32,17 @@ const groundplane = {
 // case-study figure. Built from the preset's parts rather than its ready-made
 // figure so phones scroll the wide drawing instead of getting the preset's
 // stacked narrow one.
-export default function UipackFigure(props) {
+export default function UipackFigure({ className }) {
 	const ref = useRef(null);
 	const mobile = useIsMobile();
 	const overflow = useOverflow(ref, mobile);
 	const p = agentLoopParts(groundplane, "gp");
 	const meta = groundplane.figure;
+	const scroll = mobileScrollProps(viewBoxWidth(p.viewBox));
 	return (
-		<Box
-			as="figure"
-			ref={ref}
-			data-reveal
-			mx={0}
-			w="min(100vw - 32px, 1088px)"
-			maxW="none"
-			// Above the wide-screen side rail, on an opaque ground, like
-			// DiagramFigure: the drawing and its controls slide over the rail.
-			position="relative"
-			zIndex={1}
-			bg="page.bg"
-			sx={mobileScrollSx(viewBoxWidth(p.viewBox))}
-			{...props}>
+		// Above the wide-screen side rail, on an opaque ground, like
+		// DiagramFigure: the drawing and its controls slide over the rail.
+		<figure ref={ref} data-reveal className={["uipack-figure", scroll.className, className].filter(Boolean).join(" ")} style={scroll.style}>
 			<Figure
 				id="gp"
 				number="Figure 01"
@@ -67,6 +56,6 @@ export default function UipackFigure(props) {
 				{p.wide}
 			</Figure>
 			{overflow ? <SwipeHint /> : null}
-		</Box>
+		</figure>
 	);
 }

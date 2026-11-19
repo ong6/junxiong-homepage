@@ -1,0 +1,89 @@
+.panel {
+	max-width: 480px;
+	background: var(--site-preview-panel);
+	border: 1px solid;
+	border-color: var(--site-border-subtle);
+	border-radius: 4px;
+	box-shadow: 4px 4px 0 var(--site-preview-shadow);
+	overflow: hidden;
+}
+
+.head {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+	padding-inline-start: 1rem;
+	padding-inline-end: 1rem;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	border-bottom: 1px solid;
+	border-color: var(--site-border-subtle);
+	color: var(--site-text-muted);
+	font-family: var(--font-mono);
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+.body {
+	padding: 1rem;
+}
+.fill {
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 1.65;
+}
+.rows {
+	margin-top: 0.75rem;
+}
+.row {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	column-gap: 1.5rem;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	border-top: 1px solid;
+	border-color: var(--site-border-subtle);
+}
+.label {
+	color: var(--site-text-muted);
+	line-height: 1.65;
+	font-family: var(--font-mono);
+	font-size: 12px;
+	font-weight: 400;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+.value {
+	margin: 0;
+	margin-left: auto;
+	font-size: 16px;
+	line-height: 1.65;
+	font-weight: 400;
+	text-align: right;
+}
+.strong {
+	font-weight: 700;
+}
+
+/* The uipack Figure supplies the parts' styles; its own frame and ground give
+   way to the panel's. */
+.figure :global(.uipack) {
+	border: 0;
+	border-radius: 0;
+	background: transparent;
+}
+.figure :global(.uipack__canvas) {
+	padding: 16px;
+	background: transparent;
+}
+.figure :global(.uipack__canvas) > svg:global(.uipack--wide) {
+	max-width: 448px;
+	margin-inline: auto;
+}
+.figure :global(.uipack__canvas) > svg:global(.uipack--narrow) {
+	max-width: 240px;
+	margin-inline: auto;
+}

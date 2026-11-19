@@ -1,0 +1,102 @@
+.section {
+	scroll-margin-top: 96px;
+	margin-top: 4rem;
+}
+@media screen and (min-width: 768px) {
+	.section {
+		margin-top: 6rem;
+	}
+}
+.heading {
+	margin-top: 0.5rem;
+	font-size: 25px;
+}
+@media screen and (min-width: 768px) {
+	.heading {
+		font-size: 30px;
+	}
+}
+.list {
+	list-style-type: none;
+	margin: 0;
+	margin-top: 1.5rem;
+	padding: 0;
+	border-top: 1px solid;
+	border-color: var(--site-border-subtle);
+}
+.row {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	grid-template-areas: "date arrow" "title title" "detail detail";
+	column-gap: 1rem;
+	align-items: baseline;
+	min-height: 44px;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	border-bottom: 1px solid;
+	border-color: var(--site-border-subtle);
+	color: var(--site-page-text);
+	text-decoration: none;
+}
+@media screen and (min-width: 768px) {
+	.row {
+		grid-template-columns: 136px minmax(0, 1fr) auto;
+		grid-template-areas: "date title arrow" ". detail .";
+		column-gap: 1.5rem;
+	}
+}
+/* data-hover="row" is on every row, so this hover look is also the resting look. */
+.row:hover,
+.row[data-hover] {
+	color: var(--site-brand-solid);
+	text-decoration: none;
+}
+.date {
+	grid-area: date;
+	font-family: var(--font-mono);
+	font-size: 12px;
+	line-height: 1.65;
+	color: var(--site-text-muted);
+}
+.title {
+	grid-area: title;
+	margin-top: 0.25rem;
+	font-size: 16px;
+	font-weight: 750;
+	line-height: 1.2;
+}
+@media screen and (min-width: 768px) {
+	.title {
+		margin-top: 0;
+		font-size: 18px;
+	}
+}
+.arrowBox {
+	display: flex;
+	justify-content: flex-end;
+	grid-area: arrow;
+	align-self: start;
+}
+.detail {
+	grid-area: detail;
+	margin-top: 0.25rem;
+	max-width: 680px;
+	color: var(--site-text-muted);
+	font-size: 14px;
+	line-height: 1.65;
+}
+.all {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	margin-top: 0.5rem;
+	font-family: var(--font-mono);
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-decoration: underline;
+	text-underline-offset: 4px;
+}
+.allArrow {
+	margin-left: 4px;
+}

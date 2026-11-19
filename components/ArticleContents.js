@@ -1,8 +1,8 @@
-import { Box, Link, Text, VisuallyHidden } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import OutArrow from "./OutArrow";
+import styles from "./ArticleContents.module.css";
 
 // The orientation parts of a long article (STYLE.md, Layout: Article).
 //
@@ -35,15 +35,6 @@ const slug = (text) =>
 		.toLowerCase()
 		.replace(/[^a-z0-9]+/g, "-")
 		.replace(/^-|-$/g, "");
-
-const label = {
-	fontFamily: "var(--font-mono)",
-	fontSize: "12px",
-	fontWeight: "700",
-	letterSpacing: ".08em",
-	textTransform: "uppercase",
-	color: "brand.solid",
-};
 
 // The page's h2s (figure titles, the Next card and these parts excluded),
 // given ids, and the one being read: the last head above a line 45% down
@@ -99,98 +90,72 @@ function useSections(containerRef) {
 
 function RailFacts({ facts }) {
 	return (
-		<Box aria-hidden="true" data-rail-facts>
-			<Text sx={label}>{"// Facts"}</Text>
-			<Box as="dl" m={0} mt={3} borderTop="1px solid" borderColor="border.subtle" fontFamily="var(--font-mono)" fontSize="12px" lineHeight="text">
+		<div aria-hidden="true" data-rail-facts>
+			<p className="eyebrow">{"// Facts"}</p>
+			<dl className={styles.facts}>
 				{facts.map(([name, value]) => (
-					<Box key={name} py={2} borderBottom="1px solid" borderColor="border.subtle">
-						<Box as="dt" color="text.muted">
-							{name}
-						</Box>
-						<Box as="dd" m={0} color="page.text" sx={{ textWrap: "pretty" }}>
-							{value}
-						</Box>
-					</Box>
+					<div key={name} className={styles.fact}>
+						<dt className={styles.factName}>{name}</dt>
+						<dd className={styles.factValue}>{value}</dd>
+					</div>
 				))}
-			</Box>
-		</Box>
+			</dl>
+		</div>
 	);
 }
 
 function RailLinks({ links }) {
 	return (
-		<Box aria-hidden="true" data-rail-links>
-			<Text sx={label}>{"// Links out"}</Text>
-			<Box as="ul" listStyleType="none" m={0} mt={3} p={0} borderTop="1px solid" borderColor="border.subtle">
-				{links.map(({ name, detail, href, external }) => (
-					<Box as="li" key={href} borderBottom="1px solid" borderColor="border.subtle">
-						<Link
-							as={external ? undefined : NextLink}
-							href={href}
-							prefetch={external ? undefined : false}
-							target={external ? "_blank" : undefined}
-							rel={external ? "noopener noreferrer" : undefined}
-							tabIndex={-1}
-							display="block"
-							py={2}
-							color="page.text"
-							textDecoration="none"
-							_hover={{ textDecoration: "none", "& [data-name]": { color: "brand.solid" } }}>
-							<Box as="span" display="flex" alignItems="baseline" justifyContent="space-between" gap={2}>
-								<Text as="span" data-name fontSize="14px" fontWeight="700" lineHeight="label" transition="color var(--dur-hover) ease">
-									{name}
-								</Text>
-								<OutArrow flexShrink={0} fontSize="12px" color="brand.solid" />
-							</Box>
-							{external && <VisuallyHidden> (opens in a new tab)</VisuallyHidden>}
-							{detail && (
-								<Text as="span" display="block" mt={1} color="text.muted" fontSize="12px" lineHeight="text">
-									{detail}
-								</Text>
-							)}
-						</Link>
-					</Box>
-				))}
-			</Box>
-		</Box>
+		<div aria-hidden="true" data-rail-links>
+			<p className="eyebrow">{"// Links out"}</p>
+			<ul className={styles.links}>
+				{links.map(({ name, detail, href, external }) => {
+					const Anchor = external ? "a" : NextLink;
+					return (
+						<li key={href} className={styles.linkItem}>
+							<Anchor
+								href={href}
+								prefetch={external ? undefined : false}
+								target={external ? "_blank" : undefined}
+								rel={external ? "noopener noreferrer" : undefined}
+								tabIndex={-1}
+								className={`ui-link ${styles.link}`}>
+								<span className={styles.linkLine}>
+									<span data-name className={styles.linkName}>
+										{name}
+									</span>
+									<OutArrow className={styles.linkArrow} />
+								</span>
+								{external && <span className="visually-hidden"> (opens in a new tab)</span>}
+								{detail && <span className={styles.linkDetail}>{detail}</span>}
+							</Anchor>
+						</li>
+					);
+				})}
+			</ul>
+		</div>
 	);
 }
 
 // One row per section, the one being read marked with the accent rule.
-function SectionList({ items, active, rowH, onPick }) {
+function SectionList({ items, active, tall, onPick }) {
 	return (
-		<Box as="ol" listStyleType="none" m={0} p={0} borderLeft="1px solid" borderColor="border.subtle">
+		<ol className={styles.sections}>
 			{items.map((item) => {
 				const current = item.id === active;
 				return (
-					<Box as="li" key={item.id}>
-						<Link
+					<li key={item.id}>
+						<a
 							href={`#${item.id}`}
 							onClick={onPick ? () => onPick(item.id) : undefined}
 							aria-current={current ? "location" : undefined}
-							display="flex"
-							alignItems="center"
-							minH={rowH}
-							py={1}
-							pl={4}
-							pr={2}
-							ml="-1px"
-							borderLeft="2px solid"
-							borderColor={current ? "brand.solid" : "transparent"}
-							color={current ? "page.text" : "text.muted"}
-							fontSize="14px"
-							fontWeight={current ? "700" : "500"}
-							lineHeight="label"
-							textDecoration="none"
-							transition="color var(--dur-hover) ease, border-color var(--dur-hover) ease"
-							sx={{ "@media (pointer: coarse)": { minHeight: "44px" } }}
-							_hover={{ color: "page.text", textDecoration: "none" }}>
+							className={`ui-link ${styles.section} ${tall ? styles.sectionTall : ""}`}>
 							{item.title}
-						</Link>
-					</Box>
+						</a>
+					</li>
 				);
 			})}
-		</Box>
+		</ol>
 	);
 }
 
@@ -269,54 +234,25 @@ export default function ArticleContents({ containerRef, contents = false, facts,
 	if (!shown) return null;
 
 	const factsBlock = hasFacts ? (
-		<Box ref={factsRef}>
+		<div ref={factsRef}>
 			<RailFacts facts={facts} />
-		</Box>
+		</div>
 	) : null;
 
 	return (
-		<Box
-			ref={slotRef}
-			data-article-contents
-			position="absolute"
-			top={{ base: 10, md: 16 }}
-			right={0}
-			bottom={0}
-			w="224px"
-			zIndex={0}
-			display={{ base: "none", xl: "block" }}>
-			{factsFit && factsBlock && <Box mb={8}>{factsBlock}</Box>}
-			<Box
-				ref={panelRef}
-				data-rail
-				position="sticky"
-				top={`${STICKY_TOP}px`}
-				maxH={`calc(100vh - ${STICKY_TOP + 24}px)`}
-				overflowY="auto"
-				display="flex"
-				flexDirection="column"
-				gap={8}
-				opacity={covered ? 0 : 1}
-				visibility={covered ? "hidden" : "visible"}
-				transition={covered ? "opacity var(--dur-hover) ease, visibility 0s linear var(--dur-hover)" : "opacity var(--dur-hover) ease"}
-				sx={{
-					scrollbarWidth: "thin",
-					// The panel clips its overflow, so its rings are drawn inside.
-					"& a:focus-visible": { outlineOffset: "-2px", transition: "none" },
-					"@media (prefers-reduced-motion: reduce)": { transition: "none" },
-				}}>
+		<div ref={slotRef} data-article-contents className={styles.slot}>
+			{factsFit && factsBlock && <div className={styles.factsSlot}>{factsBlock}</div>}
+			<div ref={panelRef} data-rail className={`${styles.panel} ${covered ? styles.covered : ""}`}>
 				{!factsFit && factsBlock}
 				{hasLinks && <RailLinks links={links} />}
 				{sections.length > 0 && (
-					<Box as="nav" aria-label="On this page">
-						<Text sx={label} mb={3}>
-							{"// On this page"}
-						</Text>
-						<SectionList items={sections} active={active} rowH="32px" />
-					</Box>
+					<nav aria-label="On this page">
+						<p className={`eyebrow ${styles.navLabel}`}>{"// On this page"}</p>
+						<SectionList items={sections} active={active} />
+					</nav>
 				)}
-			</Box>
-		</Box>
+			</div>
+		</div>
 	);
 }
 
@@ -330,18 +266,9 @@ function focusHeading(id) {
 }
 
 const Chevron = ({ open }) => (
-	<Box
-		as="svg"
-		aria-hidden="true"
-		viewBox="0 0 12 12"
-		w="12px"
-		h="12px"
-		flexShrink={0}
-		transform={open ? "rotate(180deg)" : "none"}
-		transition="transform var(--dur-hover) var(--ease-out)"
-		sx={{ "@media (prefers-reduced-motion: reduce)": { transition: "none" } }}>
+	<svg aria-hidden="true" viewBox="0 0 12 12" className={`${styles.chevron} ${open ? styles.chevronOpen : ""}`}>
 		<path d="M2 4.5 6 8.5 10 4.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-	</Box>
+	</svg>
 );
 
 const noSubscribe = () => () => {};
@@ -461,107 +388,39 @@ export function SectionMenu({ containerRef }) {
 	};
 
 	return createPortal(
-		<Box
+		<div
 			ref={barRef}
 			data-section-menu
 			data-shown={shown ? "" : undefined}
-			position="fixed"
-			top={{ base: "64px", md: "72px" }}
-			left={0}
-			right={0}
-			zIndex={19}
-			display={{ base: "block", xl: "none" }}
-			bg="rgba(243,239,231,.9)"
-			borderBottom="1px solid"
-			borderColor="border.subtle"
-			css={{ backdropFilter: "blur(14px)" }}
-			transform={shown ? "none" : "translateY(-100%)"}
-			visibility={shown ? "visible" : "hidden"}
-			transition={
-				shown
-					? "transform var(--dur-ui) var(--ease-out)"
-					: "transform var(--dur-ui) var(--ease-out), visibility 0s linear var(--dur-ui)"
-			}
+			className={`${styles.bar} ${shown ? "" : styles.barHidden}`}
 			onBlur={(e) => {
 				if (open && barRef.current && !barRef.current.contains(e.relatedTarget)) setOpen(false);
-			}}
-			sx={{
-				"html[data-theme=dark] &": { bg: "rgba(21,19,17,.9)" },
-				"@media (prefers-reduced-motion: reduce)": { transition: "none" },
 			}}>
-			<Box maxW="1120px" mx="auto" px={4} position="relative">
-				<Box
-					as="button"
+			<div className={styles.barInner}>
+				<button
 					type="button"
 					ref={buttonRef}
 					aria-expanded={open}
 					aria-controls={open ? panelId : undefined}
 					onClick={() => setOpen((value) => !value)}
-					display="flex"
-					alignItems="center"
-					gap={3}
-					w="100%"
-					maxW="680px"
-					minH="44px"
-					px={0}
-					bg="transparent"
-					color="page.text"
-					textAlign="left"
-					cursor="pointer"
-					sx={{ "&:focus-visible": { outlineOffset: "-2px" } }}>
-					<Text as="span" sx={label} flexShrink={0}>
-						{current ? `${index + 1} / ${items.length}` : "// On this page"}
-					</Text>
-					{current && <VisuallyHidden>On this page, section:</VisuallyHidden>}
-					<Text as="span" flex="1" minW={0} fontSize="14px" fontWeight="700" lineHeight="label" overflow="hidden" textOverflow="ellipsis" whiteSpace="nowrap">
-						{current ? current.title : ""}
-					</Text>
+					className={styles.barButton}>
+					<span className={`eyebrow ${styles.barCount}`}>{current ? `${index + 1} / ${items.length}` : "// On this page"}</span>
+					{current && <span className="visually-hidden">On this page, section:</span>}
+					<span className={styles.barTitle}>{current ? current.title : ""}</span>
 					<Chevron open={open} />
-				</Box>
+				</button>
 				{open && (
-					<Box
-						as="nav"
-						id={panelId}
-						ref={panelRef}
-						aria-label="On this page"
-						position="absolute"
-						top="calc(100% + 8px)"
-						left={4}
-						right={4}
-						maxW="680px"
-						maxH={{ base: "calc(100dvh - 64px - 45px - 24px)", md: "calc(100dvh - 72px - 45px - 24px)" }}
-						overflowY="auto"
-						bg="surface.raised"
-						border="1px solid"
-						borderColor="border.subtle"
-						borderRadius="6px"
-						px={4}
-						py={3}
-						sx={{ "& a:focus-visible": { outlineOffset: "-2px" } }}>
-						<SectionList items={items} active={active} rowH="44px" onPick={pick} />
+					<nav id={panelId} ref={panelRef} aria-label="On this page" className={styles.menu}>
+						<SectionList items={items} active={active} tall onPick={pick} />
 						{linksOut && (
-							<Link
-								href="#links-out"
-								onClick={() => pick("links-out")}
-								display="flex"
-								alignItems="center"
-								minH="44px"
-								mt={2}
-								pt={2}
-								borderTop="1px solid"
-								borderColor="border.subtle"
-								fontSize="14px"
-								fontWeight="700"
-								textDecoration="none"
-								color="page.text"
-								_hover={{ textDecoration: "none", color: "brand.solid" }}>
+							<a href="#links-out" onClick={() => pick("links-out")} className={`ui-link ${styles.menuLinksOut}`}>
 								Links out
-							</Link>
+							</a>
 						)}
-					</Box>
+					</nav>
 				)}
-			</Box>
-		</Box>,
+			</div>
+		</div>,
 		host,
 	);
 }

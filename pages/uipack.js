@@ -1,4 +1,3 @@
-import { Box, Container, Flex, Grid, Heading, Link, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 import CaseStudyFooter from "../components/CaseStudyFooter";
 import HobbyScene from "../components/HobbyScene";
@@ -10,6 +9,8 @@ import Layout from "../components/layouts/Articles";
 import { BackLink, MetaLine, P, H2, ARTICLE_TITLE } from "../components/ArticleParts";
 import { PAGE_META } from "../lib/pageMeta";
 import { withNotes } from "../lib/notes";
+import caseStudy from "../styles/CaseStudy.module.css";
+import styles from "../styles/Uipack.module.css";
 
 // A short showcase: one example of each thing UiPack does, each pointing at
 // its page on the docs site. Everything that changes with a release (parts,
@@ -24,32 +25,34 @@ const links = withNotes("/uipack", [
 	{ name: "Source on GitHub", detail: "ong6/uipack", href: "https://github.com/ong6/uipack", external: true },
 ]);
 
-// The 3D object's frame: compact, in the prose column.
-const OBJECT_H = { base: "320px", md: "420px" };
+// The 3D object's frame (styles/Uipack.module.css): compact, in the prose column.
 
 // The links under each example: 44px targets, ↗ on each.
 function MoreLinks({ items }) {
 	return (
-		<Flex as="ul" listStyleType="none" m={0} mt={3} wrap="wrap" columnGap={6}>
-			{items.map(({ name, href, external }) => (
-				<Box as="li" key={href}>
-					<Link
-						as={external ? undefined : NextLink}
-						href={href}
-						prefetch={external ? undefined : false}
-						target={external ? "_blank" : undefined}
-						rel={external ? "noopener noreferrer" : undefined}
-						data-group
-						display="inline-flex"
-						alignItems="center"
-						minH="44px"
-						fontWeight="600">
+		<ul className={styles.moreLinks}>
+			{items.map(({ name, href, external }) => {
+				const content = (
+					<>
 						{name}
-						<OutArrow ml={2} newTab={external} />
-					</Link>
-				</Box>
-			))}
-		</Flex>
+						<OutArrow className={styles.moreArrow} newTab={external} />
+					</>
+				);
+				return (
+					<li key={href}>
+						{external ? (
+							<a href={href} target="_blank" rel="noopener noreferrer" data-group className={`ui-link ${styles.moreLink}`}>
+								{content}
+							</a>
+						) : (
+							<NextLink href={href} prefetch={false} data-group className={`ui-link ${styles.moreLink}`}>
+								{content}
+							</NextLink>
+						)}
+					</li>
+				);
+			})}
+		</ul>
 	);
 }
 
@@ -65,47 +68,45 @@ export default function Uipack() {
 				programmingLanguage: "TypeScript",
 				license: "https://opensource.org/licenses/MIT",
 			}}>
-			<Container maxW="680px" px={0} ml={0}>
-				<Box pt={{ base: 10, md: 16 }}>
+			<div className={`ui-container chakra-container ${caseStudy.column}`}>
+				<div className={caseStudy.top}>
 					<BackLink href="/#work">Selected work</BackLink>
 
-					<Heading as="h1" mt={{ base: 8, md: 10 }} fontSize={ARTICLE_TITLE} lineHeight="1" letterSpacing="-.045em">
-						UiPack
-					</Heading>
+					<h1 className={`ui-heading ${ARTICLE_TITLE} ${caseStudy.title}`}>UiPack</h1>
 
 					<MetaLine>2026 · open source · react + svg</MetaLine>
 
-					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="lede" fontWeight="600">
+					<p className={caseStudy.lede}>
 						I keep the diagrams, animations and slide starters I reuse in UiPack. It lets my projects share type, colours and spacing without setting them up again each time.
-					</Text>
-					<P color="text.muted">
+					</p>
+					<P className={styles.muted}>
 						It started with the diagrams on this site. I&apos;m building it out in two directions: web design for my projects, and presentations for the things I need to explain. Each slide starter includes speaker notes alongside the visual.
 					</P>
-				</Box>
+				</div>
 
-				<Box as="section" aria-labelledby="figures">
+				<section aria-labelledby="figures">
 					<H2 id="figures">Figures and motion</H2>
-					<UipackFigure mt={6} />
+					<UipackFigure className={styles.figure} />
 					<P>
 						This is Groundplane, one of my projects, drawn with UiPack&apos;s agent-loop preset. Hover a node or legend entry to follow a flow; Pause and Replay control the animation.
 					</P>
-					<P color="text.muted">
+					<P className={styles.muted}>
 						The figure style grew from OpenAI&apos;s Habitat post and archify&apos;s approach to typed figures, adapted to the type and colours I use here.
 					</P>
 					<MoreLinks items={[{ name: "Architecture diagrams on the docs site", href: `${DOCS}/components/diagrams`, external: true }]} />
-				</Box>
+				</section>
 
-				<Box as="section" aria-labelledby="objects">
+				<section aria-labelledby="objects">
 					<H2 id="objects">3D objects</H2>
 					{/* The WebGL scene mounts as the reader nears it; the placeholder
 					    holds its height. */}
-					<Box mt={6}>
-						<LazyMount minH={OBJECT_H} rootMargin="400px">
-							<Box h={OBJECT_H} minW={0}>
+					<div className={styles.demo}>
+						<LazyMount className={styles.objectHolder} rootMargin="400px">
+							<div className={styles.objectFrame}>
 								<HobbyScene kind="ai" label="Agent session" />
-							</Box>
+							</div>
 						</LazyMount>
-					</Box>
+					</div>
 					<P>
 						The 3D objects on my Hobbies and Contact pages come from UiPack. This is the one from Coding &amp; AI; Hobbies shows all six.
 					</P>
@@ -115,66 +116,59 @@ export default function Uipack() {
 							{ name: "All six on Hobbies", href: "/hobbies" },
 						]}
 					/>
-				</Box>
+				</section>
 
-				<Box as="section" aria-labelledby="slides">
+				<section aria-labelledby="slides">
 					<H2 id="slides">Slide starters</H2>
-					<Box mt={6}>
+					<div className={styles.demo}>
 						<UipackSlide />
-					</Box>
+					</div>
 					<P>This is the opening starter: the slide, then what to say, a delivery cue and the transition to the next slide.</P>
 					<MoreLinks items={[{ name: "Slide starters on the docs site", href: `${DOCS}/presentations`, external: true }]} />
-				</Box>
+				</section>
 
-				<Grid
-					templateColumns={{ base: "1fr", md: "1fr 1fr 1fr" }}
-					gap={6}
-					mt={{ base: 12, md: 16 }}
-					py={6}
-					borderTop="1px solid"
-					borderBottom="1px solid"
-					borderColor="border.subtle">
-					<Box>
-						<Text fontWeight="700">Same palette</Text>
-						<Flex gap={2} mt={3} aria-hidden="true">
-							{["page.bg", "page.text", "brand.solid"].map((color) => (
-								<Box key={color} bg={color} w="28px" h="28px" borderRadius="full" border="1px solid" borderColor="border.subtle" />
+				<div className={styles.traits}>
+					<div>
+						<p className={styles.traitHead}>Same palette</p>
+						<div className={styles.swatches} aria-hidden="true">
+							{["page", "text", "brand"].map((tone) => (
+								<div key={tone} className={`${styles.swatch} ${styles[tone]}`} />
 							))}
-						</Flex>
-						<Text mt={2} color="text.muted" fontSize="15px">
+						</div>
+						<p className={styles.traitNote}>
 							Paper, ink and cobalt, in light and dark themes.
-						</Text>
-					</Box>
-					<Box>
-						<Text fontWeight="700">Same type</Text>
-						<Text mt={2} fontSize="22px">
+						</p>
+					</div>
+					<div>
+						<p className={styles.traitHead}>Same type</p>
+						<p className={styles.typeSans}>
 							IBM Plex Sans
-						</Text>
-						<Text mt={1} fontFamily="var(--font-mono)" fontSize="15px" color="text.muted">
+						</p>
+						<p className={styles.typeMono}>
 							IBM Plex Mono for labels
-						</Text>
-					</Box>
-					<Box>
-						<Text fontWeight="700">Same habits</Text>
-						<Text mt={2} fontSize="15px" lineHeight="text" color="text.muted">
+						</p>
+					</div>
+					<div>
+						<p className={styles.traitHead}>Same habits</p>
+						<p className={styles.traitBody}>
 							Clear hierarchy, room to read, and motion that explains what changed.
-						</Text>
-					</Box>
-				</Grid>
+						</p>
+					</div>
+				</div>
 
 				{/* Placeholder (2026-11-15): the owner asked for a looking-back line to
 				    be written for now. Both facts are checkable (the notes repo pins
 				    uipack and draws its figures from it); replace it with his own
 				    words when he sends them. */}
-				<Box maxW="680px">
+				<div className={styles.closing}>
 					<P>
 						This site and my notes site both draw their figures from UiPack now, so a fix to how a
 						figure looks is made once instead of in each repo.
 					</P>
-				</Box>
+				</div>
 
 				<CaseStudyFooter links={links} next={{ name: "Trading engine", href: "/trading-engine", detail: "A paper-trading engine that tests ideas against rules set in advance" }} />
-			</Container>
+			</div>
 		</Layout>
 	);
 }

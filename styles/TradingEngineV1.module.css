@@ -1,0 +1,57 @@
+.update {
+	--figure-h: var(--fh0);
+}
+@media (min-width: 400px) {
+	.update {
+		--figure-h: var(--fh1);
+	}
+}
+@media (min-width: 500px) {
+	.update {
+		--figure-h: var(--fh2);
+	}
+}
+@media (min-width: 721px) {
+	.update {
+		--figure-h: var(--fh3);
+	}
+}
+@media (min-width: 960px) {
+	.update {
+		--figure-h: var(--fh4);
+	}
+}
+@media (min-width: 1200px) {
+	.update {
+		--figure-h: var(--fh5);
+	}
+}
+
+.number {
+	color: var(--site-text-muted);
+}
+
+.dates {
+	margin-top: 0.75rem;
+	color: var(--site-text-muted);
+	font-family: var(--font-mono);
+	font-size: 12px;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+/* The placeholder's margins match the figure it stands in for. */
+.figure {
+	margin-top: 2.5rem;
+	margin-bottom: 2.5rem;
+}
+@media screen and (min-width: 768px) {
+	.figure {
+		margin-top: 3.5rem;
+		margin-bottom: 3.5rem;
+	}
+}
+
+.facts {
+	margin-top: 0.75rem;
+}

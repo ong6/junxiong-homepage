@@ -1,0 +1,119 @@
+/* The grey second paragraph under the lede. */
+.muted {
+	color: var(--site-text-muted);
+}
+
+/* The figure under "Figures and motion". */
+.figure {
+	margin-top: 1.5rem;
+}
+
+/* The wrapper around the 3D object and the slide. */
+.demo {
+	margin-top: 1.5rem;
+}
+
+/* The 3D object's frame: compact, in the prose column. The placeholder holds
+   the same height until the scene mounts. */
+.objectHolder {
+	min-height: 320px;
+}
+.objectFrame {
+	height: 320px;
+	min-width: 0;
+}
+@media screen and (min-width: 768px) {
+	.objectHolder {
+		min-height: 420px;
+	}
+	.objectFrame {
+		height: 420px;
+	}
+}
+
+/* The links under each example: 44px targets, an arrow on each. */
+.moreLinks {
+	display: flex;
+	flex-wrap: wrap;
+	list-style-type: none;
+	margin: 0;
+	margin-top: 0.75rem;
+	column-gap: 1.5rem;
+}
+.moreLink {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	font-weight: 600;
+}
+.moreArrow {
+	margin-left: 0.5rem;
+}
+
+/* The three-up strip: palette, type, habits. */
+.traits {
+	display: grid;
+	gap: 1.5rem;
+	grid-template-columns: 1fr;
+	margin-top: 3rem;
+	padding-top: 1.5rem;
+	padding-bottom: 1.5rem;
+	border-top: 1px solid;
+	border-bottom: 1px solid;
+	border-color: var(--site-border-subtle);
+}
+@media screen and (min-width: 768px) {
+	.traits {
+		grid-template-columns: 1fr 1fr 1fr;
+		margin-top: 4rem;
+	}
+}
+.traitHead {
+	font-weight: 700;
+}
+.swatches {
+	display: flex;
+	gap: 0.5rem;
+	margin-top: 0.75rem;
+}
+.swatch {
+	width: 28px;
+	height: 28px;
+	border-radius: 9999px;
+	border: 1px solid;
+	border-color: var(--site-border-subtle);
+}
+.page {
+	background: var(--site-page-bg);
+}
+.text {
+	background: var(--site-page-text);
+}
+.brand {
+	background: var(--site-brand-solid);
+}
+.traitNote {
+	margin-top: 0.5rem;
+	color: var(--site-text-muted);
+	font-size: 15px;
+}
+.typeSans {
+	margin-top: 0.5rem;
+	font-size: 22px;
+}
+.typeMono {
+	margin-top: 0.25rem;
+	font-family: var(--font-mono);
+	font-size: 15px;
+	color: var(--site-text-muted);
+}
+.traitBody {
+	margin-top: 0.5rem;
+	font-size: 15px;
+	line-height: 1.65;
+	color: var(--site-text-muted);
+}
+
+.closing {
+	max-width: 680px;
+}

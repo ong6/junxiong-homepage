@@ -1,10 +1,10 @@
-import { Box, Container, Link } from "@chakra-ui/react";
 import Head from "next/head";
 import { useEffect } from "react";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
 import { modifiedFor } from "../../lib/pageDates";
 import { trackHoverOrigin } from "../../lib/hoverOrigin";
+import styles from "./Main.module.css";
 
 export const SITE_URL = "https://junxiong.dev";
 
@@ -125,24 +125,10 @@ const Main = ({ children, router }) => {
 		// puts the footer at the bottom of the window. The skip link sits outside
 		// it so the clipped column never clips its focus ring.
 		<>
-		<Link
-			href="#main-content"
-			position="fixed"
-			top={3}
-			left={3}
-			zIndex={2000}
-			px={4}
-			py={2.5}
-			borderRadius="md"
-			bg="page.text"
-			color="page.bg"
-			fontWeight="700"
-			transform="translateY(-160%)"
-			transition="transform var(--dur-press) ease"
-			_focus={{ transform: "translateY(0)", outline: "2px solid", outlineColor: "brand.solid", outlineOffset: "2px" }}>
+		<a href="#main-content" className={`ui-link ${styles.skip}`}>
 			Skip to content
-		</Link>
-		<Box pb={8} overflowX="clip" display="flex" flexDirection="column" minH="100dvh">
+		</a>
+		<div className={styles.column}>
 			<Head>
 				<meta
 					name="google-site-verification"
@@ -198,18 +184,18 @@ const Main = ({ children, router }) => {
 			</Head>
 
 
-			<Box as="header">
+			<header>
 				<Navbar path={router.asPath} />
-			</Box>
+			</header>
 
-			<Container as="main" id="main-content" maxW="1120px" flex="1 0 auto" pt={{ base: "64px", md: "72px" }}>
+			<main id="main-content" className={`ui-container ${styles.main}`}>
 				{children}
-			</Container>
+			</main>
 
-			<Container as="footer" maxW="1120px">
+			<footer className={`ui-container ${styles.footer}`}>
 				<Footer />
-			</Container>
-		</Box>
+			</footer>
+		</div>
 		</>
 	);
 };

@@ -1,7 +1,7 @@
-import { Box, Link, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { VERSIONS } from "../lib/tradingVersions";
 import OutArrow from "./OutArrow";
+import styles from "./TradingVersionList.module.css";
 
 // Engine versions in the order given: the v1 updates (newest first) by
 // default, or the engine eras on the overview. The version on screen is plain
@@ -12,45 +12,33 @@ import OutArrow from "./OutArrow";
 
 export default function TradingVersionList({ active, items = VERSIONS }) {
 	return (
-		<Box as="ol" listStyleType="none" mt={6} borderTop="1px solid" borderColor="border.subtle">
+		<ol className={styles.list}>
 			{items.map(({ v, href, when, title, body, current, building }) => (
-				<Box
-					as="li"
-					key={v}
-					display="grid"
-					gridTemplateColumns={{ base: "48px 1fr", md: "64px 1fr" }}
-					columnGap={4}
-					py={4}
-					borderBottom="1px solid"
-					borderColor="border.subtle">
-					<Text fontFamily="var(--font-mono)" fontSize="14px" fontWeight="700" color={v === active ? "brand.solid" : "text.muted"}>
-						{v}
-					</Text>
-					<Box>
-						<Text fontFamily="var(--font-mono)" fontSize="12px" letterSpacing=".08em" color="text.muted" textTransform="uppercase">
+				<li key={v} className={styles.item}>
+					<p className={v === active ? `${styles.version} ${styles.versionActive}` : styles.version}>{v}</p>
+					<div>
+						<p className={styles.when}>
 							{when}
 							{current ? " · current" : ""}
 							{building ? " · being built" : ""}
-						</Text>
-						<Text mt={1} fontSize={{ base: "17px", md: "18px" }} fontWeight="700">
+						</p>
+						<p className={styles.title}>
 							{v === active ? (
 								title
 							) : (
-								<Link as={NextLink} href={href} prefetch={false} display="block" minH="44px" py="7px" my="-3px">
+								<NextLink href={href} prefetch={false} className={`ui-link ${styles.link}`}>
 									{title.split(" ").slice(0, -1).join(" ")}{" "}
-									<Box as="span" whiteSpace="nowrap">
+									<span className={styles.last}>
 										{title.split(" ").at(-1)}
-										<OutArrow ml="4px" />
-									</Box>
-								</Link>
+										<OutArrow className={styles.arrow} />
+									</span>
+								</NextLink>
 							)}
-						</Text>
-						<Text mt={1} fontSize={{ base: "16px", md: "17px" }} lineHeight="text" color="text.muted">
-							{body}
-						</Text>
-					</Box>
-				</Box>
+						</p>
+						<p className={styles.body}>{body}</p>
+					</div>
+				</li>
 			))}
-		</Box>
+		</ol>
 	);
 }

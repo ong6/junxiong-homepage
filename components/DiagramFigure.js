@@ -1,7 +1,8 @@
-import { Box, Portal, Text } from "@chakra-ui/react";
 import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
 import { Figure } from "uipack";
-import { MOBILE_MIN_FONT, MOBILE_QUERY, MOBILE_SCALE, SwipeHint, mobileScrollSx, useIsMobile, useOverflow, viewBoxWidth } from "./figureMobile";
+import { MOBILE_MIN_FONT, MOBILE_QUERY, MOBILE_SCALE, SwipeHint, mobileScrollProps, useIsMobile, useOverflow, viewBoxWidth } from "./figureMobile";
+import Portal from "./Portal";
+import styles from "./DiagramFigure.module.css";
 // One figure wrapper for every diagram. Inline, the drawing sits in a uipack
 // Figure (eyebrow, title, caption, legend, Pause and Replay, dotted canvas).
 // Its own Open canvas is switched off: Expand below is the one way to enlarge.
@@ -19,39 +20,19 @@ const TOOLBAR = 72;
 
 const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
 
-// Toolbar button: mono glyph, theme border, no Chakra Button so the overlay
-// stays tiny.
-const Ctl = forwardRef(function Ctl({ label, children, ...rest }, ref) {
+// Toolbar button: mono glyph, theme border, kept tiny so the overlay stays
+// small.
+const Ctl = forwardRef(function Ctl({ label, className, children, ...rest }, ref) {
 	return (
-		<Box
-			as="button"
-			type="button"
-			aria-label={label}
-			title={label}
-			w="44px"
-			h="44px"
-			display="grid"
-			placeItems="center"
-			border="1px solid"
-			borderColor="border.subtle"
-			bg="surface.raised"
-			color="page.text"
-			fontFamily="var(--font-mono)"
-			fontSize="18px"
-			lineHeight="1"
-			cursor="pointer"
-			_hover={{ borderColor: "page.text" }}
-			_focusVisible={{ outline: "2px solid", outlineColor: "brand.solid", outlineOffset: "2px" }}
-			ref={ref}
-			{...rest}>
+		<button type="button" aria-label={label} title={label} className={className ? `${styles.ctl} ${className}` : styles.ctl} ref={ref} {...rest}>
 			{children}
-		</Box>
+		</button>
 	);
 });
 
 function Overlay({ Wide, id, viewBox, alt, caption, onClose }) {
-	// Chakra's Portal mounts its children a tick after the overlay renders, so
-	// the stage is tracked as state rather than a ref: effects wait for it.
+	// The Portal mounts its children a tick after the overlay renders, so the
+	// stage is tracked as state rather than a ref: effects wait for it.
 	const [stage, setStage] = useState(null);
 	const svgBoxRef = useRef(null);
 	const panelRef = useRef(null);
@@ -63,7 +44,6 @@ function Overlay({ Wide, id, viewBox, alt, caption, onClose }) {
 	const pointers = useRef(new Map());
 	const gesture = useRef(null);
 
-	const scrim = "page.bg";
 	const captionRef = useRef(null);
 
 	// Read the drawing's native size from its viewBox, then fit it between the
@@ -237,38 +217,27 @@ function Overlay({ Wide, id, viewBox, alt, caption, onClose }) {
 
 	return (
 		<Portal>
-			<Box
+			<div
 				ref={panelRef}
 				role="dialog"
 				aria-modal="true"
 				aria-label={`Diagram ${shortCaption(caption)}, expanded`}
 				onKeyDown={onKeyDown}
-				position="fixed"
-				inset={0}
-				zIndex="modal"
-				bg={scrim}
-				color="page.text">
-				<Box
+				className={styles.overlay}>
+				<div
 					ref={setStage}
-					position="absolute"
-					inset={0}
-					overflow="hidden"
-					cursor={dragging ? "grabbing" : "grab"}
-					style={{ touchAction: "none" }}
+					className={styles.stage}
+					style={{ touchAction: "none", cursor: dragging ? "grabbing" : "grab" }}
 					onPointerDown={onPointerDown}
 					onPointerMove={onPointerMove}
 					onPointerUp={onPointerUp}
 					onPointerCancel={onPointerUp}>
-					<Box
+					<div
 						ref={svgBoxRef}
-						position="absolute"
-						top={0}
-						left={0}
-						w={size.w ? `${size.w}px` : "1200px"}
-						h={size.h ? `${size.h}px` : "auto"}
-						lineHeight={0}
-						pointerEvents="none"
+						className={styles.drawing}
 						style={{
+							width: size.w ? `${size.w}px` : "1200px",
+							height: size.h ? `${size.h}px` : "auto",
 							transform: `translate(${view.x}px, ${view.y}px) scale(${view.s})`,
 							transformOrigin: "0 0",
 							willChange: "transform",
@@ -278,62 +247,31 @@ function Overlay({ Wide, id, viewBox, alt, caption, onClose }) {
 								<Wide id={id} />
 							</svg>
 						</div>
-					</Box>
-				</Box>
+					</div>
+				</div>
 
-				<Box
-					position="absolute"
-					top={{ base: 3, md: 5 }}
-					right={{ base: 3, md: 5 }}
-					display="flex"
-					gap={2}
-					alignItems="center">
-					<Text
-						as="span"
-						fontFamily="var(--font-mono)"
-						fontSize="12px"
-						color="text.muted"
-						mr={1}
-						aria-live="polite">
+				<div className={styles.toolbar}>
+					<span className={styles.zoom} aria-live="polite">
 						{pct}%
-					</Text>
+					</span>
 					<Ctl label="Zoom out" onClick={() => zoomCentre(1 / 1.25)}>
 						−
 					</Ctl>
 					<Ctl label="Zoom in" onClick={() => zoomCentre(1.25)}>
 						+
 					</Ctl>
-					<Ctl label="Reset zoom" onClick={() => fit(true)} fontSize="13px">
+					<Ctl label="Reset zoom" onClick={() => fit(true)} className={styles.ctlWord}>
 						fit
 					</Ctl>
 					<Ctl ref={closeRef} label="Close diagram" onClick={onClose}>
 						×
 					</Ctl>
-				</Box>
+				</div>
 
-				<Box
-					ref={captionRef}
-					position="absolute"
-					left={{ base: 3, md: 5 }}
-					right={{ base: 3, md: 5 }}
-					bottom={{ base: 3, md: 5 }}
-					maxW="680px"
-					px={3}
-					py={2}
-					bg={scrim}
-					border="1px solid"
-					borderColor="border.subtle"
-					pointerEvents="none">
-					<Text
-						fontFamily="var(--font-mono)"
-						fontSize="12px"
-						lineHeight="text"
-						color="text.muted"
-						noOfLines={{ base: 2, md: 4 }}>
-						{captionMarks(caption)}
-					</Text>
-				</Box>
-			</Box>
+				<div ref={captionRef} className={styles.overlayCaption}>
+					<p className={styles.overlayCaptionText}>{captionMarks(caption)}</p>
+				</div>
+			</div>
 		</Portal>
 	);
 }
@@ -355,9 +293,9 @@ const natural = (viewBox) => Math.min(1088, Math.max(680, viewBoxWidth(viewBox) 
 // The caption prop stays a string (shortCaption and the e2e specs read it).
 const CIRCLED = /([\u2460-\u2473])/;
 const StepMark = ({ n }) => (
-	<Box as="span" data-step-mark fontWeight="700" color="page.text">
+	<span data-step-mark className={styles.stepMark}>
 		{n}
-	</Box>
+	</span>
 );
 const captionMarks = (c) =>
 	typeof c === "string" && CIRCLED.test(c)
@@ -375,6 +313,7 @@ export default function DiagramFigure({ id, diagram, caption, headingLevel }) {
 	const boxRef = useRef(null);
 	const mobile = useIsMobile();
 	const overflow = useOverflow(boxRef, mobile);
+	const scroll = mobileScrollProps(viewBoxWidth(meta.viewBox));
 
 	// A phone scrolls the wide drawing sideways. A drawing whose content starts
 	// well inside its canvas (a centred vertical flow) would open on empty
@@ -395,20 +334,11 @@ export default function DiagramFigure({ id, diagram, caption, headingLevel }) {
 		// A drawing wider than the prose column breaks out to the main container's
 		// content width (1120px minus its 16px gutters), which the column's left
 		// edge already sits on, so the figure reads centred in the viewport.
-		<Box
-			as="figure"
+		<figure
 			ref={boxRef}
 			data-reveal
-			my={{ base: 10, md: 14 }}
-			mx={0}
-			w={`min(100vw - 32px, ${natural(meta.viewBox)}px)`}
-			maxW="none"
-			// Above the wide-screen contents rail, on an opaque ground, so a full-width
-			// drawing slides over the rail instead of under its text.
-			position="relative"
-			zIndex={1}
-			bg="page.bg"
-			sx={mobileScrollSx(viewBoxWidth(meta.viewBox))}>
+			className={`${styles.figure} ${scroll.className}`}
+			style={{ ...scroll.style, width: `min(100vw - 32px, ${natural(meta.viewBox)}px)` }}>
 			<Figure
 				id={`${id}-figure`}
 				headingLevel={headingLevel}
@@ -426,44 +356,20 @@ export default function DiagramFigure({ id, diagram, caption, headingLevel }) {
 				<Wide id={`${id}-w`} />
 			</Figure>
 			{overflow ? <SwipeHint /> : null}
-			<Box display="flex" alignItems="flex-start" gap={3} mt={2}>
-				<Text
-					as="figcaption"
-					id={`${id}-caption`}
-					flex="1"
-					pt={2}
-					fontFamily="var(--font-mono)"
-					fontSize="12px"
-					lineHeight="text"
-					color="text.muted">
+			<div className={styles.below}>
+				<figcaption id={`${id}-caption`} className={styles.caption}>
 					{captionMarks(caption)}
-				</Text>
-				<Box
-					as="button"
+				</figcaption>
+				<button
 					type="button"
 					aria-describedby={`${id}-caption`}
 					aria-haspopup="dialog"
 					aria-label={`Expand diagram ${shortCaption(caption)}`}
 					onClick={() => setOpen(true)}
-					flexShrink={0}
-					minH="44px"
-					px={3}
-					border="1px solid"
-					borderColor="border.subtle"
-					bg="surface.raised"
-					color="text.muted"
-					fontFamily="var(--font-mono)"
-					fontSize="12px"
-					fontWeight="700"
-					letterSpacing=".08em"
-					textTransform="uppercase"
-					cursor="zoom-in"
-					_hover={{ borderColor: "page.text", color: "page.text" }}
-					_before={{ content: '"⤢ "' }}
-					_focusVisible={{ outline: "2px solid", outlineColor: "brand.solid", outlineOffset: "2px" }}>
+					className={styles.expand}>
 					expand
-				</Box>
-			</Box>
+				</button>
+			</div>
 			{open ? (
 				<Overlay
 					Wide={Wide}
@@ -474,6 +380,6 @@ export default function DiagramFigure({ id, diagram, caption, headingLevel }) {
 					onClose={() => setOpen(false)}
 				/>
 			) : null}
-		</Box>
+		</figure>
 	);
 }

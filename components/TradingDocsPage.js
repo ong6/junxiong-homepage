@@ -1,9 +1,9 @@
 import Head from "next/head";
-import { useColorMode } from "@chakra-ui/react";
+import { useTheme } from "../lib/themeChoice";
 import { DocsLayout, DocsMarkdown } from "uipack/docs";
 
 export default function TradingDocsPage({ page, sections, previous, next }) {
-	const { colorMode } = useColorMode();
+	const colorMode = useTheme();
 	const title = `${page.title} — Trading engine docs — Ong Jun Xiong`;
 
 	return (

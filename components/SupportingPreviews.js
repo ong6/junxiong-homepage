@@ -1,27 +1,9 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
 import { Fragment } from "react";
 import { Connector, Defs, Figure, Node } from "uipack";
+import styles from "./SupportingPreviews.module.css";
 
 // Static previews for the "Also building" cards, in the lead cards' grammar:
 // a flat 1px panel on the dotted canvas, mono labels at 12px, values at 16px.
-
-const labelStyle = {
-	fontFamily: "var(--font-mono)",
-	fontSize: "12px",
-	fontWeight: "700",
-	letterSpacing: ".08em",
-	textTransform: "uppercase",
-};
-
-const panelProps = {
-	"data-panel": true,
-	maxW: "480px",
-	bg: "preview.panel",
-	border: "1px solid",
-	borderColor: "border.subtle",
-	borderRadius: "4px",
-	boxShadow: "4px 4px 0 var(--chakra-colors-preview-shadow)",
-};
 
 // Every value is stated on /trading-engine/v2 ("What the engine owns" and the
 // fact table): the $1.56 example fill, the fill types and the halt rules.
@@ -33,29 +15,23 @@ const fillRows = [
 
 export function TradingPreview() {
 	return (
-		<Box {...panelProps} overflow="hidden">
-			<Flex justify="space-between" gap={4} px={4} py={2} borderBottom="1px solid" borderColor="border.subtle" color="text.muted" sx={labelStyle}>
-				<Text>Engine v2</Text>
-				<Text>Example fill</Text>
-			</Flex>
-			<Box p={4}>
-				<Text fontSize="16px" fontWeight="700" lineHeight="text">
-					Buy 300 shares at $5
-				</Text>
-				<Box as="dl" mt={3}>
+		<div data-panel className={styles.panel}>
+			<div className={styles.head}>
+				<p>Engine v2</p>
+				<p>Example fill</p>
+			</div>
+			<div className={styles.body}>
+				<p className={styles.fill}>Buy 300 shares at $5</p>
+				<dl className={styles.rows}>
 					{fillRows.map(([label, value], index) => (
-						<Flex key={label} wrap="wrap" align="baseline" justify="space-between" columnGap={6} py={2} borderTop="1px solid" borderColor="border.subtle">
-							<Text as="dt" color="text.muted" lineHeight="text" sx={{ ...labelStyle, fontWeight: "400" }}>
-								{label}
-							</Text>
-							<Text as="dd" m={0} ml="auto" fontSize="16px" lineHeight="text" fontWeight={index === 1 ? "700" : "400"} textAlign="right">
-								{value}
-							</Text>
-						</Flex>
+						<div key={label} className={styles.row}>
+							<dt className={styles.label}>{label}</dt>
+							<dd className={`${styles.value} ${index === 1 ? styles.strong : ""}`}>{value}</dd>
+						</div>
 					))}
-				</Box>
-			</Box>
-		</Box>
+				</dl>
+			</div>
+		</div>
 	);
 }
 
@@ -125,16 +101,9 @@ function Narrow() {
 
 // The uipack Figure supplies the parts' styles and the phone switch; its own
 // frame and ground give way to the panel's, so the card reads like the others.
-const figureSx = {
-	"& .uipack": { border: 0, borderRadius: 0, background: "transparent" },
-	"& .uipack__canvas": { padding: "16px", background: "transparent" },
-	"& .uipack__canvas > svg.uipack--wide": { maxWidth: "448px", marginInline: "auto" },
-	"& .uipack__canvas > svg.uipack--narrow": { maxWidth: "240px", marginInline: "auto" },
-};
-
 export function UipackPreview() {
 	return (
-		<Box {...panelProps} overflow="hidden" sx={figureSx}>
+		<div data-panel className={`${styles.panel} ${styles.figure}`}>
 			<Figure
 				id="home-uipack"
 				static
@@ -148,6 +117,6 @@ export function UipackPreview() {
 				alt="UiPack supplies one set of type, colour and spacing to three kinds of part: figures in React and SVG, motion with pause and replay, and slide starters with speaker notes.">
 				<Wide />
 			</Figure>
-		</Box>
+		</div>
 	);
 }

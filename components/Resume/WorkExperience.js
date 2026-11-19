@@ -1,6 +1,6 @@
-import { Box, Text } from "@chakra-ui/react";
 import TermHeading from "../TermHeading";
 import ResumeDetail from "./ResumeDetail";
+import styles from "./Resume.module.css";
 
 const currentExperience = [
 	{
@@ -88,26 +88,18 @@ const earlierExperience = [
 
 export default function WorkExperience() {
 	return (
-		<Box>
+		<div>
 			<TermHeading kicker="Roles">Experience</TermHeading>
 			{currentExperience.map((detail) => (
 				<ResumeDetail key={detail.title} detail={detail} />
 			))}
 
-			<Text
-				mt={8}
-				mb={2}
-				fontFamily="var(--font-mono)"
-				fontSize="12px"
-				fontWeight="700"
-				letterSpacing=".08em"
-				textTransform="uppercase"
-				opacity={0.68}>
+			<p className={styles.earlier}>
 				Earlier experience
-			</Text>
+			</p>
 			{earlierExperience.map((detail) => (
 				<ResumeDetail key={detail.title} detail={detail} compact />
 			))}
-		</Box>
+		</div>
 	);
 }

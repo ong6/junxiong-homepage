@@ -1,4 +1,3 @@
-import { Box, Container, Heading, Text } from "@chakra-ui/react";
 import AiToolFamily from "../components/AiToolFamily";
 import DiagramFigure from "../components/DiagramFigure";
 import * as GroundplaneArchitecture from "../components/diagrams/GroundplaneArchitecture";
@@ -7,8 +6,10 @@ import Layout from "../components/layouts/Articles";
 import CaseStudyFooter from "../components/CaseStudyFooter";
 import Details from "../components/Details";
 import FactList, { pickFacts } from "../components/FactList";
-import { BackLink, MetaLine, P, H2, ARTICLE_TITLE } from "../components/ArticleParts";
+import { BackLink, MetaLine, P, H2, Code, ARTICLE_TITLE } from "../components/ArticleParts";
 import { withNotes } from "../lib/notes";
+import styles from "../styles/CaseStudy.module.css";
+import groundplane from "../styles/Groundplane.module.css";
 
 // A written case study in the same shape as /compoze: one ~680px column of
 // prose, the architecture figure, a code figure, and a single mono fact table.
@@ -92,29 +93,18 @@ export default function Groundplane() {
 				license: "https://opensource.org/licenses/MIT",
 			}}
 			description="Groundplane is an open-source Python library that checks the fields an agent declares against the tool results it recorded, and traces each error to its source.">
-			<Container maxW="680px" px={0} ml={0}>
-				<Box pt={{ base: 10, md: 16 }}>
+			<div className={`ui-container chakra-container ${styles.column}`}>
+				<div className={styles.top}>
 					<BackLink href="/ai-tooling">AI tooling</BackLink>
 
-					<Heading
-						as="h1"
-						mt={{ base: 8, md: 10 }}
-						fontSize={ARTICLE_TITLE}
-						lineHeight="1"
-						letterSpacing="-.045em">
-						Groundplane
-					</Heading>
+					<h1 className={`ui-heading ${ARTICLE_TITLE} ${styles.title}`}>Groundplane</h1>
 
 					<MetaLine>2026 · open source · python</MetaLine>
 
-					<Text
-						mt={8}
-						fontSize={{ base: "19px", md: "21px" }}
-						lineHeight="lede"
-						fontWeight="600">
+					<p className={styles.lede}>
 						Groundplane is a small Python library that checks an agent&apos;s answer against the tool results it was given. If the model reports the wrong winner or total, it raises an error showing what the data actually said.
-					</Text>
-				</Box>
+					</p>
+				</div>
 
 				<CodeFigure caption="fig. 1 — before, the model&apos;s answer is trusted as is. After, the ranking is recorded with where it came from, the model fills a winner field, and Groundplane rejects it. The error is the library&apos;s real output for this input.">
 					<CodeBlock title="before" lines={BEFORE} />
@@ -142,7 +132,7 @@ export default function Groundplane() {
 				/>
 
 				<P>
-					Tool results go into a <Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">FactRegistry</Box>, each tagged with the tool call and arguments that produced it. A fact can&apos;t be overwritten; a new value becomes a new fact, so the old one and its source stay around. A <Box as="code" fontFamily="var(--font-mono)" fontSize="0.9em">boundary</Box> wraps the part of the agent&apos;s work being checked and says which facts it may use. The model has to submit structured fields there. A plain string is rejected, and leaving the block without submitting also raises, so you know when validation never ran.
+					Tool results go into a <Code>FactRegistry</Code>, each tagged with the tool call and arguments that produced it. A fact can&apos;t be overwritten; a new value becomes a new fact, so the old one and its source stay around. A <Code>boundary</Code> wraps the part of the agent&apos;s work being checked and says which facts it may use. The model has to submit structured fields there. A plain string is rejected, and leaving the block without submitting also raises, so you know when validation never ran.
 				</P>
 
 				<H2>The six checks</H2>
@@ -151,7 +141,7 @@ export default function Groundplane() {
 					A normal validator looks at each field on its own. These look at how the values relate, because two valid values can still end up on the wrong rows.
 				</P>
 
-				<FactList facts={checks} mt={6} />
+				<FactList facts={checks} className={groundplane.checksFacts} />
 
 				<P>
 					Numbers are compared exactly unless the caller sets a tolerance.
@@ -168,12 +158,12 @@ export default function Groundplane() {
 				</P>
 
 				<Details title="Package details">
-					<FactList facts={facts} mt={3} />
+					<FactList facts={facts} className={groundplane.factsTight} />
 				</Details>
 
 				<AiToolFamily current="/groundplane" />
 				<CaseStudyFooter links={links} next={{ name: "Compoze", href: "/compoze", detail: "Document-grounded assistants, a company I ran alone and sold to a client" }} />
-			</Container>
+			</div>
 		</Layout>
 	);
 }

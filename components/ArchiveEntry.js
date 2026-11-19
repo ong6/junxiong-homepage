@@ -1,8 +1,7 @@
-import { AspectRatio, Box, Button, Center, Flex, Link, Stack, Text, usePrefersReducedMotion } from "@chakra-ui/react";
-import { TriangleUpIcon } from "@chakra-ui/icons";
 import Image from "next/image";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import FactList from "./FactList";
+import { TriangleUpIcon } from "./icons";
 import OutArrow from "./OutArrow";
 import styles from "../styles/Archive.module.css";
 
@@ -17,7 +16,19 @@ import styles from "../styles/Archive.module.css";
 // video never carries on behind a closed row.
 
 const MEASURE = 680;
-const DIM = { _dark: { filter: "brightness(.86) contrast(1.04)" } };
+
+const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
+const subscribeToMotion = (onChange) => {
+	const query = window.matchMedia(REDUCED_MOTION);
+	query.addEventListener("change", onChange);
+	return () => query.removeEventListener("change", onChange);
+};
+const usePrefersReducedMotion = () =>
+	useSyncExternalStore(
+		subscribeToMotion,
+		() => window.matchMedia(REDUCED_MOTION).matches,
+		() => false,
+	);
 
 // The entry's links, platform and stack as fact rows; labels used twice
 // ("Featured on") share one row.
@@ -51,10 +62,10 @@ function factsFor(entry) {
 function FactValue({ item }) {
 	if (!item.href) return item.text;
 	return (
-		<Link href={item.href} target="_blank" rel="noopener noreferrer" display="inline-flex" alignItems="center" minH="44px" minW="44px" my={-3}>
+		<a href={item.href} target="_blank" rel="noopener noreferrer" className={`ui-link ${styles.factLink}`}>
 			{item.text}
-			<OutArrow newTab ml="4px" />
-		</Link>
+			<OutArrow newTab className={styles.arrow} />
+		</a>
 	);
 }
 
@@ -63,7 +74,7 @@ function FactValue({ item }) {
 function Shot({ block }) {
 	const ratio = block.width / block.height;
 	return (
-		<Box w="100%" maxW={`min(${block.width}px, calc(80vh * ${ratio.toFixed(4)}))`} rounded="md" overflow="hidden" border="1px solid" borderColor="border.subtle" {...DIM}>
+		<div className={`${styles.shot} ${styles.dim}`} style={{ maxWidth: `min(${block.width}px, calc(80vh * ${ratio.toFixed(4)}))` }}>
 			<Image
 				src={block.src}
 				alt={block.alt}
@@ -73,7 +84,7 @@ function Shot({ block }) {
 				unoptimized={block.animated}
 				style={{ display: "block", width: "100%", height: "auto" }}
 			/>
-		</Box>
+		</div>
 	);
 }
 
@@ -94,9 +105,8 @@ function Recording({ block, open }) {
 	}, [open, reducedMotion]);
 
 	return (
-		<Box position="relative" w="100%" maxW={`${block.width}px`}>
-			<Box
-				as="video"
+		<div className={styles.recording} style={{ maxWidth: `${block.width}px` }}>
+			<video
 				ref={ref}
 				muted
 				loop
@@ -106,25 +116,22 @@ function Recording({ block, open }) {
 				aria-label={block.alt}
 				onPlay={() => setPlaying(true)}
 				onPause={() => setPlaying(false)}
-				display="block"
-				w="100%"
-				h="auto"
-				aspectRatio={`${block.width} / ${block.height}`}
-				rounded="md"
-				border="1px solid"
-				borderColor="border.subtle"
-				{...DIM}>
+				className={`${styles.video} ${styles.dim}`}
+				style={{ aspectRatio: `${block.width} / ${block.height}` }}>
 				<source src={block.webm} type="video/webm" />
 				<source src={block.src} type="video/mp4" />
-			</Box>
+			</video>
 			{reducedMotion && !playing && (
-				<Center position="absolute" inset={0}>
-					<Button onClick={() => ref.current?.play()} size="sm" minH="44px" bg="rgba(0,0,0,.72)" color="white" _hover={{ bg: "rgba(0,0,0,.88)" }} leftIcon={<TriangleUpIcon transform="rotate(90deg)" boxSize={3} />}>
+				<div className={styles.playWrap}>
+					<button type="button" onClick={() => ref.current?.play()} className={`ui-button ${styles.play}`}>
+						<span className={styles.playIcon}>
+							<TriangleUpIcon className={styles.playGlyph} aria-hidden="true" focusable={false} />
+						</span>
 						Play recording
-					</Button>
-				</Center>
+					</button>
+				</div>
 			)}
-		</Box>
+		</div>
 	);
 }
 
@@ -138,8 +145,8 @@ const watchUrl = (src) => {
 function Embed({ block }) {
 	const youtube = block.type === "youtube";
 	return (
-		<Box w="100%">
-			<AspectRatio ratio={16 / 9} border="1px solid" borderColor="border.subtle" rounded="md" overflow="hidden" bg="surface.quiet">
+		<div className={styles.embed}>
+			<div className={styles.frame}>
 				<iframe
 					title={block.title}
 					src={block.src}
@@ -150,14 +157,14 @@ function Embed({ block }) {
 						referrerPolicy: "strict-origin-when-cross-origin",
 					})}
 				/>
-			</AspectRatio>
-			<Text mt={2} fontSize="14px" color="text.muted">
-				<Link href={youtube ? watchUrl(block.src) : block.href} target="_blank" rel="noopener noreferrer" display="inline-flex" alignItems="center" minH="44px" my={-3}>
+			</div>
+			<p className={styles.embedLink}>
+				<a href={youtube ? watchUrl(block.src) : block.href} target="_blank" rel="noopener noreferrer" className={`ui-link ${styles.outLink}`}>
 					{youtube ? "Watch on YouTube" : "Open in Figma"}
-					<OutArrow newTab ml="4px" />
-				</Link>
-			</Text>
-		</Box>
+					<OutArrow newTab className={styles.arrow} />
+				</a>
+			</p>
+		</div>
 	);
 }
 
@@ -174,12 +181,12 @@ export default function ArchiveEntry({ id, entry, open, onToggle }) {
 	if (open && !loaded) setLoaded(true);
 
 	return (
-		<Box as="details" id={id} className={styles.entry} open={open} onToggle={(event) => onToggle(id, event.currentTarget.open)} borderTopWidth="1px" borderColor="border.subtle" scrollMarginTop={{ base: "80px", md: "96px" }}>
-			<Flex as="summary" className={styles.summary} align="flex-start" gap={4} py={4} cursor="pointer" _hover={{ bg: "surface.raised" }} transitionProperty="background-color" transitionDuration="var(--dur-hover)">
+		<details id={id} className={styles.entry} open={open} onToggle={(event) => onToggle(id, event.currentTarget.open)}>
+			<summary className={styles.summary}>
 				{/* A 16:9 frame (64×36, 80×45) to match the screenshots, which
 				    fill it; logos with their own background stay contained.
 				    Framed, and dimmed in dark mode like the screenshots. */}
-				<Box position="relative" flexShrink={0} w={{ base: "64px", md: "80px" }} aspectRatio="16 / 9" rounded="md" overflow="hidden" border="1px solid" borderColor="border.subtle" bg={entry.thumbnail.background || "surface.quiet"} {...DIM}>
+				<div className={`${styles.thumb} ${styles.dim}`} style={entry.thumbnail.background ? { background: entry.thumbnail.background } : undefined}>
 					<Image
 						src={entry.thumbnail.src}
 						alt=""
@@ -190,37 +197,27 @@ export default function ArchiveEntry({ id, entry, open, onToggle }) {
 							padding: entry.thumbnail.padding || "0",
 						}}
 					/>
-				</Box>
-				<Box minW={0} flex="1">
-					<Flex align="baseline" wrap="wrap" columnGap={3} rowGap={0}>
-						<Text as="h3" fontSize={{ base: "16px", md: "17px" }} fontWeight="700">
-							{entry.title}
-						</Text>
-						{entry.note && (
-							<Text fontFamily="var(--font-mono)" fontSize="12px" color="text.muted" whiteSpace="nowrap">
-								{entry.note}
-							</Text>
-						)}
-					</Flex>
-					<Text fontSize="15px" lineHeight="text" color="text.muted" mt={1}>
-						{entry.summary}
-					</Text>
-				</Box>
-				<Box as="span" className={styles.marker} aria-hidden="true" flexShrink={0} mt="5px" mr={{ base: 0, md: 2 }} color="text.muted" />
-			</Flex>
-			<Box pl={{ base: 0, md: "96px" }} pt={1} pb={{ base: 8, md: 10 }}>
-				<Text maxW={`${MEASURE}px`} fontSize="16px" lineHeight="prose">
-					{entry.body}
-				</Text>
-				<FactList facts={factsFor(entry)} mt={5} maxW={`${MEASURE}px`} />
+				</div>
+				<div className={styles.heading}>
+					<div className={styles.titleRow}>
+						<h3 className={styles.title}>{entry.title}</h3>
+						{entry.note && <p className={styles.note}>{entry.note}</p>}
+					</div>
+					<p className={styles.summaryText}>{entry.summary}</p>
+				</div>
+				<span className={styles.marker} aria-hidden="true" />
+			</summary>
+			<div className={styles.panel}>
+				<p className={styles.body}>{entry.body}</p>
+				<FactList facts={factsFor(entry)} className={styles.facts} />
 				{loaded && (
-					<Stack spacing={6} mt={8} maxW={`${MEASURE}px`}>
+					<div className={styles.media}>
 						{entry.showcase.map((block) => (
 							<Media key={block.src} block={block} open={open} />
 						))}
-					</Stack>
+					</div>
 				)}
-			</Box>
-		</Box>
+			</div>
+		</details>
 	);
 }

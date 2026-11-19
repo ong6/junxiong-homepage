@@ -1,6 +1,6 @@
 # junxiong.dev: agent guide
 
-Next.js 16 (pages router), React 18, Chakra UI v2 + Emotion, `uipack` from its GitHub release tarball (`npm install https://github.com/ong6/uipack/releases/download/vX.Y.Z/uipack-X.Y.Z.tgz`; never `npm i uipack`, an unrelated package). Node >= 20.
+Next.js 16 (pages router), React 18, CSS modules over global base classes, Base UI (`@base-ui/react`) for interactive widgets, `uipack` from its GitHub release tarball (`npm install https://github.com/ong6/uipack/releases/download/vX.Y.Z/uipack-X.Y.Z.tgz`; never `npm i uipack`, an unrelated package). Node >= 20.
 Pushing to `main` deploys to production on Vercel; CI (`.github/workflows/ci.yml`) runs verify + build.
 
 ## Commands
@@ -13,14 +13,14 @@ Pushing to `main` deploys to production on Vercel; CI (`.github/workflows/ci.yml
 ## Layout
 - `pages/`: routes; `works.js` (the Archive: rows open in place, `/works#<slug>`) and `trading-engine/docs/[slug].js` are data-driven; `sitemap.xml.js`, `llms.txt.js` are generated routes
 - `components/`: layout, nav, article parts, `DiagramFigure.js`; `components/diagrams/`: figure modules (`trading/` for engine versions); `components/Resume/`: résumé page and its LaTeX PDF source
-- `lib/`: `theme.js` (Chakra theme), `works.js` (university projects), `tradingDocs.js`, `tradingVersions.js`, `themeTransition.js` (the theme change)
-- `content/trading-docs/`: synced docs Markdown · `scripts/`: build and sync scripts · `e2e/`: Playwright specs · `styles/`: `globals.css`, `print.css`, `Hobbies.module.css`
+- `lib/`: `themeChoice.js` (the theme store and its no-flash script), `works.js` (university projects), `tradingDocs.js`, `tradingVersions.js`, `themeTransition.js` (the theme change)
+- `content/trading-docs/`: synced docs Markdown · `scripts/`: build and sync scripts · `e2e/`: Playwright specs · `styles/`: `globals.css` (tokens as `--site-*`, motion, hovers), `parts.css` (global base classes: `ui-link`, `ui-heading`, `ui-container`, `ui-button`, article parts), `base.css` (reset and page globals, imported last), `print.css`, page CSS modules
 
 ## Recipes (files to touch)
 - New case study: `pages/<slug>.js` (copy `pages/skillsmith.js`), `components/diagrams/<Name>Architecture.js`, `components/Navbar.js` (`activePaths`), `components/layouts/Main.js` (`OG_CARDS`), `pages/sitemap.xml.js`, `pages/llms.txt.js`, `scripts/build-og-cards.mjs` then `node scripts/build-og-cards.mjs <slug>` (writes `public/images/og/<slug>.jpg`), `e2e/figures.spec.js` (`PAGES`), README "What is here"
 - University project: an entry in `lib/works.js` + images in `public/images/works/` (its row on `/works` follows)
 - New diagram: a module in `components/diagrams/` exporting `meta`, `CLAIM`, `Wide({ id })` from uipack parts (`parts.js`, `sequence.js`, uipack's user-flow parts or `uipack/presets`); render with `<DiagramFigure id diagram caption />`
-- Style edit: Chakra props in the component, tokens in `lib/theme.js`, global CSS in `styles/globals.css`. Read `STYLE.md` first for any visual change (colour, type, spacing, motion, new component or page layout)
+- Style edit: the component's CSS module (`X.module.css` beside it; pages use `styles/<Page>.module.css`), tokens in `styles/globals.css`, shared base classes in `styles/parts.css`. An element takes a base class plus its module class; module CSS loads later, so it wins ties. Interactive widgets (dialog, popover, menu, tabs, tooltip, drawer) come from Base UI, styled on the `--site-*` tokens. Read `STYLE.md` first for any visual change (colour, type, spacing, motion, new component or page layout)
 - New 3D or custom rendering: belongs in uipack, not here (`check:ui-ownership` fails otherwise)
 
 ## Generated: never hand-edit (and skip reading)

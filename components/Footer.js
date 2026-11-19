@@ -1,6 +1,6 @@
-import { Box, Flex, Link, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 import OutArrow from "./OutArrow";
+import styles from "./Footer.module.css";
 
 const links = [
 	{ label: "Contact", href: "/contact", internal: true },
@@ -14,58 +14,32 @@ const links = [
 ];
 
 const Footer = () => (
-	<Box mt={{ base: 14, md: 20 }} pt={6} borderTop="1px solid" borderColor="border.subtle">
-		<Flex
-			direction={{ base: "column", md: "row" }}
-			justify="space-between"
-			align={{ md: "center" }}
-			gap={6}>
-			<Box>
-				<Text fontWeight="700" fontSize="14px">
-					Ong Jun Xiong
-				</Text>
-				<Text
-					mt={1}
-					fontFamily="var(--font-mono)"
-					fontSize="12px"
-					letterSpacing=".08em"
-					color="text.muted">
-					SOFTWARE ENGINEER · SINGAPORE
-				</Text>
-			</Box>
-			<Flex wrap="wrap" columnGap={6} rowGap={2}>
-				{links.map((link) => (
-					<Link
-						key={link.label}
-						as={link.internal ? NextLink : undefined}
-						href={link.href}
-						target={link.href.startsWith("http") ? "_blank" : undefined}
-						rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-						display="inline-flex"
-						alignItems="center"
-						// 44px touch targets on phones (36px box + 8px row gap: wrapped rows touch,
-						// never overlap); 32px with a fine pointer, where the floor is 24px.
-						minH={{ base: "44px", md: "32px" }}
-						minW={{ base: "44px", md: 0 }}
-						justifyContent="center"
-						my={-1}
-						fontSize="12px"
-						fontWeight="650"
-						color="text.muted"
-						textDecoration="none"
-						_hover={{ color: "page.text", textDecoration: "underline" }}>
-						{link.label}
-						{link.href.startsWith("http") && (
-							<OutArrow newTab ml="3px" fontSize="12px" />
-						)}
-					</Link>
-				))}
-			</Flex>
-		</Flex>
-		<Text mt={6} pb={2} fontSize="12px" color="text.muted">
-			© {new Date().getFullYear()} Ong Jun Xiong
-		</Text>
-	</Box>
+	<div className={styles.footer}>
+		<div className={styles.row}>
+			<div>
+				<p className={styles.name}>Ong Jun Xiong</p>
+				<p className={styles.role}>SOFTWARE ENGINEER · SINGAPORE</p>
+			</div>
+			<div className={styles.links}>
+				{links.map((link) => {
+					const external = link.href.startsWith("http");
+					const Anchor = link.internal ? NextLink : "a";
+					return (
+						<Anchor
+							key={link.label}
+							href={link.href}
+							target={external ? "_blank" : undefined}
+							rel={external ? "noopener noreferrer" : undefined}
+							className={`ui-link ${styles.link}`}>
+							{link.label}
+							{external && <OutArrow newTab className={styles.arrow} />}
+						</Anchor>
+					);
+				})}
+			</div>
+		</div>
+		<p className={styles.copyright}>© {new Date().getFullYear()} Ong Jun Xiong</p>
+	</div>
 );
 
 export default Footer;

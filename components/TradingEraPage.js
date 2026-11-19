@@ -1,6 +1,6 @@
-import { Box, Container, Heading, Text } from "@chakra-ui/react";
 import Layout from "./layouts/Articles";
 import { BackLink, MetaLine, ARTICLE_TITLE } from "./ArticleParts";
+import styles from "../styles/CaseStudy.module.css";
 
 // One engine era (/trading-engine/v1, /trading-engine/v2): back link, title,
 // mono eyebrow and a bold lead, then the page's own sections.
@@ -20,21 +20,17 @@ export default function TradingEraPage({ era, status, description, lead, facts, 
 			contents
 			facts={facts}
 			links={links}>
-			<Container maxW="680px" px={0} ml={0}>
-				<Box pt={{ base: 10, md: 16 }}>
+			<div className={`ui-container chakra-container ${styles.column}`}>
+				<div className={styles.top}>
 					<BackLink href="/trading-engine">Trading engine</BackLink>
-					<Heading as="h1" mt={{ base: 8, md: 10 }} fontSize={ARTICLE_TITLE} lineHeight="1" letterSpacing="-.045em">
-						{era.title}
-					</Heading>
+					<h1 className={`ui-heading ${ARTICLE_TITLE} ${styles.title}`}>{era.title}</h1>
 					<MetaLine>
 						Engine {era.v} · {status}
 					</MetaLine>
-					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="lede" fontWeight="600">
-						{lead}
-					</Text>
-				</Box>
+					<p className={styles.lede}>{lead}</p>
+				</div>
 				{children}
-			</Container>
+			</div>
 		</Layout>
 	);
 }

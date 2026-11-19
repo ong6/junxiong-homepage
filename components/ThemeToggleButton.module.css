@@ -1,0 +1,15 @@
+.toggle {
+	padding: 0;
+	color: var(--site-brand-solid);
+	min-width: 44px;
+	height: 44px;
+}
+.toggle:hover,
+.toggle[data-hover] {
+	background: var(--site-surface-quiet);
+}
+.toggle:active,
+.toggle[data-active] {
+	transform: none;
+	background: var(--site-surface-quiet);
+}

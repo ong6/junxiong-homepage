@@ -1,0 +1,43 @@
+/* The article column shared by case studies and article pages (STYLE.md,
+   Layout: Article): the 680px prose measure on the left of the 1120px main
+   column. The markup also carries `chakra-container`, the class this column
+   had under Chakra UI: e2e/article-shell.spec.js finds the column by it. */
+.column {
+	max-width: 680px;
+	padding-inline-start: 0;
+	padding-inline-end: 0;
+	margin-left: 0;
+}
+
+.top {
+	padding-top: 2.5rem;
+}
+@media screen and (min-width: 768px) {
+	.top {
+		padding-top: 4rem;
+	}
+}
+
+/* The h1, at the article size (ARTICLE_TITLE). */
+.title {
+	margin-top: 2rem;
+	line-height: 1;
+	letter-spacing: -0.045em;
+}
+@media screen and (min-width: 768px) {
+	.title {
+		margin-top: 2.5rem;
+	}
+}
+
+.lede {
+	margin-top: 2rem;
+	font-size: 19px;
+	line-height: 1.6;
+	font-weight: 600;
+}
+@media screen and (min-width: 768px) {
+	.lede {
+		font-size: 21px;
+	}
+}

@@ -1,4 +1,3 @@
-import { Box, Container, Heading, Text } from "@chakra-ui/react";
 import CaseStudyFooter from "../components/CaseStudyFooter";
 import DiagramFigure from "../components/DiagramFigure";
 import * as HomeLabArchitecture from "../components/diagrams/HomeLabArchitecture";
@@ -7,6 +6,7 @@ import FactList, { pickFacts } from "../components/FactList";
 import { BackLink, MetaLine, P, H2, ARTICLE_TITLE } from "../components/ArticleParts";
 import { PAGE_META } from "../lib/pageMeta";
 import { withNotes } from "../lib/notes";
+import styles from "../styles/CaseStudy.module.css";
 
 // The rough idea of the home lab, not a spec. Every sentence and fact row comes
 // from the facts the owner cleared for this page (2026-11-16). It is mostly a
@@ -31,20 +31,18 @@ const links = withNotes("/home-lab", [{ name: "Hobbies", detail: "The home lab i
 export default function HomeLab() {
 	return (
 		<Layout contents facts={railFacts} links={links} {...PAGE_META["/home-lab"]} schema={{ type: "Article" }}>
-			<Container maxW="680px" px={0} ml={0}>
-				<Box pt={{ base: 10, md: 16 }}>
+			<div className={`ui-container chakra-container ${styles.column}`}>
+				<div className={styles.top}>
 					<BackLink href="/hobbies#home-lab">Hobbies</BackLink>
 
-					<Heading as="h1" mt={{ base: 8, md: 10 }} fontSize={ARTICLE_TITLE} lineHeight="1" letterSpacing="-.045em">
-						Home lab
-					</Heading>
+					<h1 className={`ui-heading ${ARTICLE_TITLE} ${styles.title}`}>Home lab</h1>
 
 					<MetaLine>2026 · hobby · mostly a plan</MetaLine>
 
-					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="lede" fontWeight="600">
+					<p className={styles.lede}>
 						My home lab will be one place for everything my household runs for itself: file storage, photos, films and shows, home automation, private git, hosting for my own small apps, and local AI. It is mostly a plan. Two parts run today: an always-on agent on a laptop and a private network between my devices.
-					</Text>
-				</Box>
+					</p>
+				</div>
 
 				<DiagramFigure
 					id="home-lab-layout"
@@ -103,7 +101,7 @@ export default function HomeLab() {
 					links={links}
 					next={{ name: "Trading engine", href: "/trading-engine", detail: "Tests trading ideas overnight, with rules set before the results come in" }}
 				/>
-			</Container>
+			</div>
 		</Layout>
 	);
 }

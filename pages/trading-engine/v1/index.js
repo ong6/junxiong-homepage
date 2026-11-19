@@ -1,4 +1,3 @@
-import { Box, Text } from "@chakra-ui/react";
 import CaseStudyFooter from "../../../components/CaseStudyFooter";
 import Details from "../../../components/Details";
 import DiagramFigure from "../../../components/DiagramFigure";
@@ -15,6 +14,7 @@ import * as V7 from "../../../components/diagrams/trading/V7";
 import * as V8 from "../../../components/diagrams/trading/V8";
 import { Code, H2, P } from "../../../components/ArticleParts";
 import { ERAS, VERSIONS } from "../../../lib/tradingVersions";
+import styles from "../../../styles/TradingEngineV1.module.css";
 
 // Engine v1 as one page: the eight updates newest first (1.8 down to 1.1), each an h2
 // section with a stable id ("1-1" … "1-8", the targets of the old /v1/1.N
@@ -36,7 +36,7 @@ import { ERAS, VERSIONS } from "../../../lib/tradingVersions";
 // Eight animated figures on one page: each mounts when it nears the viewport
 // (components/LazyMount.js). The placeholder holds the figure's measured
 // height so nothing below jumps when it mounts and a deep link to a section
-// lands on it. The heights follow the figure's own breakpoints, not Chakra's:
+// lands on it. The heights follow the figure's own breakpoints, not the site's:
 // up to 720px the drawing keeps its designed size and swipes sideways, so only
 // the caption's wrap changes the height; above that the drawing scales with
 // the figure's width, min(100vw - 32px, 1088px), and stops growing at 1200px.
@@ -53,54 +53,30 @@ const FIGURE_H = {
 	1.7: [1362, 1272, 1154, 855, 920, 948],
 	1.8: [985, 966, 852, 655, 715, 741],
 };
-const FIGURE_QUERIES = [
-	null,
-	"(min-width: 400px)",
-	"(min-width: 500px)",
-	"(min-width: 721px)",
-	"(min-width: 960px)",
-	"(min-width: 1200px)",
-];
-const figureHeight = (v) =>
-	Object.fromEntries(
-		FIGURE_H[v].map((h, i) =>
-			FIGURE_QUERIES[i]
-				? [`@media ${FIGURE_QUERIES[i]}`, { "--figure-h": `${h}px` }]
-				: ["--figure-h", `${h}px`],
-		),
-	);
-const FIGURE_MY = { base: 10, md: 14 };
+// Each update's section carries its heights as --fh0 … --fh5; the stylesheet
+// swaps --figure-h at the same breakpoints.
+const figureHeight = (v) => Object.fromEntries(FIGURE_H[v].map((h, i) => [`--fh${i}`, `${h}px`]));
 
 function Update({ v, lead, diagram, caption, facts, children }) {
 	const version = VERSIONS.find((item) => item.v === v);
 	const id = v.replace(".", "-");
 	return (
-		<Box as="section" aria-labelledby={id} sx={figureHeight(v)}>
+		<section aria-labelledby={id} className={styles.update} style={figureHeight(v)}>
 			<H2 id={id}>
-				<Box as="span" color="text.muted">
-					{v}
-				</Box>{" "}
+				<span className={styles.number}>{v}</span>{" "}
 				{version.title}
 			</H2>
-			<Text
-				mt={3}
-				color="text.muted"
-				fontFamily="var(--font-mono)"
-				fontSize="12px"
-				letterSpacing=".08em"
-				textTransform="uppercase">
-				{version.dates}
-			</Text>
+			<p className={styles.dates}>{version.dates}</p>
 			<P>{lead}</P>
 			{/* The first figure is on screen at load; the rest wait until they come near. */}
-			<LazyMount minH="var(--figure-h)" my={FIGURE_MY} eager={v === "1.8"}>
+			<LazyMount minHeight="var(--figure-h)" className={styles.figure} eager={v === "1.8"}>
 				<DiagramFigure id={`te-${id}`} diagram={diagram} caption={caption} />
 			</LazyMount>
 			{children}
 			<Details title={`Facts for ${v}`}>
-				<FactList facts={facts} mt={3} />
+				<FactList facts={facts} className={styles.facts} />
 			</Details>
-		</Box>
+		</section>
 	);
 }
 

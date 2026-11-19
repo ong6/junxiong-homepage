@@ -1,0 +1,21 @@
+.code {
+	font-family: var(--font-mono);
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--site-text-muted);
+}
+
+.title {
+	margin-top: 1rem;
+	line-height: 1;
+	letter-spacing: -0.045em;
+}
+
+.text {
+	margin-top: 1rem;
+	font-size: 16px;
+	line-height: 1.65;
+	color: var(--site-text-muted);
+}

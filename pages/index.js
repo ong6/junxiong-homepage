@@ -1,78 +1,36 @@
-import { Box, Flex, Grid, Heading, Link, Text } from "@chakra-ui/react";
 import NextImage from "next/image";
 import NextLink from "next/link";
 import Layout from "../components/layouts/Articles";
 import SelectedWork from "../components/SelectedWork";
 import OutArrow from "../components/OutArrow";
 import { Eyebrow, LANDING_TITLE } from "../components/ArticleParts";
-
-const utilityLinkProps = {
-	display: "inline-flex",
-	alignItems: "center",
-	minH: "44px",
-	fontFamily: "var(--font-mono)",
-	fontSize: "12px",
-	fontWeight: "700",
-	letterSpacing: ".04em",
-	textDecoration: "underline",
-	textUnderlineOffset: "4px",
-};
+import styles from "../styles/Home.module.css";
 
 function Introduction() {
 
 	return (
-		<Box as="header" id="about" scrollMarginTop="96px" pt={{ base: 6, md: 20 }}>
+		<header id="about" className={styles.intro}>
 			<Eyebrow className="hero-rise">JUNXIONG.DEV / SINGAPORE</Eyebrow>
 
-			<Grid
-				gridTemplateColumns={{
-					base: "144px minmax(0, 1fr)",
-					md: "minmax(0, 1.35fr) minmax(260px, .65fr)",
-				}}
-				gridTemplateAreas={{
-					base: '"copy copy" "portrait links"',
-					md: '"copy portrait" "links portrait"',
-				}}
-				columnGap={{ base: 6, md: 14, lg: 20 }}
-				rowGap={6}
-				alignItems="center"
-				mt={4}>
-				<Box gridArea="copy" maxW="720px">
-					<Heading
-						as="h1"
-						className="hero-settle"
-						fontSize={LANDING_TITLE}
-						lineHeight=".98"
-						letterSpacing="-.06em">
-						Ong Jun Xiong
-					</Heading>
-					<Text className="hero-rise" style={{ "--i": 2 }} mt={6} fontSize={{ base: "19px", md: "23px" }} lineHeight="lede">
+			<div className={styles.hero}>
+				<div className={styles.copy}>
+					<h1 className={`ui-heading hero-settle ${LANDING_TITLE} ${styles.h1}`}>Ong Jun Xiong</h1>
+					<p className={`hero-rise ${styles.lede}`} style={{ "--i": 2 }}>
 						I&apos;m a software engineer at TikTok in Singapore, working on AI{" "}
-						<Box as="span" whiteSpace="nowrap">
-							infrastructure.
-						</Box>
-					</Text>
-					<Text className="hero-rise" style={{ "--i": 3 }} mt={4} maxW="640px" fontSize="16px" lineHeight="text" color="text.muted">
+						<span className={styles.nowrap}>infrastructure.</span>
+					</p>
+					<p className={`hero-rise ${styles.body}`} style={{ "--i": 3 }}>
 						Most of my work is Go backends and distributed systems. I like taking
 						something from zero to one, and then from one to a hundred. Outside work I ran{" "}
-						<Link as={NextLink} href="/compoze">
+						<NextLink href="/compoze" className="ui-link">
 							Compoze
-						</Link>
+						</NextLink>
 						, a small company I sold to a client in 2025. Below is what I build in my own time.
-					</Text>
-				</Box>
+					</p>
+				</div>
 
-				<Box
-					gridArea="portrait"
-					justifySelf={{ md: "end" }}
-					w="100%"
-					maxW={{ base: "144px", md: "310px" }}>
-					<Box
-						border="1px solid"
-						borderColor="border.subtle"
-						bg="surface.raised"
-						p={{ base: 2, md: 4 }}
-						className="portrait-frame">
+				<div className={styles.portrait}>
+					<div className={`portrait-frame ${styles.frame}`}>
 						<NextImage
 							src="/images/junxiong.webp"
 							alt="Ong Jun Xiong, AI infrastructure engineer in Singapore"
@@ -88,45 +46,34 @@ function Introduction() {
 								objectPosition: "center 28%",
 							}}
 						/>
-						<Flex
-							mt={{ base: 2, md: 4 }}
-							justify="space-between"
-							color="text.muted"
-							fontFamily="var(--font-mono)"
-							fontSize="12px">
-							<Text>JX / 2026</Text>
-							<Text display={{ base: "none", md: "block" }}>SINGAPORE</Text>
-						</Flex>
-					</Box>
-				</Box>
+						<div className={styles.caption}>
+							<p>JX / 2026</p>
+							<p className={styles.place}>SINGAPORE</p>
+						</div>
+					</div>
+				</div>
 
-				<Grid
-					gridArea="links"
-					className="hero-rise"
-					style={{ "--i": 4 }}
-					templateColumns={{ base: "minmax(0, 1fr)", md: "repeat(3, max-content)" }}
-					columnGap={{ base: 2, md: 6 }}
-					rowGap={1}>
-					<Link
+				<div className={`hero-rise ${styles.links}`} style={{ "--i": 4 }}>
+					<a
 						href="https://github.com/ong6"
 						target="_blank"
 						rel="noopener noreferrer"
-						{...utilityLinkProps}>
-						GitHub <OutArrow newTab ml="4px" />
-					</Link>
-					<Link
+						className={`ui-link ${styles.utility}`}>
+						GitHub <OutArrow newTab className={styles.arrow} />
+					</a>
+					<a
 						href="https://www.linkedin.com/in/junx6/"
 						target="_blank"
 						rel="noopener noreferrer"
-						{...utilityLinkProps}>
-						LinkedIn <OutArrow newTab ml="4px" />
-					</Link>
-					<Link as={NextLink} href="/resume" {...utilityLinkProps}>
-						Resume <OutArrow ml="4px" />
-					</Link>
-				</Grid>
-			</Grid>
-		</Box>
+						className={`ui-link ${styles.utility}`}>
+						LinkedIn <OutArrow newTab className={styles.arrow} />
+					</a>
+					<NextLink href="/resume" className={`ui-link ${styles.utility}`}>
+						Resume <OutArrow className={styles.arrow} />
+					</NextLink>
+				</div>
+			</div>
+		</header>
 	);
 }
 

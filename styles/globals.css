@@ -42,29 +42,77 @@ a {
 	}
 }
 
-/* The site's colours as plain variables on <html> only. Chakra re-declares
-   its own tokens on every [data-theme] element, so a UiPack part that carries
-   the server's light guess as its theme (a 3D scene's still, the docs shell)
-   was a light island on a dark page until hydration. These follow the page's
-   theme wherever they are read. Values mirror lib/theme.js; e2e/basics.spec.js
-   fails if the two drift. */
+/* The site's colours (STYLE.md, Role values), on <html> only, so they follow
+   the page's theme wherever they are read, even inside a UiPack part that
+   still carries the server's light guess as its own data-theme. */
 :root {
 	--site-page-bg: #F3EFE7;
 	--site-page-text: #29231F;
-	--site-text-muted: #655C55;
 	--site-surface-raised: #FBF8F2;
+	--site-surface-quiet: #E7DED2;
 	--site-border-subtle: rgba(41,35,31,.18);
+	--site-border-strong: rgba(35,78,162,.48);
+	--site-text-muted: #655C55;
 	--site-brand-solid: #234EA2;
+	--site-brand-ink: #FBF8F2;
+	--site-brand-on-solid: #FFFFFF;
+	--site-brand-hover: #203F7E;
+	--site-brand-active: #1D3566;
+	--site-accent-terracotta: #963D25;
+	--site-accent-soft: #F8DDD1;
+	--site-preview-canvas: #F6F2EA;
+	--site-preview-panel: #FFFDFC;
 	--site-preview-shadow: #D9CFC3;
+	--site-preview-dot: rgba(36,87,197,.17);
+	--site-scroll-shadow: rgba(41,35,31,.16);
+	--site-status-error: #963D25;
+	--site-project-groundplane: #101A16;
+	--site-project-compoze: #F0DCCF;
+	--site-project-property: #DDEAF5;
+	--site-project-tradingengine: #D8E8E4;
+	/* A border with no colour of its own, and placeholder text. */
+	--site-border-default: #E2E8F0;
+	--site-placeholder: #718096;
 }
 :root[data-theme="dark"] {
 	--site-page-bg: #151311;
 	--site-page-text: #F2ECE3;
-	--site-text-muted: #BDB3A8;
 	--site-surface-raised: #211D1A;
+	--site-surface-quiet: #2B2521;
 	--site-border-subtle: rgba(242,236,227,.16);
+	--site-border-strong: rgba(154,182,255,.56);
+	--site-text-muted: #BDB3A8;
 	--site-brand-solid: #9AB6FF;
+	--site-brand-ink: #151311;
+	--site-brand-on-solid: #151311;
+	--site-brand-hover: #BFCFFF;
+	--site-brand-active: #7194ED;
+	--site-accent-terracotta: #EEBBA7;
+	--site-accent-soft: #56271F;
+	--site-preview-canvas: #191716;
+	--site-preview-panel: #28231F;
 	--site-preview-shadow: #0D0C0B;
+	--site-preview-dot: rgba(142,174,255,.18);
+	--site-scroll-shadow: rgba(0,0,0,.55);
+	--site-status-error: #F1A58B;
+	--site-project-groundplane: #16291F;
+	--site-project-compoze: #271F1A;
+	--site-project-property: #182631;
+	--site-project-tradingengine: #14262A;
+	--site-border-default: rgba(255,255,255,0.16);
+	--site-placeholder: rgba(255,255,255,0.24);
+}
+/* The token names the site used under Chakra UI. Nothing styles with them;
+   e2e/basics.spec.js and e2e/polish.spec.js still read them to check the
+   tokens, so they stay until those specs move to the --site-* names. */
+:root {
+	--chakra-colors-page-bg: var(--site-page-bg);
+	--chakra-colors-page-text: var(--site-page-text);
+	--chakra-colors-text-muted: var(--site-text-muted);
+	--chakra-colors-surface-raised: var(--site-surface-raised);
+	--chakra-colors-border-subtle: var(--site-border-subtle);
+	--chakra-colors-brand-solid: var(--site-brand-solid);
+	--chakra-colors-preview-shadow: var(--site-preview-shadow);
 }
 
 /* Motion. Curves follow Emil Kowalski's animate skill (strong ease-out for
@@ -255,7 +303,7 @@ a {
 }
 /* UiPack v0.2.0 writes its roles with light-dark(). For this browserslist
    Next's CSS step lowers light-dark() to a --lightningcss-light/-dark pair that
-   only a color-scheme declaration in compiled CSS switches; Chakra sets
+   only a color-scheme declaration in compiled CSS switches; the theme sets
    color-scheme at runtime, which the polyfill never sees, so without these
    every light-dark() role (the docs palette, for one) resolves to nothing. */
 :root {

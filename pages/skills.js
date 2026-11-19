@@ -1,4 +1,3 @@
-import { Box, Container, Heading, Text } from "@chakra-ui/react";
 import AiToolFamily from "../components/AiToolFamily";
 import DiagramFigure from "../components/DiagramFigure";
 import * as SkillsArchitecture from "../components/diagrams/SkillsArchitecture";
@@ -8,6 +7,7 @@ import CaseStudyFooter from "../components/CaseStudyFooter";
 import FactList, { pickFacts } from "../components/FactList";
 import { BackLink, MetaLine, P, H2, Code, ARTICLE_TITLE } from "../components/ArticleParts";
 import { withNotes } from "../lib/notes";
+import styles from "../styles/CaseStudy.module.css";
 
 // Case study in the same shape as /groundplane: one ~680px column of prose,
 // the link-and-publish figure, a terminal figure, and a single mono fact table.
@@ -69,28 +69,21 @@ export default function Skills() {
 				license: "https://opensource.org/licenses/MIT",
 			}}
 			description="The Claude Code and Codex skills I run in every repo, kept in one public repo and linked into place on each machine. A skill edited in one repo reaches the rest.">
-			<Container maxW="680px" px={0} ml={0}>
-				<Box pt={{ base: 10, md: 16 }}>
+			<div className={`ui-container chakra-container ${styles.column}`}>
+				<div className={styles.top}>
 					<BackLink href="/ai-tooling">AI tooling</BackLink>
 
-					<Heading
-						as="h1"
-						mt={{ base: 8, md: 10 }}
-						fontSize={ARTICLE_TITLE}
-						lineHeight="1"
-						letterSpacing="-.045em">
-						Agent skills
-					</Heading>
+					<h1 className={`ui-heading ${ARTICLE_TITLE} ${styles.title}`}>Agent skills</h1>
 
 					<MetaLine>2026 · open source · claude code + codex</MetaLine>
 
-					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="lede" fontWeight="600">
+					<p className={styles.lede}>
 						A skill is a Markdown file that tells a coding agent when to do something and how. I had
 					the same eight copied into several repos, and every copy drifted. Now the ones I can share
 					live in one public repo, <Code>ong6/skills</Code>, and a small command links them into
 					every repo I work in and sends my edits back.
-				</Text>
-				</Box>
+				</p>
+				</div>
 
 				<DiagramFigure
 					id="sparch"
@@ -151,7 +144,7 @@ export default function Skills() {
 
 				<AiToolFamily current="/skills" />
 				<CaseStudyFooter links={links} next={{ name: "Skillsmith", href: "/skillsmith", detail: "Drafts a skill from the repo, then a blind test decides whether it stays" }} />
-			</Container>
+			</div>
 		</Layout>
 	);
 }

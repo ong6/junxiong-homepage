@@ -1,0 +1,92 @@
+/* One framed column, a row per layer, so the page reads as a stack. */
+.stack {
+	margin-top: 2.5rem;
+	background: var(--site-surface-raised);
+	border: 1px solid;
+	border-color: var(--site-border-subtle);
+	border-radius: 6px;
+	overflow: clip;
+	overflow-clip-margin: 2px;
+}
+@media screen and (min-width: 768px) {
+	.stack {
+		margin-top: 3rem;
+	}
+}
+
+.layer {
+	border-color: var(--site-border-subtle);
+	padding: 1.5rem;
+	transition: border-color 160ms ease;
+}
+@media screen and (min-width: 768px) {
+	.layer {
+		padding: 2rem;
+	}
+}
+.layerRuled {
+	border-top: 1px solid;
+	border-color: var(--site-border-subtle);
+}
+
+.layerLabel {
+	color: var(--site-brand-solid);
+	font-family: var(--font-mono);
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+.layerWhen {
+	color: var(--site-text-muted);
+	font-weight: 500;
+}
+
+.layerName {
+	margin-top: 0.5rem;
+	font-size: 24px;
+	line-height: 1.2;
+}
+@media screen and (min-width: 768px) {
+	.layerName {
+		font-size: 28px;
+	}
+}
+
+.overlay {
+	color: inherit;
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+}
+.overlayArrow {
+	margin-left: 0.5rem;
+	color: var(--site-brand-solid);
+}
+
+.layerDetail {
+	margin-top: 0.5rem;
+	font-size: 17px;
+	line-height: 1.8;
+}
+@media screen and (min-width: 768px) {
+	.layerDetail {
+		font-size: 18px;
+	}
+}
+
+.layerMeta {
+	margin-top: 0.75rem;
+	color: var(--site-text-muted);
+	font-family: var(--font-mono);
+	font-size: 12px;
+}
+
+.lookingBack {
+	margin-top: 2.5rem;
+}
+@media screen and (min-width: 768px) {
+	.lookingBack {
+		margin-top: 3rem;
+	}
+}

@@ -1,4 +1,4 @@
-import { useColorMode } from "@chakra-ui/react";
+import { useTheme } from "../lib/themeChoice";
 import { SlideStarter } from "uipack/presentations";
 
 // The one slide starter on /uipack: uipack's opening layout with its talk
@@ -24,6 +24,6 @@ const opening = {
 };
 
 export default function UipackSlide() {
-	const { colorMode } = useColorMode();
+	const colorMode = useTheme();
 	return <SlideStarter slide={opening} theme={colorMode} />;
 }

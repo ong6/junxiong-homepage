@@ -1,0 +1,54 @@
+.button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	min-width: 44px;
+	min-height: 44px;
+	padding-inline-start: 0;
+	padding-inline-end: 0;
+	border: 1px solid;
+	border-color: var(--site-border-subtle);
+	border-radius: 4px;
+	color: var(--site-text-muted);
+	background: transparent;
+	cursor: pointer;
+	transition: background-color var(--dur-hover) ease, color var(--dur-hover) ease;
+}
+@media screen and (min-width: 960px) {
+	.button {
+		padding-inline-start: 0.75rem;
+		padding-inline-end: 0.75rem;
+	}
+}
+.button:hover,
+.button[data-hover] {
+	background: var(--site-surface-quiet);
+	color: var(--site-page-text);
+}
+
+.icon {
+	width: 14px;
+	height: 14px;
+}
+
+.label {
+	display: none;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1;
+}
+.shortcut {
+	display: none;
+	width: 6ch;
+	font-family: var(--font-mono);
+	font-size: 12px;
+	line-height: 1;
+	text-align: right;
+}
+@media screen and (min-width: 960px) {
+	.label,
+	.shortcut {
+		display: inline;
+	}
+}

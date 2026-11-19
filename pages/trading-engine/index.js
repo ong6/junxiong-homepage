@@ -1,4 +1,3 @@
-import { Box, Container, Heading, Text } from "@chakra-ui/react";
 import CaseStudyFooter from "../../components/CaseStudyFooter";
 import DiagramFigure from "../../components/DiagramFigure";
 import * as Engine2 from "../../components/diagrams/trading/Engine2";
@@ -8,6 +7,7 @@ import { ERAS } from "../../lib/tradingVersions";
 import { BackLink, MetaLine, P, H2, ARTICLE_TITLE } from "../../components/ArticleParts";
 import { withNotes } from "../../lib/notes";
 import { PAGE_META } from "../../lib/pageMeta";
+import styles from "../../styles/CaseStudy.module.css";
 
 // Overview of the trading engine: what it is, the engine running now, and the
 // two engine eras. Each era has its own page (/trading-engine/v1, /v2); the v1
@@ -40,28 +40,21 @@ export default function TradingEngine() {
 				license: "https://opensource.org/licenses/MIT",
 			}}
 			description={PAGE_META["/trading-engine"].description}>
-			<Container maxW="680px" px={0} ml={0}>
-				<Box pt={{ base: 10, md: 16 }}>
+			<div className={`ui-container chakra-container ${styles.column}`}>
+				<div className={styles.top}>
 					<BackLink href="/#work">Selected work</BackLink>
 
-					<Heading
-						as="h1"
-						mt={{ base: 8, md: 10 }}
-						fontSize={ARTICLE_TITLE}
-						lineHeight="1"
-						letterSpacing="-.045em">
-						Trading engine
-					</Heading>
+					<h1 className={`ui-heading ${ARTICLE_TITLE} ${styles.title}`}>Trading engine</h1>
 
 					<MetaLine>2026 · open source · Python</MetaLine>
 
-					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="lede" fontWeight="600">
+					<p className={styles.lede}>
 						A paper-trading engine I&apos;ve been building since July 2026, to find out whether a
 						strategy, or a model reading the market, makes money after costs. Every strategy goes
 						through the same backtest core and the same evidence checks before it gets a paper
 						portfolio. Nothing has beaten its frozen control yet.
-					</Text>
-				</Box>
+					</p>
+				</div>
 
 				<DiagramFigure
 					id="te-now"
@@ -108,7 +101,7 @@ export default function TradingEngine() {
 				</P>
 
 				<CaseStudyFooter links={links} next={{ name: "Agent skills", href: "/skills", detail: "One home for coding-agent skills, linked into every repo" }} />
-			</Container>
+			</div>
 		</Layout>
 	);
 }

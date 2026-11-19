@@ -1,4 +1,3 @@
-import { Box, Container, Heading, Text } from "@chakra-ui/react";
 import AiToolFamily from "../components/AiToolFamily";
 import CaseStudyFooter from "../components/CaseStudyFooter";
 import DiagramFigure from "../components/DiagramFigure";
@@ -7,6 +6,7 @@ import Layout from "../components/layouts/Articles";
 import FactList, { pickFacts } from "../components/FactList";
 import { BackLink, MetaLine, P, H2, Code, ARTICLE_TITLE } from "../components/ArticleParts";
 import { withNotes } from "../lib/notes";
+import styles from "../styles/CaseStudy.module.css";
 
 
 
@@ -42,20 +42,18 @@ export default function Skillsmith() {
 				license: "https://opensource.org/licenses/MIT",
 			}}
 			description="Skillsmith makes an agent skill from your repo, tests it against a no-skill baseline, and keeps it only when it wins on fresh heldout tasks.">
-			<Container maxW="680px" px={0} ml={0}>
-				<Box pt={{ base: 10, md: 16 }}>
+			<div className={`ui-container chakra-container ${styles.column}`}>
+				<div className={styles.top}>
 					<BackLink href="/ai-tooling">AI tooling</BackLink>
 
-					<Heading as="h1" mt={{ base: 8, md: 10 }} fontSize={ARTICLE_TITLE} lineHeight="1" letterSpacing="-.045em">
-						Skillsmith
-					</Heading>
+					<h1 className={`ui-heading ${ARTICLE_TITLE} ${styles.title}`}>Skillsmith</h1>
 
 					<MetaLine>2026 · open source · claude code + codex</MetaLine>
 
-					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="lede" fontWeight="600">
+					<p className={styles.lede}>
 						I wanted to know whether my agent instructions actually helped. Skillsmith drafts a skill from the repo I&apos;m working in, then runs the same tasks with and without it and has judges compare the results without knowing which is which. The skill is kept only if it wins on cases it wasn&apos;t tuned on.
-					</Text>
-				</Box>
+					</p>
+				</div>
 
 				<DiagramFigure
 					id="skillsmith-lifecycle"
@@ -83,7 +81,7 @@ export default function Skillsmith() {
 
 				<AiToolFamily current="/skillsmith" />
 				<CaseStudyFooter links={links} next={{ name: "Groundplane", href: "/groundplane", detail: "Checks an agent's declared fields against recorded tool results" }} />
-			</Container>
+			</div>
 		</Layout>
 	);
 }

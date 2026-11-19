@@ -1,0 +1,83 @@
+.footer {
+	margin-top: 3.5rem;
+	padding-top: 1.5rem;
+	border-top: 1px solid;
+	border-color: var(--site-border-subtle);
+}
+@media screen and (min-width: 768px) {
+	.footer {
+		margin-top: 5rem;
+	}
+}
+
+.row {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 1.5rem;
+}
+@media screen and (min-width: 768px) {
+	.row {
+		flex-direction: row;
+		align-items: center;
+	}
+}
+
+.name {
+	font-weight: 700;
+	font-size: 14px;
+}
+
+.role {
+	margin-top: 0.25rem;
+	font-family: var(--font-mono);
+	font-size: 12px;
+	letter-spacing: 0.08em;
+	color: var(--site-text-muted);
+}
+
+.links {
+	display: flex;
+	flex-wrap: wrap;
+	column-gap: 1.5rem;
+	row-gap: 0.5rem;
+}
+
+/* 44px touch targets on phones (36px box + 8px row gap: wrapped rows touch,
+   never overlap); 32px with a fine pointer, where the floor is 24px. */
+.link {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	min-width: 44px;
+	justify-content: center;
+	margin-top: -0.25rem;
+	margin-bottom: -0.25rem;
+	font-size: 12px;
+	font-weight: 650;
+	color: var(--site-text-muted);
+	text-decoration: none;
+}
+@media screen and (min-width: 768px) {
+	.link {
+		min-height: 32px;
+		min-width: 0;
+	}
+}
+.link:hover,
+.link[data-hover] {
+	color: var(--site-page-text);
+	text-decoration: underline;
+}
+
+.arrow {
+	margin-left: 3px;
+	font-size: 12px;
+}
+
+.copyright {
+	margin-top: 1.5rem;
+	padding-bottom: 0.5rem;
+	font-size: 12px;
+	color: var(--site-text-muted);
+}
