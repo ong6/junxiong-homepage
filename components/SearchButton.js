@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import { SearchIcon } from "./icons";
 import styles from "./SearchButton.module.css";
 
@@ -19,6 +19,10 @@ const loadMenu = () => {
 const preload = () => {
 	loadMenu().catch(() => {});
 };
+
+// The shortcut listener goes on in the commit that hydrates the header, not
+// a frame later, so a ⌘K pressed as the page finishes loading is caught.
+const useCommitEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 // The hint says ⌘K on Apple devices and Ctrl K elsewhere; the server renders ⌘K.
 const noSubscribe = () => () => {};
@@ -45,7 +49,7 @@ export default function SearchButton() {
 		openRef.current = open;
 	}, [open]);
 
-	useEffect(() => {
+	useCommitEffect(() => {
 		const onKey = (event) => {
 			if (event.key?.toLowerCase() !== "k" || !(event.metaKey || event.ctrlKey) || event.altKey || event.shiftKey) return;
 			event.preventDefault();

@@ -1,6 +1,6 @@
 import Logo from "./Logo";
 import NextLink from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { Dialog } from "@base-ui/react/dialog";
 import { CloseIcon, HamburgerIcon } from "./icons";
 import ThemeToggleButton from "./ThemeToggleButton";
@@ -69,9 +69,11 @@ const Navbar = ({ path = "/", ...props }) => {
 
 	// The layout persists between pages, so browser Back/Forward must not leave
 	// a menu from the previous route hanging open.
-	useEffect(() => {
-		onClose();
-	}, [path, onClose]);
+	const [menuPath, setMenuPath] = useState(path);
+	if (menuPath !== path) {
+		setMenuPath(path);
+		setOpen(false);
+	}
 
 	return (
 		<nav ref={navRef} aria-label="Site" className={styles.nav} {...props}>
@@ -114,7 +116,10 @@ const Navbar = ({ path = "/", ...props }) => {
 									ref={toggleRef}
 									className={`ui-button ${styles.menuToggle}`}
 									aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
-									aria-controls="navbar-menu">
+									aria-controls="navbar-menu"
+									// A disclosure for the site's links, as it always was: the
+									// header's one dialog trigger stays the search button.
+									aria-haspopup={undefined}>
 									{isOpen ? <CloseIcon className={styles.closeIcon} aria-hidden="true" /> : <HamburgerIcon aria-hidden="true" />}
 								</Dialog.Trigger>
 							</div>
