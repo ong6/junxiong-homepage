@@ -153,6 +153,21 @@ test("Engine v1 is one page: eight dated sections, newest first, each with its d
 	expect(await page.locator("figcaption[id^='te-1-']").evaluateAll((els) => els.map((el) => el.textContent.match(/^fig\. (\d) —/)?.[1]))).toEqual(order);
 });
 
+// Plex has no circled digits (① …), so DiagramFigure sets each as a plain bold
+// mono number; a raw glyph would fall back to a system font.
+test("Engine v1 captions set step numbers in Plex Mono, never as circled-digit glyphs", async ({ page }) => {
+	await page.goto("/trading-engine/v1");
+	// Figures mount as they come near (components/LazyMount.js).
+	for (const n of [7, 6, 5, 4, 3, 2, 1]) await page.locator(`[id="1-${n}"]`).scrollIntoViewIfNeeded();
+	await expect(page.locator("figure.uipack")).toHaveCount(8);
+	const caption = page.locator("#te-1-7-caption");
+	await expect(caption.locator("[data-step-mark]")).toHaveText(["1", "2", "3", "4", "5", "6"]);
+	expect(await page.locator("figcaption").evaluateAll((els) => els.filter((el) => /[①-⑳]/.test(el.textContent)).length)).toBe(0);
+	const mark = await caption.locator("[data-step-mark]").first().evaluate((el) => ({ font: getComputedStyle(el).fontFamily, size: parseFloat(getComputedStyle(el).fontSize) }));
+	expect(mark.font).toMatch(/Plex Mono/i);
+	expect(mark.size).toBeGreaterThanOrEqual(12);
+});
+
 test("old version routes redirect to their Engine v1 section", async ({ page }) => {
 	for (const [from, to] of [
 		["/trading-engine/v1/1.1", "1-1"],

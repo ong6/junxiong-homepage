@@ -330,7 +330,7 @@ function Overlay({ Wide, id, viewBox, alt, caption, onClose }) {
 						lineHeight="text"
 						color="text.muted"
 						noOfLines={{ base: 2, md: 4 }}>
-						{caption}
+						{captionMarks(caption)}
 					</Text>
 				</Box>
 			</Box>
@@ -347,6 +347,22 @@ function Overlay({ Wide, id, viewBox, alt, caption, onClose }) {
 // full 1088px (a 720-unit drawing would otherwise render at 1.4x). Never
 // narrower than the prose column; 66px covers the canvas padding and border.
 const natural = (viewBox) => Math.min(1088, Math.max(680, viewBoxWidth(viewBox) + 66));
+
+// Captions name a figure's numbered step badges as ① ② ③. IBM Plex has no
+// circled digits, so those glyphs fell back to a system font. Each one is set
+// instead in the site's numeral treatment, a plain mono number with no ring
+// (STYLE.md, --ui-num-*), in bold ink so it reads as the badge it points at.
+// The caption prop stays a string (shortCaption and the e2e specs read it).
+const CIRCLED = /([\u2460-\u2473])/;
+const StepMark = ({ n }) => (
+	<Box as="span" data-step-mark fontWeight="700" color="page.text">
+		{n}
+	</Box>
+);
+const captionMarks = (c) =>
+	typeof c === "string" && CIRCLED.test(c)
+		? c.split(CIRCLED).map((part, i) => (i % 2 ? <StepMark key={i} n={part.codePointAt(0) - 0x2460 + 1} /> : part))
+		: c;
 
 const shortCaption = (c) => {
 	const m = /^fig\.\s*\d+/i.exec(c || "");
@@ -420,7 +436,7 @@ export default function DiagramFigure({ id, diagram, caption, headingLevel }) {
 					fontSize="12px"
 					lineHeight="text"
 					color="text.muted">
-					{caption}
+					{captionMarks(caption)}
 				</Text>
 				<Box
 					as="button"
