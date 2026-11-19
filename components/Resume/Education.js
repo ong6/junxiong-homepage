@@ -1,36 +1,24 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
 import TermHeading from "../TermHeading";
+import styles from "./Resume.module.css";
 
 export default function Education() {
-	const borderColor = "border.subtle";
-
 	return (
-		<Box>
+		<div>
 			<TermHeading kicker="School">Education</TermHeading>
-			<Flex
-				direction={{ base: "column", smmd: "row" }}
-				justify="space-between"
-				gap={2}
-				pt={6}
-				borderTopWidth="1px"
-				borderColor={borderColor}>
-				<Box>
-					<Text as="h3" fontSize="17px" fontWeight="800">
+			<div className={styles.school}>
+				<div>
+					<h3 className={styles.schoolName}>
 						National University of Singapore
-					</Text>
-					<Text fontSize="15px" lineHeight="text" opacity={0.82} mt={1}>
+					</h3>
+					<p className={styles.schoolDetail}>
 						Bachelor of Computing (Honours), Computer Science. Specialised in
 						AI and software engineering; NUS Overseas Colleges in Munich.
-					</Text>
-				</Box>
-				<Text
-					fontFamily="var(--font-mono)"
-					fontSize="12px"
-					whiteSpace="nowrap"
-					opacity={0.68}>
+					</p>
+				</div>
+				<p className={styles.schoolDates}>
 					2020 – 2023
-				</Text>
-			</Flex>
-		</Box>
+				</p>
+			</div>
+		</div>
 	);
 }

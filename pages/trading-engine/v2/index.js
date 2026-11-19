@@ -4,6 +4,7 @@ import FactList, { pickFacts } from "../../../components/FactList";
 import TradingEraPage from "../../../components/TradingEraPage";
 import { H2, P } from "../../../components/ArticleParts";
 import { ERAS } from "../../../lib/tradingVersions";
+import styles from "../../../styles/TradingEngineV2.module.css";
 
 // Engine v2, live on paper since 2026-10-18. Facts from the engine repo and
 // its host (git log, BUILDLOG, /meta, pytest --collect-only on main 454cfc6a),
@@ -155,7 +156,7 @@ export default function TradingEngineV2() {
 				passed with the path corrected and the release went out at 07:02 UTC.
 			</P>
 
-			<FactList facts={facts} mt={{ base: 12, md: 14 }} />
+			<FactList facts={facts} className={styles.facts} />
 		</TradingEraPage>
 	);
 }

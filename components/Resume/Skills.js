@@ -1,5 +1,5 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
 import TermHeading from "../TermHeading";
+import styles from "./Resume.module.css";
 
 const skills = [
 	{
@@ -25,29 +25,25 @@ const skills = [
 ];
 
 export default function Skills() {
-	const borderColor = "border.subtle";
-
 	// Opens on the same rule and 24px inset as Experience and Education
 	// (16px here plus each row's 8px).
 	return (
-		<Box>
+		<div>
 			<TermHeading kicker="Tools">Skills</TermHeading>
-			<Box pt={4} borderTopWidth="1px" borderColor={borderColor}>
+			<div className={styles.skills}>
 				{skills.map((skill) => (
-					<Flex
+					<div
 						key={skill.label}
-						direction={{ base: "column", smmd: "row" }}
-						gap={{ base: 1, smmd: 4 }}
-						py={2}>
-						<Text w={{ smmd: "128px" }} flexShrink={0} fontSize="15px" fontWeight="800">
+						className={styles.skill}>
+						<p className={styles.skillLabel}>
 							{skill.label}
-						</Text>
-						<Text fontSize="15px" lineHeight="text" opacity={0.92}>
+						</p>
+						<p className={styles.skillValue}>
 							{skill.value}
-						</Text>
-					</Flex>
+						</p>
+					</div>
 				))}
-			</Box>
-		</Box>
+			</div>
+		</div>
 	);
 }

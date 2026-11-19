@@ -1,0 +1,8 @@
+.facts {
+	margin-top: 3rem;
+}
+@media screen and (min-width: 768px) {
+	.facts {
+		margin-top: 3.5rem;
+	}
+}

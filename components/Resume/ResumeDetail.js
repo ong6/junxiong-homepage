@@ -1,69 +1,39 @@
-import {
-	Box,
-	Flex,
-	ListItem,
-	Text,
-	UnorderedList,
-} from "@chakra-ui/react";
+import styles from "./Resume.module.css";
 
 export default function ResumeDetail({ detail, compact = false }) {
 	return (
-		<Box
-			as="section"
-			py={compact ? 4 : 6}
-			borderTopWidth="1px"
-			borderColor="border.subtle">
-			<Flex
-				direction={{ base: "column", smmd: "row" }}
-				justify="space-between"
-				align={{ base: "flex-start", smmd: "baseline" }}
-				gap={1}>
-				<Text as="h3" fontSize={compact ? "17px" : "20px"} fontWeight="800">
+		<section className={compact ? `${styles.detail} ${styles.detailCompact}` : styles.detail}>
+			<div className={styles.line}>
+				<h3 className={compact ? `${styles.employer} ${styles.employerCompact}` : styles.employer}>
 					{detail.title}
-				</Text>
-				<Text
-					fontFamily="var(--font-mono)"
-					fontSize="12px"
-					fontWeight="700"
-					letterSpacing=".08em"
-					textTransform="uppercase"
-					color="text.muted">
+				</h3>
+				<p className={styles.location}>
 					{detail.location}
-				</Text>
-			</Flex>
+				</p>
+			</div>
 
 			{detail.roles.map((role) => (
-				<Box key={`${detail.title}-${role.subtitle}`} mt={4}>
-					<Flex
-						direction={{ base: "column", smmd: "row" }}
-						justify="space-between"
-						align={{ base: "flex-start", smmd: "baseline" }}
-						gap={1}>
-						<Text as="h4" fontSize="15px" fontWeight="700">
+				<div key={`${detail.title}-${role.subtitle}`} className={styles.roleBlock}>
+					<div className={styles.line}>
+						<h4 className={styles.subtitle}>
 							{role.subtitle}
-						</Text>
-						<Text
-							fontFamily="var(--font-mono)"
-							fontSize="12px"
-							whiteSpace="nowrap"
-							color="text.muted">
+						</h4>
+						<p className={styles.date}>
 							{role.date}
-						</Text>
-					</Flex>
+						</p>
+					</div>
 
-					<UnorderedList mt={2} ml={6} spacing={2} maxW="760px">
+					<ul role="list" className={styles.list}>
 						{role.description.map((description) => (
-							<ListItem
+							<li
 								key={description}
-								fontSize="15px"
-								lineHeight="text"
-								opacity={0.92}>
+								className={styles.item}>
 								{description}
-							</ListItem>
+							</li>
 						))}
-					</UnorderedList>
-				</Box>
+					</ul>
+				</div>
 			))}
-		</Box>
+		</section>
 	);
 }
