@@ -1,23 +1,15 @@
 import Logo from "./Logo";
 import NextLink from "next/link";
-import { useEffect, useRef } from "react";
-import {
-	Box,
-	Container,
-	Flex,
-	IconButton,
-	Link,
-	VisuallyHidden,
-	useDisclosure,
-	Stack,
-} from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Dialog } from "@base-ui/react/dialog";
+import { CloseIcon, HamburgerIcon } from "./icons";
 import ThemeToggleButton from "./ThemeToggleButton";
 import OutArrow from "./OutArrow";
 import SearchButton from "./SearchButton";
+import styles from "./Navbar.module.css";
 
-// Keep the bar and the main offset in sync so the fixed header never covers content.
-const NAV_HEIGHT = { base: "64px", md: "72px" };
+// The bar is 64px tall, 72px from 768px; layouts/Main.module.css offsets
+// <main> by the same so the fixed header never covers content.
 
 const navigationLinks = [
 	{
@@ -43,86 +35,37 @@ const isActive = (link, path) => {
 };
 
 function LinkItem({ href, active, external, children }) {
+	const Anchor = external ? "a" : NextLink;
 	return (
-		<Link
-			as={external ? undefined : NextLink}
+		<Anchor
 			href={href}
 			target={external ? "_blank" : undefined}
 			rel={external ? "noopener noreferrer" : undefined}
 			aria-current={active ? "page" : undefined}
-			position="relative"
-			display="inline-flex"
-			alignItems="center"
-			minH="44px"
-			px={2}
-			fontSize="13px"
-			fontWeight="650"
-			lineHeight="1"
-			color={active ? "page.text" : "text.muted"}
-			textDecoration="none"
-			_after={{
-				content: '""',
-				position: "absolute",
-				left: 2,
-				right: 2,
-				bottom: "10px",
-				h: "1px",
-				bg: "cobalt.500",
-				transform: active ? "scaleX(1)" : "scaleX(0)",
-				transformOrigin: "left",
-				transition: "transform 160ms ease",
-			}}
-			_hover={{ color: "page.text", textDecoration: "none", _after: { transform: "scaleX(1)" } }}>
+			className={`ui-link ${styles.link}`}>
 			{children}
-			{external && (
-				<>
-					<OutArrow ml="3px" fontSize="12px" />
-					<VisuallyHidden> (opens in a new tab)</VisuallyHidden>
-				</>
-			)}
-		</Link>
+			{external && <OutArrow newTab className={styles.linkArrow} />}
+		</Anchor>
 	);
 }
 
 const Navbar = ({ path = "/", ...props }) => {
 	const onHome = path === "/" || path.startsWith("/#");
-	const menu = useDisclosure();
+	const [isOpen, setOpen] = useState(false);
+	const navRef = useRef(null);
 	const menuRef = useRef(null);
 	const toggleRef = useRef(null);
+	// Focus goes back to the toggle only when Escape closed the menu.
 	const restoreFocusRef = useRef(false);
 
-	// Mobile menu: Esc closes, a click outside closes, focus moves into the
-	// menu on open and back to the toggle on close.
-	const { isOpen, onClose } = menu;
-	useEffect(() => {
-		if (!isOpen) return undefined;
-		const first = menuRef.current && menuRef.current.querySelector("a");
-		if (first) first.focus();
-		const onKey = (e) => {
-			if (e.key === "Escape") {
-				restoreFocusRef.current = true;
-				onClose();
-			}
-		};
-		const onPointer = (e) => {
-			const inMenu = menuRef.current && menuRef.current.contains(e.target);
-			const onToggle = toggleRef.current && toggleRef.current.contains(e.target);
-			if (!inMenu && !onToggle) onClose();
-		};
-		document.addEventListener("keydown", onKey);
-		document.addEventListener("pointerdown", onPointer);
-		return () => {
-			document.removeEventListener("keydown", onKey);
-			document.removeEventListener("pointerdown", onPointer);
-		};
-	}, [isOpen, onClose]);
+	const onClose = useCallback(() => setOpen(false), []);
 
-	useEffect(() => {
-		if (!isOpen && restoreFocusRef.current) {
-			restoreFocusRef.current = false;
-			toggleRef.current?.focus();
-		}
-	}, [isOpen]);
+	// The mobile menu is a non-modal Base UI dialog drawn as a dropdown under
+	// the bar: Escape, a click outside and focus leaving it all close it.
+	const onOpenChange = useCallback((open, details) => {
+		restoreFocusRef.current = !open && details?.reason === "escape-key";
+		setOpen(open);
+	}, []);
 
 	// The layout persists between pages, so browser Back/Forward must not leave
 	// a menu from the previous route hanging open.
@@ -131,178 +74,101 @@ const Navbar = ({ path = "/", ...props }) => {
 	}, [path, onClose]);
 
 	return (
-		<Box
-			position="fixed"
-			as="nav"
-			aria-label="Site"
-			top={0}
-			left={0}
-			right={0}
-			w="100%"
-			// Keyed off data-theme so the SSR paint already matches a stored dark mode.
-			bg="rgba(243,239,231,.9)"
-			sx={{ "html[data-theme=dark] &": { bg: "rgba(21,19,17,.9)" } }}
-			h={NAV_HEIGHT}
-			borderBottom="1px solid"
-			borderColor="border.subtle"
-			css={{ backdropFilter: "blur(14px)" }}
-			zIndex={20}
-			{...props}>
-			<Container maxW="1120px" px={4} h="100%">
-				<Flex h="100%" align="center" justify="space-between" gap={{ base: 2, sm: 4 }}>
-					<Box
-						flexShrink={0}
-						display="flex"
-						alignItems="center"
-						sx={{ "> a": { display: "inline-flex", alignItems: "center", minH: "44px" } }}>
-						<Logo />
-					</Box>
+		<nav ref={navRef} aria-label="Site" className={styles.nav} {...props}>
+			<Dialog.Root open={isOpen} onOpenChange={onOpenChange} modal={false}>
+				<div className={`ui-container ${styles.bar}`}>
+					<div className={styles.row}>
+						<div className={styles.brand}>
+							<Logo />
+						</div>
 
-					<Flex align="center" gap={{ base: 1, md: 3 }} flexShrink={0}>
-						<Stack
-							as="ul"
-							listStyleType="none"
-							m={0}
-							p={0}
-							direction="row"
-							display={{ base: "none", md: "flex" }}
-							alignItems="center"
-							spacing={{ md: 1, lg: 4 }}
-							mr={{ md: 1, lg: 2 }}>
-							{navigationLinks.map((link) => {
-								const href = onHome && link.homeHref ? link.homeHref : link.href;
-								return (
-									<Box as="li" key={link.name}>
-										<LinkItem href={href} active={isActive(link, path)} external={link.external}>
-											{link.name}
-										</LinkItem>
-									</Box>
-								);
-							})}
-						</Stack>
+						<div className={styles.controls}>
+							<ul className={styles.links}>
+								{navigationLinks.map((link) => {
+									const href = onHome && link.homeHref ? link.homeHref : link.href;
+									return (
+										<li key={link.name}>
+											<LinkItem href={href} active={isActive(link, path)} external={link.external}>
+												{link.name}
+											</LinkItem>
+										</li>
+									);
+								})}
+							</ul>
 
-						<SearchButton />
+							<SearchButton />
 
-						<Link
-							as={NextLink}
-							href="/contact"
-							aria-current={pathname(path) === "/contact" ? "page" : undefined}
-							display="inline-flex"
-							alignItems="center"
-							justifyContent="center"
-							minH="44px"
-							px={{ base: 3, md: 4 }}
-							border="1px solid"
-							borderColor="border.subtle"
-							borderRadius="4px"
-							fontSize={{ base: "12px", md: "13px" }}
-							fontWeight="700"
-							color="page.text"
-							textDecoration="none"
-							_hover={{ bg: "surface.quiet", textDecoration: "none" }}>
-							Contact
-						</Link>
+							<NextLink
+								href="/contact"
+								aria-current={pathname(path) === "/contact" ? "page" : undefined}
+								className={`ui-link ${styles.contact}`}>
+								Contact
+							</NextLink>
 
-						<Box display={{ base: "none", md: "block" }}>
-							<ThemeToggleButton />
-						</Box>
+							<div className={styles.wideOnly}>
+								<ThemeToggleButton />
+							</div>
 
-						<Box display={{ base: "block", md: "none" }}>
-							<IconButton
-								ref={toggleRef}
-								icon={menu.isOpen ? <CloseIcon boxSize="12px" /> : <HamburgerIcon />}
-								variant="outline"
-								// Tokens, not the variant's mode() colours: the icon is the
-								// theme's ink on the first paint.
-								color="page.text"
-								_hover={{ bg: "surface.quiet" }}
-								_active={{ bg: "surface.quiet" }}
-								borderColor="border.subtle"
-								minW="44px"
-								h="44px"
-								aria-label={menu.isOpen ? "Close navigation menu" : "Open navigation menu"}
-								aria-expanded={menu.isOpen}
-								aria-controls="navbar-menu"
-								onClick={menu.onToggle}
-							/>
-						</Box>
-					</Flex>
-				</Flex>
-			</Container>
+							<div className={styles.narrowOnly}>
+								<Dialog.Trigger
+									ref={toggleRef}
+									className={`ui-button ${styles.menuToggle}`}
+									aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+									aria-controls="navbar-menu">
+									{isOpen ? <CloseIcon className={styles.closeIcon} aria-hidden="true" /> : <HamburgerIcon aria-hidden="true" />}
+								</Dialog.Trigger>
+							</div>
+						</div>
+					</div>
+				</div>
 
-			{menu.isOpen && (
-				<Container maxW="1120px" px={4} position="relative">
-					<Stack
+				<Dialog.Portal container={navRef} className={`ui-container ${styles.menuFrame}`}>
+					<Dialog.Popup
 						ref={menuRef}
 						id="navbar-menu"
-						as="ul"
-						listStyleType="none"
-						position="absolute"
-						right={4}
-						top={2}
-						minW="200px"
-						m={0}
-						spacing={0}
-						py={2}
-						bg="surface.raised"
-						border="1px solid"
-						borderColor="border.subtle"
-						borderRadius="md"
-						boxShadow="0 18px 48px rgba(0,0,0,.18)"
+						className={styles.menu}
+						initialFocus={() => menuRef.current?.querySelector("a") ?? true}
+						finalFocus={() => (restoreFocusRef.current ? toggleRef.current : false)}
 						onBlur={(event) => {
 							const next = event.relatedTarget;
-							if (!menuRef.current?.contains(next) && !toggleRef.current?.contains(next)) {
+							if (next && !menuRef.current?.contains(next) && !toggleRef.current?.contains(next)) {
 								onClose();
 							}
 						}}>
-						{[...navigationLinks, ...mobileOnlyLinks].map((link) => {
-							const href = onHome && link.homeHref ? link.homeHref : link.href;
-							const active = isActive(link, path);
-							return (
-								<Box as="li" key={link.name}>
-									<Link
-										as={link.external ? undefined : NextLink}
-										href={href}
-										target={link.external ? "_blank" : undefined}
-										rel={link.external ? "noopener noreferrer" : undefined}
-										aria-current={active ? "page" : undefined}
-										display="flex"
-										alignItems="center"
-										minH="44px"
-										px={4}
-										py={2}
-										fontSize="15px"
-										fontWeight={active ? "700" : "500"}
-										color={active ? "page.text" : "text.muted"}
-										borderLeft="2px solid"
-										borderColor={active ? "cobalt.500" : "transparent"}
-										textDecoration="none"
-										_hover={{ bg: "surface.quiet", color: "page.text", textDecoration: "none" }}
-										onClick={menu.onClose}>
-										{link.name}
-										{link.external && (
-											<>
-												<OutArrow ml="4px" fontSize="12px" />
-												<VisuallyHidden> (opens in a new tab)</VisuallyHidden>
-											</>
-										)}
-									</Link>
-								</Box>
-							);
-						})}
-						<Box as="li">
-							<Flex minH="52px" px={4} align="center" justify="space-between" gap={4}>
-								<Box>
-									<Box fontSize="15px" fontWeight="600">Theme</Box>
-									<Box color="text.muted" fontSize="12px">Light or dark</Box>
-								</Box>
-								<ThemeToggleButton />
-							</Flex>
-						</Box>
-					</Stack>
-				</Container>
-			)}
-		</Box>
+						<ul className={styles.menuList}>
+							{[...navigationLinks, ...mobileOnlyLinks].map((link) => {
+								const href = onHome && link.homeHref ? link.homeHref : link.href;
+								const active = isActive(link, path);
+								const Anchor = link.external ? "a" : NextLink;
+								return (
+									<li key={link.name}>
+										<Anchor
+											href={href}
+											target={link.external ? "_blank" : undefined}
+											rel={link.external ? "noopener noreferrer" : undefined}
+											aria-current={active ? "page" : undefined}
+											className={`ui-link ${styles.menuLink}`}
+											onClick={onClose}>
+											{link.name}
+											{link.external && <OutArrow newTab className={styles.menuArrow} />}
+										</Anchor>
+									</li>
+								);
+							})}
+							<li>
+								<div className={styles.themeRow}>
+									<div>
+										<div className={styles.themeLabel}>Theme</div>
+										<div className={styles.themeHint}>Light or dark</div>
+									</div>
+									<ThemeToggleButton />
+								</div>
+							</li>
+						</ul>
+					</Dialog.Popup>
+				</Dialog.Portal>
+			</Dialog.Root>
+		</nav>
 	);
 };
 

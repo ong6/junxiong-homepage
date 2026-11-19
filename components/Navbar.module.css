@@ -1,0 +1,278 @@
+/* The fixed bar, 64px tall and 72px from 768px. Keyed off data-theme so the
+   first paint already matches a stored dark mode. */
+.nav {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	width: 100%;
+	background: rgba(243, 239, 231, 0.9);
+	height: 64px;
+	border-bottom: 1px solid;
+	border-color: var(--site-border-subtle);
+	z-index: 20;
+	backdrop-filter: blur(14px);
+}
+@media screen and (min-width: 768px) {
+	.nav {
+		height: 72px;
+	}
+}
+:global(html[data-theme="dark"]) .nav {
+	background: rgba(21, 19, 17, 0.9);
+}
+
+.bar {
+	max-width: 1120px;
+	height: 100%;
+}
+
+.row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 100%;
+	gap: 0.5rem;
+}
+@media screen and (min-width: 320px) {
+	.row {
+		gap: 1rem;
+	}
+}
+
+.brand {
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+}
+.brand > a {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+}
+
+.controls {
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
+	flex-shrink: 0;
+}
+@media screen and (min-width: 768px) {
+	.controls {
+		gap: 0.75rem;
+	}
+}
+
+.links {
+	display: none;
+	align-items: center;
+	flex-direction: row;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+@media screen and (min-width: 768px) {
+	.links {
+		display: flex;
+		gap: 0.25rem;
+		margin-right: 0.25rem;
+	}
+}
+@media screen and (min-width: 960px) {
+	.links {
+		gap: 1rem;
+		margin-right: 0.5rem;
+	}
+}
+
+/* A nav link: muted, ink when it is the current section; a 1px cobalt rule
+   draws under it on hover and stays under the current one. */
+.link {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	padding-inline-start: 0.5rem;
+	padding-inline-end: 0.5rem;
+	font-size: 13px;
+	font-weight: 650;
+	line-height: 1;
+	color: var(--site-text-muted);
+	text-decoration: none;
+}
+.link[aria-current="page"] {
+	color: var(--site-page-text);
+}
+.link::after {
+	content: "";
+	position: absolute;
+	left: 0.5rem;
+	right: 0.5rem;
+	bottom: 10px;
+	height: 1px;
+	background: #4B70CF;
+	transform: scaleX(0);
+	transform-origin: left;
+	transition: transform 160ms ease;
+}
+.link[aria-current="page"]::after {
+	transform: scaleX(1);
+}
+.link:hover,
+.link[data-hover] {
+	color: var(--site-page-text);
+	text-decoration: none;
+}
+.link:hover::after,
+.link[data-hover]::after {
+	transform: scaleX(1);
+}
+.linkArrow {
+	margin-left: 3px;
+	font-size: 12px;
+}
+
+.contact {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 44px;
+	padding-inline-start: 0.75rem;
+	padding-inline-end: 0.75rem;
+	border: 1px solid;
+	border-color: var(--site-border-subtle);
+	border-radius: 4px;
+	font-size: 12px;
+	font-weight: 700;
+	color: var(--site-page-text);
+	text-decoration: none;
+}
+@media screen and (min-width: 768px) {
+	.contact {
+		padding-inline-start: 1rem;
+		padding-inline-end: 1rem;
+		font-size: 13px;
+	}
+}
+.contact:hover,
+.contact[data-hover] {
+	background: var(--site-surface-quiet);
+	text-decoration: none;
+}
+
+.wideOnly {
+	display: none;
+}
+@media screen and (min-width: 768px) {
+	.wideOnly {
+		display: block;
+	}
+}
+.narrowOnly {
+	display: block;
+}
+@media screen and (min-width: 768px) {
+	.narrowOnly {
+		display: none;
+	}
+}
+
+/* The menu toggle: an outlined 44px square in the theme's ink. */
+.menuToggle {
+	border: 1px solid;
+	padding: 0;
+	color: var(--site-page-text);
+	border-color: var(--site-border-subtle);
+	min-width: 44px;
+	height: 44px;
+}
+.menuToggle:hover,
+.menuToggle[data-hover] {
+	background: var(--site-surface-quiet);
+}
+.menuToggle:active,
+.menuToggle[data-active] {
+	transform: none;
+	background: var(--site-surface-quiet);
+}
+.closeIcon {
+	width: 12px;
+	height: 12px;
+}
+
+/* The mobile menu: a panel under the bar, right-aligned to the page column. */
+.menuFrame {
+	max-width: 1120px;
+	padding-inline-start: 1rem;
+	padding-inline-end: 1rem;
+	position: relative;
+}
+.menu {
+	position: absolute;
+	right: 1rem;
+	top: 0.5rem;
+	min-width: 200px;
+	margin: 0;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	background: var(--site-surface-raised);
+	border: 1px solid;
+	border-color: var(--site-border-subtle);
+	border-radius: 0.375rem;
+	box-shadow: 0 18px 48px rgba(0, 0, 0, 0.18);
+}
+.menu:focus {
+	outline: none;
+}
+.menuList {
+	display: flex;
+	flex-direction: column;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+.menuLink {
+	display: flex;
+	align-items: center;
+	min-height: 44px;
+	padding: 0.5rem 1rem;
+	font-size: 15px;
+	font-weight: 500;
+	color: var(--site-text-muted);
+	border-left: 2px solid;
+	border-color: transparent;
+	text-decoration: none;
+}
+.menuLink[aria-current="page"] {
+	font-weight: 700;
+	color: var(--site-page-text);
+	border-color: #4B70CF;
+}
+.menuLink:hover,
+.menuLink[data-hover] {
+	background: var(--site-surface-quiet);
+	color: var(--site-page-text);
+	text-decoration: none;
+}
+.menuArrow {
+	margin-left: 4px;
+	font-size: 12px;
+}
+
+.themeRow {
+	display: flex;
+	min-height: 52px;
+	padding-inline-start: 1rem;
+	padding-inline-end: 1rem;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+}
+.themeLabel {
+	font-size: 15px;
+	font-weight: 600;
+}
+.themeHint {
+	color: var(--site-text-muted);
+	font-size: 12px;
+}

@@ -1,5 +1,5 @@
-import { Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import styles from "./figureMobile.module.css";
 
 // Phones get the wide drawing, not a squeezed or re-laid-out one. It renders
 // at MOBILE_SCALE of its designed width and the canvas scrolls sideways, so the
@@ -46,28 +46,15 @@ export function useOverflow(ref, active) {
 	return overflow;
 }
 
-// `sx` for the element wrapping a uipack Figure.
-export const mobileScrollSx = (vbWidth) => ({
-	[`@media ${MOBILE_QUERY}`]: {
-		"& .uipack .uipack__canvas": { WebkitOverflowScrolling: "touch" },
-		"& .uipack .uipack__canvas > svg.uipack--wide": {
-			width: `${Math.round(vbWidth * MOBILE_SCALE)}px`,
-			minWidth: "100%",
-			maxWidth: "none",
-		},
-	},
+// Props for the element wrapping a uipack Figure: on a phone the wide drawing
+// keeps its designed width and the canvas scrolls (figureMobile.module.css).
+export const mobileScrollProps = (vbWidth) => ({
+	className: styles.mobileScroll,
+	style: { "--figure-wide-w": `${Math.round(vbWidth * MOBILE_SCALE)}px` },
 });
 
 export const SwipeHint = () => (
-	<Text
-		mt={2}
-		fontFamily="var(--font-mono)"
-		fontSize="12px"
-		fontWeight="700"
-		letterSpacing=".08em"
-		textTransform="uppercase"
-		color="text.muted"
-		aria-hidden="true">
+	<p className={styles.swipeHint} aria-hidden="true">
 		Swipe to see the whole diagram →
-	</Text>
+	</p>
 );

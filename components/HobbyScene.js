@@ -1,4 +1,4 @@
-import { useColorMode } from "@chakra-ui/react";
+import { useTheme } from "../lib/themeChoice";
 import { ObjectScene } from "uipack/objects";
 import { useIdleAfterLoad } from "../lib/useIdleAfterLoad";
 
@@ -10,7 +10,7 @@ import { useIdleAfterLoad } from "../lib/useIdleAfterLoad";
 // `preload` builds a scene and paints its first frame before it is active
 // (a page sets it on the scenes near the viewport).
 export default function HobbyScene({ controls = "playback", active = true, preload = false, ...props }) {
-	const { colorMode } = useColorMode();
+	const colorMode = useTheme();
 	const idle = useIdleAfterLoad();
 	return (
 		<ObjectScene

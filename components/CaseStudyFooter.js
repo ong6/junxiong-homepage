@@ -1,9 +1,9 @@
-import { Box, Heading, LinkBox, LinkOverlay, Text } from "@chakra-ui/react";
 import OutArrow from "./OutArrow";
 import NextLink from "next/link";
 import ProjectLinks from "./ProjectLinks";
 import { Eyebrow } from "./ArticleParts";
 import { toneFor } from "../lib/tones";
+import styles from "./CaseStudyFooter.module.css";
 
 // The deliberate end of a case study: the links out (the only copy in the
 // reading order; the wide-screen rail repeats them for the eye), then one
@@ -14,48 +14,30 @@ import { toneFor } from "../lib/tones";
 
 export default function CaseStudyFooter({ links, next }) {
 	return (
-		<Box mt={{ base: 12, md: 16 }}>
+		<div className={styles.end}>
 			{links && links.length > 0 && <ProjectLinks id="links-out" links={links} />}
 
 			{next && (
-				<LinkBox
-					as="section"
+				<section
 					aria-label="Next project"
 					data-contents-skip
 					data-group
 					data-reveal
 					data-hover="card"
 					data-tone={toneFor(next.href)}
-					mt={{ base: 4, md: 5 }}
-					bg="surface.raised"
-					border="1px solid"
-					borderColor="border.subtle"
-					borderRadius="6px"
-					px={5}
-					py={5}>
+					className={`ui-linkbox ${styles.next}`}>
 					<Eyebrow data-tone-label>NEXT</Eyebrow>
-					<Heading as="h2" mt={3} fontSize="24px" lineHeight="heading">
-						<LinkOverlay
-							as={NextLink}
-							href={next.href}
-							prefetch={false}
-							color="inherit"
-							display="inline-flex"
-							alignItems="center"
-							minH="44px">
+					<h2 className={`ui-heading ${styles.title}`}>
+						<NextLink href={next.href} prefetch={false} className={`ui-linkoverlay ${styles.overlay}`}>
 							{next.name}
-							<OutArrow ml={2} color="brand.solid" />
-						</LinkOverlay>
-					</Heading>
-					{next.detail && (
-						<Text mt={2} color="text.muted" fontSize="16px" lineHeight="text">
-							{next.detail}
-						</Text>
-					)}
-				</LinkBox>
+							<OutArrow className={styles.arrow} />
+						</NextLink>
+					</h2>
+					{next.detail && <p className={styles.detail}>{next.detail}</p>}
+				</section>
 			)}
 
-			<Box h={{ base: 12, md: 20 }} />
-		</Box>
+			<div className={styles.spacer} />
+		</div>
 	);
 }

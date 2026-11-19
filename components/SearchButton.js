@@ -1,6 +1,6 @@
-import { Box } from "@chakra-ui/react";
-import { SearchIcon } from "@chakra-ui/icons";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { SearchIcon } from "./icons";
+import styles from "./SearchButton.module.css";
 
 // The header's search control and the ⌘K / Ctrl+K shortcut. The menu itself
 // (cmdk and the site index) is fetched on first intent: hovering or focusing
@@ -67,9 +67,9 @@ export default function SearchButton() {
 
 	return (
 		<>
-			<Box
-				as="button"
+			<button
 				type="button"
+				className={styles.button}
 				onClick={show}
 				onPointerEnter={preload}
 				onFocus={preload}
@@ -77,32 +77,17 @@ export default function SearchButton() {
 				aria-label={`Search (${shortcut})`}
 				aria-haspopup="dialog"
 				aria-expanded={open}
-				aria-keyshortcuts="Meta+K Control+K"
-				display="inline-flex"
-				alignItems="center"
-				justifyContent="center"
-				gap={2}
-				minW="44px"
-				minH="44px"
-				px={{ base: 0, lg: 3 }}
-				border="1px solid"
-				borderColor="border.subtle"
-				borderRadius="4px"
-				color="text.muted"
-				bg="transparent"
-				cursor="pointer"
-				transition="background-color var(--dur-hover) ease, color var(--dur-hover) ease"
-				_hover={{ bg: "surface.quiet", color: "page.text" }}>
-				<SearchIcon boxSize="14px" />
-				{/* From 992px it reads as a search field: label, then the shortcut. */}
-				<Box as="span" aria-hidden="true" display={{ base: "none", lg: "inline" }} fontSize="13px" fontWeight="600" lineHeight="1">
+				aria-keyshortcuts="Meta+K Control+K">
+				<SearchIcon className={styles.icon} />
+				{/* From 960px it reads as a search field: label, then the shortcut. */}
+				<span aria-hidden="true" className={styles.label}>
 					Search
-				</Box>
+				</span>
 				{/* Fixed width, so the ⌘K / Ctrl K swap after load moves nothing. */}
-				<Box as="span" aria-hidden="true" display={{ base: "none", lg: "inline" }} w="6ch" fontFamily="mono" fontSize="12px" lineHeight="1" textAlign="right">
+				<span aria-hidden="true" className={styles.shortcut}>
 					{shortcut}
-				</Box>
-			</Box>
+				</span>
+			</button>
 			{Menu && <Menu open={open} onOpenChange={setOpen} onClosed={restoreFocus} />}
 		</>
 	);

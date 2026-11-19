@@ -1,0 +1,54 @@
+.list {
+	margin-top: 0.75rem;
+	border-top: 1px solid;
+	border-color: var(--site-border-subtle);
+}
+
+/* A row: name, arrow, detail; a ruled line under all but the last. */
+.row {
+	display: block;
+	min-height: 56px;
+	padding-top: 0.75rem;
+	padding-bottom: 0.75rem;
+	border-bottom: 1px solid;
+	border-color: var(--site-border-subtle);
+	color: var(--site-page-text);
+	text-decoration: none;
+}
+.compact {
+	min-height: 48px;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+}
+.row:last-of-type {
+	border-bottom: 0;
+}
+/* The row carries data-hover="row" (the tone-edge hook in globals.css), so
+   this "hover" look is also its resting look: the name is always in the
+   accent. Kept as it has always rendered. */
+.row:hover,
+.row[data-hover] {
+	text-decoration: none;
+}
+.row:hover [data-name],
+.row[data-hover] [data-name] {
+	color: var(--site-brand-solid);
+}
+
+.line {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.75rem;
+}
+.name {
+	font-weight: 700;
+	transition: color 160ms ease;
+}
+.detail {
+	display: block;
+	margin-top: 0.25rem;
+	color: var(--site-text-muted);
+	font-size: 14px;
+	line-height: 1.65;
+}

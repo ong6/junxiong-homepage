@@ -4,13 +4,14 @@ import "uipack/presentations.css";
 import "uipack/docs.css";
 import "../styles/globals.css";
 import "../styles/print.css";
-import SiteProvider from "../components/SiteProvider";
+import "../styles/parts.css";
+import "../styles/base.css";
+import { ThemeFollower } from "../lib/themeChoice";
 import Layout from "../components/layouts/Main";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import Head from "next/head";
-import theme from "../lib/theme";
 
 const plexSans = IBM_Plex_Sans({
 	weight: "variable",
@@ -41,11 +42,10 @@ function MyApp({ Component, pageProps, router }) {
 					dangerouslySetInnerHTML={{ __html: fontRoles }}
 				/>
 			</Head>
-			<SiteProvider theme={theme}>
-				<Layout router={router}>
-					<Component {...pageProps} key={router.route} />
-				</Layout>
-			</SiteProvider>
+			<ThemeFollower />
+			<Layout router={router}>
+				<Component {...pageProps} key={router.route} />
+			</Layout>
 			<Analytics />
 			<SpeedInsights />
 		</div>

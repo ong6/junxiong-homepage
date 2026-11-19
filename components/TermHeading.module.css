@@ -1,0 +1,15 @@
+.head {
+	margin-bottom: 1rem;
+}
+.kicker {
+	margin-bottom: 0.5rem;
+}
+.title {
+	font-size: 32px;
+	line-height: 1.2;
+}
+@media screen and (min-width: 768px) {
+	.title {
+		font-size: 44px;
+	}
+}

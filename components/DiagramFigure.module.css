@@ -1,0 +1,172 @@
+/* Above the wide-screen contents rail, on an opaque ground, so a full-width
+   drawing slides over the rail instead of under its text. The width is set
+   inline from the drawing's viewBox. */
+.figure {
+	margin-top: 2.5rem;
+	margin-bottom: 2.5rem;
+	margin-inline-start: 0;
+	margin-inline-end: 0;
+	max-width: none;
+	position: relative;
+	z-index: 1;
+	background: var(--site-page-bg);
+}
+@media screen and (min-width: 768px) {
+	.figure {
+		margin-top: 3.5rem;
+		margin-bottom: 3.5rem;
+	}
+}
+
+.below {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.75rem;
+	margin-top: 0.5rem;
+}
+.caption {
+	flex: 1;
+	padding-top: 0.5rem;
+	font-family: var(--font-mono);
+	font-size: 12px;
+	line-height: 1.65;
+	color: var(--site-text-muted);
+}
+.expand {
+	flex-shrink: 0;
+	min-height: 44px;
+	padding-inline-start: 0.75rem;
+	padding-inline-end: 0.75rem;
+	border: 1px solid;
+	border-color: var(--site-border-subtle);
+	background: var(--site-surface-raised);
+	color: var(--site-text-muted);
+	font-family: var(--font-mono);
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	cursor: zoom-in;
+}
+.expand:hover,
+.expand[data-hover] {
+	border-color: var(--site-page-text);
+	color: var(--site-page-text);
+}
+.expand::before {
+	content: "⤢ ";
+}
+.expand:focus-visible,
+.expand[data-focus-visible] {
+	outline: 2px solid;
+	outline-color: var(--site-brand-solid);
+	outline-offset: 2px;
+}
+
+/* A caption's step numbers: plain mono numerals in bold ink. */
+.stepMark {
+	font-weight: 700;
+	color: var(--site-page-text);
+}
+
+/* ── The expanded drawing ──────────────────────────────────────────────── */
+.overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 1400;
+	background: var(--site-page-bg);
+	color: var(--site-page-text);
+}
+.stage {
+	position: absolute;
+	inset: 0;
+	overflow: hidden;
+}
+.drawing {
+	position: absolute;
+	top: 0;
+	left: 0;
+	line-height: 0;
+	pointer-events: none;
+}
+.toolbar {
+	position: absolute;
+	top: 0.75rem;
+	right: 0.75rem;
+	display: flex;
+	gap: 0.5rem;
+	align-items: center;
+}
+.overlayCaption {
+	position: absolute;
+	left: 0.75rem;
+	right: 0.75rem;
+	bottom: 0.75rem;
+	max-width: 680px;
+	padding: 0.5rem 0.75rem;
+	background: var(--site-page-bg);
+	border: 1px solid;
+	border-color: var(--site-border-subtle);
+	pointer-events: none;
+}
+@media screen and (min-width: 768px) {
+	.toolbar {
+		top: 1.25rem;
+		right: 1.25rem;
+	}
+	.overlayCaption {
+		left: 1.25rem;
+		right: 1.25rem;
+		bottom: 1.25rem;
+	}
+}
+.zoom {
+	font-family: var(--font-mono);
+	font-size: 12px;
+	color: var(--site-text-muted);
+	margin-right: 0.25rem;
+}
+.overlayCaptionText {
+	font-family: var(--font-mono);
+	font-size: 12px;
+	line-height: 1.65;
+	color: var(--site-text-muted);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+}
+@media screen and (min-width: 768px) {
+	.overlayCaptionText {
+		-webkit-line-clamp: 4;
+	}
+}
+
+.ctl {
+	width: 44px;
+	height: 44px;
+	display: grid;
+	place-items: center;
+	border: 1px solid;
+	border-color: var(--site-border-subtle);
+	background: var(--site-surface-raised);
+	color: var(--site-page-text);
+	font-family: var(--font-mono);
+	font-size: 18px;
+	line-height: 1;
+	cursor: pointer;
+}
+.ctl:hover,
+.ctl[data-hover] {
+	border-color: var(--site-page-text);
+}
+.ctl:focus-visible,
+.ctl[data-focus-visible] {
+	outline: 2px solid;
+	outline-color: var(--site-brand-solid);
+	outline-offset: 2px;
+}
+.ctlWord {
+	font-size: 13px;
+}

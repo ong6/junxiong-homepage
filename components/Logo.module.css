@@ -1,0 +1,29 @@
+.logo {
+	font-weight: bold;
+	font-size: 22px;
+	display: inline-flex;
+	align-items: center;
+	height: 32px;
+	line-height: 20px;
+}
+.logo img {
+	transition: transform var(--dur-hover) var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+	.logo:hover img {
+		transform: rotate(20deg);
+	}
+}
+/* Below 360px the header's search, Contact and menu controls need the room:
+   the mark goes and the name stays. */
+@media (max-width: 359px) {
+	.logo img {
+		display: none !important;
+	}
+}
+
+.name {
+	color: var(--site-page-text);
+	font-family: var(--font-sans);
+	font-weight: 700;
+}
