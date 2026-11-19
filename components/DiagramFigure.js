@@ -349,30 +349,13 @@ function Overlay({ Wide, id, viewBox, alt, caption, onClose }) {
 const natural = (viewBox) => Math.min(1088, Math.max(680, viewBoxWidth(viewBox) + 66));
 
 // Captions name a figure's numbered step badges as ① ② ③. IBM Plex has no
-// circled digits, so those glyphs fell back to a system font. Each one is
-// drawn instead as the badge it points at: a thin ring around a Plex Mono
-// digit, the same mark uipack's Badge draws in the figure. The caption prop
-// stays a string (shortCaption and the e2e specs read it as text).
-const CIRCLED = /([①-⑳])/;
+// circled digits, so those glyphs fell back to a system font. Each one is set
+// instead in the site's numeral treatment, a plain mono number with no ring
+// (STYLE.md, --ui-num-*), in bold ink so it reads as the badge it points at.
+// The caption prop stays a string (shortCaption and the e2e specs read it).
+const CIRCLED = /([\u2460-\u2473])/;
 const StepMark = ({ n }) => (
-	<Box
-		as="span"
-		data-step-mark
-		display="inline-grid"
-		placeItems="center"
-		w="18px"
-		h="18px"
-		// Pulled back so the ring never makes its line taller than the caption's.
-		my="-3px"
-		verticalAlign="1px"
-		border="1px solid"
-		borderColor="text.muted"
-		borderRadius="full"
-		fontFamily="var(--font-mono)"
-		fontSize="12px"
-		fontWeight="700"
-		lineHeight="1"
-		color="page.text">
+	<Box as="span" data-step-mark fontWeight="700" color="page.text">
 		{n}
 	</Box>
 );

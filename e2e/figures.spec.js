@@ -153,9 +153,9 @@ test("Engine v1 is one page: eight dated sections, newest first, each with its d
 	expect(await page.locator("figcaption[id^='te-1-']").evaluateAll((els) => els.map((el) => el.textContent.match(/^fig\. (\d) —/)?.[1]))).toEqual(order);
 });
 
-// Plex has no circled digits (① …), so DiagramFigure draws each as a ringed
-// mono digit like the figure's badges; a raw glyph would fall back to a system font.
-test("Engine v1 captions draw step numbers as rings, never as circled-digit glyphs", async ({ page }) => {
+// Plex has no circled digits (① …), so DiagramFigure sets each as a plain bold
+// mono number; a raw glyph would fall back to a system font.
+test("Engine v1 captions set step numbers in Plex Mono, never as circled-digit glyphs", async ({ page }) => {
 	await page.goto("/trading-engine/v1");
 	// Figures mount as they come near (components/LazyMount.js).
 	for (const n of [7, 6, 5, 4, 3, 2, 1]) await page.locator(`[id="1-${n}"]`).scrollIntoViewIfNeeded();
