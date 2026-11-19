@@ -1,0 +1,104 @@
+.block {
+	margin-top: 1rem;
+	border: 1px solid;
+	border-color: var(--site-border-subtle);
+	background: var(--site-preview-canvas);
+}
+
+.title {
+	padding-inline-start: 1rem;
+	padding-inline-end: 1rem;
+	padding-top: 1rem;
+	font-family: var(--font-mono);
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--site-text-muted);
+}
+@media screen and (min-width: 768px) {
+	.title {
+		padding-inline-start: 1.25rem;
+		padding-inline-end: 1.25rem;
+		padding-top: 1.25rem;
+	}
+}
+
+.scroller {
+	overflow-x: auto;
+	padding-inline-start: 1rem;
+	padding-inline-end: 1rem;
+	padding-top: 0.75rem;
+	padding-bottom: 1rem;
+	background-image: linear-gradient(to right, var(--site-preview-canvas) 40%, transparent), linear-gradient(to left, var(--site-preview-canvas) 40%, transparent), linear-gradient(to right, var(--site-scroll-shadow), transparent), linear-gradient(to left, var(--site-scroll-shadow), transparent);
+	background-position: left, right, left, right;
+	background-size: 40px 100%, 40px 100%, 14px 100%, 14px 100%;
+	background-repeat: no-repeat;
+	background-attachment: local, local, scroll, scroll;
+}
+@media screen and (min-width: 768px) {
+	.scroller {
+		padding-inline-start: 1.25rem;
+		padding-inline-end: 1.25rem;
+		padding-bottom: 1.25rem;
+	}
+}
+.scroller:focus-visible,
+.scroller[data-focus-visible] {
+	outline: 2px solid;
+	outline-color: var(--site-brand-solid);
+	outline-offset: -2px;
+}
+
+.pre {
+	margin: 0;
+	font-family: var(--font-mono);
+	font-size: 12px;
+	line-height: 1.65;
+	white-space: pre;
+	width: max-content;
+	min-width: 100%;
+}
+@media screen and (min-width: 768px) {
+	.pre {
+		font-size: 12.5px;
+	}
+}
+
+.line,
+.muted,
+.hot {
+	display: block;
+	font-weight: 400;
+}
+.line {
+	color: var(--site-page-text);
+}
+.muted {
+	color: var(--site-text-muted);
+}
+.hot {
+	color: var(--site-brand-solid);
+	font-weight: 700;
+}
+
+.figure {
+	margin-top: 2.5rem;
+	margin-bottom: 2.5rem;
+	margin-inline-start: 0;
+	margin-inline-end: 0;
+}
+@media screen and (min-width: 768px) {
+	.figure {
+		margin-top: 3.5rem;
+		margin-bottom: 3.5rem;
+	}
+}
+
+.caption {
+	margin-top: 0.75rem;
+	font-family: var(--font-mono);
+	font-size: 12px;
+	line-height: 1.65;
+	color: var(--site-text-muted);
+}

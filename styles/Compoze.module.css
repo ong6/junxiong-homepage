@@ -1,0 +1,47 @@
+/* The product shots are light-UI captures. In dark mode they are pulled down
+   a step so they sit in the page rather than glow off it. */
+.figure {
+	margin-top: 2.5rem;
+	margin-bottom: 2.5rem;
+	margin-inline-start: 0;
+	margin-inline-end: 0;
+}
+@media screen and (min-width: 768px) {
+	.figure {
+		margin-top: 3.5rem;
+		margin-bottom: 3.5rem;
+	}
+}
+
+.frame {
+	border: 1px solid;
+	border-color: var(--site-border-subtle);
+	line-height: 0;
+}
+:global(html[data-theme="dark"]) .frame {
+	background: var(--site-surface-raised);
+}
+:global(html[data-theme="dark"]) .frame img {
+	filter: brightness(0.86) contrast(1.04);
+}
+
+.caption {
+	margin-top: 0.75rem;
+	font-family: var(--font-mono);
+	font-size: 12px;
+	line-height: 1.65;
+	color: var(--site-text-muted);
+}
+
+.factsTight {
+	margin-top: 0.75rem;
+}
+
+.factsSpaced {
+	margin-top: 2rem;
+}
+@media screen and (min-width: 768px) {
+	.factsSpaced {
+		margin-top: 2.5rem;
+	}
+}

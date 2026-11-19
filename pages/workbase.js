@@ -1,4 +1,3 @@
-import { Box, Container, Heading, Text } from "@chakra-ui/react";
 import AiToolFamily from "../components/AiToolFamily";
 import CaseStudyFooter from "../components/CaseStudyFooter";
 import DiagramFigure from "../components/DiagramFigure";
@@ -7,6 +6,7 @@ import Layout from "../components/layouts/Articles";
 import FactList, { pickFacts } from "../components/FactList";
 import { BackLink, MetaLine, P, H2, Code, ARTICLE_TITLE } from "../components/ArticleParts";
 import { withNotes } from "../lib/notes";
+import styles from "../styles/CaseStudy.module.css";
 
 // Every fact below is checkable in github.com/ong6/workbase: README.md,
 // DESIGN.md, template/AGENTS.md, template/.gitignore, bin/new-workbase and
@@ -41,20 +41,18 @@ export default function Workbase() {
 				license: "https://opensource.org/licenses/MIT",
 			}}
 			description="Workbase is a notes folder for one job with the company's repos inside it, and a manual that tells a coding agent where each kind of fact goes and where to look before answering.">
-			<Container maxW="680px" px={0} ml={0}>
-				<Box pt={{ base: 10, md: 16 }}>
+			<div className={`ui-container chakra-container ${styles.column}`}>
+				<div className={styles.top}>
 					<BackLink href="/ai-tooling">AI tooling</BackLink>
 
-					<Heading as="h1" mt={{ base: 8, md: 10 }} fontSize={ARTICLE_TITLE} lineHeight="1" letterSpacing="-.045em">
-						Workbase
-					</Heading>
+					<h1 className={`ui-heading ${ARTICLE_TITLE} ${styles.title}`}>Workbase</h1>
 
 					<MetaLine>2026 · open source · claude code + codex</MetaLine>
 
-					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="lede" fontWeight="600">
+					<p className={styles.lede}>
 						Workbase is a notes folder for one job that my coding agent keeps up to date. I clone the company&apos;s repos inside it, and every agent session started below it reads the same manual, which says where each kind of fact goes and where to look before answering.
-					</Text>
-				</Box>
+					</p>
+				</div>
 
 				<DiagramFigure
 					id="workbase-lookups"
@@ -113,7 +111,7 @@ export default function Workbase() {
 
 				<AiToolFamily current="/workbase" />
 				<CaseStudyFooter links={links} next={{ name: "Agent skills", href: "/skills", detail: "The reusable instructions my agents load, kept in one public repo" }} />
-			</Container>
+			</div>
 		</Layout>
 	);
 }

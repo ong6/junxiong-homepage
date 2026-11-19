@@ -1,9 +1,3 @@
-import {
-	Box,
-	Container,
-	Heading,
-	Text,
-} from "@chakra-ui/react";
 import Image from "next/image";
 import DiagramFigure from "../components/DiagramFigure";
 import Details from "../components/Details";
@@ -18,6 +12,8 @@ import { PAGE_META } from "../lib/pageMeta";
 import CaseStudyFooter from "../components/CaseStudyFooter";
 import { BackLink, MetaLine, P, H2, ARTICLE_TITLE } from "../components/ArticleParts";
 import { withNotes } from "../lib/notes";
+import styles from "../styles/Compoze.module.css";
+import caseStudy from "../styles/CaseStudy.module.css";
 
 // A written case study: one ~680px column of prose, screenshots as inline
 // figures, and a single mono fact table. Deliberately unlike the homepage
@@ -30,12 +26,8 @@ import { withNotes } from "../lib/notes";
 // The product shots are light-UI captures. In dark mode they are pulled down
 // a step so they sit in the page rather than glow off it.
 const Figure = ({ src, alt, caption, preload = false }) => (
-	<Box as="figure" my={{ base: 10, md: 14 }} mx={0}>
-		<Box
-			border="1px solid"
-			borderColor="border.subtle"
-			lineHeight={0}
-			_dark={{ bg: "surface.raised", "& img": { filter: "brightness(.86) contrast(1.04)" } }}>
+	<figure className={styles.figure}>
+		<div className={styles.frame}>
 			<Image
 				src={src}
 				alt={alt}
@@ -45,17 +37,9 @@ const Figure = ({ src, alt, caption, preload = false }) => (
 				preload={preload}
 				style={{ width: "100%", height: "auto" }}
 			/>
-		</Box>
-		<Text
-			as="figcaption"
-			mt={3}
-			fontFamily="var(--font-mono)"
-			fontSize="12px"
-			lineHeight="text"
-			color="text.muted">
-			{caption}
-		</Text>
-	</Box>
+		</div>
+		<figcaption className={styles.caption}>{caption}</figcaption>
+	</figure>
 );
 
 
@@ -109,29 +93,18 @@ export default function Compoze() {
 			links={links}
 			{...PAGE_META["/compoze"]}
 			schema={{ type: "TechArticle" }}>
-			<Container maxW="680px" px={0} ml={0}>
-				<Box pt={{ base: 10, md: 16 }}>
+			<div className={`ui-container chakra-container ${caseStudy.column}`}>
+				<div className={caseStudy.top}>
 					<BackLink href="/#work">Selected work</BackLink>
 
-					<Heading
-						as="h1"
-						mt={{ base: 8, md: 10 }}
-						fontSize={ARTICLE_TITLE}
-						lineHeight="1"
-						letterSpacing="-.045em">
-						Compoze
-					</Heading>
+					<h1 className={`ui-heading ${ARTICLE_TITLE} ${caseStudy.title}`}>Compoze</h1>
 
 					<MetaLine>2025 · sole founder · sold to a client</MetaLine>
 
-					<Text
-						mt={8}
-						fontSize={{ base: "19px", md: "21px" }}
-						lineHeight="lede"
-						fontWeight="600">
+					<p className={caseStudy.lede}>
 						Compoze was a company I ran on evenings and weekends alongside my job at TikTok. It built assistants that answer questions from a company&apos;s own documents, and a client bought it at the end of 2025.
-					</Text>
-				</Box>
+					</p>
+				</div>
 
 				<Figure
 					preload
@@ -248,7 +221,7 @@ export default function Compoze() {
 				</P>
 
 				<Details title="Implementation details">
-					<FactList facts={facts} mt={3} />
+					<FactList facts={facts} className={styles.factsTight} />
 
 					<P>
 						Edge middleware replaced any client-supplied identity header with
@@ -257,7 +230,7 @@ export default function Compoze() {
 						and chat creation was an atomic insert-on-conflict.
 					</P>
 
-					<FactList facts={optimisations} mt={{ base: 8, md: 10 }} />
+					<FactList facts={optimisations} className={styles.factsSpaced} />
 
 					<P>
 						With no one else reviewing the code, I leaned on automated checks: typed route contracts, Zod validation on every payload and contract tests on each push. Each request is traced with tokens, model and tenant, which is what pricing was based on.
@@ -265,7 +238,7 @@ export default function Compoze() {
 				</Details>
 
 				<CaseStudyFooter links={links} next={{ name: "UiPack", href: "/uipack", detail: "The design system behind these figures" }} />
-			</Container>
+			</div>
 		</Layout>
 	);
 }

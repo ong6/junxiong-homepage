@@ -1,12 +1,3 @@
-import {
-	Box,
-	Container,
-	Heading,
-	LinkBox,
-	LinkOverlay,
-	Text,
-	VisuallyHidden,
-} from "@chakra-ui/react";
 import NextLink from "next/link";
 import CaseStudyFooter from "../components/CaseStudyFooter";
 import OutArrow from "../components/OutArrow";
@@ -14,57 +5,40 @@ import Layout from "../components/layouts/Articles";
 import { PAGE_META } from "../lib/pageMeta";
 import { AI_TOOLING } from "../lib/aiTooling";
 import { BackLink, MetaLine, P, ARTICLE_TITLE } from "../components/ArticleParts";
-
-const mono = {
-	fontFamily: "var(--font-mono)",
-	fontSize: "12px",
-	fontWeight: "700",
-	letterSpacing: ".08em",
-	textTransform: "uppercase",
-};
+import caseStudy from "../styles/CaseStudy.module.css";
+import styles from "../styles/AiTooling.module.css";
 
 // One framed column, a row per layer, so the page reads as a stack. The layer
 // sits above the name rather than in a side column, so every row shares one left edge.
 function Layer({ tool, index }) {
+	const overlayProps = tool.external
+		? { href: tool.href, target: "_blank", rel: "noopener noreferrer" }
+		: { href: tool.href, prefetch: false };
+	const Overlay = tool.external ? "a" : NextLink;
 	return (
-		<LinkBox
-			as="article"
+		<article
 			data-group
 			data-reveal
 			data-hover="row"
 			style={{ "--i": index }}
-			borderTop={index ? "1px solid" : undefined}
-			borderColor="border.subtle"
-			p={{ base: 6, md: 8 }}
-			transition="border-color 160ms ease">
-			<Text sx={mono} color="brand.solid">
+			className={`ui-linkbox ${styles.layer} ${index ? styles.layerRuled : ""}`}>
+			<p className={styles.layerLabel}>
 				{String(index + 1).padStart(2, "0")} · {tool.layer}
-				<Box as="span" color="text.muted" fontWeight="500">
+				<span className={styles.layerWhen}>
 					{" · "}
 					{tool.when}
-				</Box>
-			</Text>
-			<Heading as="h2" data-contents-title={tool.name} mt={2} fontSize={{ base: "24px", md: "28px" }} lineHeight="heading">
-				<LinkOverlay
-					{...(tool.external
-						? { href: tool.href, target: "_blank", rel: "noopener noreferrer" }
-						: { as: NextLink, href: tool.href, prefetch: false })}
-					color="inherit"
-					display="inline-flex"
-					alignItems="center"
-					minH="44px">
+				</span>
+			</p>
+			<h2 data-contents-title={tool.name} className={`ui-heading ${styles.layerName}`}>
+				<Overlay {...overlayProps} className={`ui-linkoverlay ${styles.overlay}`}>
 					{tool.name}
-					{tool.external && <VisuallyHidden> (opens in a new tab)</VisuallyHidden>}
-					<OutArrow ml={2} color="brand.solid" />
-				</LinkOverlay>
-			</Heading>
-			<Text mt={2} fontSize={{ base: "17px", md: "18px" }} lineHeight="prose">
-				{tool.detail}
-			</Text>
-			<Text mt={3} color="text.muted" fontFamily="var(--font-mono)" fontSize="12px">
-				{tool.meta}
-			</Text>
-		</LinkBox>
+					{tool.external && <span className="visually-hidden"> (opens in a new tab)</span>}
+					<OutArrow className={styles.overlayArrow} />
+				</Overlay>
+			</h2>
+			<p className={styles.layerDetail}>{tool.detail}</p>
+			<p className={styles.layerMeta}>{tool.meta}</p>
+		</article>
 	);
 }
 
@@ -73,49 +47,35 @@ export default function AiTooling() {
 		<Layout
 			contents
 			{...PAGE_META["/ai-tooling"]}>
-			<Container maxW="680px" px={0} ml={0}>
-				<Box pt={{ base: 10, md: 16 }}>
+			<div className={`ui-container chakra-container ${caseStudy.column}`}>
+				<div className={caseStudy.top}>
 					<BackLink href="/#work">Selected work</BackLink>
 
-					<Heading
-						as="h1"
-						mt={{ base: 8, md: 10 }}
-						fontSize={ARTICLE_TITLE}
-						lineHeight="1"
-						letterSpacing="-.045em">
-						AI tooling
-					</Heading>
+					<h1 className={`ui-heading ${ARTICLE_TITLE} ${caseStudy.title}`}>AI tooling</h1>
 
 					<MetaLine>2026 · open source · {AI_TOOLING.length} tools</MetaLine>
 
-					<Text mt={8} fontSize={{ base: "19px", md: "21px" }} lineHeight="lede" fontWeight="600">
+					<p className={caseStudy.lede}>
 						I use coding agents every day and build them at work, and these are the tools I ended up
 						writing around them. They&apos;re ordered by where they sit in an agent&apos;s run, from
 						what it reads before it starts to checking what it says at the end.
-					</Text>
-				</Box>
+					</p>
+				</div>
 
-				<Box
-					as="section"
+				<section
 					aria-label="Tools by layer"
-					mt={{ base: 10, md: 12 }}
-					bg="surface.raised"
-					border="1px solid"
-					borderColor="border.subtle"
-					borderRadius="6px"
-					overflow="clip"
 					// Room for the last layer's hover rule on the frame's bottom border
 					// (styles/globals.css, Card hover); Chrome snaps the clip 1px in.
-					sx={{ overflowClipMargin: "2px" }}>
+					className={styles.stack}>
 					{AI_TOOLING.map((tool, index) => (
 						<Layer key={tool.href} tool={tool} index={index} />
 					))}
-				</Box>
+				</section>
 
 				{/* Placeholder (2026-11-15): the owner asked for a looking-back line to
 				    be written for now. Every fact in it is from the four tool pages;
 				    replace it with his own words when he sends them. */}
-				<P mt={{ base: 10, md: 12 }}>
+				<P className={styles.lookingBack}>
 					Most of these came from taking something away. Workbase is what was left of a 27-skill
 					setup at work once I kept only the parts I used. The skills repo replaced eight copies
 					that had drifted apart. Groundplane moves a ranking out of the model and into code, and
@@ -129,7 +89,7 @@ export default function AiTooling() {
 						detail: "Document-grounded assistants, a company I ran alone and sold to a client",
 					}}
 				/>
-			</Container>
+			</div>
 		</Layout>
 	);
 }
