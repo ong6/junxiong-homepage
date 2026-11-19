@@ -131,12 +131,13 @@ const Navbar = ({ path = "/", ...props }) => {
 					<Dialog.Popup
 						ref={menuRef}
 						id="navbar-menu"
+						aria-label="Site menu"
 						className={styles.menu}
 						initialFocus={() => menuRef.current?.querySelector("a") ?? true}
 						finalFocus={() => (restoreFocusRef.current ? toggleRef.current : false)}
 						onBlur={(event) => {
 							const next = event.relatedTarget;
-							if (next && !menuRef.current?.contains(next) && !toggleRef.current?.contains(next)) {
+							if (!menuRef.current?.contains(next) && !toggleRef.current?.contains(next)) {
 								onClose();
 							}
 						}}>
