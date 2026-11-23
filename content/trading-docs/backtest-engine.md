@@ -114,8 +114,8 @@ pay that profile on every fill path, not only the baseline one; a name with zero
 rejected instead of filled without limit; study eligibility measures liquidity over the same 60
 trading bars the fill model uses; and never-settled price bars with an impossible open are left
 out of study inputs. Because the last two change what some studies compute, the core's version
-identity moved to `p18-study-v3`, so results from the earlier version are never silently compared
-with new ones.
+identity changed, so results from the earlier version are never silently compared with new
+ones.
 
 The same review sped up the research loop and proved each change by comparing output digests
 before and after on a copy of the store:

@@ -103,23 +103,26 @@ tests run first, followed by the full suite and the repository’s lint and metr
 This on-demand approach favors durable evidence over noisy notification infrastructure. Local UI
 badges, reports, and logs can show a problem; they do not send a push message or grant authority.
 
-## Deployment verification
+## Deployment
 
-The automation installer has a read-only planning mode. It compares service definitions, timers,
-the managed schedule block, autostart membership, source identities, and server prerequisites. A
-“changes required” result describes a plan; it is not permission to apply it.
+A merged change reaches the server by itself once its tests pass under both UTC and Singapore
+time. A deployer checks every 15 minutes and acts only in a quiet moment: no scheduled job due
+soon, nothing running, and enough free disk. It runs the deployment gate and the frozen-record
+tests on a private copy, moves the server to the new version, installs changed services, and
+checks the live status routes.
 
-An admitted deployment applies the installer, verifies installed units against versioned sources,
-checks service status, and exercises the relevant read-only status routes. The working tree must end
-clean because the nightly synchronizer will not build on uncommitted source or documentation.
+A failed check rolls the server back to the previous version. If anything leaves the server on a
+version that was never verified, the next run brings it back to the last good one, retrying with
+backoff and restarting the app services if needed. Nothing sends a notification; every decision
+is recorded and shown in the hourly digest.
 
-Releases follow the same caution. The release tool plans by default and acts only when told to;
-a job registry describes every scheduled unit and is audited against the installed ones without
-changing them; and a public-hygiene check refuses commits that would publish private host details
-or unapproved tool identities. A change reaches the branch the nightly runs only after the full
-test suite passes under both UTC and Singapore time.
+Dependency, schema and record-contract changes wait for the release tool. It plans by default,
+backs up the store before changing anything, and restores the paused schedule by itself if it
+fails before touching the server. A job registry describes every scheduled unit and is audited
+against the installed ones, and a public-hygiene check refuses commits that would publish private
+host details.
 
 The engine remains paper-only throughout these operations. No deployment step on this server may
 add broker credentials, a broker connection, or real capital.
 
-<!-- sources: BUILDLOG.md, ops/jobs.toml, tools/ops_digest.py, tools/check_invariants.py, tools/release_deploy.py, tools/public_hygiene.py, server/trading-engine-ops-digest.timer, docs/operate/how-it-works.md, engine/bitemporal_facts.py, engine/earnings.py, engine/lib/driver.sh, engine/queue_runner.py, engine/run_daily.sh, engine/tradingview_history_archive.py, engine/verify_prices.py, farm/walkforward/runner.py, server/agent_evaluation_reporting.py, server/hourly_opportunity_observer.py, server/intraday_readiness.py, server/main.py, server/scheduler_monitor.py, server/driver_monitor.py, server/meta_snapshot.py, server/run_p15_scoring.sh, server/trading-engine-p15-scoring.service, tools/install_automation.py, tools/publish_snapshot.py, tools/backup_database.py, tools/stage_timings.py -->
+<!-- sources: BUILDLOG.md, ops/jobs.toml, tools/auto_deploy.py, tools/ops_digest.py, tools/check_invariants.py, tools/release_deploy.py, tools/public_hygiene.py, server/trading-engine-ops-digest.timer, docs/operate/how-it-works.md, engine/bitemporal_facts.py, engine/earnings.py, engine/lib/driver.sh, engine/queue_runner.py, engine/run_daily.sh, engine/tradingview_history_archive.py, engine/verify_prices.py, farm/walkforward/runner.py, server/agent_evaluation_reporting.py, server/hourly_opportunity_observer.py, server/intraday_readiness.py, server/main.py, server/scheduler_monitor.py, server/driver_monitor.py, server/meta_snapshot.py, server/run_p15_scoring.sh, server/trading-engine-p15-scoring.service, tools/install_automation.py, tools/publish_snapshot.py, tools/backup_database.py, tools/stage_timings.py -->
