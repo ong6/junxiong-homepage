@@ -71,7 +71,8 @@ export default function TradingEngine() {
 					October and does a different job: it fills the orders, keeps the books and charges
 					commissions on every fill, and each strategy gets its own paper account. Every change goes
 					to a fresh reviewer that didn&apos;t write it. The checks in fig. 1 went live with the 21
-					October update. A new engine number means the engine&apos;s job
+					October update, and since 23 November a merged change with green CI deploys itself and
+					rolls back on its own if a check fails. A new engine number means the engine&apos;s job
 					changed; updates inside an engine move the number after the dot.
 				</P>
 

@@ -1,75 +1,13 @@
 ---
 title: Glossary
-summary: Plain names for the engine’s plan codes, workstreams, research safeguards, and paper-trading terms.
+summary: Plain meanings for the engine’s research safeguards and paper-trading terms.
 order: 11
 section: Start here
 ---
 
 # Glossary
 
-Internal records use short codes so plans and registrations keep stable identities. A code is only
-a label. It is not a quality mark, a profit claim, or proof that the work is active.
-
-## Plan codes
-
-| Code | Plain name | Meaning |
-|---|---|---|
-| P1 | Appliance mode | The closed plan that once framed the engine as a maintain-only service. |
-| P2 | League collapse | Retires old paper books that no longer answer a live research question. |
-| P3 | Point-in-time data | Builds survivor-aware historical membership and data inputs, using free sources first. |
-| P4 | Broker decision | Records the long-term broker choice while granting no connection or trading authority. |
-| P5 | Agent paper decisions | Lets one constrained agent create orders only in an isolated simulator book. |
-| P6 | Alpha experiment | Ran one frozen deterministic SPY/BIL experiment and preserved its negative result. |
-| P7 | Autonomous paper trial | Compares rule-only, AI-only, and hybrid allocation books on the same paper capital. |
-| P8 | Daily opportunity agent | Reviews nightly market standouts and can use one locked simulator-only trade tool. |
-| P9 | Multi-cadence agent tools | Adds hourly and four-hour shadow observers around the nightly agent path. |
-| P10 | Contamination-aware 2022 replay | Replays a few old decisions as a diagnostic, not as evidence of predictive skill. |
-| P11 | Forward agent evaluation | Joins frozen agent decisions to later outcomes in an append-only evaluation record. |
-| P12 | Agent research product | Brings agent data, execution, evaluation, and status views into one programme. |
-| P13 | Market-data source hardening | Adds exact-response, research-only adapters and explicit source-admission rules. |
-| P14 | TradingView historical archive | Collects a resumable, survivor-biased daily-bar archive for research only. |
-| P15 | Profitability evidence loop | Scores every candidate, runs paired paper books, and tests the model against a rule. |
-| P16 | Challenger lab, text edge, and evaluation science | Builds shadow challengers, text labs, stronger statistics, portfolios, and execution measurement. |
-| P17 | Personal-host IBKR paper execution | A proposed future broker paper plan on personal hardware; explicitly not work for now. |
-| P18 | Shared backtest core | Supplies one public point-in-time evaluator for event and portfolio studies. |
-| P19 | Offline market-data auditor | Measures signal-input coverage against an independent reference population, with a fictional omission demo. |
-| P20 | Engine and paper dashboard review | Reviewed and fixed the engine and dashboard against real host evidence. |
-| P21 | Operational issue closure and separate accounts | Closed operational issues and proved isolated paper accounts for separately held strategies. |
-| P22 | Engine v2 accounts and money | Made the engine the single executor and ledger for paper accounts: commissions, auction and intraday fills, shorts, margin and halts. Live since 2026-10-18. |
-| P23 | Hourly operations digest | Summarizes every scheduled run, stage and log signal each hour so an agent can investigate failures on demand. |
-| P24 | Senior-quant review | The active 2026-10-21 review: pipeline and data-integrity fixes, statistics audit, output-identical speed work, and new private research studies. |
-
-The plan index is the single source of truth for status. “Done” means the planned work finished; it
-does not mean the strategy was profitable.
-
-## Workstream codes
-
-Workstream codes are local to their plan. W8 alone is ambiguous: the profitability evidence loop’s
-W8 means activation, while the challenger lab’s W8 means Stage 2 design.
-
-| Plan | Code | Plain name |
-|---|---|---|
-| P15 | W0 | Baseline and safety |
-| P15 | W1 | Observer evidence |
-| P15 | W2 | Scoring and deterministic baseline |
-| P15 | W3 | Comparator paper books |
-| P15 | W4 | Cancel-only pre-open reassessment |
-| P15 | W5 | Shadow event triggers |
-| P15 | W6 | Gates and reporting |
-| P15 | W7 | Cleanup and documentation |
-| P15 | W8 | Activation |
-| P16 | W0 | P15 remediation and activation |
-| P16 | W1 | Evaluation science |
-| P16 | W2 | Challenger lab |
-| P16 | W3 | Filing reader |
-| P16 | W4 | Historical text and replay labs |
-| P16 | W5 | Portfolio construction |
-| P16 | W6 | Execution realism |
-| P16 | W7 | Operator digest |
-| P16 | W8 | Stage 2 design |
-| P16 | W9 | Cleanup, registration, rehearsal, and activation |
-| P16 | W10 | Final refine pass |
-| P16 | W11 | Synthetic proving ground |
+Plain meanings for the research safeguards and paper-trading terms used across these pages.
 
 ## Research terms
 
@@ -105,4 +43,4 @@ For examples, see [How research earns a verdict](/trading-engine/docs/research-p
 [Paper books and the league](/trading-engine/docs/paper-books), and
 [Evidence and reliability](/trading-engine/docs/evidence-and-reliability).
 
-<!-- sources: docs/glossary.md, docs/plans/README.md, docs/plans/p15-profitability-evidence-loop.md, docs/plans/p16-challenger-lab-and-text-edge.md, farm/study/protocol.py, farm/study/stats.py, sim/league.py, tools/p15_evidence_validation.py -->
+<!-- sources: docs/architecture/glossary.md, docs/plans/README.md, docs/plans/p15-profitability-evidence-loop.md, docs/plans/p16-challenger-lab-and-text-edge.md, farm/study/protocol.py, farm/study/stats.py, sim/league.py, tools/p15_evidence_validation.py -->

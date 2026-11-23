@@ -34,8 +34,7 @@ rewrite old evidence.
 
 Some revisions change the policy and therefore begin a new cohort. Others bind infrastructure
 changes that leave the research meaning untouched. The recent profitability registration
-revisions are in the second group. The current one, revision 17 (October 2026), binds the senior-quant
-review's fixes: the SEC acceptance clock, batched nightly writes, faster replays, and cost and
+revisions are in the second group, for example the senior-quant review's fixes: the SEC acceptance clock, batched nightly writes, faster replays, and cost and
 liquidity corrections on the fill paths. Revision 16 bound its first batch: store-integrity
 repairs, statistics fixes, and operations evidence fixes. Neither changed scoring, books, gates,
 labels, schedules, or registered values. When a fix does change what an evaluation computes, as

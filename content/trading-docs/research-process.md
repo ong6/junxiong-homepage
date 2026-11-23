@@ -104,7 +104,7 @@ Stopping is not a broken pipeline. It is the pipeline doing its job. Negative re
 the record so the same idea is not quietly rediscovered and counted as new.
 
 The final path is intentionally long: historical screen, prospective confirmation, simulator book,
-and only after an owner-approved Stage 1 pass, perhaps a future broker paper account. Today the
+and only after an approved Stage 1 pass, perhaps a future broker paper account. Today the
 engine is still paper-only, and no AI policy has cleared its prospective gate.
 
-<!-- sources: BUILDLOG.md, farm/stats/inference.py, docs/backtest-standard.md, docs/system-blueprint.md, farm/study/census.py, farm/study/protocol.py, farm/study/stats.py, farm/walkforward/protocol.py, server/p15-registration.json, server/p16-registration.json -->
+<!-- sources: BUILDLOG.md, farm/stats/inference.py, docs/change/backtest-standard.md, docs/architecture/system-blueprint.md, farm/study/census.py, farm/study/protocol.py, farm/study/stats.py, farm/walkforward/protocol.py, server/p15-registration.json, server/p16-registration.json -->

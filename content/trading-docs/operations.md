@@ -49,7 +49,7 @@ failed queue job keeps its state and error instead of disappearing into a retry 
 
 ## Current operating profile
 
-The profitability evidence loop is at registration revision 17 (October 2026). Its research rules
+The profitability evidence loop's current registration revision is published by `GET /meta`. Its research rules
 have stayed fixed while the revisions changed how work is measured, written, and scheduled:
 
 | Area | Current operating contract |
@@ -122,4 +122,4 @@ test suite passes under both UTC and Singapore time.
 The engine remains paper-only throughout these operations. No deployment step on this server may
 add broker credentials, a broker connection, or real capital.
 
-<!-- sources: BUILDLOG.md, ops/jobs.toml, tools/ops_digest.py, tools/check_invariants.py, tools/release_deploy.py, tools/public_hygiene.py, server/trading-engine-ops-digest.timer, docs/how-it-works.md, engine/bitemporal_facts.py, engine/earnings.py, engine/lib/driver.sh, engine/queue_runner.py, engine/run_daily.sh, engine/tradingview_history_archive.py, engine/verify_prices.py, farm/walkforward/runner.py, server/agent_evaluation_reporting.py, server/hourly_opportunity_observer.py, server/intraday_readiness.py, server/main.py, server/scheduler_monitor.py, server/driver_monitor.py, server/meta_snapshot.py, server/run_p15_scoring.sh, server/trading-engine-p15-scoring.service, tools/install_automation.py, tools/publish_snapshot.py, tools/backup_database.py, tools/stage_timings.py -->
+<!-- sources: BUILDLOG.md, ops/jobs.toml, tools/ops_digest.py, tools/check_invariants.py, tools/release_deploy.py, tools/public_hygiene.py, server/trading-engine-ops-digest.timer, docs/operate/how-it-works.md, engine/bitemporal_facts.py, engine/earnings.py, engine/lib/driver.sh, engine/queue_runner.py, engine/run_daily.sh, engine/tradingview_history_archive.py, engine/verify_prices.py, farm/walkforward/runner.py, server/agent_evaluation_reporting.py, server/hourly_opportunity_observer.py, server/intraday_readiness.py, server/main.py, server/scheduler_monitor.py, server/driver_monitor.py, server/meta_snapshot.py, server/run_p15_scoring.sh, server/trading-engine-p15-scoring.service, tools/install_automation.py, tools/publish_snapshot.py, tools/backup_database.py, tools/stage_timings.py -->

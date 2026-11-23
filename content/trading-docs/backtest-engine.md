@@ -144,4 +144,4 @@ That result proves the evaluator can detect this known synthetic effect at the r
 does not prove that any real strategy works. Synthetic power is a test of the ruler, not the thing
 being measured.
 
-<!-- sources: BUILDLOG.md, docs/backtest-standard.md, docs/plans/p18-backtest-core.md, farm/study/spec.py, farm/study/data.py, farm/study/panel.py, farm/study/bench.py, farm/study/costs.py, farm/study/benchmark.py, farm/study/stats.py, farm/study/protocol.py, farm/study/run.py, farm/study/simulate.py, farm/study/synthetic.py, farm/study_columnar.py, farm/research/, sim/fills.py, tools/sim_bench.py, tests/test_study_followup3.py, tests/test_study_synthetic.py -->
+<!-- sources: BUILDLOG.md, docs/change/backtest-standard.md, docs/history/plans/p18-backtest-core.md, farm/study/spec.py, farm/study/data.py, farm/study/panel.py, farm/study/bench.py, farm/study/costs.py, farm/study/benchmark.py, farm/study/stats.py, farm/study/protocol.py, farm/study/run.py, farm/study/simulate.py, farm/study/synthetic.py, farm/study_columnar.py, farm/research/, sim/fills.py, tools/sim_bench.py, tests/test_study_followup3.py, tests/test_study_synthetic.py -->

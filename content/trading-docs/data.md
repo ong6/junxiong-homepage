@@ -18,11 +18,11 @@ could the system know it?” as separate questions.
 |---|---|---|
 | Yahoo through a maintained Python client | End-of-day prices, bounded intraday bars, and headline search results | Primary operational and agent context, with exact cutoffs and missing-data checks |
 | Nasdaq symbol directory and independent response captures | Current symbol information and bounded price cross-checks | Verification and diagnostics, not a way to rewrite history |
-| TradingView chart responses | Real-time research cross-checks and a resumable daily/5-minute archive | Research only, retained under the owner’s asserted non-display rights; never a fill price |
+| TradingView chart responses | Real-time research cross-checks and a resumable daily/5-minute archive | Research only, retained for research use only under non-display rights; never a fill price |
 | A credential-gated Alpaca IEX adapter | Official API quotes and bounded raw daily bars | Implemented but dormant without admitted personal credentials |
 | SEC EDGAR | Acceptance-timestamped filings, 8-K events, Form 25 delisting notices, and public insider datasets | Retained with request and availability times; each consumer needs its own activation gate |
 | SEC nightly bulk archives (Companyfacts and Submissions) | Point-in-time company fundamentals and earnings-release events | Isolated research store; each fact is available only from its filing's acceptance time |
-| A local RSS/news scraper | Public headline titles collected throughout the day | Read as an owner-controlled file; each accepted line becomes a timestamped fact |
+| A local RSS/news scraper | Public headline titles collected throughout the day | Read as a local file; each accepted line becomes a timestamped fact |
 | Tiingo’s public ticker archive | Historical listing intervals for US stocks | Loaded into an isolated free-source store, never into operational prices |
 | Massive grouped daily data | Free grouped daily bars for all US securities returned on each historical date | Isolated rolling two-year capture and the complete-coverage source for small names within that window; never an operational fill price |
 | Massive minute aggregates | Free extended-hours minute bars for a frozen small-stock tier plus three market benchmarks | Isolated, resumable research history with one key-wide limiter; never an operational fill price |
@@ -96,7 +96,7 @@ benchmarks plus every exact USD Stock ticker that entered the USD 1--5M MDV60 ti
 regular, or post-market using the exchange calendar, including holidays and early closes. A
 content-addressed per-chunk cache makes pagination and restarts repeatable.
 
-All Massive processes share one owner-only lock and timestamp, with at least 13 seconds between
+All Massive processes share one local lock and timestamp, with at least 13 seconds between
 calls. The minute runner also stops in the registered UTC and New York no-call windows and resumes
 after the boundary. Its database and manifest are local research inputs only; they do not rewrite
 daily prices or grant execution authority.

@@ -10,17 +10,20 @@ import styles from "../../../styles/TradingEngineV2.module.css";
 // its host (git log, BUILDLOG, /meta, pytest --collect-only on main 454cfc6a),
 // counted 2026-10-22. The 13 November section and the test count are from
 // BUILDLOG, docs/revision-21-storage-deploy-checklist.md and
-// pytest --collect-only on main 7699e0de, 2026-11-13.
+// pytest --collect-only on main 7699e0de, 2026-11-13. The 23 November section,
+// the test count (pytest --collect-only, 354 files) and the book count
+// (data/reports/metrics) are from main da783f77: BUILDLOG and docs/change/deploy.md.
 const facts = [
 	["status", "live on paper since 18 Oct 2026"],
-	["paper portfolios", "17, each updated every night · 8 retired 21 Oct"],
+	["paper portfolios", "15, each updated every night · 8 retired 21 Oct, 2 on 30 Oct"],
 	["accounts", "next step: one per strategy version · $10k, $50k or $100k"],
 	["fills", "opening auction · closing auction · intraday from minute bars"],
 	["costs", "commission and fees on every fill · dated rate table"],
 	["risk halts", "−20% from peak · −5% in a day · any ledger mismatch"],
 	["first night", "every stage finished · 74 fills, each charged fees"],
-	["tests", "6,749 on main"],
+	["tests", "6,921 on main"],
 	["store", "API reads published read-only copies · since 13 Nov"],
+	["deploys", "newest green main · every 15 min in quiet windows · rolls back itself · since 23 Nov"],
 	["speed", "walk-forward fold 4,872 s → 582 s · identical ledgers"],
 	["reviews", "six held the deploy · a fresh reviewer on every change"],
 	["edge", "none shown yet"],
@@ -34,7 +37,7 @@ export default function TradingEngineV2() {
 			era={ERAS[1]}
 			facts={railFacts}
 			status="live on paper since 18 Oct 2026"
-			description="Engine v2 of Ong Jun Xiong's paper-trading engine, live on paper since 18 October 2026: the engine fills orders, keeps the books and charges commissions on every fill, with deploy checks since 21 October."
+			description="Engine v2 of Ong Jun Xiong's paper-trading engine, live on paper since 18 October 2026: the engine fills orders, keeps the books and charges commissions on every fill, with deploy checks since 21 October and merged changes deploying themselves since 23 November."
 			lead="Engine v2 went live on 18 October 2026, on paper. The engine is now the strategies' broker: it fills their orders, keeps the books, charges commissions on every fill and halts an account that breaks its loss limits. Nothing it runs has shown an edge yet.">
 			<DiagramFigure
 				id="te-v2"
@@ -154,6 +157,39 @@ export default function TradingEngineV2() {
 				check&apos;s lock waits under one deadline. No data collection was switched off. The deploy
 				script stopped once, on a proof that looked for a module in the wrong folder; the proof
 				passed with the path corrected and the release went out at 07:02 UTC.
+			</P>
+
+			<H2>Changes deploy themselves</H2>
+			<P>
+				Until 23 November a merged fix reached the engine only when someone walked it through a
+				release by hand, so fixes piled up into batches. Now a deployer runs every 15 minutes,
+				takes the newest commit on main whose CI is green, runs the deploy gate and the
+				registration tests on a private copy, and deploys it. A dependency, schema or contract
+				change still waits for me; everything before it goes out.
+			</P>
+			<P>
+				It acts only in quiet moments: outside the nightly and pre-open windows, with no scheduled
+				job due in the next 15 minutes, nothing running and enough free disk. If a deploy fails its
+				health checks, it rolls back. If a deploy crashes or the rollback fails, each later run
+				brings the engine back to the last commit that passed, and after three failed tries it
+				clears the failed jobs and restarts the API and UI.
+			</P>
+			<P>
+				It sends no alerts. Every decision goes into a receipt and the hourly digest, and the{" "}
+				<a className="ui-link" href="https://github.com/ong6/trading-engine/blob/main/docs/change/deploy.md" target="_blank" rel="noopener noreferrer">deploy doc</a>{" "}
+				lists the rules. Before it went live it passed a forced rollback and a real deploy on the
+				server.
+			</P>
+			<P>
+				The same day a hand release paused every job, then failed checking its own backup, and the
+				engine sat paused for about half an hour until it was restored by hand. A release that
+				fails before it changes anything now restores the paused jobs itself.
+			</P>
+			<P>
+				I also rewrote the docs for agents: a short map at the root, a note in each code folder and
+				docs grouped by task, with dated material moved to an archive. The server keeps only its
+				newest two local backups, since the long-term copies live in a private GitHub repo. The
+				cleanup deleted nearly 3,000 lines of one-off scripts and old migrations.
 			</P>
 
 			<FactList facts={facts} className={styles.facts} />

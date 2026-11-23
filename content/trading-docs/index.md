@@ -13,7 +13,7 @@ did a decision process add value after realistic costs, or did it merely get luc
 
 “Paper” is the important word. Orders, fills, cash, positions, and costs are simulated. The engine
 has no broker connection, no broker credentials, and no authority over real money. A future broker
-paper account is described in an internal proposal, but it is explicitly not work for now.
+paper account is described in an internal proposal; it is not planned for now.
 
 The engine runs unattended on a Linux server. An LLM can make bounded research decisions through a
 model gateway, while deterministic code controls the data it may see, the candidate list, position
@@ -57,21 +57,18 @@ system has working infrastructure and accumulating paper evidence; it does not h
 
 ## What is running now
 
-As of 22 October 2026:
+The live state (which paper books are active, the registration revision, freshness of every
+producer and the status of each forward record) is published by the engine's `GET /meta` endpoint
+and the generated reports in `data/reports/`, not restated here. The shape is stable:
 
-- **Engine v2 is live on paper.** Since 18 October 2026 the engine has been the single executor
-  and ledger for every paper book and paper account. From 19 October each book pays a registered
-  commission schedule, and its evaluation clock restarted on that date so old and new cost rules
-  are never mixed in one result.
-- **17 paper books are active.** On 21 October eight books that showed no edge after costs were
-  retired. Their history stays in the record; they simply stop trading.
+- **Engine v2 runs on paper.** The engine is the single executor and ledger for every paper book
+  and paper account. Every book pays a registered commission schedule from a recorded break date,
+  and its evaluation clock restarted there so old and new cost rules are never mixed.
+- **Books that show no edge after costs are retired.** Their history stays in the record; they
+  simply stop trading.
 - **Three frozen forward records keep accumulating**: a weekly SPY Monday experiment, a sector
-  momentum rule, and a 12-1 stock momentum comparison. None has reached the date when its verdict
-  is allowed.
-- **A senior-quant review is under way.** This in-depth technical review of the whole pipeline
-  fixed data-integrity and statistics defects, made the nightly jobs, simulator, and test suite
-  faster while proving identical outputs, and repaired stored price history on 22 October. A
-  storage reorganization from the same review is still being rehearsed and is not live.
+  momentum rule, and a 12-1 stock momentum comparison. Each reaches a verdict only on its
+  pre-registered date.
 
 ## Public engine, private research
 

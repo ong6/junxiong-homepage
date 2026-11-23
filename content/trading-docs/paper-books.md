@@ -108,4 +108,4 @@ research results stay outside this repository, and none of them has a proven edg
 Paper equity is evidence about a simulator under stated assumptions. It is not cash, it is not a
 broker statement, and it is never permission to trade live.
 
-<!-- sources: docs/product.md, docs/paper-account-contract.md, docs/plans/p22-engine-v2-accounts.md, sim/book_breaks.py, sim/ledger.py, sim/execution.py, sim/fills.py, sim/league.py, sim/p15_books.py, sim/p15_fills.py, sim/strategies/spy_benchmark.py, server/nightly_reports.py -->
+<!-- sources: docs/product.md, docs/architecture/paper-account-contract.md, docs/plans/p22-engine-v2-accounts.md, sim/book_breaks.py, sim/ledger.py, sim/execution.py, sim/fills.py, sim/league.py, sim/p15_books.py, sim/p15_fills.py, sim/strategies/spy_benchmark.py, server/nightly_reports.py -->
